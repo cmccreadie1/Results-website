@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRA Scottish Shore 2026 | v7.5.0</title>
+    <title>SPRA Scottish Shore 2026 | v7.5.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -29,8 +29,8 @@
             align-items: center;
         }
 
-        /* SPRA Header Pill */
-        .dynamic-hub { margin-top: 50px; margin-bottom: 40px; }
+        /* Dynamic Hub */
+        .dynamic-hub { margin-top: 50px; margin-bottom: 40px; z-index: 10; }
         .hub-pill {
             background: var(--surface-color);
             backdrop-filter: blur(15px);
@@ -40,13 +40,13 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
         }
         .hub-status { width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); animation: pulse 2s infinite; }
         h1 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Navigation Buttons */
-        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
+        /* Button Stack */
+        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 15px; }
 
         .slide-btn {
             background: var(--surface-color);
@@ -61,24 +61,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(5px);
         }
 
-        .slide-btn:hover { transform: translateX(8px); border-color: var(--accent-cyan); background: rgba(35, 40, 50, 1); }
+        .slide-btn:hover { 
+            transform: translateX(10px); 
+            border-color: var(--accent-cyan);
+            background: rgba(40, 45, 55, 1);
+            box-shadow: -5px 5px 20px rgba(0,0,0,0.5);
+        }
 
-        /* Live Viewer Overlay */
+        /* Live Viewer Modal */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(20px);
             display: none;
             flex-direction: column;
             z-index: 1000;
         }
 
         .viewer-header {
-            padding: 15px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -89,19 +95,25 @@
             background: var(--accent-cyan);
             color: #000;
             border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 25px;
+            border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
         }
 
-        iframe { width: 100%; height: 100%; border: none; background: white; }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            background: #fff; /* White background inside the frame for Excel readability */
+        }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: #444; text-align: center; }
         .version-tag { color: var(--accent-cyan); font-weight: 700; }
 
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
     </style>
 </head>
 <body>
@@ -116,44 +128,44 @@
     <nav class="button-stack">
         <div class="slide-btn" onclick="openSheet('INDIVIDUAL RESULT')">
             <span>Individual Winner</span>
-            <span>LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         
         <div class="slide-btn" onclick="openSheet('TEAM RESULT')">
             <span>Team Winners</span>
-            <span>LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         
         <div class="slide-btn" onclick="openSheet('ZONE 1')">
             <span>Zone Day 1</span>
-            <span>LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         
         <div class="slide-btn" onclick="openSheet('ZONE 2')">
             <span>Zone Day 2</span>
-            <span>LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         
         <div class="slide-btn" onclick="openSheet('BIGGEST FISH')">
             <span>Biggest Fish</span>
-            <span>LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
     </nav>
 
     <div id="viewer-modal">
         <div class="viewer-header">
-            <span id="sheet-title" style="font-family: 'Oswald'; letter-spacing: 1px; color: var(--accent-cyan);">LOADING...</span>
-            <button class="close-btn" onclick="closeSheet()">CLOSE</button>
+            <span id="sheet-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;">LOADING...</span>
+            <button class="close-btn" onclick="closeSheet()">CLOSE MENU</button>
         </div>
         <iframe id="excel-frame" src=""></iframe>
     </div>
 
     <footer class="footer">
-        SINGLE SOURCE OF TRUTH VERSION: <span class="version-tag">v7.5.0</span>
+        SSOT VERSION: <span class="version-tag">v7.5.1</span>
     </footer>
 
     <script>
-        // Your Master Excel Embed URL
+        // Verified Direct Database ID format from your screenshot
         const EXCEL_BASE = "https://onedrive.live.com/embed?resid=B76F6D0E3CF0861A&authkey=!AAL-vHmz_YxFSKc";
         
         function openSheet(tabName) {
@@ -163,18 +175,20 @@
             
             title.innerText = tabName;
             
-            // Parameters hide the gridlines/headers for a cleaner 'app' look
-            const params = `&em=2&wdHideGridlines=True&wdHideHeaders=True&ActiveItem='${encodeURIComponent(tabName)}'`;
+            // em=2: Hides Excel UI
+            // activeitems: Tells the engine which tab to render
+            // wdHideGridlines: Cleaner look
+            const params = `&em=2&wdHideGridlines=True&wdHideHeaders=True&activeitems='${encodeURIComponent(tabName)}'`;
             
             frame.src = EXCEL_BASE + params;
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeSheet() {
             document.getElementById('viewer-modal').style.display = 'none';
             document.getElementById('excel-frame').src = "";
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.body.style.overflow = 'auto'; 
         }
     </script>
 </body>
