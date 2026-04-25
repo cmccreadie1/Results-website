@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRA Scottish Shore 2026 | v7.5.3</title>
+    <title>SPRA Scottish Shore 2026 | v7.5.4</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -118,12 +118,17 @@
     </div>
 
     <footer class="footer">
-        SSOT VERSION: <span class="version-tag">v7.5.3</span>
+        SSOT VERSION: <span class="version-tag">v7.5.4</span>
     </footer>
 
     <script>
-        // Use the base OneDrive link without the extra parameters at the end
-        const EXCEL_BASE = "https://onedrive.live.com/embed?resid=B76F6D0E3CF0861A&authkey=!AAL-vHmz_YxFSKc";
+        /**
+         * THE MASTER LINK: 
+         * This is the exact link from your working iframe.
+         * We remove the 'em=2' etc. from the end of the string here 
+         * because we will re-add them along with the specific Tab Name.
+         */
+        const WORKING_LINK = "https://1drv.ms/x/c/b76f6d0e3cf0861a/IQQIvHmz_YxFSKd1LQuu8ACvAYodA5xgVAG-0_xBj3bOyv0";
         
         function openSheet(tabName) {
             const modal = document.getElementById('viewer-modal');
@@ -132,11 +137,12 @@
             
             title.innerText = tabName;
             
-            // wdItem is a 'hard' switch that forces the iframe to a specific sheet or range
-            // em=2 hides the UI.
-            const params = `&em=2&wdHideGridlines=True&wdHideHeaders=True&wdItem='${encodeURIComponent(tabName)}'`;
+            // This is the specific formula to tell the Microsoft 'Friendly' link 
+            // to switch sheets while keeping the security session alive.
+            const tuner = `?em=2&wdHideGridlines=True&wdHideHeaders=True&activeitems='${encodeURIComponent(tabName)}'`;
             
-            frame.src = EXCEL_BASE + params;
+            frame.src = WORKING_LINK + tuner;
+            
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden'; 
         }
