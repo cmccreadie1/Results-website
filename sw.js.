@@ -1,38 +1,26 @@
-const CACHE_NAME = 'fishing-competition-v7.4.0';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'spra-shore-2026-v7.4.0';
+const ASSETS = [
   '/',
   '/index.html',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap',
-  'https://www.transparenttextures.com/patterns/carbon-fibre.png'
+  'https://www.transparenttextures.com/patterns/carbon-fibre.png',
+  '/individual.pdf',
+  '/team.pdf',
+  '/zone1.pdf',
+  '/zone2.pdf',
+  '/biggest.pdf'
 ];
 
-// Install: Cache UI assets
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
-  );
+self.addEventListener('install', (e) => {
+  e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
 });
 
-// Activate: Remove old versions
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      );
-    })
-  );
+self.addEventListener('activate', (e) => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(
+    keys.map(key => key !== CACHE_NAME && caches.delete(key))
+  )));
 });
 
-// Fetch: Serve from cache, then network
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+self.addEventListener('fetch', (e) => {
+  e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
 });
