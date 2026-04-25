@@ -2,138 +2,218 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SPRA Shore Angling Championship 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fishing Competition Results | v7.4.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0a0b0e;
+            --surface-color: rgba(25, 28, 35, 0.75);
+            --accent-cyan: #00f2ff;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            /* Brightened beach background */
-            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), 
-                        url('background.jpg');
-            background-size: cover;
-            background-position: 75% center; 
-            background-attachment: fixed;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: var(--bg-color);
+            background: radial-gradient(circle at center, #161b22 0%, #0a0b0e 100%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
             min-height: 100vh;
-            color: white;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        header {
-            position: absolute;
-            top: 7vh;
-            text-align: center;
-            width: 100%;
+        /* Movement Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.05;
+            z-index: -1;
         }
 
-        header h1 { 
-            font-size: 1rem; 
-            font-weight: 600; 
-            letter-spacing: 3px; 
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0 0 20px rgba(0,0,0,0.9), 0 2px 5px rgba(0,0,0,0.9);
-            padding: 0 30px;
-        }
-
-        header .sub { 
-            font-size: 0.7rem; 
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 1;
-            margin-top: 8px;
-            text-shadow: 0 2px 8px rgba(0,0,0,1);
-        }
-
-        .container {
-            width: 100%;
+        /* Dynamic Hub Header */
+        .dynamic-hub {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .hub-pill {
+            background: var(--surface-color);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding-top: 60px;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
-        .card {
-            font-size: 1.4rem;
-            font-weight: 300;
-            text-decoration: none;
-            color: white;
-            /* Fast 0.1s transition for haptic feel */
-            transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            text-shadow: 0 0 15px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,1);
-            padding: 8px 20px;
-            text-align: center;
+        .hub-status {
+            width: 10px;
+            height: 10px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Leaderboard Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        .leaderboard-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .board-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 100px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            font-size: 0.8rem;
             letter-spacing: 1px;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        /* The Haptic Bounce & Glow */
-        .card:active {
-            transform: scale(0.92); /* Press-in effect */
-            text-shadow: 0 0 30px rgba(255, 255, 255, 1);
-            filter: brightness(1.5);
+        .entry-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px 100px;
+            padding: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 999; backdrop-filter: blur(8px); }
-        #alert-box {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; width: 80%; z-index: 1000;
+        .entry-row:hover {
+            background: rgba(0, 242, 255, 0.03);
+            transform: scale(1.01);
         }
-        #alert-box div { font-weight: 300; font-size: 1.6rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; line-height: 1.4; }
-        .btn-ok { display: inline-block; padding: 12px 40px; border: 1px solid rgba(255,255,255,0.4); color: white; text-decoration: none; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
+
+        .rank { font-family: 'Oswald', sans-serif; font-size: 1.5rem; opacity: 0.5; }
+        .name { font-weight: 700; font-size: 1.1rem; }
+        .weight { color: var(--accent-cyan); font-family: 'Oswald', sans-serif; }
+        .date { font-size: 0.85rem; color: var(--text-dim); }
+
+        /* SSoT Versioning Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        .version-tag {
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .board-header { display: none; }
+            .entry-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .rank { grid-column: span 2; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; }
+            .weight { text-align: right; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>SPRA Shore Angling Championship</h1>
-    <div class="sub">Official Results Portal</div>
-</header>
+    <header class="dynamic-hub">
+        <div class="hub-pill">
+            <div class="hub-status"></div>
+            <h1>John McCreadie Memorial</h1>
+        </div>
+    </header>
 
-<div class="container">
-    <a href="#" onclick="openFile('individual.pdf')" class="card">Individual</a>
-    <a href="#" onclick="openFile('team.pdf')" class="card">Teams</a>
-    <a href="#" onclick="openFile('zone1.pdf')" class="card">Day 1 Zones</a>
-    <a href="#" onclick="openFile('zone2.pdf')" class="card">Day 2 Zones</a>
-    <a href="#" onclick="openFile('biggest.pdf')" class="card">Biggest Fish</a>
-    <a href="#" onclick="openFile('pairs.pdf')" class="card">Secret Pairs</a>
-    <a href="#" onclick="openFile('totals.pdf')" class="card">Total Stats</a>
-    <a href="#" onclick="openFile('performance.pdf')" class="card">Performance</a>
-</div>
+    <main class="container">
+        <div class="leaderboard-card">
+            <div class="board-header">
+                <div>Rank</div>
+                <div>Angler</div>
+                <div>Weight</div>
+                <div>Date</div>
+            </div>
+            
+            <div id="results-list">
+                <div class="entry-row">
+                    <div class="rank">01</div>
+                    <div class="name">Sample Angler</div>
+                    <div class="weight">12lb 4oz</div>
+                    <div class="date">Mar 22</div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-<div id="overlay" onclick="closeAlert()"></div>
-<div id="alert-box">
-    <div>Results Pending</div>
-    <a href="#" class="btn-ok" onclick="closeAlert()">Back</a>
-</div>
+    <footer class="footer">
+        SINGLE SOURCE OF TRUTH VERSION: <span class="version-tag">v7.4.0</span><br>
+        &copy; 2026 Fishing Competition Results
+    </footer>
 
-<script>
-    function openFile(filename) {
-        const baseUrl = 'https://cmccreadie1.github.io/Fishing-Competition-Results/';
-        const finalUrl = baseUrl + filename + '?v=' + new Date().getTime();
+    <script>
+        // v7.4.0 Logic
+        const VERSION = "7.4.0";
         
-        // Save Point 3 logic: stable HEAD check
-        fetch(finalUrl, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) { 
-                const googleViewerUrl = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(finalUrl);
-                window.open(googleViewerUrl, '_blank'); 
-            } 
-            else { showAlert(); }
-        })
-        .catch(() => showAlert());
-    }
-    function showAlert() { document.getElementById('overlay').style.display = 'block'; document.getElementById('alert-box').style.display = 'block'; }
-    function closeAlert() { document.getElementById('overlay').style.display = 'none'; document.getElementById('alert-box').style.display = 'none'; }
-</script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('SW Registered v' + VERSION))
+                    .catch(err => console.log('SW Failed', err));
+            });
+        }
 
+        // Potential for data loading logic here without slimming current structure
+    </script>
 </body>
 </html>
