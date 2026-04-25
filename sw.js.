@@ -1,36 +1,38 @@
-const CACHE_NAME = 'fishing-results-v7.4.0';
-const ASSETS = [
+const CACHE_NAME = 'fishing-competition-v7.4.0';
+const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap',
   'https://www.transparenttextures.com/patterns/carbon-fibre.png'
 ];
 
-// Install Event
+// Install: Cache UI assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
+      return cache.addAll(ASSETS_TO_CACHE);
     })
   );
 });
 
-// Activate Event (Cleanup old caches)
+// Activate: Remove old versions
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.map((key) => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
       );
     })
   );
 });
 
-// Fetch Event (Offline-First)
+// Fetch: Serve from cache, then network
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
