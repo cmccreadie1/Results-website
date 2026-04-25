@@ -10,11 +10,11 @@
     <style>
         :root {
             --bg-color: #0a0b0e;
-            --surface-color: rgba(25, 28, 35, 0.75);
+            --surface-color: rgba(25, 28, 35, 0.8);
             --accent-cyan: #00f2ff;
             --text-main: #ffffff;
             --text-dim: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(0, 242, 255, 0.2);
         }
 
         * {
@@ -25,49 +25,48 @@
 
         body {
             background-color: var(--bg-color);
-            background: radial-gradient(circle at center, #161b22 0%, #0a0b0e 100%);
+            background: radial-gradient(circle at center, #1a1f26 0%, #0a0b0e 100%);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
             min-height: 100vh;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Movement Background */
+        /* Movement Background Texture */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.05;
+            opacity: 0.1;
             z-index: -1;
+            pointer-events: none;
         }
 
         /* Dynamic Hub Header */
         .dynamic-hub {
-            position: sticky;
-            top: 20px;
+            margin-top: 40px;
+            margin-bottom: 50px;
             z-index: 100;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
         }
 
         .hub-pill {
             background: var(--surface-color);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 50px;
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
         }
 
         .hub-status {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: var(--accent-cyan);
             border-radius: 50%;
             box-shadow: 0 0 10px var(--accent-cyan);
@@ -76,62 +75,83 @@
 
         h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
+            color: var(--text-main);
         }
 
-        /* Leaderboard Container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px 100px;
+        /* Main Navigation Stack */
+        .button-stack {
+            width: 100%;
+            max-width: 450px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .leaderboard-card {
+        /* Sliding Button Design */
+        .slide-btn {
+            position: relative;
             background: var(--surface-color);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
             border: 1px solid var(--glass-border);
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out forwards;
-        }
-
-        .board-header {
-            background: rgba(255, 255, 255, 0.05);
             padding: 20px;
-            display: grid;
-            grid-template-columns: 60px 1fr 100px 100px;
-            font-weight: 700;
-            color: var(--accent-cyan);
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
             text-transform: uppercase;
-            font-size: 0.8rem;
             letter-spacing: 1px;
-        }
-
-        .entry-row {
-            display: grid;
-            grid-template-columns: 60px 1fr 100px 100px;
-            padding: 20px;
-            border-bottom: 1px solid var(--glass-border);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        .entry-row:hover {
-            background: rgba(0, 242, 255, 0.03);
-            transform: scale(1.01);
+        /* The "Slide" Overlay */
+        .slide-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.1), transparent);
+            transition: all 0.6s ease;
         }
 
-        .rank { font-family: 'Oswald', sans-serif; font-size: 1.5rem; opacity: 0.5; }
-        .name { font-weight: 700; font-size: 1.1rem; }
-        .weight { color: var(--accent-cyan); font-family: 'Oswald', sans-serif; }
-        .date { font-size: 0.85rem; color: var(--text-dim); }
+        .slide-btn:hover {
+            border-color: var(--accent-cyan);
+            transform: translateX(10px);
+            box-shadow: -5px 5px 20px rgba(0, 242, 255, 0.1);
+            background: rgba(30, 35, 45, 0.9);
+        }
+
+        .slide-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-icon {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            transition: transform 0.3s ease;
+        }
+
+        .slide-btn:hover .btn-icon {
+            transform: translateX(5px);
+            opacity: 1;
+        }
 
         /* SSoT Versioning Footer */
         .footer {
-            text-align: center;
+            margin-top: auto;
             padding: 40px;
+            text-align: center;
             font-size: 0.7rem;
             color: var(--text-dim);
             letter-spacing: 1px;
@@ -142,27 +162,14 @@
             font-weight: 700;
         }
 
-        /* Animations */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 0.6; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            .board-header { display: none; }
-            .entry-row {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .rank { grid-column: span 2; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; }
-            .weight { text-align: right; }
+        @media (max-width: 480px) {
+            .slide-btn { padding: 18px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -171,49 +178,52 @@
     <header class="dynamic-hub">
         <div class="hub-pill">
             <div class="hub-status"></div>
-            <h1>John McCreadie Memorial</h1>
+            <h1>John McCreadie Memorial Trophy</h1>
         </div>
     </header>
 
-    <main class="container">
-        <div class="leaderboard-card">
-            <div class="board-header">
-                <div>Rank</div>
-                <div>Angler</div>
-                <div>Weight</div>
-                <div>Date</div>
-            </div>
-            
-            <div id="results-list">
-                <div class="entry-row">
-                    <div class="rank">01</div>
-                    <div class="name">Sample Angler</div>
-                    <div class="weight">12lb 4oz</div>
-                    <div class="date">Mar 22</div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <nav class="button-stack">
+        <a href="Season 4.pdf" class="slide-btn">
+            <span>Season 4 Results</span>
+            <span class="btn-icon">PDF ❯</span>
+        </a>
+
+        <a href="Season 3.pdf" class="slide-btn">
+            <span>Season 3 Results</span>
+            <span class="btn-icon">PDF ❯</span>
+        </a>
+
+        <a href="Season 2.pdf" class="slide-btn">
+            <span>Season 2 Results</span>
+            <span class="btn-icon">PDF ❯</span>
+        </a>
+
+        <a href="Season 1.pdf" class="slide-btn">
+            <span>Season 1 Results</span>
+            <span class="btn-icon">PDF ❯</span>
+        </a>
+
+        <a href="latest-weigh-in.pdf" class="slide-btn" style="border-width: 2px;">
+            <span>Latest Weigh In Results</span>
+            <span class="btn-icon">LIVE ❯</span>
+        </a>
+    </nav>
 
     <footer class="footer">
-        SINGLE SOURCE OF TRUTH VERSION: <span class="version-tag">v7.4.0</span><br>
-        &copy; 2026 Fishing Competition Results
+        APP VERSION: <span class="version-tag">v7.4.0</span><br>
+        SINGLE SOURCE OF TRUTH DESIGN
     </footer>
 
     <script>
-        // v7.4.0 Logic
-        const VERSION = "7.4.0";
+        const APP_VERSION = "7.4.0";
         
-        // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('SW Registered v' + VERSION))
-                    .catch(err => console.log('SW Failed', err));
+                    .then(reg => console.log('ShoreScore Engine Active: ' + APP_VERSION))
+                    .catch(err => console.log('SW Registration Failed', err));
             });
         }
-
-        // Potential for data loading logic here without slimming current structure
     </script>
 </body>
 </html>
