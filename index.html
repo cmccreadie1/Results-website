@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v8.1.0</title>
+    <title>SPRA Scottish Shore 2026 | v8.1.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@
         .alt-btn { border-color: rgba(255,255,255,0.3); }
         .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0; }
 
-        /* FULL SCREEN NATIVE VIEWER */
+        /* MODAL VIEWER */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -93,11 +93,18 @@
             cursor: pointer; font-family: 'Oswald', sans-serif; 
         }
 
-        .pdf-content {
+        .pdf-container {
             flex: 1;
             width: 100%;
             height: 100%;
             background: #fff;
+            overflow: hidden;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; text-transform: uppercase; }
@@ -118,34 +125,34 @@
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="openNativePDF('individual.pdf', 'Individual Result')">
+        <div class="slide-btn" onclick="openPDF('individual.pdf', 'Individual Result')">
             <span>Individual Winner</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openNativePDF('team.pdf', 'Team Result')">
+        <div class="slide-btn" onclick="openPDF('team.pdf', 'Team Result')">
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openNativePDF('zone1.pdf', 'Zone Day 1')">
+        <div class="slide-btn" onclick="openPDF('zone1.pdf', 'Zone Day 1')">
             <span>Zone Day 1</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openNativePDF('zone2.pdf', 'Zone Day 2')">
+        <div class="slide-btn" onclick="openPDF('zone2.pdf', 'Zone Day 2')">
             <span>Zone Day 2</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openNativePDF('biggest.pdf', 'Biggest Fish')">
+        <div class="slide-btn" onclick="openPDF('biggest.pdf', 'Biggest Fish')">
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
 
         <div class="divider"></div>
 
-        <div class="slide-btn alt-btn" onclick="openNativePDF('totals.pdf', 'Overall Totals')">
+        <div class="slide-btn alt-btn" onclick="openPDF('totals.pdf', 'Overall Totals')">
             <span>Overall Totals</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn alt-btn" onclick="openNativePDF('performance.pdf', 'Performance Stats')">
+        <div class="slide-btn alt-btn" onclick="openPDF('performance.pdf', 'Performance Stats')">
             <span>Performance Stats</span>
             <span>VIEW ❯</span>
         </div>
@@ -156,28 +163,26 @@
             <span id="viewer-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
             <button class="close-btn" onclick="closeViewer()">CLOSE MENU</button>
         </div>
-        <div id="pdf-target" class="pdf-content">
-            </div>
+        <div class="pdf-container">
+            <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
+        </div>
     </div>
 
     <footer class="footer">
         Official Results Hub<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v8.1.0</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v8.1.1</span>
     </footer>
 
     <script>
         const modal = document.getElementById('viewer-modal');
-        const target = document.getElementById('pdf-target');
+        const frame = document.getElementById('pdf-frame');
         const titleElement = document.getElementById('viewer-title');
 
-        function openNativePDF(file, title) {
+        function openPDF(file, title) {
             const timestamp = new Date().getTime();
-            const filePath = file + "?v=" + timestamp;
-            
-            // Using <object> instead of <iframe> for native PDF handling
-            target.innerHTML = `<object data="${filePath}" type="application/pdf" width="100%" height="100%">
-                <p>Unable to display PDF. <a href="${filePath}">Download instead</a>.</p>
-            </object>`;
+            // We load the PDF directly into the iframe. 
+            // On mobile, this usually triggers the native PDF renderer automatically.
+            frame.src = file + "?v=" + timestamp;
             
             titleElement.innerText = title;
             modal.style.display = 'flex';
@@ -186,7 +191,7 @@
 
         function closeViewer() {
             modal.style.display = 'none';
-            target.innerHTML = ''; // Wipes the memory
+            frame.src = ""; // Clear the memory
             document.body.style.overflow = 'auto';
         }
     </script>
