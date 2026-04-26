@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRA Scottish Shore 2026 | v7.7.0</title>
+    <title>SPRA Scottish Shore 2026 | v7.8.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -35,17 +35,16 @@
             padding: 12px 30px;
             border-radius: 50px;
             display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
         }
         .hub-status { width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); animation: pulse 2s infinite; }
         h1 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 15px; }
+        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
 
         .slide-btn {
             background: var(--surface-color);
             border: 1px solid var(--glass-border);
-            padding: 22px;
+            padding: 20px;
             border-radius: 14px;
             color: var(--text-main);
             cursor: pointer;
@@ -56,9 +55,10 @@
             transition: all 0.3s ease;
         }
 
-        .slide-btn:hover { transform: translateX(10px); border-color: var(--accent-cyan); background: rgba(40, 45, 55, 1); }
+        .slide-btn:hover { transform: translateX(8px); border-color: var(--accent-cyan); }
+        .charts-btn { border-color: #ffffff; background: rgba(255,255,255,0.05); }
 
-        /* PDF Viewer Modal */
+        /* Viewer Modal */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -68,30 +68,29 @@
 
         .viewer-header { 
             padding: 15px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--glass-border);
-            background: var(--bg-color);
         }
 
-        .viewer-actions { display: flex; gap: 10px; }
+        .close-btn { background: var(--accent-cyan); color: #000; border: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; font-family: 'Oswald', sans-serif; }
 
-        .action-btn {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+        .pdf-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px;
+            background: #111;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            height: 80vh; /* Shows 80% of the screen height per PDF */
             border: none;
+            background: #fff;
+            border-radius: 8px;
         }
-
-        .download-btn { background: #ffffff; color: #000; text-decoration: none; display: flex; align-items: center; }
-        .close-btn { background: var(--accent-cyan); color: #000; }
-
-        iframe { width: 100%; height: 100%; border: none; background: #fff; }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: #444; text-align: center; }
         .version-tag { color: var(--accent-cyan); font-weight: 700; }
@@ -109,64 +108,77 @@
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="openPDF('individual.pdf', 'Individual Result')">
+        <div class="slide-btn" onclick="openSinglePDF('individual.pdf', 'Individual Result')">
             <span>Individual Winner</span>
             <span style="color: var(--accent-cyan)">PDF ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('team.pdf', 'Team Result')">
+        <div class="slide-btn" onclick="openSinglePDF('team.pdf', 'Team Result')">
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">PDF ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('zone1.pdf', 'Zone Day 1')">
+        <div class="slide-btn" onclick="openSinglePDF('zone1.pdf', 'Zone Day 1')">
             <span>Zone Day 1</span>
             <span style="color: var(--accent-cyan)">PDF ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('zone2.pdf', 'Zone Day 2')">
+        <div class="slide-btn" onclick="openSinglePDF('zone2.pdf', 'Zone Day 2')">
             <span>Zone Day 2</span>
             <span style="color: var(--accent-cyan)">PDF ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('biggest.pdf', 'Biggest Fish')">
+        <div class="slide-btn" onclick="openSinglePDF('biggest.pdf', 'Biggest Fish')">
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">PDF ❯</span>
+        </div>
+
+        <div class="slide-btn charts-btn" onclick="openMultiPDF(['totals.pdf', 'performance.pdf'], 'Performance Charts')">
+            <span>Performance Charts</span>
+            <span style="color: #fff">VIEW ALL ❯</span>
         </div>
     </nav>
 
     <div id="viewer-modal">
         <div class="viewer-header">
-            <span id="pdf-title" style="font-family: 'Oswald'; color: var(--accent-cyan);"></span>
-            <div class="viewer-actions">
-                <a id="download-link" href="#" download class="action-btn download-btn">Download ↓</a>
-                <button class="action-btn close-btn" onclick="closePDF()">Close</button>
-            </div>
+            <span id="viewer-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
+            <button class="close-btn" onclick="closeViewer()">CLOSE</button>
         </div>
-        <iframe id="pdf-frame" src=""></iframe>
+        <div id="pdf-container" class="pdf-scroll-container">
+            </div>
     </div>
 
     <footer class="footer">
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v7.7.0</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v7.8.0</span>
     </footer>
 
     <script>
-        function openPDF(file, title) {
-            const frame = document.getElementById('pdf-frame');
-            const download = document.getElementById('download-link');
-            
-            // Add timestamp to bypass cache when you update the file
+        const modal = document.getElementById('viewer-modal');
+        const container = document.getElementById('pdf-container');
+        const titleElement = document.getElementById('viewer-title');
+
+        // Logic for buttons with only ONE PDF
+        function openSinglePDF(file, title) {
+            openMultiPDF([file], title);
+        }
+
+        // Logic for buttons with MULTIPLE PDFs
+        function openMultiPDF(files, title) {
             const timestamp = new Date().getTime();
-            const filePath = file + "?v=" + timestamp;
+            container.innerHTML = ''; // Clear existing views
             
-            frame.src = filePath;
-            download.href = filePath;
-            
-            document.getElementById('pdf-title').innerText = title;
-            document.getElementById('viewer-modal').style.display = 'flex';
+            files.forEach(file => {
+                const iframe = document.createElement('iframe');
+                iframe.src = `${file}?v=${timestamp}`;
+                iframe.className = 'pdf-frame';
+                container.appendChild(iframe);
+            });
+
+            titleElement.innerText = title;
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
-        function closePDF() {
-            document.getElementById('viewer-modal').style.display = 'none';
+        function closeViewer() {
+            modal.style.display = 'none';
+            container.innerHTML = '';
             document.body.style.overflow = 'auto';
-            document.getElementById('pdf-frame').src = "";
         }
     </script>
 </body>
