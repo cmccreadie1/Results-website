@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v7.9.0</title>
+    <title>SPRA Scottish Shore 2026 | v7.9.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-overlay: rgba(10, 11, 14, 0.85); /* Dark tint to keep text readable */
-            --surface-color: rgba(20, 22, 28, 0.7); /* More transparent for 'bleed' */
+            --bg-overlay: rgba(10, 11, 14, 0.88); /* Dark tint to ensure text clarity over background.jpg */
+            --surface-color: rgba(20, 22, 28, 0.75); /* Translucent glass for buttons */
             --accent-cyan: #00f2ff;
             --text-main: #ffffff;
             --glass-border: rgba(0, 242, 255, 0.3);
         }
 
+        /* Basic Reset & Smooth Scroll */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: #0a0b0e;
-            /* This pulls your background image from GitHub */
+            /* Dynamic background bleed */
             background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('background.jpg');
             background-attachment: fixed;
             background-size: cover;
@@ -29,36 +30,58 @@
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
         }
 
-        /* Branding Header */
-        .dynamic-hub { margin-top: 30px; margin-bottom: 30px; width: 100%; display: flex; justify-content: center; }
+        /* Branded Header Hub */
+        .dynamic-hub { margin-top: 40px; margin-bottom: 30px; width: 100%; display: flex; justify-content: center; }
+        
         .hub-pill {
-            background: rgba(10, 11, 14, 0.9);
+            background: rgba(10, 11, 14, 0.95);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            padding: 10px 25px;
+            padding: 8px 25px 8px 10px; /* Slimmer padding for circular logo */
             border-radius: 60px;
             display: flex; align-items: center; gap: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
-        
-        /* The Logo Styling */
+
+        .logo-box {
+            background: white; /* Clean backing for non-transparent logos */
+            padding: 4px;
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+        }
+
         .assoc-logo {
-            height: 45px; /* Adjust based on your logo shape */
-            width: auto;
-            filter: drop-shadow(0 0 5px rgba(0,242,255,0.3));
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .hub-text h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 0.95rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            line-height: 1.2;
         }
 
         .hub-status { width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan); animation: pulse 2s infinite; }
-        h1 { font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.2; }
 
-        /* Navigation Stack */
+        /* Button Stack Interface */
         .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
         
         .slide-btn {
             background: var(--surface-color);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             padding: 18px 22px;
             border-radius: 12px;
@@ -68,25 +91,50 @@
             font-size: 1rem;
             text-transform: uppercase;
             display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.2s ease;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
         }
-        .slide-btn:active { transform: scale(0.96); background: rgba(0, 242, 255, 0.1); }
-        
-        .alt-btn { border-color: rgba(255,255,255,0.3); }
 
-        /* Viewer Styles */
+        .slide-btn:active { transform: scale(0.97); background: rgba(0, 242, 255, 0.15); }
+        
+        .alt-btn { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+
+        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0; width: 100%; }
+
+        /* PDF Smooth-Glide Viewer */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
             display: none; flex-direction: column; z-index: 1000;
+            will-change: transform;
         }
-        .viewer-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
-        .close-btn { background: var(--accent-cyan); color: #000; border: none; padding: 8px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; font-family: 'Oswald', sans-serif; }
-        .pdf-container { flex: 1; overflow: hidden; }
-        .pdf-frame { width: 100%; height: 100%; border: none; background: #fff; }
 
-        .footer { margin-top: auto; padding: 30px; font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .viewer-header { 
+            padding: 15px 20px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--glass-border);
+            background: #000;
+        }
+
+        .close-btn { 
+            background: var(--accent-cyan); color: #000; border: none; 
+            padding: 10px 25px; border-radius: 30px; font-weight: bold; 
+            cursor: pointer; font-family: 'Oswald', sans-serif; 
+        }
+
+        .pdf-container {
+            flex: 1;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .pdf-frame {
+            width: 100%; height: 100%;
+            border: none; background: #fff;
+        }
+
+        /* Branding Footer */
+        .footer { margin-top: auto; padding: 40px; font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
         .version-tag { color: var(--accent-cyan); font-weight: 700; }
 
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -96,7 +144,9 @@
 
     <header class="dynamic-hub">
         <div class="hub-pill">
-            <img src="logo.png" alt="SPRA Logo" class="assoc-logo">
+            <div class="logo-box">
+                <img src="logo.png" alt="SPRA Logo" class="assoc-logo">
+            </div>
             <div class="hub-text">
                 <h1>SPRA Scottish<br>Shore 2026</h1>
             </div>
@@ -126,7 +176,7 @@
             <span style="color: var(--accent-cyan)">PDF ❯</span>
         </div>
 
-        <div style="height: 10px;"></div>
+        <div class="divider"></div>
 
         <div class="slide-btn alt-btn" onclick="openPDF('totals.pdf', 'Overall Totals')">
             <span>Overall Totals</span>
@@ -141,7 +191,7 @@
     <div id="viewer-modal">
         <div class="viewer-header">
             <span id="viewer-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
-            <button class="close-btn" onclick="closeViewer()">CLOSE</button>
+            <button class="close-btn" onclick="closeViewer()">CLOSE MENU</button>
         </div>
         <div class="pdf-container">
             <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
@@ -149,19 +199,27 @@
     </div>
 
     <footer class="footer">
-        Official Results Hub | <span class="version-tag">v7.9.0</span>
+        Official Scottish Shore Results Hub<br>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v7.9.1</span>
     </footer>
 
     <script>
         const modal = document.getElementById('viewer-modal');
         const frame = document.getElementById('pdf-frame');
         const titleElement = document.getElementById('viewer-title');
+
+        // Resolve absolute URL for Google Viewer compatibility
         const SITE_URL = window.location.origin + window.location.pathname;
 
         function openPDF(file, title) {
             const timestamp = new Date().getTime();
+            
+            // Construct timestamped URL to force refresh
             const fullPdfPath = new URL(file, SITE_URL).href + "?v=" + timestamp;
+            
+            // Bypass mobile 'Open' buttons using Google GView
             frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(fullPdfPath)}&embedded=true`;
+            
             titleElement.innerText = title;
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
