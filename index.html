@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v8.1.1</title>
+    <title>SPRA Scottish Shore 2026 | v8.2.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-overlay: rgba(10, 11, 14, 0.9);
-            --surface-color: rgba(20, 22, 28, 0.75);
+            /* Lightened overlay (0.65) to let the background image bleed through more clearly */
+            --bg-overlay: rgba(10, 11, 14, 0.65); 
+            --surface-color: rgba(20, 22, 28, 0.6); 
             --accent-cyan: #00f2ff;
             --text-main: #ffffff;
-            --glass-border: rgba(0, 242, 255, 0.3);
+            --glass-border: rgba(0, 242, 255, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -28,96 +29,69 @@
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden;
         }
 
-        /* Branding Header */
+        /* Improved Header Hub */
         .dynamic-hub { margin-top: 40px; margin-bottom: 30px; width: 100%; display: flex; justify-content: center; }
+        
         .hub-pill {
-            background: rgba(10, 11, 14, 0.95);
+            background: rgba(10, 11, 14, 0.85);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            padding: 8px 25px 8px 10px;
-            border-radius: 60px;
-            display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            padding: 12px 25px;
+            border-radius: 15px;
+            display: flex; align-items: center; gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .logo-box {
-            background: white;
-            padding: 4px; border-radius: 50%;
-            width: 52px; height: 52px;
-            display: flex; justify-content: center; align-items: center;
-            overflow: hidden; border: 2px solid var(--accent-cyan);
-        }
-        .assoc-logo { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .hub-text h1 { font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px; line-height: 1.2; }
 
-        /* Navigation Stack */
-        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+        .assoc-logo {
+            height: 60px; /* Increased size */
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4));
+        }
+
+        .hub-text h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 1.1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            line-height: 1.2;
+        }
+
+        /* Navigation Buttons */
+        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
+        
         .slide-btn {
             background: var(--surface-color);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border);
-            padding: 18px 22px;
+            padding: 20px 24px;
             border-radius: 12px;
             color: var(--text-main);
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             display: flex; justify-content: space-between; align-items: center;
-            transition: transform 0.2s ease;
-        }
-        .slide-btn:active { transform: scale(0.97); background: rgba(0, 242, 255, 0.15); }
-        .alt-btn { border-color: rgba(255,255,255,0.3); }
-        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0; }
-
-        /* MODAL VIEWER */
-        #viewer-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            display: none; flex-direction: column; z-index: 1000;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .viewer-header { 
-            padding: 15px 20px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid var(--glass-border);
-            background: #000;
-        }
+        .slide-btn:active { transform: scale(0.96); background: rgba(0, 242, 255, 0.2); }
+        
+        .alt-btn { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
 
-        .close-btn { 
-            background: var(--accent-cyan); color: #000; border: none; 
-            padding: 10px 25px; border-radius: 30px; font-weight: bold; 
-            cursor: pointer; font-family: 'Oswald', sans-serif; 
-        }
+        .divider { height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; width: 100%; }
 
-        .pdf-container {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            overflow: hidden;
-        }
-
-        .pdf-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .footer { margin-top: auto; padding: 40px; font-size: 0.65rem; color: rgba(255,255,255,0.4); text-align: center; text-transform: uppercase; }
-        .version-tag { color: var(--accent-cyan); font-weight: 700; }
+        .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; text-transform: uppercase; font-weight: bold; }
+        .version-tag { color: var(--accent-cyan); }
     </style>
 </head>
 <body>
 
     <header class="dynamic-hub">
         <div class="hub-pill">
-            <div class="logo-box">
-                <img src="logo.png" alt="SPRA Logo" class="assoc-logo">
-            </div>
+            <img src="logo.png" alt="SPRA Logo" class="assoc-logo">
             <div class="hub-text">
                 <h1>SPRA Scottish<br>Shore 2026</h1>
             </div>
@@ -125,75 +99,56 @@
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="openPDF('individual.pdf', 'Individual Result')">
+        <a href="individual.pdf" class="slide-btn">
             <span>Individual Winner</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-        <div class="slide-btn" onclick="openPDF('team.pdf', 'Team Result')">
+        </a>
+        <a href="team.pdf" class="slide-btn">
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-        <div class="slide-btn" onclick="openPDF('zone1.pdf', 'Zone Day 1')">
+        </a>
+        <a href="zone1.pdf" class="slide-btn">
             <span>Zone Day 1</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-        <div class="slide-btn" onclick="openPDF('zone2.pdf', 'Zone Day 2')">
+        </a>
+        <a href="zone2.pdf" class="slide-btn">
             <span>Zone Day 2</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-        <div class="slide-btn" onclick="openPDF('biggest.pdf', 'Biggest Fish')">
+        </a>
+        <a href="biggest.pdf" class="slide-btn">
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
+        </a>
 
         <div class="divider"></div>
 
-        <div class="slide-btn alt-btn" onclick="openPDF('totals.pdf', 'Overall Totals')">
+        <a href="totals.pdf" class="slide-btn alt-btn">
             <span>Overall Totals</span>
-            <span>VIEW ❯</span>
-        </div>
-        <div class="slide-btn alt-btn" onclick="openPDF('performance.pdf', 'Performance Stats')">
+            <span>DATA ❯</span>
+        </a>
+        <a href="performance.pdf" class="slide-btn alt-btn">
             <span>Performance Stats</span>
-            <span>VIEW ❯</span>
-        </div>
+            <span>DATA ❯</span>
+        </a>
     </nav>
 
-    <div id="viewer-modal">
-        <div class="viewer-header">
-            <span id="viewer-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
-            <button class="close-btn" onclick="closeViewer()">CLOSE MENU</button>
-        </div>
-        <div class="pdf-container">
-            <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
-        </div>
-    </div>
-
     <footer class="footer">
-        Official Results Hub<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v8.1.1</span>
+        Official Results Portal<br>
+        v8.2.0 | <span class="version-tag">LIVE SYNC</span>
     </footer>
 
     <script>
-        const modal = document.getElementById('viewer-modal');
-        const frame = document.getElementById('pdf-frame');
-        const titleElement = document.getElementById('viewer-title');
-
-        function openPDF(file, title) {
-            const timestamp = new Date().getTime();
-            // We load the PDF directly into the iframe. 
-            // On mobile, this usually triggers the native PDF renderer automatically.
-            frame.src = file + "?v=" + timestamp;
-            
-            titleElement.innerText = title;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeViewer() {
-            modal.style.display = 'none';
-            frame.src = ""; // Clear the memory
-            document.body.style.overflow = 'auto';
-        }
+        // Forces the browser to refresh the PDF from GitHub instead of using an old cached version
+        document.querySelectorAll('.slide-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.includes('.pdf')) {
+                    e.preventDefault();
+                    const timestamp = new Date().getTime();
+                    window.location.href = href + "?v=" + timestamp;
+                }
+            });
+        });
     </script>
 </body>
 </html>
