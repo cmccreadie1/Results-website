@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRA Scottish Shore 2026 | v7.8.0</title>
+    <title>SPRA Scottish Shore 2026 | v7.8.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -58,7 +58,6 @@
         .slide-btn:hover { transform: translateX(8px); border-color: var(--accent-cyan); }
         .charts-btn { border-color: #ffffff; background: rgba(255,255,255,0.05); }
 
-        /* Viewer Modal */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -86,7 +85,7 @@
 
         .pdf-frame {
             width: 100%;
-            height: 80vh; /* Shows 80% of the screen height per PDF */
+            height: 85vh;
             border: none;
             background: #fff;
             border-radius: 8px;
@@ -110,25 +109,24 @@
     <nav class="button-stack">
         <div class="slide-btn" onclick="openSinglePDF('individual.pdf', 'Individual Result')">
             <span>Individual Winner</span>
-            <span style="color: var(--accent-cyan)">PDF ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         <div class="slide-btn" onclick="openSinglePDF('team.pdf', 'Team Result')">
             <span>Team Winners</span>
-            <span style="color: var(--accent-cyan)">PDF ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         <div class="slide-btn" onclick="openSinglePDF('zone1.pdf', 'Zone Day 1')">
             <span>Zone Day 1</span>
-            <span style="color: var(--accent-cyan)">PDF ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         <div class="slide-btn" onclick="openSinglePDF('zone2.pdf', 'Zone Day 2')">
             <span>Zone Day 2</span>
-            <span style="color: var(--accent-cyan)">PDF ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
         <div class="slide-btn" onclick="openSinglePDF('biggest.pdf', 'Biggest Fish')">
             <span>Biggest Fish</span>
-            <span style="color: var(--accent-cyan)">PDF ❯</span>
+            <span style="color: var(--accent-cyan)">LIVE ❯</span>
         </div>
-
         <div class="slide-btn charts-btn" onclick="openMultiPDF(['totals.pdf', 'performance.pdf'], 'Performance Charts')">
             <span>Performance Charts</span>
             <span style="color: #fff">VIEW ALL ❯</span>
@@ -140,12 +138,11 @@
             <span id="viewer-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
             <button class="close-btn" onclick="closeViewer()">CLOSE</button>
         </div>
-        <div id="pdf-container" class="pdf-scroll-container">
-            </div>
+        <div id="pdf-container" class="pdf-scroll-container"></div>
     </div>
 
     <footer class="footer">
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v7.8.0</span>
+        SSOT VERSION: <span class="version-tag">v7.8.1</span>
     </footer>
 
     <script>
@@ -153,19 +150,27 @@
         const container = document.getElementById('pdf-container');
         const titleElement = document.getElementById('viewer-title');
 
-        // Logic for buttons with only ONE PDF
+        // IMPORTANT: Replace this with your actual Netlify/GitHub website URL
+        // Example: https://spra-results.netlify.app/
+        const SITE_URL = window.location.href.split('?')[0].split('#')[0];
+
         function openSinglePDF(file, title) {
             openMultiPDF([file], title);
         }
 
-        // Logic for buttons with MULTIPLE PDFs
         function openMultiPDF(files, title) {
             const timestamp = new Date().getTime();
-            container.innerHTML = ''; // Clear existing views
+            container.innerHTML = ''; 
             
             files.forEach(file => {
                 const iframe = document.createElement('iframe');
-                iframe.src = `${file}?v=${timestamp}`;
+                
+                // Construct the full path to your PDF
+                const fullPdfPath = SITE_URL + file + "?v=" + timestamp;
+                
+                // Use Google's GView engine to bypass the 'Open' button on mobile
+                iframe.src = `https://docs.google.com/gview?url=${encodeURIComponent(fullPdfPath)}&embedded=true`;
+                
                 iframe.className = 'pdf-frame';
                 container.appendChild(iframe);
             });
