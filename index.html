@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPRA Scottish Shore 2026 | v7.5.4</title>
+    <title>SPRA Scottish Shore 2026 | v7.6.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -58,18 +58,27 @@
 
         .slide-btn:hover { transform: translateX(10px); border-color: var(--accent-cyan); background: rgba(40, 45, 55, 1); }
 
+        /* The Result Overlay */
         #viewer-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.96);
-            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.98);
             display: none; flex-direction: column; z-index: 1000;
         }
 
-        .viewer-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
+        .viewer-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
         .close-btn { background: var(--accent-cyan); color: #000; border: none; padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; font-family: 'Oswald', sans-serif; }
 
-        iframe { width: 100%; height: 100%; border: none; background: #fff; }
+        .image-container {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        #result-img { max-width: 100%; height: auto; border-radius: 8px; }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: #444; text-align: center; }
         .version-tag { color: var(--accent-cyan); font-weight: 700; }
@@ -87,70 +96,53 @@
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="openSheet('INDIVIDUAL RESULT')">
+        <div class="slide-btn" onclick="openResult('individual.png', 'Individual Result')">
             <span>Individual Winner</span>
-            <span style="color: var(--accent-cyan)">LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openSheet('TEAM RESULT')">
+        <div class="slide-btn" onclick="openResult('team.png', 'Team Result')">
             <span>Team Winners</span>
-            <span style="color: var(--accent-cyan)">LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openSheet('ZONE 1')">
+        <div class="slide-btn" onclick="openResult('zone1.png', 'Zone Day 1')">
             <span>Zone Day 1</span>
-            <span style="color: var(--accent-cyan)">LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openSheet('ZONE 2')">
+        <div class="slide-btn" onclick="openResult('zone2.png', 'Zone Day 2')">
             <span>Zone Day 2</span>
-            <span style="color: var(--accent-cyan)">LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openSheet('BIGGEST FISH')">
+        <div class="slide-btn" onclick="openResult('biggest.png', 'Biggest Fish')">
             <span>Biggest Fish</span>
-            <span style="color: var(--accent-cyan)">LIVE ❯</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
     </nav>
 
     <div id="viewer-modal">
         <div class="viewer-header">
-            <span id="sheet-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;">LOADING...</span>
-            <button class="close-btn" onclick="closeSheet()">CLOSE MENU</button>
+            <span id="result-title" style="font-family: 'Oswald'; color: var(--accent-cyan); text-transform: uppercase;"></span>
+            <button class="close-btn" onclick="closeResult()">CLOSE</button>
         </div>
-        <iframe id="excel-frame" src=""></iframe>
+        <div class="image-container">
+            <img id="result-img" src="" alt="Result Screenshot">
+        </div>
     </div>
 
     <footer class="footer">
-        SSOT VERSION: <span class="version-tag">v7.5.4</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v7.6.0</span>
     </footer>
 
     <script>
-        /**
-         * THE MASTER LINK: 
-         * This is the exact link from your working iframe.
-         * We remove the 'em=2' etc. from the end of the string here 
-         * because we will re-add them along with the specific Tab Name.
-         */
-        const WORKING_LINK = "https://1drv.ms/x/c/b76f6d0e3cf0861a/IQQIvHmz_YxFSKd1LQuu8ACvAYodA5xgVAG-0_xBj3bOyv0";
-        
-        function openSheet(tabName) {
-            const modal = document.getElementById('viewer-modal');
-            const frame = document.getElementById('excel-frame');
-            const title = document.getElementById('sheet-title');
-            
-            title.innerText = tabName;
-            
-            // This is the specific formula to tell the Microsoft 'Friendly' link 
-            // to switch sheets while keeping the security session alive.
-            const tuner = `?em=2&wdHideGridlines=True&wdHideHeaders=True&activeitems='${encodeURIComponent(tabName)}'`;
-            
-            frame.src = WORKING_LINK + tuner;
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; 
+        function openResult(imgSrc, title) {
+            document.getElementById('result-img').src = imgSrc;
+            document.getElementById('result-title').innerText = title;
+            document.getElementById('viewer-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeSheet() {
+        function closeResult() {
             document.getElementById('viewer-modal').style.display = 'none';
-            document.getElementById('excel-frame').src = "";
-            document.body.style.overflow = 'auto'; 
+            document.body.style.overflow = 'auto';
         }
     </script>
 </body>
