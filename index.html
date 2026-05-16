@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.4.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.5.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
         }
 
         /* Branding Header */
-        .dynamic-hub { margin-top: 40px; margin-bottom: 30px; width: 100%; display: flex; justify-content: center; }
+        .dynamic-hub { margin-top: 40px; margin-bottom: 20px; width: 100%; display: flex; justify-content: center; }
         .hub-pill {
             background: rgba(10, 11, 14, 0.85);
             backdrop-filter: blur(15px);
@@ -46,6 +46,28 @@
         }
         .assoc-logo { height: 60px; width: auto; filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4)); }
         .hub-text h1 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Live Status Badge */
+        .live-status-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            color: #999;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+            animation: flash 2s infinite;
+        }
 
         /* Navigation Menu Stack */
         .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
@@ -82,7 +104,7 @@
             flex-shrink: 0;
             z-index: 20; 
             gap: 10px;
-            flex-wrap: wrap; /* Allows safe wrapping on very narrow phones */
+            flex-wrap: wrap; 
         }
 
         .back-btn {
@@ -161,11 +183,11 @@
             border: none;
         }
 
-        /* Zebra Striping for distinct visual tracking */
+        /* Zebra Striping */
         tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
         tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
 
-        /* Targeted Column Compression for Rank Arrays */
+        /* Targeted Column Compression */
         .table-layout-standard table th:first-child,
         .table-layout-standard table td:first-child {
             width: 40px;
@@ -176,7 +198,7 @@
             padding-right: 5px;
         }
 
-        /* Multi-Block Dynamic Zone Colors */
+        /* Zone Colors */
         .zone-red { color: #ff5252; }
         .zone-yellow { color: #ffd600; }
         .zone-green { color: #00e676; }
@@ -187,7 +209,6 @@
         table.zone-green th { border-bottom-color: #00e676; color: #00e676; }
         table.zone-blue th { border-bottom-color: #448aff; color: #448aff; }
 
-        /* Message Display Styling */
         .status-msg {
             font-family: 'Oswald', sans-serif;
             color: #ff4444;
@@ -200,9 +221,7 @@
         .loading-pulse { color: var(--accent-cyan); animation: flash 1.5s infinite; }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; text-transform: uppercase; }
-        .version-tag { color: var(--accent-cyan); font-weight: bold; }
-        .sync-stamp { display: block; margin-top: 10px; color: #888; font-weight: normal; letter-spacing: 0.5px; }
-
+        
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
@@ -216,6 +235,11 @@
             </div>
         </div>
     </header>
+
+    <div class="live-status-badge">
+        <div class="pulse-dot"></div>
+        <span id="sync-time-text">Data Synced: Checking...</span>
+    </div>
 
     <nav class="button-stack">
         <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
@@ -261,13 +285,10 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.4.0</span>
-        <span class="sync-stamp" id="sync-time">Data Last Synced: Checking...</span>
+        Official Results Portal | v10.5.0
     </footer>
 
     <script>
-        // CONFIGURATION: Map columns and determine how many overarching title rows to skip
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3 }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
@@ -288,7 +309,7 @@
 
         let cachedWorkbook = null;
 
-        // Automatically fetch timestamp on page load to update the footer
+        // Fetch timestamp on page load to update the badge
         document.addEventListener("DOMContentLoaded", updateSyncTime);
 
         async function updateSyncTime() {
@@ -300,13 +321,13 @@
                         const dateObj = new Date(lastMod);
                         const dateStr = dateObj.toLocaleDateString();
                         const timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                        document.getElementById('sync-time').innerText = `Data Last Synced: ${dateStr}, ${timeStr}`;
+                        document.getElementById('sync-time-text').innerText = `Data Synced: ${dateStr}, ${timeStr}`;
                         return;
                     }
                 }
-                document.getElementById('sync-time').innerText = `Data Last Synced: Live Ready`;
+                document.getElementById('sync-time-text').innerText = `Data Synced: Live Ready`;
             } catch (e) {
-                document.getElementById('sync-time').innerText = `Data Last Synced: Offline`;
+                document.getElementById('sync-time-text').innerText = `Data Synced: Offline`;
             }
         }
 
@@ -332,7 +353,6 @@
             
             tables.forEach(table => {
                 const trs = table.getElementsByTagName('tr');
-                // Start loop at 1 to completely ignore the sticky header row
                 for (let i = 1; i < trs.length; i++) {
                     const rowText = trs[i].innerText.toUpperCase();
                     if (rowText.includes(input)) {
@@ -349,7 +369,6 @@
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
             
-            // Clear search box on new tab load
             document.getElementById('search-box').value = '';
 
             const sanitizedTarget = targetTabName.trim().toUpperCase();
@@ -411,7 +430,6 @@
                                 let cellContent = String(cell).trim();
                                 let displayContent = cellContent;
                                 
-                                // Apply Podium Medals to Column 1 (if not header)
                                 if (!isFirstRow && idx === 0) {
                                     if (cellContent === "1") displayContent = "🥇 " + cellContent;
                                     else if (cellContent === "2") displayContent = "🥈 " + cellContent;
@@ -452,7 +470,6 @@
                             let cellContent = String(cell).trim();
                             let displayContent = cellContent;
                             
-                            // Apply Podium Medals to Column 1 (if not header)
                             if (!isFirstRow && idx === 0) {
                                 if (cellContent === "1") displayContent = "🥇 " + cellContent;
                                 else if (cellContent === "2") displayContent = "🥈 " + cellContent;
