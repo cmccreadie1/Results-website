@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.3.1</title>
+    <title>SPRA Scottish Shore 2026 | v10.4.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -80,29 +80,55 @@
             background: #000;
             border-bottom: 2px solid var(--accent-cyan);
             flex-shrink: 0;
-            z-index: 20; /* Ensures nav stays above everything */
+            z-index: 20; 
+            gap: 10px;
+            flex-wrap: wrap; /* Allows safe wrapping on very narrow phones */
         }
 
         .back-btn {
             background: var(--accent-cyan); color: #000; border: none;
-            padding: 12px 20px; border-radius: 8px;
+            padding: 10px 16px; border-radius: 8px;
             font-family: 'Oswald', sans-serif; font-weight: 700;
             cursor: pointer; text-transform: uppercase;
+            font-size: 0.9rem;
         }
+
+        #current-title {
+            color: var(--accent-cyan); font-family: 'Oswald'; font-size: 0.9rem; text-transform: uppercase;
+            flex-grow: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        /* Real-time Search Box */
+        .search-box {
+            background: #111;
+            border: 1px solid var(--accent-cyan);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            width: 130px;
+            transition: width 0.3s, box-shadow 0.3s;
+        }
+        .search-box:focus {
+            width: 180px;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+        }
+        .search-box::placeholder { color: #888; }
 
         /* Dynamic Table Output Shell */
         .table-scroll-box {
             flex: 1;
             overflow-x: auto;
             overflow-y: auto;
-            padding: 0 15px 15px 15px; /* Top padding strictly 0 for flush headers */
+            padding: 0 15px 15px 15px; 
             background: #11141a;
             -webkit-overflow-scrolling: touch;
         }
 
         /* Generated Excel Table Style Sheets */
         table {
-            /* Changed from collapse to separate to bypass Safari sticky bug */
             border-collapse: separate; 
             border-spacing: 0;
             width: 100%;
@@ -124,7 +150,6 @@
             border: none;
             border-bottom: 2px solid var(--accent-cyan);
             text-align: left;
-            /* WebKit prefix required for Apple devices */
             position: -webkit-sticky; 
             position: sticky; 
             top: 0;
@@ -157,7 +182,6 @@
         .zone-green { color: #00e676; }
         .zone-blue { color: #448aff; }
 
-        /* Color-match the sticky header underline for each zone block */
         table.zone-red th { border-bottom-color: #ff5252; color: #ff5252; }
         table.zone-yellow th { border-bottom-color: #ffd600; color: #ffd600; }
         table.zone-green th { border-bottom-color: #00e676; color: #00e676; }
@@ -177,6 +201,7 @@
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; text-transform: uppercase; }
         .version-tag { color: var(--accent-cyan); font-weight: bold; }
+        .sync-stamp { display: block; margin-top: 10px; color: #888; font-weight: normal; letter-spacing: 0.5px; }
 
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
@@ -227,8 +252,9 @@
 
     <div id="viewer-overlay">
         <div class="viewer-nav">
-            <button class="back-btn" onclick="closeViewer()">❮ BACK TO MENU</button>
-            <span id="current-title" style="color: var(--accent-cyan); font-family: 'Oswald'; font-size: 0.9rem; text-transform: uppercase;"></span>
+            <button class="back-btn" onclick="closeViewer()">❮ MENU</button>
+            <span id="current-title"></span>
+            <input type="text" id="search-box" class="search-box" placeholder="Find Angler..." onkeyup="filterTable()">
         </div>
         <div class="table-scroll-box" id="table-output">
             </div>
@@ -236,18 +262,19 @@
 
     <footer class="footer">
         Official Results Portal<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.3.1</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.4.0</span>
+        <span class="sync-stamp" id="sync-time">Data Last Synced: Checking...</span>
     </footer>
 
     <script>
         // CONFIGURATION: Map columns and determine how many overarching title rows to skip
         const TAB_CONFIG = {
-            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3 }, // Freezes at row 4
-            'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       // Freezes at row 2
-            'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      // Freezes at row 2
-            'SECRET PAIRS LIVE': { startCol: 4, endCol: 6, skipRows: 2 }, // Freezes at row 3
-            'ZONE 1': { isMultiZone: true, skipRows: 1 },                 // Freezes at row 2
-            'ZONE 2': { isMultiZone: true, skipRows: 1 }                  // Freezes at row 2
+            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3 }, 
+            'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
+            'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      
+            'SECRET PAIRS LIVE': { startCol: 4, endCol: 6, skipRows: 2 }, 
+            'ZONE 1': { isMultiZone: true, skipRows: 1 },                 
+            'ZONE 2': { isMultiZone: true, skipRows: 1 }                  
         };
 
         const ALLOWED_TABS = [
@@ -260,6 +287,28 @@
         ];
 
         let cachedWorkbook = null;
+
+        // Automatically fetch timestamp on page load to update the footer
+        document.addEventListener("DOMContentLoaded", updateSyncTime);
+
+        async function updateSyncTime() {
+            try {
+                const response = await fetch(`scores.xlsx?v=${new Date().getTime()}`, { method: 'HEAD' });
+                if (response.ok) {
+                    const lastMod = response.headers.get('Last-Modified');
+                    if (lastMod) {
+                        const dateObj = new Date(lastMod);
+                        const dateStr = dateObj.toLocaleDateString();
+                        const timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        document.getElementById('sync-time').innerText = `Data Last Synced: ${dateStr}, ${timeStr}`;
+                        return;
+                    }
+                }
+                document.getElementById('sync-time').innerText = `Data Last Synced: Live Ready`;
+            } catch (e) {
+                document.getElementById('sync-time').innerText = `Data Last Synced: Offline`;
+            }
+        }
 
         async function fetchWorkbook() {
             if (cachedWorkbook) return cachedWorkbook;
@@ -276,11 +325,33 @@
             return cachedWorkbook;
         }
 
+        // Live Search Filter Function
+        function filterTable() {
+            const input = document.getElementById('search-box').value.toUpperCase();
+            const tables = document.querySelectorAll('#table-output table');
+            
+            tables.forEach(table => {
+                const trs = table.getElementsByTagName('tr');
+                // Start loop at 1 to completely ignore the sticky header row
+                for (let i = 1; i < trs.length; i++) {
+                    const rowText = trs[i].innerText.toUpperCase();
+                    if (rowText.includes(input)) {
+                        trs[i].style.display = "";
+                    } else {
+                        trs[i].style.display = "none";
+                    }
+                }
+            });
+        }
+
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
             
+            // Clear search box on new tab load
+            document.getElementById('search-box').value = '';
+
             const sanitizedTarget = targetTabName.trim().toUpperCase();
 
             titleDisplay.innerText = displayTitle;
@@ -309,8 +380,6 @@
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
                 
                 const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10, skipRows: 0 };
-                
-                // DATA TRIMMER: Slices off the top N rows based on your skipRows configuration
                 const processedData = rawData.slice(limits.skipRows || 0);
 
                 let htmlMarkup = '';
@@ -338,12 +407,21 @@
                             blockHasData = true;
                             blockHtml += `<tr>`;
                             
-                            slicedRow.forEach(cell => {
+                            slicedRow.forEach((cell, idx) => {
                                 let cellContent = String(cell).trim();
+                                let displayContent = cellContent;
+                                
+                                // Apply Podium Medals to Column 1 (if not header)
+                                if (!isFirstRow && idx === 0) {
+                                    if (cellContent === "1") displayContent = "🥇 " + cellContent;
+                                    else if (cellContent === "2") displayContent = "🥈 " + cellContent;
+                                    else if (cellContent === "3") displayContent = "🥉 " + cellContent;
+                                }
+
                                 if (isFirstRow) {
-                                    blockHtml += `<th>${cellContent}</th>`;
+                                    blockHtml += `<th>${displayContent}</th>`;
                                 } else {
-                                    blockHtml += `<td>${cellContent}</td>`;
+                                    blockHtml += `<td>${displayContent}</td>`;
                                 }
                             });
                             
@@ -370,12 +448,21 @@
                         if (slicedRow.every(cell => String(cell).trim() === "")) return;
 
                         htmlMarkup += `<tr>`;
-                        slicedRow.forEach(cell => {
+                        slicedRow.forEach((cell, idx) => {
                             let cellContent = String(cell).trim();
+                            let displayContent = cellContent;
+                            
+                            // Apply Podium Medals to Column 1 (if not header)
+                            if (!isFirstRow && idx === 0) {
+                                if (cellContent === "1") displayContent = "🥇 " + cellContent;
+                                else if (cellContent === "2") displayContent = "🥈 " + cellContent;
+                                else if (cellContent === "3") displayContent = "🥉 " + cellContent;
+                            }
+
                             if (isFirstRow) {
-                                htmlMarkup += `<th>${cellContent}</th>`;
+                                htmlMarkup += `<th>${displayContent}</th>`;
                             } else {
-                                htmlMarkup += `<td>${cellContent}</td>`;
+                                htmlMarkup += `<td>${displayContent}</td>`;
                             }
                         });
                         
@@ -397,6 +484,7 @@
         function closeViewer() {
             document.getElementById('viewer-overlay').style.display = 'none';
             document.getElementById('table-output').innerHTML = '';
+            document.getElementById('search-box').value = '';
             document.body.style.overflow = 'auto';
         }
     </script>
