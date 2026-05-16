@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.3.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.3.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -80,6 +80,7 @@
             background: #000;
             border-bottom: 2px solid var(--accent-cyan);
             flex-shrink: 0;
+            z-index: 20; /* Ensures nav stays above everything */
         }
 
         .back-btn {
@@ -94,19 +95,20 @@
             flex: 1;
             overflow-x: auto;
             overflow-y: auto;
-            padding: 0 15px 15px 15px; /* Removed top padding to allow headers to freeze at the exact top edge */
+            padding: 0 15px 15px 15px; /* Top padding strictly 0 for flush headers */
             background: #11141a;
             -webkit-overflow-scrolling: touch;
         }
 
         /* Generated Excel Table Style Sheets */
         table {
-            border-collapse: collapse;
+            /* Changed from collapse to separate to bypass Safari sticky bug */
+            border-collapse: separate; 
+            border-spacing: 0;
             width: 100%;
             color: #fff;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            margin-top: 15px; /* Replaces the removed container padding */
             margin-bottom: 30px;
             white-space: nowrap;
         }
@@ -120,8 +122,10 @@
             letter-spacing: 1px;
             padding: 14px 12px;
             border: none;
-            border-bottom: 2px solid var(--accent-cyan); /* Clear glowing divider instead of full grid */
+            border-bottom: 2px solid var(--accent-cyan);
             text-align: left;
+            /* WebKit prefix required for Apple devices */
+            position: -webkit-sticky; 
             position: sticky; 
             top: 0;
             z-index: 10;
@@ -129,14 +133,14 @@
 
         td {
             padding: 14px 12px;
-            border: none; /* Borders removed for clean App UI */
+            border: none;
         }
 
         /* Zebra Striping for distinct visual tracking */
         tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
         tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
 
-        /* Targeted Column Compression for Rank Arrays (Only triggers on tables starting at Col A) */
+        /* Targeted Column Compression for Rank Arrays */
         .table-layout-standard table th:first-child,
         .table-layout-standard table td:first-child {
             width: 40px;
@@ -232,25 +236,21 @@
 
     <footer class="footer">
         Official Results Portal<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.3.0</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.3.1</span>
     </footer>
 
     <script>
-        // CONFIGURATION WHITELIST AND BOUNDARIES
+        // CONFIGURATION: Map columns and determine how many overarching title rows to skip
         const TAB_CONFIG = {
-            'DAY 1 SCORES': { startCol: 1, endCol: 7 },         // B to H
-            'DAY 2 SCORES': { startCol: 1, endCol: 7 },         // B to H
-            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4 },    // A to E
-            'TEAM RESULT': { startCol: 0, endCol: 8 },          // A to I
-            'BIGGEST FISH': { startCol: 0, endCol: 4 },         // A to E
-            'SECRET PAIRS LIVE': { startCol: 4, endCol: 6 },    // E to G
-            'ZONE 1': { isMultiZone: true },
-            'ZONE 2': { isMultiZone: true }
+            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3 }, // Freezes at row 4
+            'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       // Freezes at row 2
+            'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      // Freezes at row 2
+            'SECRET PAIRS LIVE': { startCol: 4, endCol: 6, skipRows: 2 }, // Freezes at row 3
+            'ZONE 1': { isMultiZone: true, skipRows: 1 },                 // Freezes at row 2
+            'ZONE 2': { isMultiZone: true, skipRows: 1 }                  // Freezes at row 2
         };
 
         const ALLOWED_TABS = [
-            'DAY 1 SCORES', 
-            'DAY 2 SCORES', 
             'ZONE 1', 
             'ZONE 2', 
             'INDIVIDUAL RESULT', 
@@ -308,16 +308,20 @@
                 const worksheet = workbook.Sheets[actualSheetName];
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
                 
-                const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10 };
+                const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10, skipRows: 0 };
+                
+                // DATA TRIMMER: Slices off the top N rows based on your skipRows configuration
+                const processedData = rawData.slice(limits.skipRows || 0);
+
                 let htmlMarkup = '';
 
                 // MULTI-BLOCK ZONE PARSER
                 if (limits.isMultiZone) {
                     const zoneBlocks = [
-                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       // B to E
-                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, // G to J
-                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, // L to O
-                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    // Q to T
+                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
+                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, 
+                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, 
+                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    
                     ];
 
                     zoneBlocks.forEach(block => {
@@ -326,7 +330,7 @@
                         blockHtml += `<table class="${block.colorClass}">`;
                         let isFirstRow = true;
 
-                        rawData.forEach((row) => {
+                        processedData.forEach((row) => {
                             let slicedRow = row.slice(block.start, block.end + 1);
                             
                             if (slicedRow.length === 0 || slicedRow.every(cell => String(cell).trim() === "")) return;
@@ -358,12 +362,10 @@
                     // STANDARD SINGLE-BLOCK PARSER
                     let isFirstRow = true;
                     
-                    // Smart Layout Wrapper: Automatically triggers rank compression if table starts at Column A (0)
                     let layoutClass = (limits.startCol === 0) ? 'class="table-layout-standard"' : '';
-                    
                     htmlMarkup = `<div ${layoutClass}><table>`;
 
-                    rawData.forEach((row) => {
+                    processedData.forEach((row) => {
                         let slicedRow = row.slice(limits.startCol, limits.endCol + 1);
                         if (slicedRow.every(cell => String(cell).trim() === "")) return;
 
