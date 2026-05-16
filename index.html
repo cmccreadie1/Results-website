@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.1.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.2.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -107,7 +107,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             margin-bottom: 30px;
-            white-space: nowrap; /* Forces horizontal scroll instead of bunching up */
+            white-space: nowrap;
         }
 
         th {
@@ -133,9 +133,25 @@
         tr:nth-child(even) td { background: rgba(255, 255, 255, 0.03); }
         tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.2); }
 
-        /* Dynamic Zone Tinting - applied via JS class */
-        tr.zone-tint-1 td { background: rgba(0, 242, 255, 0.08); } /* Subtle Cyan Tint */
-        tr.zone-tint-2 td { background: rgba(255, 215, 0, 0.08); } /* Subtle Gold Tint */
+        /* Targeted Column Compression for Rank Arrays */
+        .table-layout-standard table th:first-child,
+        .table-layout-standard table td:first-child {
+            width: 1%;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        /* Multi-Block Dynamic Zone Colors */
+        .zone-red { color: #ff5252; }
+        .zone-yellow { color: #ffd600; }
+        .zone-green { color: #00e676; }
+        .zone-blue { color: #448aff; }
+
+        /* Match borders to Zone Colors for clarity */
+        table.zone-red th, tr.zone-red td { border-color: rgba(255, 82, 82, 0.3); }
+        table.zone-yellow th, tr.zone-yellow td { border-color: rgba(255, 214, 0, 0.3); }
+        table.zone-green th, tr.zone-green td { border-color: rgba(0, 230, 118, 0.3); }
+        table.zone-blue th, tr.zone-blue td { border-color: rgba(68, 138, 255, 0.3); }
 
         /* Message Display Styling */
         .status-msg {
@@ -175,7 +191,7 @@
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
+        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS LIVE', 'Secret Pairs')">
             <span>Secret Pairs</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
@@ -193,7 +209,7 @@
         
         <div class="divider"></div>
 
-        <div class="slide-btn" onclick="loadExcelTab('DAY 1 SCORES', 'Biggest Fish')">
+        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
@@ -210,22 +226,32 @@
 
     <footer class="footer">
         Official Results Portal<br>
-        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.1.0</span>
+        SINGLE SOURCE OF TRUTH: <span class="version-tag">v10.2.0</span>
     </footer>
 
     <script>
-        // CONFIGURATION: Map specific tabs to specific column index ranges to drop scratchpad data.
-        // Index conversion: A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8
+        // CONFIGURATION WHITELIST AND BOUNDARIES
         const TAB_CONFIG = {
             'DAY 1 SCORES': { startCol: 1, endCol: 7 },         // B to H
             'DAY 2 SCORES': { startCol: 1, endCol: 7 },         // B to H
             'INDIVIDUAL RESULT': { startCol: 0, endCol: 4 },    // A to E
             'TEAM RESULT': { startCol: 0, endCol: 8 },          // A to I
             'BIGGEST FISH': { startCol: 0, endCol: 4 },         // A to E
-            'SECRET PAIRS': { startCol: 4, endCol: 6 },         // E to G
-            'ZONE 1': { startCol: 0, endCol: 8 },               // Default safe boundary A to I
-            'ZONE 2': { startCol: 0, endCol: 8 }                // Default safe boundary A to I
+            'SECRET PAIRS LIVE': { startCol: 4, endCol: 6 },    // E to G
+            'ZONE 1': { isMultiZone: true },
+            'ZONE 2': { isMultiZone: true }
         };
+
+        const ALLOWED_TABS = [
+            'DAY 1 SCORES', 
+            'DAY 2 SCORES', 
+            'ZONE 1', 
+            'ZONE 2', 
+            'INDIVIDUAL RESULT', 
+            'TEAM RESULT',
+            'BIGGEST FISH',
+            'SECRET PAIRS LIVE'
+        ];
 
         let cachedWorkbook = null;
 
@@ -248,18 +274,24 @@
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
+            
+            const sanitizedTarget = targetTabName.trim().toUpperCase();
 
             titleDisplay.innerText = displayTitle;
             output.innerHTML = `<div class="status-msg loading-pulse">Processing Master Workbook...</div>`;
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
+            if (!ALLOWED_TABS.includes(sanitizedTarget)) {
+                output.innerHTML = `<div class="status-msg">Access Vetoed: The requested tab is not white-listed.</div>`;
+                return;
+            }
+
             try {
                 const workbook = await fetchWorkbook();
                 
-                // FUZZY MATCHER: Ignores invisible trailing spaces in your Excel sheet names
                 const actualSheetName = workbook.SheetNames.find(
-                    name => name.trim().toUpperCase() === targetTabName.trim().toUpperCase()
+                    name => name.trim().toUpperCase() === sanitizedTarget
                 );
 
                 if (!actualSheetName) {
@@ -268,46 +300,89 @@
                 }
 
                 const worksheet = workbook.Sheets[actualSheetName];
-                
-                // Convert worksheet to a pure 2D array of raw text values
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
                 
-                // Retrieve column boundaries based on the config map
-                const limits = TAB_CONFIG[targetTabName.trim().toUpperCase()] || { startCol: 0, endCol: 10 };
+                const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10 };
+                let htmlMarkup = '';
 
-                let htmlMarkup = '<table>';
-                let isFirstRow = true;
+                // MULTI-BLOCK ZONE PARSER
+                if (limits.isMultiZone) {
+                    // Definition of the isolated color blocks based on Excel columns
+                    const zoneBlocks = [
+                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       // B to E
+                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, // G to J
+                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, // L to O
+                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    // Q to T
+                    ];
 
-                rawData.forEach((row) => {
-                    // SLICE PARSER: Physically drops all data beyond your specified end column
-                    let slicedRow = row.slice(limits.startCol, limits.endCol + 1);
-                    
-                    // Filter: Skip completely empty rows
-                    if (slicedRow.every(cell => String(cell).trim() === "")) return;
+                    zoneBlocks.forEach(block => {
+                        let blockHasData = false;
+                        let blockHtml = `<h3 class="${block.colorClass}" style="margin: 25px 0 10px; font-family: 'Oswald'; text-transform: uppercase;">${block.name}</h3>`;
+                        blockHtml += `<table class="${block.colorClass}">`;
+                        let isFirstRow = true;
 
-                    // DYNAMIC TINTING: Apply CSS classes based on text context for Zones
-                    let rowString = slicedRow.join(" ").toUpperCase();
-                    let rowClass = "";
-                    if (rowString.includes("ZONE 1") || rowString.includes("ZONE A")) rowClass = "zone-tint-1";
-                    else if (rowString.includes("ZONE 2") || rowString.includes("ZONE B")) rowClass = "zone-tint-2";
-
-                    htmlMarkup += `<tr class="${rowClass}">`;
-                    
-                    slicedRow.forEach(cell => {
-                        let cellContent = String(cell).trim();
-                        // Format the very first printed row as the Table Header
-                        if (isFirstRow) {
-                            htmlMarkup += `<th>${cellContent}</th>`;
-                        } else {
-                            htmlMarkup += `<td>${cellContent}</td>`;
+                        rawData.forEach((row) => {
+                            let slicedRow = row.slice(block.start, block.end + 1);
+                            
+                            // Check if the sliced portion is entirely blank
+                            if (slicedRow.length === 0 || slicedRow.every(cell => String(cell).trim() === "")) return;
+                            
+                            blockHasData = true;
+                            blockHtml += `<tr class="${block.colorClass}">`;
+                            
+                            slicedRow.forEach(cell => {
+                                let cellContent = String(cell).trim();
+                                if (isFirstRow) {
+                                    blockHtml += `<th>${cellContent}</th>`;
+                                } else {
+                                    blockHtml += `<td>${cellContent}</td>`;
+                                }
+                            });
+                            
+                            blockHtml += '</tr>';
+                            isFirstRow = false;
+                        });
+                        
+                        blockHtml += '</table>';
+                        
+                        // Only inject the table if there is actual data in those columns
+                        if (blockHasData) {
+                            htmlMarkup += blockHtml;
                         }
                     });
-                    
-                    htmlMarkup += '</tr>';
-                    isFirstRow = false; // Only the first valid row gets the TH header tags
-                });
 
-                htmlMarkup += '</table>';
+                } else {
+                    // STANDARD SINGLE-BLOCK PARSER
+                    let isFirstRow = true;
+                    
+                    // Apply layout wrapper for Individual and Team tables to squash Column A
+                    let layoutClass = (sanitizedTarget === 'INDIVIDUAL RESULT' || sanitizedTarget === 'TEAM RESULT') 
+                        ? 'class="table-layout-standard"' 
+                        : '';
+                    
+                    htmlMarkup = `<div ${layoutClass}><table>`;
+
+                    rawData.forEach((row) => {
+                        let slicedRow = row.slice(limits.startCol, limits.endCol + 1);
+                        if (slicedRow.every(cell => String(cell).trim() === "")) return;
+
+                        htmlMarkup += `<tr>`;
+                        slicedRow.forEach(cell => {
+                            let cellContent = String(cell).trim();
+                            if (isFirstRow) {
+                                htmlMarkup += `<th>${cellContent}</th>`;
+                            } else {
+                                htmlMarkup += `<td>${cellContent}</td>`;
+                            }
+                        });
+                        
+                        htmlMarkup += '</tr>';
+                        isFirstRow = false; 
+                    });
+
+                    htmlMarkup += '</table></div>';
+                }
+
                 output.innerHTML = htmlMarkup;
 
             } catch (error) {
