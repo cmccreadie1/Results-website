@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v8.2.2</title>
+    <title>SPRA Scottish Shore 2026 | v10.0.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <style>
         :root {
             --bg-overlay: rgba(10, 11, 14, 0.65); 
@@ -30,6 +33,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* Branding Header */
         .dynamic-hub { margin-top: 40px; margin-bottom: 30px; width: 100%; display: flex; justify-content: center; }
         .hub-pill {
             background: rgba(10, 11, 14, 0.85);
@@ -43,6 +47,7 @@
         .assoc-logo { height: 60px; width: auto; filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4)); }
         .hub-text h1 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; }
 
+        /* Navigation Menu Stack */
         .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
         .slide-btn {
             background: var(--surface-color);
@@ -62,6 +67,7 @@
         .alt-btn { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1); }
         .divider { height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; width: 100%; }
 
+        /* Full Screen Native Table Viewer Overlay */
         #viewer-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -74,25 +80,76 @@
             display: flex; justify-content: space-between; align-items: center;
             background: #000;
             border-bottom: 2px solid var(--accent-cyan);
+            flex-shrink: 0;
         }
 
         .back-btn {
-            background: var(--accent-cyan);
-            color: #000;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
+            background: var(--accent-cyan); color: #000; border: none;
+            padding: 12px 20px; border-radius: 8px;
+            font-family: 'Oswald', sans-serif; font-weight: 700;
+            cursor: pointer; text-transform: uppercase;
         }
 
-        .pdf-frame-container { flex: 1; overflow: hidden; background: #fff; }
-        iframe { width: 100%; height: 100%; border: none; }
+        /* Dynamic Table Output Shell */
+        .table-scroll-box {
+            flex: 1;
+            overflow: auto;
+            padding: 15px;
+            background: #11141a;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Generated Excel Table Style Sheets */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        th {
+            background: #000;
+            color: var(--accent-cyan);
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 12px 10px;
+            border: 1px solid #222;
+            text-align: left;
+            position: sticky; top: 0;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #222;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.06); /* Clean alternating rows */
+        }
+
+        /* Message Display Styling */
+        .status-msg {
+            font-family: 'Oswald', sans-serif;
+            color: #ff4444;
+            text-align: center;
+            padding: 40px 20px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .loading-pulse { color: var(--accent-cyan); animation: flash 1.5s infinite; }
 
         .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; text-transform: uppercase; }
         .version-tag { color: var(--accent-cyan); }
+
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
@@ -107,34 +164,34 @@
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="openPDF('individual.pdf', 'Individual Winner')">
+        <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span>Individual Winner</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('team.pdf', 'Team Result')">
+        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('zone1.pdf', 'Zone Day 1')">
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span>Zone Day 1</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('zone2.pdf', 'Zone Day 2')">
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
             <span>Zone Day 2</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="openPDF('biggest.pdf', 'Biggest Fish')">
+        <div class="slide-btn" onclick="loadExcelTab('DAY 1 SCORES', 'Biggest Fish')">
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
 
         <div class="divider"></div>
 
-        <div class="slide-btn alt-btn" onclick="openPDF('totals.pdf', 'Overall Totals')">
+        <div class="slide-btn alt-btn" onclick="loadExcelTab('DAY 1 SCORES', 'Overall Totals')">
             <span>Overall Totals</span>
             <span>DATA ❯</span>
         </div>
-        <div class="slide-btn alt-btn" onclick="openPDF('performance.pdf', 'Performance Stats')">
+        <div class="slide-btn alt-btn" onclick="loadExcelTab('DAY 2 SCORES', 'Performance Stats')">
             <span>Performance Stats</span>
             <span>DATA ❯</span>
         </div>
@@ -142,46 +199,90 @@
 
     <div id="viewer-overlay">
         <div class="viewer-nav">
-            <button class="back-btn" onclick="closePDF()">❮ BACK TO MENU</button>
+            <button class="back-btn" onclick="closeViewer()">❮ BACK TO MENU</button>
             <span id="current-title" style="color: var(--accent-cyan); font-family: 'Oswald'; font-size: 0.9rem; text-transform: uppercase;"></span>
         </div>
-        <div class="pdf-frame-container">
-            <iframe id="pdf-view" src=""></iframe>
-        </div>
+        <div class="table-scroll-box" id="table-output">
+            </div>
     </div>
 
     <footer class="footer">
         Official Results Portal<br>
-        v8.2.2 | <span class="version-tag">UNIVERSAL</span>
+        v10.0.0 | <span class="version-tag">EXCEL AUTOPILOT</span>
     </footer>
 
     <script>
-        // Automatic detection of your live site address
-        const SITE_URL = window.location.origin + window.location.pathname;
+        // CONFIGURATION WHITELIST: Only workbook tabs explicitly defined here will load.
+        // Scratchpads, drafts, and instruction tabs not included here are strictly invisible.
+        const ALLOWED_TABS = [
+            'DAY 1 SCORES', 
+            'DAY 2 SCORES', 
+            'ZONE 1', 
+            'ZONE 2', 
+            'INDIVIDUAL RESULT', 
+            'TEAM RESULT'
+        ];
 
-        function openPDF(file, title) {
-            const overlay = document.getElementById('viewer-overlay');
-            const frame = document.getElementById('pdf-view');
-            const titleDisplay = document.getElementById('current-title');
-            
+        let cachedWorkbook = null;
+
+        async function fetchWorkbook() {
+            if (cachedWorkbook) return cachedWorkbook;
+
             const timestamp = new Date().getTime();
+            // Pulls the complete master workbook file directly from your root repository directory
+            const response = await fetch(`scores.xlsx?v=${timestamp}`);
             
-            // Build the absolute path to your file
-            const fullFileUrl = new URL(file, SITE_URL).href + "?v=" + timestamp;
-            
-            // USE GOOGLE GVIEW WRAPPER: This is the ONLY way to bypass the 'Download' prompt on Samsung Internet
-            frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(fullFileUrl)}&embedded=true`;
-            
-            titleDisplay.innerText = title;
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; 
+            if (!response.ok) {
+                throw new Error("Results workbook file ('scores.xlsx') was not found in the repository.");
+            }
+
+            const arrayBuffer = await response.arrayBuffer();
+            cachedWorkbook = XLSX.read(arrayBuffer, { type: "array" });
+            return cachedWorkbook;
         }
 
-        function closePDF() {
+        async function loadExcelTab(tabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
-            const frame = document.getElementById('pdf-view');
-            overlay.style.display = 'none';
-            frame.src = ""; 
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+
+            titleDisplay.innerText = displayTitle;
+            output.innerHTML = `<div class="status-msg loading-pulse">Reading Master Workbook...</div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // Tab Access Security Interceptor
+            if (!ALLOWED_TABS.includes(tabName)) {
+                output.innerHTML = `<div class="status-msg">Access Vetoed: The requested tab is not white-listed.</div>`;
+                return;
+            }
+
+            try {
+                const workbook = await fetchWorkbook();
+                const worksheet = workbook.Sheets[tabName];
+
+                if (!worksheet) {
+                    output.innerHTML = `<div class="status-msg">Section Offline: Data sheet '${tabName}' could not be located in scores.xlsx.</div>`;
+                    return;
+                }
+
+                // Generates standard, un-styled HTML markup straight from the binary file array map
+                let htmlMarkup = XLSX.utils.sheet_to_html(worksheet, { header: '', footer: '' });
+                
+                // Strip out inline coordinate-based tracking labels generated by SheetJS default parser
+                htmlMarkup = htmlMarkup.replace(/id="[^"]*"/g, "");
+
+                output.innerHTML = htmlMarkup;
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = `<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure master workbook is uploaded to GitHub as 'scores.xlsx'</span></div>`;
+            }
+        }
+
+        function closeViewer() {
+            document.getElementById('viewer-overlay').style.display = 'none';
+            document.getElementById('table-output').innerHTML = '';
             document.body.style.overflow = 'auto';
         }
     </script>
