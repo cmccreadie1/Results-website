@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spra-shore-v10.6.0';
+const CACHE_NAME = 'spra-shore-v10.7.0';
 
 // Essential dependencies needed to render the exact app structure while offline
 const APP_ASSETS = [
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
     self.skipWaiting();
 });
 
-// 2. ACTIVATION: Clear out any old versions of the cache (e.g., the old PDF caches)
+// 2. ACTIVATION: Clear out any old versions of the cache
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
