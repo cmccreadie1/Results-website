@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.8.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.9.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -149,30 +149,22 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* App-Style Information Banner */
+        /* Ultra-Thin Compact Rectangular Ribbon Legend */
         .info-banner {
-            background: rgba(0, 242, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.25);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 12px auto 15px auto;
+            max-width: 95%;
+            color: rgba(255, 255, 255, 0.75);
             font-family: 'Inter', sans-serif;
-            font-size: 0.82rem;
-            line-height: 1.6;
-            text-align: left;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            text-align: center;
         }
-        .info-title {
-            font-family: 'Oswald', sans-serif;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-        }
-        .info-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
-        .info-line:last-child { margin-bottom: 0; }
+        .banner-bullet { color: var(--accent-cyan); margin-right: 4px; font-weight: bold; }
+        .banner-sep { color: rgba(0, 242, 255, 0.4); margin: 0 8px; }
 
         /* Generated Excel Table Style Sheets */
         table {
@@ -312,20 +304,20 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v10.8.0
+        Official Results Portal | v10.9.0
     </footer>
 
     <script>
         // CONFIGURATION: Map columns and determine skip rows.
-        // staticRules: Replaces long Excel row data with hardcoded, stylized mobile app banners.
+        // staticRules: Rendered within a space-efficient micro-ribbon container.
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
                 startCol: 0, 
                 endCol: 4, 
                 skipRows: 3, 
                 staticRules: [
-                    "<strong>Tie-Break Order:</strong> Length (cm) ➔ Number of Fish ➔ Biggest Fish ➔ Daily Species.",
-                    "<strong>Species Variety:</strong> Calculated as the sum of unique species landed each individual day."
+                    "<strong>Tie-Breaks:</strong> Length (cm) ➔ Fish Count ➔ Biggest Fish ➔ Daily Species",
+                    "<strong>Species Variety:</strong> Sum of unique species caught each individual day"
                 ]
             }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
@@ -437,12 +429,14 @@
                 
                 let htmlMarkup = '';
 
-                // SMART STATIC OVERRIDE INTERCEPTOR
+                // COMPACT HORIZONTAL RIBBON GENERATOR
                 if (limits.staticRules) {
                     htmlMarkup += `<div class="info-banner">`;
-                    htmlMarkup += `<div class="info-title">Scoring & Tie-Breakers</div>`;
-                    limits.staticRules.forEach(rule => {
-                        htmlMarkup += `<div class="info-line"><span>▪</span><span>${rule}</span></div>`;
+                    limits.staticRules.forEach((rule, idx) => {
+                        htmlMarkup += `<span><span class="banner-bullet">▪</span>${rule}</span>`;
+                        if (idx < limits.staticRules.length - 1) {
+                            htmlMarkup += `<span class="banner-sep">|</span>`;
+                        }
                     });
                     htmlMarkup += `</div>`;
                 }
