@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.6.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.7.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -149,6 +149,23 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        /* Extracted Information Banner (Scoring Rules) */
+        .info-banner {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .info-banner p { margin-bottom: 5px; }
+        .info-banner p:last-child { margin-bottom: 0; }
+
         /* Generated Excel Table Style Sheets */
         table {
             border-collapse: separate; 
@@ -160,6 +177,9 @@
             margin-bottom: 30px;
             white-space: nowrap;
         }
+
+        /* Added conditional margin-top in case there is no info-banner */
+        table:first-child { margin-top: 15px; }
 
         th {
             background: #000;
@@ -285,12 +305,14 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v10.6.0
+        Official Results Portal | v10.7.0
     </footer>
 
     <script>
+        // CONFIGURATION: Map columns and determine skip rows. 
+        // Added 'extractInfo' specifically for extracting rules before the frozen header.
         const TAB_CONFIG = {
-            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3 }, 
+            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3, extractInfo: { start: 1, end: 2 } }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
             'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      
             'SECRET PAIRS LIVE': { startCol: 4, endCol: 6, skipRows: 2 }, 
@@ -399,9 +421,30 @@
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
                 
                 const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10, skipRows: 0 };
-                const processedData = rawData.slice(limits.skipRows || 0);
-
+                
                 let htmlMarkup = '';
+
+                // INFO BANNER EXTRACTION
+                if (limits.extractInfo) {
+                    const infoData = rawData.slice(limits.extractInfo.start, limits.extractInfo.end + 1);
+                    let infoTextHTML = '';
+                    
+                    infoData.forEach(row => {
+                        // Extract text within defined bounds and filter blanks
+                        const rowContent = row.slice(limits.startCol, limits.endCol + 1)
+                                              .filter(cell => String(cell).trim() !== '')
+                                              .join(' - ');
+                        if (rowContent) {
+                            infoTextHTML += `<p>${rowContent}</p>`;
+                        }
+                    });
+
+                    if (infoTextHTML) {
+                        htmlMarkup += `<div class="info-banner">${infoTextHTML}</div>`;
+                    }
+                }
+
+                const processedData = rawData.slice(limits.skipRows || 0);
 
                 // MULTI-BLOCK ZONE PARSER
                 if (limits.isMultiZone) {
@@ -459,7 +502,7 @@
                     let isFirstRow = true;
                     
                     let layoutClass = (limits.startCol === 0) ? 'class="table-layout-standard"' : '';
-                    htmlMarkup = `<div ${layoutClass}><table>`;
+                    htmlMarkup += `<div ${layoutClass}><table>`;
 
                     processedData.forEach((row) => {
                         let slicedRow = row.slice(limits.startCol, limits.endCol + 1);
