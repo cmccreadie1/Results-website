@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v10.7.0</title>
+    <title>SPRA Scottish Shore 2026 | v10.8.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -149,7 +149,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Extracted Information Banner (Scoring Rules) */
+        /* App-Style Information Banner */
         .info-banner {
             background: rgba(0, 242, 255, 0.05);
             border: 1px solid var(--glass-border);
@@ -157,14 +157,22 @@
             padding: 15px;
             margin-top: 15px;
             margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.9);
             font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            text-align: center;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            text-align: left;
         }
-        .info-banner p { margin-bottom: 5px; }
-        .info-banner p:last-child { margin-bottom: 0; }
+        .info-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .info-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
+        .info-line:last-child { margin-bottom: 0; }
 
         /* Generated Excel Table Style Sheets */
         table {
@@ -178,7 +186,6 @@
             white-space: nowrap;
         }
 
-        /* Added conditional margin-top in case there is no info-banner */
         table:first-child { margin-top: 15px; }
 
         th {
@@ -305,14 +312,22 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v10.7.0
+        Official Results Portal | v10.8.0
     </footer>
 
     <script>
-        // CONFIGURATION: Map columns and determine skip rows. 
-        // Added 'extractInfo' specifically for extracting rules before the frozen header.
+        // CONFIGURATION: Map columns and determine skip rows.
+        // staticRules: Replaces long Excel row data with hardcoded, stylized mobile app banners.
         const TAB_CONFIG = {
-            'INDIVIDUAL RESULT': { startCol: 0, endCol: 4, skipRows: 3, extractInfo: { start: 1, end: 2 } }, 
+            'INDIVIDUAL RESULT': { 
+                startCol: 0, 
+                endCol: 4, 
+                skipRows: 3, 
+                staticRules: [
+                    "<strong>Tie-Break Order:</strong> Length (cm) ➔ Number of Fish ➔ Biggest Fish ➔ Daily Species.",
+                    "<strong>Species Variety:</strong> Calculated as the sum of unique species landed each individual day."
+                ]
+            }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
             'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      
             'SECRET PAIRS LIVE': { startCol: 4, endCol: 6, skipRows: 2 }, 
@@ -331,7 +346,6 @@
 
         let cachedWorkbook = null;
 
-        // Fetch timestamp on page load to update the badge
         document.addEventListener("DOMContentLoaded", updateSyncTime);
 
         async function updateSyncTime() {
@@ -368,7 +382,6 @@
             return cachedWorkbook;
         }
 
-        // Live Search Filter Function
         function filterTable() {
             const input = document.getElementById('search-box').value.toUpperCase();
             const tables = document.querySelectorAll('#table-output table');
@@ -424,24 +437,14 @@
                 
                 let htmlMarkup = '';
 
-                // INFO BANNER EXTRACTION
-                if (limits.extractInfo) {
-                    const infoData = rawData.slice(limits.extractInfo.start, limits.extractInfo.end + 1);
-                    let infoTextHTML = '';
-                    
-                    infoData.forEach(row => {
-                        // Extract text within defined bounds and filter blanks
-                        const rowContent = row.slice(limits.startCol, limits.endCol + 1)
-                                              .filter(cell => String(cell).trim() !== '')
-                                              .join(' - ');
-                        if (rowContent) {
-                            infoTextHTML += `<p>${rowContent}</p>`;
-                        }
+                // SMART STATIC OVERRIDE INTERCEPTOR
+                if (limits.staticRules) {
+                    htmlMarkup += `<div class="info-banner">`;
+                    htmlMarkup += `<div class="info-title">Scoring & Tie-Breakers</div>`;
+                    limits.staticRules.forEach(rule => {
+                        htmlMarkup += `<div class="info-line"><span>▪</span><span>${rule}</span></div>`;
                     });
-
-                    if (infoTextHTML) {
-                        htmlMarkup += `<div class="info-banner">${infoTextHTML}</div>`;
-                    }
+                    htmlMarkup += `</div>`;
                 }
 
                 const processedData = rawData.slice(limits.skipRows || 0);
@@ -548,7 +551,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // --- Service Worker Installation ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
