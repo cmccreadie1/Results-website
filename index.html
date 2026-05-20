@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.0.0</title>
+    <title>SPRA Scottish Shore 2026 | v11.1.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -164,6 +164,7 @@
             text-align: center;
         }
         .banner-bullet { color: var(--accent-cyan); margin-right: 5px; font-weight: bold; }
+        .rule-segment { margin-right: 12px; display: inline-block; }
 
         /* Generated Excel Table Style Sheets */
         table {
@@ -303,7 +304,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.0.0
+        Official Results Portal | v11.1.0
     </footer>
 
     <script>
@@ -314,7 +315,8 @@
                 endCol: 4, 
                 skipRows: 3, 
                 staticRules: [
-                    "<strong>Tie-Breaks:</strong> Length (cm) ➔ Fish Count ➔ Biggest Fish ➔ Daily Species"
+                    "<strong>Winner:</strong> Lowest Zone Points",
+                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
                 ]
             }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
@@ -426,11 +428,11 @@
                 
                 let htmlMarkup = '';
 
-                // SINGLE LINE RIBBON GENERATOR
+                // SINGLE LINE RIBBON GENERATOR WITH SPACING
                 if (limits.staticRules) {
                     htmlMarkup += `<div class="info-banner">`;
                     limits.staticRules.forEach((rule) => {
-                        htmlMarkup += `<span><span class="banner-bullet">▪</span>${rule}</span>`;
+                        htmlMarkup += `<span class="rule-segment"><span class="banner-bullet">▪</span>${rule}</span>`;
                     });
                     htmlMarkup += `</div>`;
                 }
