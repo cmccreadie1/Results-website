@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.1.0</title>
+    <title>SPRA Scottish Shore 2026 | v11.2.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -73,8 +73,9 @@
         .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
         .slide-btn {
             background: var(--surface-color);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
             padding: 20px 24px;
             border-radius: 12px;
             color: var(--text-main);
@@ -85,7 +86,12 @@
             display: flex; justify-content: space-between; align-items: center;
             transition: all 0.2s ease;
         }
-        .slide-btn:active { transform: scale(0.96); background: rgba(0, 242, 255, 0.2); }
+        .slide-btn:active { 
+            transform: scale(0.96); 
+            background: rgba(0, 242, 255, 0.15); 
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
         .divider { height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; width: 100%; }
 
         /* Full Screen Native Table Viewer Overlay */
@@ -165,6 +171,16 @@
         }
         .banner-bullet { color: var(--accent-cyan); margin-right: 5px; font-weight: bold; }
         .rule-segment { margin-right: 12px; display: inline-block; }
+
+        /* Skeleton Loader Animation */
+        .skeleton-wrapper { width: 100%; display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .skeleton-row { height: 40px; background: #1a1e26; border-radius: 4px; position: relative; overflow: hidden; }
+        .skeleton-row::after {
+            content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         /* Generated Excel Table Style Sheets */
         table {
@@ -300,15 +316,14 @@
             <input type="text" id="search-box" class="search-box" placeholder="Find Angler..." onkeyup="filterTable()">
         </div>
         <div class="table-scroll-box" id="table-output">
-            </div>
+        </div>
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.1.0
+        Official Results Portal | v11.2.0
     </footer>
 
     <script>
-        // CONFIGURATION: Map columns and determine skip rows.
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
                 startCol: 0, 
@@ -400,7 +415,18 @@
             const sanitizedTarget = targetTabName.trim().toUpperCase();
 
             titleDisplay.innerText = displayTitle;
-            output.innerHTML = `<div class="status-msg loading-pulse">Processing Master Workbook...</div>`;
+            
+            // SHOW SKELETON LOADER IMMEDIATELY
+            output.innerHTML = `
+                <div class="skeleton-wrapper">
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                </div>
+            `;
+            
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
@@ -428,7 +454,6 @@
                 
                 let htmlMarkup = '';
 
-                // SINGLE LINE RIBBON GENERATOR WITH SPACING
                 if (limits.staticRules) {
                     htmlMarkup += `<div class="info-banner">`;
                     limits.staticRules.forEach((rule) => {
@@ -439,7 +464,6 @@
 
                 const processedData = rawData.slice(limits.skipRows || 0);
 
-                // MULTI-BLOCK ZONE PARSER
                 if (limits.isMultiZone) {
                     const zoneBlocks = [
                         { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
@@ -491,7 +515,6 @@
                     });
 
                 } else {
-                    // STANDARD SINGLE-BLOCK PARSER
                     let isFirstRow = true;
                     
                     let layoutClass = (limits.startCol === 0) ? 'class="table-layout-standard"' : '';
