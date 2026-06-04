@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spra-shore-v12.0.0';
+const CACHE_NAME = 'spra-shore-v11.3.0';
 
 const APP_ASSETS = [
     './',
@@ -7,7 +7,7 @@ const APP_ASSETS = [
     './background.jpg',
     './scores.xlsx',
     'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap'
 ];
 
 self.addEventListener('install', function(event) {
