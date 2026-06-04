@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.2.0</title>
+    <title>SPRA Scottish Shore 2026 | v12.0.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
         :root {
-            --bg-overlay: rgba(10, 11, 14, 0.75); 
-            --surface-color: rgba(20, 22, 28, 0.65); 
+            --bg-overlay: rgba(10, 11, 14, 0.85); 
+            --surface-color: rgba(20, 22, 28, 0.7); 
             --accent-cyan: #00f2ff;
             --text-main: #ffffff;
-            --glass-border: rgba(0, 242, 255, 0.4);
+            --glass-border: rgba(0, 242, 255, 0.3);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -30,151 +31,123 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            padding-bottom: 40px;
         }
 
         /* Branding Header */
-        .dynamic-hub { margin-top: 40px; margin-bottom: 20px; width: 100%; display: flex; justify-content: center; }
+        .dynamic-hub { 
+            margin-top: 40px; 
+            margin-bottom: 30px; 
+            width: 100%; 
+            display: flex; 
+            justify-content: center; 
+        }
         .hub-pill {
-            background: rgba(10, 11, 14, 0.85);
-            backdrop-filter: blur(15px);
+            background: rgba(10, 11, 14, 0.9);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            padding: 12px 25px;
-            border-radius: 15px;
-            display: flex; align-items: center; gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 15px 30px;
+            border-radius: 20px;
+            display: flex; 
+            align-items: center; 
+            gap: 20px;
+            box-shadow: var(--card-shadow);
         }
-        .assoc-logo { height: 60px; width: auto; filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4)); }
-        .hub-text h1 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* Live Status Badge */
-        .live-status-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 25px;
-            color: #999;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
+        .assoc-logo { 
+            height: 60px; 
+            width: auto; 
+            filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.6)); 
         }
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--accent-cyan);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-cyan);
-            animation: flash 2s infinite;
+        .hub-text h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
         }
 
-        /* Navigation Menu Stack */
-        .button-stack { width: 100%; max-width: 450px; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; }
-        .slide-btn {
+        /* Bento Grid Navigation */
+        .bento-grid { 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 0 20px; 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+        }
+        .bento-card {
             background: var(--surface-color);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-            padding: 20px 24px;
-            border-radius: 12px;
-            color: var(--text-main);
-            cursor: pointer;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            display: flex; justify-content: space-between; align-items: center;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            aspect-ratio: 1 / 1;
             transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
         }
-        .slide-btn:active { 
-            transform: scale(0.96); 
-            background: rgba(0, 242, 255, 0.15); 
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        .bento-card span {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .divider { height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; width: 100%; }
+        .bento-icon { font-size: 1.5rem; color: var(--accent-cyan); }
+        
+        .bento-card:active { 
+            transform: scale(0.95); 
+            background: var(--accent-cyan);
+            color: #000;
+        }
 
-        /* Full Screen Native Table Viewer Overlay */
+        /* Full Screen Viewer */
         #viewer-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             display: none; flex-direction: column; z-index: 2000;
         }
-
         .viewer-nav {
-            padding: 15px 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: #000;
-            border-bottom: 2px solid var(--accent-cyan);
-            flex-shrink: 0;
-            z-index: 20; 
-            gap: 10px;
-            flex-wrap: wrap; 
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+            background: #000; border-bottom: 2px solid var(--accent-cyan);
         }
-
         .back-btn {
-            background: var(--accent-cyan); color: #000; border: none;
-            padding: 10px 16px; border-radius: 8px;
-            font-family: 'Oswald', sans-serif; font-weight: 700;
-            cursor: pointer; text-transform: uppercase;
-            font-size: 0.9rem;
+            background: var(--accent-cyan); color: #000; border: none; padding: 10px 16px; border-radius: 8px;
+            font-family: 'Oswald', sans-serif; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
         }
-
         #current-title {
             color: var(--accent-cyan); font-family: 'Oswald'; font-size: 0.9rem; text-transform: uppercase;
-            flex-grow: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
 
-        /* Real-time Search Box */
-        .search-box {
-            background: #111;
-            border: 1px solid var(--accent-cyan);
-            color: #fff;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            outline: none;
-            width: 130px;
-            transition: width 0.3s, box-shadow 0.3s;
-        }
-        .search-box:focus {
-            width: 180px;
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
-        }
-        .search-box::placeholder { color: #888; }
-
-        /* Dynamic Table Output Shell */
         .table-scroll-box {
-            flex: 1;
-            overflow-x: auto;
-            overflow-y: auto;
-            padding: 0 15px 15px 15px; 
-            background: #11141a;
-            -webkit-overflow-scrolling: touch;
+            flex: 1; overflow-x: auto; overflow-y: auto; padding: 20px; background: #0a0b0e;
         }
 
-        /* Ultra-Thin Compact Rectangular Ribbon Legend */
-        .info-banner {
-            background: rgba(0, 242, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.25);
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin: 12px auto 15px auto;
-            max-width: 95%;
-            color: rgba(255, 255, 255, 0.75);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            line-height: 1.4;
-            text-align: center;
+        /* Monospace Data Tables */
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            color: #fff; 
+            font-family: 'Roboto Mono', monospace; 
+            font-size: 0.85rem; 
         }
-        .banner-bullet { color: var(--accent-cyan); margin-right: 5px; font-weight: bold; }
-        .rule-segment { margin-right: 12px; display: inline-block; }
+        th {
+            background: #111; 
+            color: var(--accent-cyan); 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase;
+            padding: 12px; 
+            text-align: left; 
+            border-bottom: 1px solid var(--glass-border);
+        }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* Skeleton Loader Animation */
-        .skeleton-wrapper { width: 100%; display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .skeleton-row { height: 40px; background: #1a1e26; border-radius: 4px; position: relative; overflow: hidden; }
+        /* Skeleton Animation */
+        .skeleton-wrapper { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        .skeleton-row { height: 30px; background: #1a1e26; border-radius: 8px; position: relative; overflow: hidden; }
         .skeleton-row::after {
             content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
@@ -182,82 +155,7 @@
         }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* Generated Excel Table Style Sheets */
-        table {
-            border-collapse: separate; 
-            border-spacing: 0;
-            width: 100%;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            white-space: nowrap;
-        }
-
-        table:first-child { margin-top: 15px; }
-
-        th {
-            background: #000;
-            color: var(--accent-cyan);
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 14px 12px;
-            border: none;
-            border-bottom: 2px solid var(--accent-cyan);
-            text-align: left;
-            position: -webkit-sticky; 
-            position: sticky; 
-            top: 0;
-            z-index: 10;
-        }
-
-        td {
-            padding: 14px 12px;
-            border: none;
-        }
-
-        /* Zebra Striping */
-        tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
-        tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
-
-        /* Targeted Column Compression */
-        .table-layout-standard table th:first-child,
-        .table-layout-standard table td:first-child {
-            width: 40px;
-            min-width: 40px;
-            max-width: 40px;
-            text-align: center;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        /* Zone Colors */
-        .zone-red { color: #ff5252; }
-        .zone-yellow { color: #ffd600; }
-        .zone-green { color: #00e676; }
-        .zone-blue { color: #448aff; }
-
-        table.zone-red th { border-bottom-color: #ff5252; color: #ff5252; }
-        table.zone-yellow th { border-bottom-color: #ffd600; color: #ffd600; }
-        table.zone-green th { border-bottom-color: #00e676; color: #00e676; }
-        table.zone-blue th { border-bottom-color: #448aff; color: #448aff; }
-
-        .status-msg {
-            font-family: 'Oswald', sans-serif;
-            color: #ff4444;
-            text-align: center;
-            padding: 40px 20px;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-        }
-
-        .loading-pulse { color: var(--accent-cyan); animation: flash 1.5s infinite; }
-
-        .footer { margin-top: auto; padding: 40px; font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; text-transform: uppercase; }
-        
-        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .footer { margin-top: auto; padding: 20px; font-size: 0.6rem; color: rgba(255,255,255,0.4); text-align: center; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -271,68 +169,50 @@
         </div>
     </header>
 
-    <div class="live-status-badge">
-        <div class="pulse-dot"></div>
-        <span id="sync-time-text">Data Synced: Checking...</span>
-    </div>
-
-    <nav class="button-stack">
-        <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
-            <span>Individual Winner</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+    <main class="bento-grid">
+        <div class="bento-card" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
+            <div class="bento-icon">👤</div>
+            <span>Individual</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
-            <span>Team Winners</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        <div class="bento-card" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
+            <div class="bento-icon">👥</div>
+            <span>Teams</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS LIVE', 'Secret Pairs')">
-            <span>Secret Pairs</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        <div class="bento-card" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
+            <div class="bento-icon">📍</div>
+            <span>Zone 1</span>
         </div>
-        
-        <div class="divider"></div>
-
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
-            <span>Zone Day 1</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        <div class="bento-card" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
+            <div class="bento-icon">📍</div>
+            <span>Zone 2</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
-            <span>Zone Day 2</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        <div class="bento-card" onclick="loadExcelTab('SECRET PAIRS LIVE', 'Secret Pairs')">
+            <div class="bento-icon">🃏</div>
+            <span>Pairs</span>
         </div>
-        
-        <div class="divider"></div>
-
-        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
-            <span>Biggest Fish</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        <div class="bento-card" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
+            <div class="bento-icon">🏆</div>
+            <span>Biggest</span>
         </div>
-    </nav>
+    </main>
 
     <div id="viewer-overlay">
         <div class="viewer-nav">
-            <button class="back-btn" onclick="closeViewer()">❮ MENU</button>
+            <button class="back-btn" onclick="closeViewer()">❮ BACK</button>
             <span id="current-title"></span>
-            <input type="text" id="search-box" class="search-box" placeholder="Find Angler..." onkeyup="filterTable()">
         </div>
-        <div class="table-scroll-box" id="table-output">
-        </div>
+        <div class="table-scroll-box" id="table-output"></div>
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.2.0
+        Official Results Portal | v12.0.0
     </footer>
 
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                startCol: 0, 
-                endCol: 4, 
-                skipRows: 3, 
-                staticRules: [
-                    "<strong>Winner:</strong> Lowest Zone Points",
-                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
-                ]
+                startCol: 0, endCol: 4, skipRows: 3, 
+                staticRules: ["<strong>Winner:</strong> Lowest Zone Points", "<strong>If Tied:</strong> Length (cm) ➔ Fish Count ➔ Biggest Fish ➔ Daily Species"]
             }, 
             'TEAM RESULT': { startCol: 0, endCol: 8, skipRows: 1 },       
             'BIGGEST FISH': { startCol: 0, endCol: 4, skipRows: 1 },      
@@ -341,68 +221,21 @@
             'ZONE 2': { isMultiZone: true, skipRows: 1 }                  
         };
 
-        const ALLOWED_TABS = [
-            'ZONE 1', 
-            'ZONE 2', 
-            'INDIVIDUAL RESULT', 
-            'TEAM RESULT',
-            'BIGGEST FISH',
-            'SECRET PAIRS LIVE'
-        ];
-
+        const ALLOWED_TABS = ['ZONE 1', 'ZONE 2', 'INDIVIDUAL RESULT', 'TEAM RESULT', 'BIGGEST FISH', 'SECRET PAIRS LIVE'];
         let cachedWorkbook = null;
 
-        document.addEventListener("DOMContentLoaded", updateSyncTime);
-
-        async function updateSyncTime() {
-            try {
-                const response = await fetch(`scores.xlsx?v=${new Date().getTime()}`, { method: 'HEAD' });
-                if (response.ok) {
-                    const lastMod = response.headers.get('Last-Modified');
-                    if (lastMod) {
-                        const dateObj = new Date(lastMod);
-                        const dateStr = dateObj.toLocaleDateString();
-                        const timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                        document.getElementById('sync-time-text').innerText = `Data Synced: ${dateStr}, ${timeStr}`;
-                        return;
-                    }
-                }
-                document.getElementById('sync-time-text').innerText = `Data Synced: Live Ready`;
-            } catch (e) {
-                document.getElementById('sync-time-text').innerText = `Data Synced: Offline (Cached Version)`;
-            }
-        }
-
         async function fetchWorkbook() {
-            if (cachedWorkbook) return cachedWorkbook;
-
-            const timestamp = new Date().getTime();
-            const response = await fetch(`scores.xlsx?v=${timestamp}`);
-            
-            if (!response.ok) {
-                throw new Error("Results workbook file ('scores.xlsx') was not found in the repository.");
+            if (cachedWorkbook !== null) {
+                return cachedWorkbook;
             }
-
+            const timestampForFetch = new Date().getTime();
+            const response = await fetch('scores.xlsx?v=' + timestampForFetch);
+            if (response.ok === false) {
+                throw new Error("Workbook file not found.");
+            }
             const arrayBuffer = await response.arrayBuffer();
             cachedWorkbook = XLSX.read(arrayBuffer, { type: "array" });
             return cachedWorkbook;
-        }
-
-        function filterTable() {
-            const input = document.getElementById('search-box').value.toUpperCase();
-            const tables = document.querySelectorAll('#table-output table');
-            
-            tables.forEach(table => {
-                const trs = table.getElementsByTagName('tr');
-                for (let i = 1; i < trs.length; i++) {
-                    const rowText = trs[i].innerText.toUpperCase();
-                    if (rowText.includes(input)) {
-                        trs[i].style.display = "";
-                    } else {
-                        trs[i].style.display = "none";
-                    }
-                }
-            });
         }
 
         async function loadExcelTab(targetTabName, displayTitle) {
@@ -410,168 +243,89 @@
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
             
-            document.getElementById('search-box').value = '';
-
-            const sanitizedTarget = targetTabName.trim().toUpperCase();
-
             titleDisplay.innerText = displayTitle;
             
-            // SHOW SKELETON LOADER IMMEDIATELY
             output.innerHTML = `
                 <div class="skeleton-wrapper">
-                    <div class="skeleton-row"></div>
-                    <div class="skeleton-row"></div>
-                    <div class="skeleton-row"></div>
-                    <div class="skeleton-row"></div>
-                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div><div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div><div class="skeleton-row"></div>
                 </div>
             `;
             
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            if (!ALLOWED_TABS.includes(sanitizedTarget)) {
-                output.innerHTML = `<div class="status-msg">Access Vetoed: The requested tab is not white-listed.</div>`;
-                return;
-            }
+            await new Promise(function(resolve) {
+                setTimeout(resolve, 400);
+            });
 
             try {
                 const workbook = await fetchWorkbook();
-                
-                const actualSheetName = workbook.SheetNames.find(
-                    name => name.trim().toUpperCase() === sanitizedTarget
-                );
+                let foundSheet = null;
+                for (let i = 0; i < workbook.SheetNames.length; i++) {
+                    let sheetName = workbook.SheetNames[i];
+                    if (sheetName.trim().toUpperCase() === targetTabName.trim().toUpperCase()) {
+                        foundSheet = sheetName;
+                    }
+                }
 
-                if (!actualSheetName) {
-                    output.innerHTML = `<div class="status-msg">Section Offline: Data sheet '${targetTabName}' could not be located in scores.xlsx. Check spelling.</div>`;
+                if (foundSheet === null) {
+                    output.innerHTML = '<div style="padding:20px; color:#fff;">Sheet not found.</div>';
                     return;
                 }
 
-                const worksheet = workbook.Sheets[actualSheetName];
+                const worksheet = workbook.Sheets[foundSheet];
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
-                
-                const limits = TAB_CONFIG[sanitizedTarget] || { startCol: 0, endCol: 10, skipRows: 0 };
+                const limits = TAB_CONFIG[targetTabName.trim().toUpperCase()];
                 
                 let htmlMarkup = '';
-
-                if (limits.staticRules) {
-                    htmlMarkup += `<div class="info-banner">`;
-                    limits.staticRules.forEach((rule) => {
-                        htmlMarkup += `<span class="rule-segment"><span class="banner-bullet">▪</span>${rule}</span>`;
-                    });
-                    htmlMarkup += `</div>`;
+                if (limits.staticRules !== undefined) {
+                    htmlMarkup += '<div style="background:rgba(0,242,255,0.05); padding:10px; margin-bottom:20px; border-radius:10px; font-size:0.75rem; color:#fff;">';
+                    for (let i = 0; i < limits.staticRules.length; i++) {
+                        htmlMarkup += '<div>▪ ' + limits.staticRules[i] + '</div>';
+                    }
+                    htmlMarkup += '</div>';
                 }
 
                 const processedData = rawData.slice(limits.skipRows || 0);
+                htmlMarkup += '<table>';
+                
+                for (let r = 0; r < processedData.length; r++) {
+                    const row = processedData[r];
+                    let isEmpty = true;
+                    for (let c = 0; c < row.length; c++) {
+                        if (String(row[c]).trim() !== "") isEmpty = false;
+                    }
+                    if (isEmpty === true) continue;
 
-                if (limits.isMultiZone) {
-                    const zoneBlocks = [
-                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
-                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, 
-                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, 
-                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    
-                    ];
-
-                    zoneBlocks.forEach(block => {
-                        let blockHasData = false;
-                        let blockHtml = `<h3 class="${block.colorClass}" style="margin: 25px 0 10px; font-family: 'Oswald'; text-transform: uppercase;">${block.name}</h3>`;
-                        blockHtml += `<table class="${block.colorClass}">`;
-                        let isFirstRow = true;
-
-                        processedData.forEach((row) => {
-                            let slicedRow = row.slice(block.start, block.end + 1);
-                            
-                            if (slicedRow.length === 0 || slicedRow.every(cell => String(cell).trim() === "")) return;
-                            
-                            blockHasData = true;
-                            blockHtml += `<tr>`;
-                            
-                            slicedRow.forEach((cell, idx) => {
-                                let cellContent = String(cell).trim();
-                                let displayContent = cellContent;
-                                
-                                if (!isFirstRow && idx === 0) {
-                                    if (cellContent === "1") displayContent = "🥇 " + cellContent;
-                                    else if (cellContent === "2") displayContent = "🥈 " + cellContent;
-                                    else if (cellContent === "3") displayContent = "🥉 " + cellContent;
-                                }
-
-                                if (isFirstRow) {
-                                    blockHtml += `<th>${displayContent}</th>`;
-                                } else {
-                                    blockHtml += `<td>${displayContent}</td>`;
-                                }
-                            });
-                            
-                            blockHtml += '</tr>';
-                            isFirstRow = false;
-                        });
-                        
-                        blockHtml += '</table>';
-                        
-                        if (blockHasData) {
-                            htmlMarkup += blockHtml;
-                        }
-                    });
-
-                } else {
-                    let isFirstRow = true;
-                    
-                    let layoutClass = (limits.startCol === 0) ? 'class="table-layout-standard"' : '';
-                    htmlMarkup += `<div ${layoutClass}><table>`;
-
-                    processedData.forEach((row) => {
-                        let slicedRow = row.slice(limits.startCol, limits.endCol + 1);
-                        if (slicedRow.every(cell => String(cell).trim() === "")) return;
-
-                        htmlMarkup += `<tr>`;
-                        slicedRow.forEach((cell, idx) => {
-                            let cellContent = String(cell).trim();
-                            let displayContent = cellContent;
-                            
-                            if (!isFirstRow && idx === 0) {
-                                if (cellContent === "1") displayContent = "🥇 " + cellContent;
-                                else if (cellContent === "2") displayContent = "🥈 " + cellContent;
-                                else if (cellContent === "3") displayContent = "🥉 " + cellContent;
-                            }
-
-                            if (isFirstRow) {
-                                htmlMarkup += `<th>${displayContent}</th>`;
-                            } else {
-                                htmlMarkup += `<td>${displayContent}</td>`;
-                            }
-                        });
-                        
-                        htmlMarkup += '</tr>';
-                        isFirstRow = false; 
-                    });
-
-                    htmlMarkup += '</table></div>';
+                    htmlMarkup += '<tr>';
+                    for (let c = 0; c < row.length; c++) {
+                        htmlMarkup += '<td>' + String(row[c]) + '</td>';
+                    }
+                    htmlMarkup += '</tr>';
                 }
-
+                htmlMarkup += '</table>';
+                
                 output.innerHTML = htmlMarkup;
-
             } catch (error) {
-                console.error(error);
-                output.innerHTML = `<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure master workbook is uploaded to GitHub as 'scores.xlsx'</span></div>`;
+                output.innerHTML = '<div style="padding:20px; color:#ff4444;">No Data Available</div>';
             }
         }
 
         function closeViewer() {
             document.getElementById('viewer-overlay').style.display = 'none';
             document.getElementById('table-output').innerHTML = '';
-            document.getElementById('search-box').value = '';
             document.body.style.overflow = 'auto';
         }
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
+            window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful');
+                    .then(function(registration) {
+                        console.log('v12.0.0 registered');
                     })
-                    .catch(err => {
-                        console.error('ServiceWorker registration failed: ', err);
+                    .catch(function(err) {
+                        console.error('SW failed', err);
                     });
             });
         }
