@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.4.0</title>
+    <title>SPRA Scottish Shore 2026 | v11.4.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -392,16 +392,15 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.4.0
+        Official Results Portal | v11.4.1
     </footer>
 
     <script>
         // CONFIGURATION: Map columns and determine skip rows.
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                startCol: 0, 
-                endCol: 4, 
-                skipRows: 3, 
+                isIndividualCustom: true, // Triggers the P.N.B.S column combination logic
+                skipRows: 1, // Fixed skipRows so the actual Rank 1 winner isn't skipped
                 staticRules: [
                     "<strong>Winner:</strong> Lowest Zone Points", 
                     "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
@@ -417,7 +416,6 @@
                 endCol: 4, 
                 skipRows: 1 
             },      
-            // Tab config updated to 'SECRET PAIRS'
             'SECRET PAIRS': { 
                 startCol: 4, 
                 endCol: 6, 
@@ -433,7 +431,6 @@
             }                  
         };
 
-        // Whitelist array updated to 'SECRET PAIRS'
         const ALLOWED_TABS = [
             'ZONE 1', 
             'ZONE 2', 
@@ -624,22 +621,54 @@
                 } else {
                     let isFirstRow = true;
                     let layoutClass = "";
-                    if (limits.startCol === 0) {
+                    if (limits.startCol === 0 || limits.isIndividualCustom === true) {
                         layoutClass = 'class="table-layout-standard"';
                     }
                     htmlMarkup += '<div ' + layoutClass + '><table>';
 
                     for (let r = 0; r < processedData.length; r++) {
                         const row = processedData[r];
-                        const slicedRow = row.slice(limits.startCol, limits.endCol + 1);
-                        
-                        let isEmpty = true;
-                        for (let c = 0; c < slicedRow.length; c++) {
-                            if (String(slicedRow[c]).trim() !== "") {
+                        let slicedRow = [];
+
+                        // NEW: Custom Logic for Individual Result to target specific columns
+                        if (limits.isIndividualCustom === true) {
+                            let colA = row[0]; if (colA === undefined) colA = "";
+                            let colB = row[1]; if (colB === undefined) colB = "";
+                            let colC = row[2]; if (colC === undefined) colC = "";
+                            
+                            // Map to Q, R, S, T, U based on zero-index layout
+                            let colQ = row[16]; if (colQ === undefined) colQ = "";
+                            let colR = row[17]; if (colR === undefined) colR = "";
+                            let colS = row[18]; if (colS === undefined) colS = "";
+                            let colT = row[19]; if (colT === undefined) colT = "";
+                            let colU = row[20]; if (colU === undefined) colU = "";
+
+                            let isEmpty = true;
+                            if (String(colA).trim() !== "" || String(colB).trim() !== "") {
                                 isEmpty = false;
                             }
+                            if (isEmpty === true) continue;
+
+                            if (isFirstRow === true) {
+                                // Force exact headers for row 1
+                                slicedRow = ["RANK", "ANGLER NAME", "TEAM", "PTS", "P.N.B.S"];
+                            } else {
+                                // Combine tie-breaks with a clean separator
+                                let combined = String(colR).trim() + " | " + String(colS).trim() + " | " + String(colT).trim() + " | " + String(colU).trim();
+                                slicedRow = [String(colA).trim(), String(colB).trim(), String(colC).trim(), String(colQ).trim(), combined];
+                            }
+                        } else {
+                            // Standard logic for all other tabs
+                            slicedRow = row.slice(limits.startCol, limits.endCol + 1);
+                            
+                            let isEmpty = true;
+                            for (let c = 0; c < slicedRow.length; c++) {
+                                if (String(slicedRow[c]).trim() !== "") {
+                                    isEmpty = false;
+                                }
+                            }
+                            if (isEmpty === true) continue;
                         }
-                        if (isEmpty === true) continue;
 
                         htmlMarkup += '<tr>';
                         for (let c = 0; c < slicedRow.length; c++) {
@@ -685,7 +714,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.4.0 registered');
+                        console.log('v11.4.1 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
