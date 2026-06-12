@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.6.1</title>
+    <title>SPRA Scottish Shore 2026 | v11.6.2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -443,7 +443,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.6.1
+        Official Results Portal | v11.6.2
     </footer>
 
     <script>
@@ -551,7 +551,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.6.1 - Fact Based Approach
+        // UPDATED: Match Stats Dashboard Function for v11.6.2 - Field/Mid-Table Focus
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -604,16 +604,12 @@
                 let totalLengthCm = 0;
                 let scoringAnglersCount = 0;
 
-                let maxFish = -1; let maxFishAngler = "";
-                let maxSpec = -1; let maxSpecAngler = "";
-                let maxBig = -1;  let maxBigAngler = "";
-                
-                let peakDailyFish = 0; let peakDailyAngler = ""; let peakDailyDay = "";
-
                 let maxAvgLen = -1; let maxAvgAngler = ""; let maxAvgFishCt = 0;
                 let minAvgLen = 999999; let minAvgAngler = ""; let minAvgFishCt = 0;
 
                 let maxImprovement = -999; let comebackAngler = ""; let comebackD1 = 0; let comebackD2 = 0;
+                
+                let anglersList = [];
 
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
@@ -627,8 +623,6 @@
                     let d2Fish = parseFloat(row[12]) || 0;
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
-                    let cBig = parseFloat(row[19]) || 0;
-                    let cSpec = parseFloat(row[20]) || 0;
 
                     // USER REQUIREMENT: Ignore anyone with 0 fish (The Wooden Spoon)
                     if (cFish === 0) {
@@ -640,13 +634,8 @@
                     day1Fish += d1Fish;
                     day2Fish += d2Fish;
                     totalLengthCm += cLen;
-
-                    if (cFish > maxFish) { maxFish = cFish; maxFishAngler = name; }
-                    if (cSpec > maxSpec) { maxSpec = cSpec; maxSpecAngler = name; }
-                    if (cBig > maxBig) { maxBig = cBig; maxBigAngler = name; }
                     
-                    if (d1Fish > peakDailyFish) { peakDailyFish = d1Fish; peakDailyAngler = name; peakDailyDay = "Day 1"; }
-                    if (d2Fish > peakDailyFish) { peakDailyFish = d2Fish; peakDailyAngler = name; peakDailyDay = "Day 2"; }
+                    anglersList.push({ name: name, cFish: cFish, d1Fish: d1Fish, d2Fish: d2Fish });
 
                     let avgLen = cLen / cFish;
                     if (cFish >= 5 && avgLen > maxAvgLen) { 
@@ -662,21 +651,46 @@
                     }
                 }
                 
-                let competitorAverage = (totalFish / scoringAnglersCount).toFixed(1);
+                let competitorAverage = totalFish / scoringAnglersCount;
+                let avgSpecimenSize = totalLengthCm / totalFish;
+                let dailyShift = day2Fish - day1Fish;
+                
+                let minDiffToAvg = 999999; let benchmarkAngler = ""; let benchmarkFish = 0;
+                let minVariance = 999999; let metronomeAngler = ""; let metronomeD1 = 0; let metronomeD2 = 0; let metronomeTotal = 0;
+                
+                for (let i = 0; i < anglersList.length; i++) {
+                    let a = anglersList[i];
+                    
+                    let diffToAvg = Math.abs(a.cFish - competitorAverage);
+                    if (diffToAvg < minDiffToAvg) {
+                        minDiffToAvg = diffToAvg;
+                        benchmarkAngler = a.name;
+                        benchmarkFish = a.cFish;
+                    }
+                    
+                    if (a.cFish >= 10) {
+                        let variance = Math.abs(a.d1Fish - a.d2Fish);
+                        if (variance < minVariance) {
+                            minVariance = variance;
+                            metronomeAngler = a.name;
+                            metronomeD1 = a.d1Fish;
+                            metronomeD2 = a.d2Fish;
+                            metronomeTotal = a.cFish;
+                        }
+                    }
+                }
 
                 // 2. Process Zone Wars (Read ZONE 1 & ZONE 2 silently)
-                let zoneTotals = { 'Red Zone': 0, 'Yellow Zone': 0, 'Green Zone': 0, 'Blue Zone': 0 };
-                const zoneSheetNames = ['ZONE 1', 'ZONE 2'];
-                
-                for (let s = 0; s < zoneSheetNames.length; s++) {
+                function processZoneSheet(wBook, targetSheet) {
+                    let totals = { 'Red Zone': 0, 'Yellow Zone': 0, 'Green Zone': 0, 'Blue Zone': 0 };
                     let zSheetName = null;
-                    for (let i = 0; i < workbook.SheetNames.length; i++) {
-                        if (workbook.SheetNames[i].trim().toUpperCase() === zoneSheetNames[s]) {
-                            zSheetName = workbook.SheetNames[i];
+                    for (let i = 0; i < wBook.SheetNames.length; i++) {
+                        if (wBook.SheetNames[i].trim().toUpperCase() === targetSheet) {
+                            zSheetName = wBook.SheetNames[i];
                         }
                     }
                     if (zSheetName !== null) {
-                        let zWorksheet = workbook.Sheets[zSheetName];
+                        let zWorksheet = wBook.Sheets[zSheetName];
                         let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
                         let zProcessedData = zRawData.slice(1);
                         
@@ -699,7 +713,7 @@
                                         if (parts.length >= 2) {
                                             let fishCt = parseFloat(parts[1]);
                                             if (isNaN(fishCt) === false) {
-                                                zoneTotals[block.name] += fishCt;
+                                                totals[block.name] += fishCt;
                                             }
                                         }
                                     }
@@ -707,47 +721,31 @@
                             }
                         }
                     }
+                    return totals;
                 }
+                
+                let d1ZoneTotals = processZoneSheet(workbook, 'ZONE 1');
+                let d2ZoneTotals = processZoneSheet(workbook, 'ZONE 2');
 
-                let maxZoneFish = -1; let maxZoneName = "";
-                let minZoneFish = 999999; let minZoneName = "";
-                let zoneKeys = Object.keys(zoneTotals);
-                for (let i = 0; i < zoneKeys.length; i++) {
-                    let zName = zoneKeys[i];
-                    let zFish = zoneTotals[zName];
+                let d1MaxFish = -1; let d1MaxName = ""; let d1MinFish = 999999; let d1MinName = "";
+                let d1Keys = Object.keys(d1ZoneTotals);
+                for (let i = 0; i < d1Keys.length; i++) {
+                    let zName = d1Keys[i];
+                    let zFish = d1ZoneTotals[zName];
                     if (zFish > 0) {
-                        if (zFish > maxZoneFish) { maxZoneFish = zFish; maxZoneName = zName; }
-                        if (zFish < minZoneFish) { minZoneFish = zFish; minZoneName = zName; }
+                        if (zFish > d1MaxFish) { d1MaxFish = zFish; d1MaxName = zName; }
+                        if (zFish < d1MinFish) { d1MinFish = zFish; d1MinName = zName; }
                     }
                 }
                 
-                // 3. Process Teams silently
-                let teamSheetName = null;
-                for (let i = 0; i < workbook.SheetNames.length; i++) {
-                    if (workbook.SheetNames[i].trim().toUpperCase() === 'TEAM RESULT') {
-                        teamSheetName = workbook.SheetNames[i];
-                    }
-                }
-                
-                let maxTeamFish = -1; let maxTeamName = "";
-                if (teamSheetName !== null) {
-                    let tWorksheet = workbook.Sheets[teamSheetName];
-                    let tRawData = XLSX.utils.sheet_to_json(tWorksheet, { header: 1, defval: "" });
-                    let tProcessedData = tRawData.slice(1);
-                    
-                    for (let r = 0; r < tProcessedData.length; r++) {
-                        let row = tProcessedData[r];
-                        let teamName = String(row[1] || "").trim();
-                        let teamFish = parseFloat(row[4]);
-                        
-                        if (teamName !== "" && isNaN(teamFish) === false) {
-                            if (teamFish > maxTeamFish) {
-                                maxTeamFish = teamFish;
-                                maxTeamName = teamName;
-                            } else if (teamFish === maxTeamFish) {
-                                maxTeamName += " & " + teamName;
-                            }
-                        }
+                let d2MaxFish = -1; let d2MaxName = ""; let d2MinFish = 999999; let d2MinName = "";
+                let d2Keys = Object.keys(d2ZoneTotals);
+                for (let i = 0; i < d2Keys.length; i++) {
+                    let zName = d2Keys[i];
+                    let zFish = d2ZoneTotals[zName];
+                    if (zFish > 0) {
+                        if (zFish > d2MaxFish) { d2MaxFish = zFish; d2MaxName = zName; }
+                        if (zFish < d2MinFish) { d2MinFish = zFish; d2MinName = zName; }
                     }
                 }
 
@@ -771,79 +769,97 @@
                 // Card: Competitor Average
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Competitor Average</div>';
-                htmlMarkup += '<div class="stat-value">' + competitorAverage + ' <span class="stat-sub">Fish</span></div>';
+                htmlMarkup += '<div class="stat-value">' + competitorAverage.toFixed(1) + ' <span class="stat-sub">Fish</span></div>';
                 htmlMarkup += '<div class="stat-desc">The mean number of fish successfully landed per scoring angler across the weekend.</div>';
                 htmlMarkup += '</div>';
                 
-                // Card: Highest Team Volume
-                if (maxTeamFish > -1) {
-                    htmlMarkup += '<div class="stat-card">';
-                    htmlMarkup += '<div class="stat-title">Highest Team Volume</div>';
-                    htmlMarkup += '<div class="stat-value">' + maxTeamName + '</div>';
-                    htmlMarkup += '<div class="stat-desc">Most total fish landed collectively by a single squad (' + maxTeamFish + ' fish).</div>';
-                    htmlMarkup += '</div>';
-                }
-
-                // Card: Most Productive Zone
-                if (maxZoneFish > -1) {
-                    let hotspotPercentage = ((maxZoneFish / totalFish) * 100).toFixed(1);
-                    htmlMarkup += '<div class="stat-card">';
-                    htmlMarkup += '<div class="stat-title">Most Productive Zone</div>';
-                    htmlMarkup += '<div class="stat-value">' + maxZoneName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
-                    htmlMarkup += '<div class="stat-desc">Highest yielding zone, accounting for ' + hotspotPercentage + '% of the total weekend catch (' + maxZoneFish + ' fish).</div>';
-                    htmlMarkup += '</div>';
-                }
-
-                // Card: Toughest Zone
-                if (minZoneFish !== 999999) {
-                    htmlMarkup += '<div class="stat-card">';
-                    htmlMarkup += '<div class="stat-title">Toughest Zone</div>';
-                    htmlMarkup += '<div class="stat-value">' + minZoneName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
-                    htmlMarkup += '<div class="stat-desc">Lowest yielding zone over the two days, producing ' + minZoneFish + ' total fish.</div>';
-                    htmlMarkup += '</div>';
-                }
-
-                // Card: Highest Catch Rate
+                // Card: Average Specimen Size
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Highest Catch Rate</div>';
-                htmlMarkup += '<div class="stat-value">' + maxFishAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Most individual fish landed by a single angler over the weekend (' + maxFish + ' fish).</div>';
+                htmlMarkup += '<div class="stat-title">Average Specimen Size</div>';
+                htmlMarkup += '<div class="stat-value">' + avgSpecimenSize.toFixed(1) + ' <span class="stat-sub">cm</span></div>';
+                htmlMarkup += '<div class="stat-desc">The mathematical average length of a single fish caught during this competition.</div>';
                 htmlMarkup += '</div>';
                 
-                // Card: Peak Daily Performance
+                // Card: The Daily Shift
+                let dailyShiftText = "";
+                if (dailyShift > 0) {
+                    dailyShiftText = "The field caught " + dailyShift + " more fish on Day 2.";
+                } else if (dailyShift < 0) {
+                    dailyShiftText = "The field caught " + Math.abs(dailyShift) + " fewer fish on Day 2.";
+                } else {
+                    dailyShiftText = "The field caught the exact same number of fish on both days.";
+                }
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Peak Daily Performance</div>';
-                htmlMarkup += '<div class="stat-value">' + peakDailyAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Maximum number of fish landed by a single competitor in one day (' + peakDailyFish + ' fish on ' + peakDailyDay + ').</div>';
+                htmlMarkup += '<div class="stat-title">The Daily Shift</div>';
+                htmlMarkup += '<div class="stat-value">' + (dailyShift > 0 ? '+' : '') + dailyShift + ' <span class="stat-sub">Fish</span></div>';
+                htmlMarkup += '<div class="stat-desc">Overall field performance variance between sessions. ' + dailyShiftText + '</div>';
                 htmlMarkup += '</div>';
 
-                // Card: Greatest Species Variety
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Greatest Species Variety</div>';
-                htmlMarkup += '<div class="stat-value">' + maxSpecAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Highest number of unique species recorded by a single angler (' + maxSpec + ' species).</div>';
-                htmlMarkup += '</div>';
+                // Card: Day 1 Hotspot
+                if (d1MaxFish > -1) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Day 1 Hotspot</div>';
+                    htmlMarkup += '<div class="stat-value">' + d1MaxName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">Highest yielding zone on Saturday, accounting for ' + d1MaxFish + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
 
-                // Card: Largest Specimen
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Largest Specimen</div>';
-                htmlMarkup += '<div class="stat-value">' + maxBigAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">The single longest fish recorded during the competition (' + maxBig + ' cm).</div>';
-                htmlMarkup += '</div>';
+                // Card: Day 1 Toughest Zone
+                if (d1MinFish !== 999999) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Day 1 Toughest Zone</div>';
+                    htmlMarkup += '<div class="stat-value">' + d1MinName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">Lowest yielding zone on Saturday, producing only ' + d1MinFish + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
+                
+                // Card: Day 2 Hotspot
+                if (d2MaxFish > -1) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Day 2 Hotspot</div>';
+                    htmlMarkup += '<div class="stat-value">' + d2MaxName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">Highest yielding zone on Sunday, accounting for ' + d2MaxFish + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
 
-                // Card: Highest Average Size
+                // Card: Day 2 Toughest Zone
+                if (d2MinFish !== 999999) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Day 2 Toughest Zone</div>';
+                    htmlMarkup += '<div class="stat-value">' + d2MinName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">Lowest yielding zone on Sunday, producing only ' + d2MinFish + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
+                
+                // Card: The Benchmark
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">The Benchmark (Average Joe)</div>';
+                htmlMarkup += '<div class="stat-value">' + benchmarkAngler + '</div>';
+                htmlMarkup += '<div class="stat-desc">The statistical center of the competition. Their ' + benchmarkFish + ' fish was mathematically closest to the field average.</div>';
+                htmlMarkup += '</div>';
+                
+                // Card: The Metronome
+                if (metronomeTotal > 0) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">The Metronome</div>';
+                    htmlMarkup += '<div class="stat-value">' + metronomeAngler + '</div>';
+                    htmlMarkup += '<div class="stat-desc">Smallest day-over-day variance in catch volume. Consistency is key (Day 1: ' + metronomeD1 + ' | Day 2: ' + metronomeD2 + ').</div>';
+                    htmlMarkup += '</div>';
+                }
+
+                // Card: Quality Over Quantity
                 if (maxAvgLen > -1) {
                     htmlMarkup += '<div class="stat-card">';
-                    htmlMarkup += '<div class="stat-title">Highest Average Size</div>';
+                    htmlMarkup += '<div class="stat-title">Quality Over Quantity</div>';
                     htmlMarkup += '<div class="stat-value">' + maxAvgAngler + '</div>';
                     htmlMarkup += '<div class="stat-desc">Highest average length per fish (minimum 5 fish caught). Averaged ' + maxAvgLen.toFixed(1) + ' cm.</div>';
                     htmlMarkup += '</div>';
                 }
 
-                // Card: Lowest Average Size
+                // Card: Sprat King
                 if (minAvgLen !== 999999) {
                     htmlMarkup += '<div class="stat-card">';
-                    htmlMarkup += '<div class="stat-title">Lowest Average Size</div>';
+                    htmlMarkup += '<div class="stat-title">Sprat King</div>';
                     htmlMarkup += '<div class="stat-value">' + minAvgAngler + '</div>';
                     htmlMarkup += '<div class="stat-desc">Lowest average length per fish (minimum 10 fish caught). Averaged ' + minAvgLen.toFixed(1) + ' cm.</div>';
                     htmlMarkup += '</div>';
@@ -1081,7 +1097,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.6.1 registered');
+                        console.log('v11.6.2 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
