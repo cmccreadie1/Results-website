@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.4.3</title>
+    <title>SPRA Scottish Shore 2026 | v11.5.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -318,6 +318,50 @@
             text-transform: uppercase; 
             font-size: 1.1rem; 
         }
+        
+        /* NEW: Match Stats Dashboard Styles */
+        .stat-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.05), 0 5px 15px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .stat-title {
+            color: var(--accent-cyan);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .stat-sub {
+            font-size: 0.9rem;
+            color: #aaa;
+            font-weight: 400;
+        }
+        .stat-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         .footer { 
             margin-top: auto; 
             padding: 40px; 
@@ -363,6 +407,13 @@
         </div>
         
         <div class="divider"></div>
+        
+        <div class="slide-btn" onclick="loadMatchStats('Match Stats')">
+            <span>Match Stats</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        </div>
+
+        <div class="divider"></div>
 
         <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span>Zone Day 1</span>
@@ -392,7 +443,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.4.3
+        Official Results Portal | v11.5.0
     </footer>
 
     <script>
@@ -417,8 +468,8 @@
                 skipRows: 1 
             },      
             'SECRET PAIRS': { 
-                startCol: 0, // Updated to look at column A
-                endCol: 2,   // Updated to end at column C
+                startCol: 0, 
+                endCol: 2,   
                 skipRows: 2 
             }, 
             'ZONE 1': { 
@@ -500,10 +551,197 @@
             });
         }
 
+        // NEW: Function specifically built to read the data and output curated Fun Facts
+        async function loadMatchStats(displayTitle) {
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            // Hide the search box and scroll hint for the dashboard
+            document.getElementById('search-box').style.display = 'none';
+            document.querySelector('.scroll-hint').style.display = 'none';
+            document.getElementById('search-box').value = '';
+            titleDisplay.innerText = displayTitle;
+            
+            output.innerHTML = `
+                <div class="skeleton-wrapper">
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                    <div class="skeleton-row"></div>
+                </div>
+            `;
+            
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(function(resolve) {
+                setTimeout(resolve, 400);
+            });
+
+            try {
+                const workbook = await fetchWorkbook();
+                
+                let foundSheet = null;
+                for (let i = 0; i < workbook.SheetNames.length; i++) {
+                    let sheetName = workbook.SheetNames[i];
+                    if (sheetName.trim().toUpperCase() === 'INDIVIDUAL RESULT') {
+                        foundSheet = sheetName;
+                    }
+                }
+
+                if (foundSheet === null) {
+                    output.innerHTML = '<div class="status-msg">Section Offline: Data sheet could not be located.</div>';
+                    return;
+                }
+
+                const worksheet = workbook.Sheets[foundSheet];
+                const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
+                
+                // Variables for running calculations
+                let totalFish = 0;
+                let day1Fish = 0;
+                let day2Fish = 0;
+                let totalLengthCm = 0;
+
+                let maxFish = -1; let maxFishAngler = "";
+                let maxSpec = -1; let maxSpecAngler = "";
+                let maxBig = -1;  let maxBigAngler = "";
+
+                let maxAvgLen = -1; let maxAvgAngler = ""; let maxAvgFishCt = 0;
+                let minAvgLen = 999999; let minAvgAngler = ""; let minAvgFishCt = 0;
+
+                let maxImprovement = -999; let comebackAngler = ""; let comebackD1 = 0; let comebackD2 = 0;
+
+                // Loop through all data skipping the headers
+                for (let r = 1; r < rawData.length; r++) {
+                    let row = rawData[r];
+                    let name = String(row[1] || "").trim();
+                    
+                    if (name === "" || name === "ANGLER NAME") {
+                        continue;
+                    }
+
+                    // Extract strict columns mapping to Day 1, Day 2, and Combined
+                    let d1Fish = parseFloat(row[6]) || 0;
+                    let d2Fish = parseFloat(row[12]) || 0;
+                    let cLen = parseFloat(row[17]) || 0;
+                    let cFish = parseFloat(row[18]) || 0;
+                    let cBig = parseFloat(row[19]) || 0;
+                    let cSpec = parseFloat(row[20]) || 0;
+
+                    // USER REQUIREMENT: Ignore anyone with 0 fish (The Wooden Spoon)
+                    if (cFish === 0) {
+                        continue; 
+                    }
+
+                    // Sums
+                    totalFish += cFish;
+                    day1Fish += d1Fish;
+                    day2Fish += d2Fish;
+                    totalLengthCm += cLen;
+
+                    // Standard Maximums
+                    if (cFish > maxFish) { maxFish = cFish; maxFishAngler = name; }
+                    if (cSpec > maxSpec) { maxSpec = cSpec; maxSpecAngler = name; }
+                    if (cBig > maxBig) { maxBig = cBig; maxBigAngler = name; }
+
+                    // Averages
+                    let avgLen = cLen / cFish;
+                    if (cFish >= 5 && avgLen > maxAvgLen) { 
+                        maxAvgLen = avgLen; maxAvgAngler = name; maxAvgFishCt = cFish; 
+                    }
+                    if (cFish >= 10 && avgLen < minAvgLen) { 
+                        minAvgLen = avgLen; minAvgAngler = name; minAvgFishCt = cFish; 
+                    }
+
+                    // Improvement
+                    let improvement = d2Fish - d1Fish;
+                    if (improvement > maxImprovement) { 
+                        maxImprovement = improvement; comebackAngler = name; comebackD1 = d1Fish; comebackD2 = d2Fish; 
+                    }
+                }
+
+                let htmlMarkup = '<div class="stat-grid">';
+                
+                // 1. Grand Total Card
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">The Grand Total</div>';
+                htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
+                htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' | Day 2: ' + day2Fish + '</div>';
+                htmlMarkup += '</div>';
+
+                // 2. Endurance Card
+                let totalMeters = (totalLengthCm / 100).toFixed(2);
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">Tape Measure Stat</div>';
+                htmlMarkup += '<div class="stat-value">' + totalMeters + ' <span class="stat-sub">Meters</span></div>';
+                htmlMarkup += '<div class="stat-desc">If laid end-to-end on the beach!</div>';
+                htmlMarkup += '</div>';
+
+                // 3. The Machine Card
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">The Machine</div>';
+                htmlMarkup += '<div class="stat-value">' + maxFishAngler + '</div>';
+                htmlMarkup += '<div class="stat-desc">Highest volume overall with ' + maxFish + ' fish caught.</div>';
+                htmlMarkup += '</div>';
+
+                // 4. Species Hunter Card
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">Species Hunter</div>';
+                htmlMarkup += '<div class="stat-value">' + maxSpecAngler + '</div>';
+                htmlMarkup += '<div class="stat-desc">Caught ' + maxSpec + ' different species.</div>';
+                htmlMarkup += '</div>';
+
+                // 5. Monster Fish Card
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">Monster Catch</div>';
+                htmlMarkup += '<div class="stat-value">' + maxBigAngler + '</div>';
+                htmlMarkup += '<div class="stat-desc">Landed an absolute unit measuring ' + maxBig + ' cm.</div>';
+                htmlMarkup += '</div>';
+
+                // 6. Quality Over Quantity Card
+                if (maxAvgLen > -1) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Quality Over Quantity</div>';
+                    htmlMarkup += '<div class="stat-value">' + maxAvgAngler + '</div>';
+                    htmlMarkup += '<div class="stat-desc">Averaged a massive ' + maxAvgLen.toFixed(1) + ' cm across ' + maxAvgFishCt + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
+
+                // 7. Sprat King Card
+                if (minAvgLen !== 999999) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">Sprat King</div>';
+                    htmlMarkup += '<div class="stat-value">' + minAvgAngler + '</div>';
+                    htmlMarkup += '<div class="stat-desc">Worked hard for ' + minAvgFishCt + ' fish, but averaged only ' + minAvgLen.toFixed(1) + ' cm!</div>';
+                    htmlMarkup += '</div>';
+                }
+
+                // 8. Comeback Kid Card
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">Comeback Kid</div>';
+                htmlMarkup += '<div class="stat-value">' + comebackAngler + '</div>';
+                htmlMarkup += '<div class="stat-desc">Day 1: ' + comebackD1 + ' ➔ Day 2: ' + comebackD2 + ' (+' + maxImprovement + ' fish)</div>';
+                htmlMarkup += '</div>';
+
+                htmlMarkup += '</div>';
+                
+                output.innerHTML = htmlMarkup;
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = '<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure master workbook is uploaded to GitHub as \'scores.xlsx\'</span></div>';
+            }
+        }
+
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
+            
+            // Restore visibility of standard features
+            document.getElementById('search-box').style.display = 'block';
+            document.querySelector('.scroll-hint').style.display = 'block';
             
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
@@ -711,7 +949,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.4.3 registered');
+                        console.log('v11.5.0 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
