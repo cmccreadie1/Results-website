@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.6.3</title>
+    <title>SPRA Scottish Shore 2026 | v11.6.4</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -272,7 +272,7 @@
             100% { transform: translateX(100%); } 
         }
 
-        /* Table Styles */
+        /* Table Styles - Enforced Center Justification */
         table { 
             border-collapse: separate; 
             border-spacing: 0; 
@@ -296,8 +296,12 @@
             position: sticky; 
             top: 0; 
             z-index: 10;
+            text-align: center; /* Enforces Center Justification */
         }
-        td { padding: 14px 12px; }
+        td { 
+            padding: 14px 12px; 
+            text-align: center; /* Enforces Center Justification */
+        }
         tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
         tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
 
@@ -443,7 +447,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.6.3
+        Official Results Portal | v11.6.4
     </footer>
 
     <script>
@@ -474,11 +478,19 @@
             }, 
             'ZONE 1': { 
                 isMultiZone: true, 
-                skipRows: 1 
+                skipRows: 1,
+                staticRules: [
+                    "<strong>Winner:</strong> Lowest Zone Points", 
+                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
+                ]
             },                 
             'ZONE 2': { 
                 isMultiZone: true, 
-                skipRows: 1 
+                skipRows: 1,
+                staticRules: [
+                    "<strong>Winner:</strong> Lowest Zone Points", 
+                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
+                ]
             }                  
         };
 
@@ -551,7 +563,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.6.3 - Anonymous Field Data & Zone Profiles
+        // UPDATED: Match Stats Dashboard Function for v11.6.4
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -686,7 +698,8 @@
                                 let row = zProcessedData[r];
                                 let slicedRow = row.slice(block.start, block.end + 1);
                                 if (slicedRow.length >= 3) {
-                                    let pnbs = String(slicedRow[2]).trim();
+                                    // P.N.B.S is located at slicedRow[3] due to original parsing
+                                    let pnbs = String(slicedRow[3]).trim();
                                     if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
                                         let parts = pnbs.split("/");
                                         if (parts.length >= 2) {
@@ -898,7 +911,7 @@
 
                         for (let r = 0; r < processedData.length; r++) {
                             const row = processedData[r];
-                            const slicedRow = row.slice(block.start, block.end + 1);
+                            let slicedRow = row.slice(block.start, block.end + 1);
                             
                             let isEmpty = true;
                             for (let c = 0; c < slicedRow.length; c++) {
@@ -908,6 +921,27 @@
                                 }
                             }
                             if (isEmpty === true) continue;
+                            
+                            // Reorder logic: Move 'Points' (index 4) to the left side (index 1) for better visibility
+                            if (slicedRow.length >= 5) {
+                                let pos = slicedRow[0];
+                                let name = slicedRow[1];
+                                let team = slicedRow[2];
+                                let pnbs = slicedRow[3];
+                                let pt = slicedRow[4];
+                                
+                                // Rename headers automatically
+                                if (isFirstRow === true) {
+                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") {
+                                        pnbs = "TIE BREAKERS";
+                                    }
+                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") {
+                                        pt = "PTS";
+                                    }
+                                }
+                                
+                                slicedRow = [pos, pt, name, team, pnbs];
+                            }
                             
                             blockHasData = true;
                             blockHtml += '<tr>';
@@ -969,7 +1003,7 @@
                             if (isEmpty === true) continue;
 
                             if (isFirstRow === true) {
-                                slicedRow = ["RANK", "ANGLER NAME", "TEAM", "PTS", "P.N.B.S"];
+                                slicedRow = ["RANK", "ANGLER NAME", "TEAM", "PTS", "TIE BREAKERS"];
                             } else {
                                 let combined = String(colR).trim() + " | " + String(colS).trim() + " | " + String(colT).trim() + " | " + String(colU).trim();
                                 slicedRow = [String(colA).trim(), String(colB).trim(), String(colC).trim(), String(colQ).trim(), combined];
@@ -1031,7 +1065,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.6.3 registered');
+                        console.log('v11.6.4 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
