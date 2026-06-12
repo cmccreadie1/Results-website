@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.6.4</title>
+    <title>SPRA Scottish Shore 2026 | v11.6.5</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -323,7 +323,7 @@
             font-size: 1.1rem; 
         }
         
-        /* NEW: Match Stats Dashboard Styles */
+        /* Match Stats Dashboard Styles */
         .stat-grid {
             display: flex;
             flex-direction: column;
@@ -447,7 +447,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.6.4
+        Official Results Portal | v11.6.5
     </footer>
 
     <script>
@@ -563,7 +563,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.6.4
+        // Match Stats Dashboard Function for v11.6.5
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -685,11 +685,12 @@
                         let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
                         let zProcessedData = zRawData.slice(1);
                         
+                        // FIX: Updated boundaries to include Rank column so math aligns perfectly
                         const zBlocks = [
-                            { name: 'Red Zone', start: 1, end: 4 },
-                            { name: 'Yellow Zone', start: 6, end: 9 },
-                            { name: 'Green Zone', start: 11, end: 14 },
-                            { name: 'Blue Zone', start: 16, end: 19 }
+                            { name: 'Red Zone', start: 0, end: 4 },
+                            { name: 'Yellow Zone', start: 5, end: 9 },
+                            { name: 'Green Zone', start: 10, end: 14 },
+                            { name: 'Blue Zone', start: 15, end: 19 }
                         ];
                         
                         for (let z = 0; z < zBlocks.length; z++) {
@@ -697,8 +698,8 @@
                             for (let r = 0; r < zProcessedData.length; r++) {
                                 let row = zProcessedData[r];
                                 let slicedRow = row.slice(block.start, block.end + 1);
-                                if (slicedRow.length >= 3) {
-                                    // P.N.B.S is located at slicedRow[3] due to original parsing
+                                if (slicedRow.length >= 4) {
+                                    // With the included Rank column, P.N.B.S moves to index 3
                                     let pnbs = String(slicedRow[3]).trim();
                                     if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
                                         let parts = pnbs.split("/");
@@ -895,11 +896,12 @@
                 const processedData = rawData.slice(limits.skipRows || 0);
 
                 if (limits.isMultiZone === true) {
+                    // FIX: Ensure 'start' catches the Rank column so array length allows reordering
                     const zoneBlocks = [
-                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
-                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, 
-                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, 
-                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    
+                        { name: 'Red Zone', start: 0, end: 4, colorClass: 'zone-red' },       
+                        { name: 'Yellow Zone', start: 5, end: 9, colorClass: 'zone-yellow' }, 
+                        { name: 'Green Zone', start: 10, end: 14, colorClass: 'zone-green' }, 
+                        { name: 'Blue Zone', start: 15, end: 19, colorClass: 'zone-blue' }    
                     ];
 
                     for (let z = 0; z < zoneBlocks.length; z++) {
@@ -922,7 +924,7 @@
                             }
                             if (isEmpty === true) continue;
                             
-                            // Reorder logic: Move 'Points' (index 4) to the left side (index 1) for better visibility
+                            // Reorder logic: Move 'Points' (index 4) to the left side (index 1)
                             if (slicedRow.length >= 5) {
                                 let pos = slicedRow[0];
                                 let name = slicedRow[1];
@@ -930,14 +932,10 @@
                                 let pnbs = slicedRow[3];
                                 let pt = slicedRow[4];
                                 
-                                // Rename headers automatically
                                 if (isFirstRow === true) {
-                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") {
-                                        pnbs = "TIE BREAKERS";
-                                    }
-                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") {
-                                        pt = "PTS";
-                                    }
+                                    if (String(pos).trim().toUpperCase() === "POS") pos = "RANK";
+                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") pnbs = "TIE BREAKERS";
+                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") pt = "PTS";
                                 }
                                 
                                 slicedRow = [pos, pt, name, team, pnbs];
@@ -1002,11 +1000,12 @@
                             }
                             if (isEmpty === true) continue;
 
+                            // Ensures PTS is directly to the left for uniformity
                             if (isFirstRow === true) {
-                                slicedRow = ["RANK", "ANGLER NAME", "TEAM", "PTS", "TIE BREAKERS"];
+                                slicedRow = ["RANK", "PTS", "ANGLER NAME", "TEAM", "TIE BREAKERS"];
                             } else {
                                 let combined = String(colR).trim() + " | " + String(colS).trim() + " | " + String(colT).trim() + " | " + String(colU).trim();
-                                slicedRow = [String(colA).trim(), String(colB).trim(), String(colC).trim(), String(colQ).trim(), combined];
+                                slicedRow = [String(colA).trim(), String(colQ).trim(), String(colB).trim(), String(colC).trim(), combined];
                             }
                         } else {
                             slicedRow = row.slice(limits.startCol, limits.endCol + 1);
@@ -1065,7 +1064,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.6.4 registered');
+                        console.log('v11.6.5 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
