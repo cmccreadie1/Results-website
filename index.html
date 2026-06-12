@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.5.0</title>
+    <title>SPRA Scottish Shore 2026 | v11.6.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -40,10 +40,10 @@
             align-items: center;
         }
 
-        /* Branding Header */
+        /* Branding Header - Spacing Tightened */
         .dynamic-hub { 
-            margin-top: 40px; 
-            margin-bottom: 20px; 
+            margin-top: 20px; 
+            margin-bottom: 15px; 
             width: 100%; 
             display: flex; 
             justify-content: center; 
@@ -52,32 +52,32 @@
             background: rgba(10, 11, 14, 0.85);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 15px;
             display: flex; 
             align-items: center; 
-            gap: 20px;
+            gap: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .assoc-logo { 
-            height: 60px; 
+            height: 50px; 
             width: auto; 
             filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4)); 
         }
         .hub-text h1 { 
             font-family: 'Oswald', sans-serif; 
-            font-size: 1.1rem; 
+            font-size: 1rem; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
         }
 
-        /* Live Status Badge */
+        /* Live Status Badge - Spacing Tightened */
         .live-status-badge {
             display: flex; 
             align-items: center; 
             justify-content: center; 
             gap: 8px; 
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
             color: #999;
             font-size: 0.7rem; 
             text-transform: uppercase; 
@@ -93,26 +93,26 @@
             animation: flash 2s infinite;
         }
 
-        /* Navigation Menu Stack */
+        /* Navigation Menu Stack - Spacing Tightened */
         .button-stack { 
             width: 100%; 
             max-width: 450px; 
-            padding: 0 20px; 
+            padding: 0 15px; 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
+            gap: 8px; 
         }
         .slide-btn {
             background: var(--surface-color);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-            padding: 20px 24px;
-            border-radius: 12px;
+            padding: 15px 20px;
+            border-radius: 10px;
             color: var(--text-main);
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-transform: uppercase;
             display: flex; 
             justify-content: space-between; 
@@ -129,7 +129,7 @@
         .divider { 
             height: 1px; 
             background: rgba(255,255,255,0.2); 
-            margin: 10px 0; 
+            margin: 5px 0; 
             width: 100%; 
         }
 
@@ -364,7 +364,7 @@
 
         .footer { 
             margin-top: auto; 
-            padding: 40px; 
+            padding: 30px; 
             font-size: 0.7rem; 
             color: rgba(255,255,255,0.6); 
             text-align: center; 
@@ -407,13 +407,6 @@
         </div>
         
         <div class="divider"></div>
-        
-        <div class="slide-btn" onclick="loadMatchStats('Match Stats')">
-            <span>Match Stats</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-
-        <div class="divider"></div>
 
         <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span>Zone Day 1</span>
@@ -430,6 +423,13 @@
             <span>Biggest Fish</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
+        
+        <div class="divider"></div>
+        
+        <div class="slide-btn" onclick="loadMatchStats('Match Stats')">
+            <span>Match Stats</span>
+            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+        </div>
     </nav>
 
     <div id="viewer-overlay">
@@ -443,7 +443,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.5.0
+        Official Results Portal | v11.6.0
     </footer>
 
     <script>
@@ -551,7 +551,7 @@
             });
         }
 
-        // NEW: Function specifically built to read the data and output curated Fun Facts
+        // UPDATED: Match Stats Dashboard Function for v11.6.0
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -581,6 +581,7 @@
             try {
                 const workbook = await fetchWorkbook();
                 
+                // 1. Process Individual Stats
                 let foundSheet = null;
                 for (let i = 0; i < workbook.SheetNames.length; i++) {
                     let sheetName = workbook.SheetNames[i];
@@ -597,7 +598,6 @@
                 const worksheet = workbook.Sheets[foundSheet];
                 const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
                 
-                // Variables for running calculations
                 let totalFish = 0;
                 let day1Fish = 0;
                 let day2Fish = 0;
@@ -612,7 +612,6 @@
 
                 let maxImprovement = -999; let comebackAngler = ""; let comebackD1 = 0; let comebackD2 = 0;
 
-                // Loop through all data skipping the headers
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
                     let name = String(row[1] || "").trim();
@@ -621,7 +620,6 @@
                         continue;
                     }
 
-                    // Extract strict columns mapping to Day 1, Day 2, and Combined
                     let d1Fish = parseFloat(row[6]) || 0;
                     let d2Fish = parseFloat(row[12]) || 0;
                     let cLen = parseFloat(row[17]) || 0;
@@ -634,18 +632,15 @@
                         continue; 
                     }
 
-                    // Sums
                     totalFish += cFish;
                     day1Fish += d1Fish;
                     day2Fish += d2Fish;
                     totalLengthCm += cLen;
 
-                    // Standard Maximums
                     if (cFish > maxFish) { maxFish = cFish; maxFishAngler = name; }
                     if (cSpec > maxSpec) { maxSpec = cSpec; maxSpecAngler = name; }
                     if (cBig > maxBig) { maxBig = cBig; maxBigAngler = name; }
 
-                    // Averages
                     let avgLen = cLen / cFish;
                     if (cFish >= 5 && avgLen > maxAvgLen) { 
                         maxAvgLen = avgLen; maxAvgAngler = name; maxAvgFishCt = cFish; 
@@ -654,74 +649,149 @@
                         minAvgLen = avgLen; minAvgAngler = name; minAvgFishCt = cFish; 
                     }
 
-                    // Improvement
                     let improvement = d2Fish - d1Fish;
                     if (improvement > maxImprovement) { 
                         maxImprovement = improvement; comebackAngler = name; comebackD1 = d1Fish; comebackD2 = d2Fish; 
                     }
                 }
 
+                // 2. Process Zone Wars (Read ZONE 1 & ZONE 2 silently)
+                let zoneTotals = { 'Red Zone': 0, 'Yellow Zone': 0, 'Green Zone': 0, 'Blue Zone': 0 };
+                const zoneSheetNames = ['ZONE 1', 'ZONE 2'];
+                
+                for (let s = 0; s < zoneSheetNames.length; s++) {
+                    let zSheetName = null;
+                    for (let i = 0; i < workbook.SheetNames.length; i++) {
+                        if (workbook.SheetNames[i].trim().toUpperCase() === zoneSheetNames[s]) {
+                            zSheetName = workbook.SheetNames[i];
+                        }
+                    }
+                    if (zSheetName !== null) {
+                        let zWorksheet = workbook.Sheets[zSheetName];
+                        let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
+                        let zProcessedData = zRawData.slice(1);
+                        
+                        const zBlocks = [
+                            { name: 'Red Zone', start: 1, end: 4 },
+                            { name: 'Yellow Zone', start: 6, end: 9 },
+                            { name: 'Green Zone', start: 11, end: 14 },
+                            { name: 'Blue Zone', start: 16, end: 19 }
+                        ];
+                        
+                        for (let z = 0; z < zBlocks.length; z++) {
+                            let block = zBlocks[z];
+                            for (let r = 0; r < zProcessedData.length; r++) {
+                                let row = zProcessedData[r];
+                                let slicedRow = row.slice(block.start, block.end + 1);
+                                if (slicedRow.length >= 3) {
+                                    let pnbs = String(slicedRow[2]).trim();
+                                    if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
+                                        let parts = pnbs.split("/");
+                                        if (parts.length >= 2) {
+                                            let fishCt = parseFloat(parts[1]);
+                                            if (isNaN(fishCt) === false) {
+                                                zoneTotals[block.name] += fishCt;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                let maxZoneFish = -1; let maxZoneName = "";
+                let minZoneFish = 999999; let minZoneName = "";
+                let zoneKeys = Object.keys(zoneTotals);
+                for (let i = 0; i < zoneKeys.length; i++) {
+                    let zName = zoneKeys[i];
+                    let zFish = zoneTotals[zName];
+                    if (zFish > 0) {
+                        if (zFish > maxZoneFish) { maxZoneFish = zFish; maxZoneName = zName; }
+                        if (zFish < minZoneFish) { minZoneFish = zFish; minZoneName = zName; }
+                    }
+                }
+
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                // 1. Grand Total Card
+                // Card: The Grand Total
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">The Grand Total</div>';
                 htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' | Day 2: ' + day2Fish + '</div>';
+                htmlMarkup += '<div class="stat-desc">A photo finish between Day 1 (' + day1Fish + ') and Day 2 (' + day2Fish + ').</div>';
                 htmlMarkup += '</div>';
 
-                // 2. Endurance Card
+                // Card: Tape Measure Stat
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Tape Measure Stat</div>';
                 htmlMarkup += '<div class="stat-value">' + totalMeters + ' <span class="stat-sub">Meters</span></div>';
-                htmlMarkup += '<div class="stat-desc">If laid end-to-end on the beach!</div>';
+                htmlMarkup += '<div class="stat-desc">If laid end-to-end on the beach, that\'s over two football pitches of fish!</div>';
                 htmlMarkup += '</div>';
 
-                // 3. The Machine Card
+                // Card: Hotspot Zone
+                if (maxZoneFish > -1) {
+                    let hotspotPercentage = ((maxZoneFish / totalFish) * 100).toFixed(1);
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">The Hotspot</div>';
+                    htmlMarkup += '<div class="stat-value">' + maxZoneName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">The absolute place to be this weekend. Nearly ' + hotspotPercentage + '% of all fish came from here (' + maxZoneFish + ' fish).</div>';
+                    htmlMarkup += '</div>';
+                }
+
+                // Card: Grim Zone
+                if (minZoneFish !== 999999) {
+                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-title">The Grim Zone</div>';
+                    htmlMarkup += '<div class="stat-value">' + minZoneName.replace(' Zone', '') + ' <span class="stat-sub">Zone</span></div>';
+                    htmlMarkup += '<div class="stat-desc">The ultimate test of angling skill. A tough shift on the shore with only ' + minZoneFish + ' fish.</div>';
+                    htmlMarkup += '</div>';
+                }
+
+                // Card: The Machine
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">The Machine</div>';
                 htmlMarkup += '<div class="stat-value">' + maxFishAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Highest volume overall with ' + maxFish + ' fish caught.</div>';
+                htmlMarkup += '<div class="stat-desc">Sheer volume. An absolute machine on the beach with ' + maxFish + ' fish.</div>';
                 htmlMarkup += '</div>';
 
-                // 4. Species Hunter Card
+                // Card: Species Hunter
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Species Hunter</div>';
                 htmlMarkup += '<div class="stat-value">' + maxSpecAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Caught ' + maxSpec + ' different species.</div>';
+                htmlMarkup += '<div class="stat-desc">Didn\'t just catch volume, caught the whole encyclopedia (' + maxSpec + ' species).</div>';
                 htmlMarkup += '</div>';
 
-                // 5. Monster Fish Card
+                // Card: Monster Catch
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Monster Catch</div>';
                 htmlMarkup += '<div class="stat-value">' + maxBigAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Landed an absolute unit measuring ' + maxBig + ' cm.</div>';
+                htmlMarkup += '<div class="stat-desc">Bragging rights for the absolute lunker of the weekend (' + maxBig + ' cm).</div>';
                 htmlMarkup += '</div>';
 
-                // 6. Quality Over Quantity Card
+                // Card: Quality Over Quantity
                 if (maxAvgLen > -1) {
                     htmlMarkup += '<div class="stat-card">';
                     htmlMarkup += '<div class="stat-title">Quality Over Quantity</div>';
                     htmlMarkup += '<div class="stat-value">' + maxAvgAngler + '</div>';
-                    htmlMarkup += '<div class="stat-desc">Averaged a massive ' + maxAvgLen.toFixed(1) + ' cm across ' + maxAvgFishCt + ' fish.</div>';
+                    htmlMarkup += '<div class="stat-desc">Skipped the small stuff and hunted for quality. Averaged ' + maxAvgLen.toFixed(1) + ' cm across ' + maxAvgFishCt + ' fish.</div>';
                     htmlMarkup += '</div>';
                 }
 
-                // 7. Sprat King Card
+                // Card: Sprat King
                 if (minAvgLen !== 999999) {
                     htmlMarkup += '<div class="stat-card">';
                     htmlMarkup += '<div class="stat-title">Sprat King</div>';
                     htmlMarkup += '<div class="stat-value">' + minAvgAngler + '</div>';
-                    htmlMarkup += '<div class="stat-desc">Worked hard for ' + minAvgFishCt + ' fish, but averaged only ' + minAvgLen.toFixed(1) + ' cm!</div>';
+                    htmlMarkup += '<div class="stat-desc">Worked incredibly hard for their catch, but mostly hauled in micro-fish! (Avg ' + minAvgLen.toFixed(1) + ' cm).</div>';
                     htmlMarkup += '</div>';
                 }
 
-                // 8. Comeback Kid Card
+                // Card: Comeback Kid
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Comeback Kid</div>';
                 htmlMarkup += '<div class="stat-value">' + comebackAngler + '</div>';
-                htmlMarkup += '<div class="stat-desc">Day 1: ' + comebackD1 + ' ➔ Day 2: ' + comebackD2 + ' (+' + maxImprovement + ' fish)</div>';
+                htmlMarkup += '<div class="stat-desc">Dusted themselves off after Day 1, changed tactics, and rallied back (+' + maxImprovement + ' fish).</div>';
                 htmlMarkup += '</div>';
 
                 htmlMarkup += '</div>';
@@ -949,7 +1019,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.5.0 registered');
+                        console.log('v11.6.0 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
