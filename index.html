@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.3.1</title>
+    <title>SPRA Scottish Shore 2026 | v11.4.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -357,7 +357,7 @@
             <span>Team Winners</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS LIVE', 'Secret Pairs')">
+        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
             <span>Secret Pairs</span>
             <span style="color: var(--accent-cyan)">VIEW ❯</span>
         </div>
@@ -392,7 +392,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.3.1
+        Official Results Portal | v11.4.0
     </footer>
 
     <script>
@@ -417,7 +417,8 @@
                 endCol: 4, 
                 skipRows: 1 
             },      
-            'SECRET PAIRS LIVE': { 
+            // Tab config updated to 'SECRET PAIRS'
+            'SECRET PAIRS': { 
                 startCol: 4, 
                 endCol: 6, 
                 skipRows: 2 
@@ -432,13 +433,14 @@
             }                  
         };
 
+        // Whitelist array updated to 'SECRET PAIRS'
         const ALLOWED_TABS = [
             'ZONE 1', 
             'ZONE 2', 
             'INDIVIDUAL RESULT', 
             'TEAM RESULT',
             'BIGGEST FISH',
-            'SECRET PAIRS LIVE'
+            'SECRET PAIRS'
         ];
 
         let cachedWorkbook = null;
@@ -683,7 +685,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.3.1 registered');
+                        console.log('v11.4.0 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
