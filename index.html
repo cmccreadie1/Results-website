@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.4.2</title>
+    <title>SPRA Scottish Shore 2026 | v11.4.3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -392,7 +392,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.4.2
+        Official Results Portal | v11.4.3
     </footer>
 
     <script>
@@ -417,8 +417,8 @@
                 skipRows: 1 
             },      
             'SECRET PAIRS': { 
-                startCol: 4, 
-                endCol: 6, 
+                startCol: 0, // Updated to look at column A
+                endCol: 2,   // Updated to end at column C
                 skipRows: 2 
             }, 
             'ZONE 1': { 
@@ -583,7 +583,6 @@
                             let isEmpty = true;
                             for (let c = 0; c < slicedRow.length; c++) {
                                 let checkContent = String(slicedRow[c]).trim();
-                                // NEW LOGIC: Ignore empty strings AND the '///' remnants
                                 if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
                                     isEmpty = false;
                                 }
@@ -661,7 +660,6 @@
                             let isEmpty = true;
                             for (let c = 0; c < slicedRow.length; c++) {
                                 let checkContent = String(slicedRow[c]).trim();
-                                // NEW LOGIC: Ignore empty strings AND the '///' remnants
                                 if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
                                     isEmpty = false;
                                 }
@@ -713,7 +711,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.4.2 registered');
+                        console.log('v11.4.3 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
