@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.6.6</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -93,31 +93,37 @@
             animation: flash 2s infinite;
         }
 
-        /* Navigation Menu Stack - Spacing Tightened */
+        /* Navigation Menu Stack - Horizontal Refinement */
         .button-stack { 
             width: 100%; 
             max-width: 450px; 
             padding: 0 15px; 
             display: flex; 
-            flex-direction: column; 
-            gap: 8px; 
+            flex-direction: row; 
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px; 
         }
         .slide-btn {
             background: var(--surface-color);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-            padding: 15px 20px;
+            padding: 15px 12px;
             border-radius: 10px;
             color: var(--text-main);
             cursor: pointer;
             font-family: 'Oswald', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             display: flex; 
-            justify-content: space-between; 
+            flex-direction: column;
+            justify-content: center; 
             align-items: center;
+            text-align: center;
             transition: all 0.1s ease;
+            flex: 0 0 calc(50% - 5px);
+            gap: 4px;
         }
         .slide-btn:active { 
             transform: scale(0.96); 
@@ -125,12 +131,6 @@
             color: #000;
             border-color: #fff;
             box-shadow: 0 0 20px var(--accent-cyan);
-        }
-        .divider { 
-            height: 1px; 
-            background: rgba(255,255,255,0.2); 
-            margin: 5px 0; 
-            width: 100%; 
         }
 
         /* Full Screen Native Table Viewer Overlay */
@@ -366,6 +366,42 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* NEW: CSS Bar Charts */
+        .bar-chart-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 8px 0;
+            height: 32px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .bar-chart-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: width 1s ease-out;
+        }
+        .bar-chart-label-right {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 700;
+            text-shadow: 0 0 5px #000;
+        }
+
         .footer { 
             margin-top: auto; 
             padding: 30px; 
@@ -399,40 +435,32 @@
     <nav class="button-stack">
         <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span>Individual Winner</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
         <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
             <span>Team Winners</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
-            <span>Secret Pairs</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
-        </div>
-        
-        <div class="divider"></div>
-
         <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span>Zone Day 1</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
         <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
             <span>Zone Day 2</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
-        
-        <div class="divider"></div>
-
+        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
+            <span>Secret Pairs</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
+        </div>
         <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
             <span>Biggest Fish</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
         
-        <div class="divider"></div>
-        
-        <div class="slide-btn" onclick="loadMatchStats('Match Stats')">
+        <div class="slide-btn" onclick="loadMatchStats('Match Stats')" style="flex: 0 0 100%;">
             <span>Match Stats</span>
-            <span style="color: var(--accent-cyan)">VIEW ❯</span>
+            <span style="color: var(--accent-cyan); font-size: 0.8rem;">VIEW ❯</span>
         </div>
     </nav>
 
@@ -447,7 +475,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.6.6
+        Official Results Portal | v11.7.0
     </footer>
 
     <script>
@@ -563,13 +591,12 @@
             });
         }
 
-        // Match Stats Dashboard Function for v11.6.6
+        // UPDATED: Match Stats Dashboard Function for v11.7.0
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
             
-            // Hide the search box and scroll hint for the dashboard
             document.getElementById('search-box').style.display = 'none';
             document.querySelector('.scroll-hint').style.display = 'none';
             document.getElementById('search-box').value = '';
@@ -635,10 +662,7 @@
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
 
-                    // USER REQUIREMENT: Ignore anyone with 0 fish (The Wooden Spoon)
-                    if (cFish === 0) {
-                        continue; 
-                    }
+                    if (cFish === 0) continue; 
                     
                     scoringAnglersCount++;
                     totalFish += cFish;
@@ -655,18 +679,14 @@
                 let dailyShift = day2Fish - day1Fish;
                 
                 let d1AvgSize = 0;
-                if (day1Fish > 0) {
-                    d1AvgSize = day1LengthTotal / day1Fish;
-                }
+                if (day1Fish > 0) d1AvgSize = day1LengthTotal / day1Fish;
                 
                 let d2AvgSize = 0;
-                if (day2Fish > 0) {
-                    d2AvgSize = day2LengthTotal / day2Fish;
-                }
+                if (day2Fish > 0) d2AvgSize = day2LengthTotal / day2Fish;
                 
                 let overallSizeVariance = d2AvgSize - d1AvgSize;
 
-                // 2. Process Zone Wars (Read ZONE 1 & ZONE 2 silently for comprehensive profiles)
+                // 2. Process Zone Wars 
                 function processZoneSheet(wBook, targetSheet) {
                     let totals = { 
                         'Red Zone': { fish: 0, length: 0 }, 
@@ -685,7 +705,6 @@
                         let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
                         let zProcessedData = zRawData.slice(1);
                         
-                        // FIX: We skip index 0 (Rank) entirely so we can ignore rows based on pure data.
                         const zBlocks = [
                             { name: 'Red Zone', start: 1, end: 4 },
                             { name: 'Yellow Zone', start: 6, end: 9 },
@@ -699,7 +718,6 @@
                                 let row = zProcessedData[r];
                                 let slicedRow = row.slice(block.start, block.end + 1);
                                 if (slicedRow.length >= 4) {
-                                    // P.N.B.S is located at slicedRow[2] since we start at index 1
                                     let pnbs = String(slicedRow[2]).trim();
                                     if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
                                         let parts = pnbs.split("/");
@@ -722,18 +740,26 @@
                 let d1ZoneTotals = processZoneSheet(workbook, 'ZONE 1');
                 let d2ZoneTotals = processZoneSheet(workbook, 'ZONE 2');
 
+                let d1MaxFish = 0;
+                let d2MaxFish = 0;
+                let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+                
+                for (let i = 0; i < zoneKeys.length; i++) {
+                    let zName = zoneKeys[i];
+                    if (d1ZoneTotals[zName].fish > d1MaxFish) d1MaxFish = d1ZoneTotals[zName].fish;
+                    if (d2ZoneTotals[zName].fish > d2MaxFish) d2MaxFish = d2ZoneTotals[zName].fish;
+                }
+
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                // SECTION: CLEAN FIELD DATA CARDS
+                // SECTION 1: CLEAN FIELD DATA CARDS
                 
-                // Card: Total Volume
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Total Volume</div>';
                 htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
                 htmlMarkup += '<div class="stat-desc">Total fish caught across both days (Day 1: ' + day1Fish + ' | Day 2: ' + day2Fish + ').</div>';
                 htmlMarkup += '</div>';
 
-                // Card: Cumulative Length
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Cumulative Length</div>';
@@ -741,21 +767,18 @@
                 htmlMarkup += '<div class="stat-desc">Sum length of all recorded fish over the competition.</div>';
                 htmlMarkup += '</div>';
                 
-                // Card: Competitor Average
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Competitor Average</div>';
                 htmlMarkup += '<div class="stat-value">' + competitorAverage.toFixed(1) + ' <span class="stat-sub">Fish</span></div>';
                 htmlMarkup += '<div class="stat-desc">Mean catch per scoring angler.</div>';
                 htmlMarkup += '</div>';
                 
-                // Card: Average Specimen Size
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Average Specimen</div>';
                 htmlMarkup += '<div class="stat-value">' + avgSpecimenSize.toFixed(1) + ' <span class="stat-sub">cm</span></div>';
                 htmlMarkup += '<div class="stat-desc">Mean length of a single fish across the entire competition.</div>';
                 htmlMarkup += '</div>';
                 
-                // Card: The Daily Shift
                 let dailyShiftText = "";
                 if (dailyShift > 0) {
                     dailyShiftText = "Yield increased by " + dailyShift + " fish on Day 2.";
@@ -770,7 +793,6 @@
                 htmlMarkup += '<div class="stat-desc">Variance in total field yield between sessions. ' + dailyShiftText + '</div>';
                 htmlMarkup += '</div>';
 
-                // Card: Overall Size Variance
                 let sizeVarText = "";
                 if (overallSizeVariance > 0) {
                     sizeVarText = "Average fish size increased by " + overallSizeVariance.toFixed(1) + " cm on Day 2.";
@@ -784,17 +806,52 @@
                 htmlMarkup += '<div class="stat-value">' + (overallSizeVariance > 0 ? '+' : '') + overallSizeVariance.toFixed(1) + ' <span class="stat-sub">cm</span></div>';
                 htmlMarkup += '<div class="stat-desc">Change in average specimen length from Day 1 to Day 2. ' + sizeVarText + '</div>';
                 htmlMarkup += '</div>';
-                
-                // SECTION: ZONE PROFILE CARDS
-                
-                const zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+
+                // SECTION 2: ZONE WARS (4-Way Comparisons)
                 const zoneColors = {
                     'Red Zone': '#ff5252',
                     'Blue Zone': '#448aff',
                     'Green Zone': '#00e676',
                     'Yellow Zone': '#ffd600'
                 };
+
+                // Day 1 Zone Wars
+                htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
+                htmlMarkup += '<div class="stat-title">Day 1 Zone Wars</div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Saturday.</div>';
+                for (let i = 0; i < zoneKeys.length; i++) {
+                    let zName = zoneKeys[i];
+                    let zFish = d1ZoneTotals[zName].fish;
+                    let percent = d1MaxFish > 0 ? (zFish / d1MaxFish) * 100 : 0;
+                    let overallPct = day1Fish > 0 ? ((zFish / day1Fish) * 100).toFixed(1) : 0;
+                    let textColor = zName === 'Yellow Zone' ? '#000' : '#fff';
+                    
+                    htmlMarkup += '<div class="bar-chart-container">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
+                    htmlMarkup += '</div>';
+                }
+                htmlMarkup += '</div>';
+
+                // Day 2 Zone Wars
+                htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
+                htmlMarkup += '<div class="stat-title">Day 2 Zone Wars</div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Sunday.</div>';
+                for (let i = 0; i < zoneKeys.length; i++) {
+                    let zName = zoneKeys[i];
+                    let zFish = d2ZoneTotals[zName].fish;
+                    let percent = d2MaxFish > 0 ? (zFish / d2MaxFish) * 100 : 0;
+                    let overallPct = day2Fish > 0 ? ((zFish / day2Fish) * 100).toFixed(1) : 0;
+                    let textColor = zName === 'Yellow Zone' ? '#000' : '#fff';
+                    
+                    htmlMarkup += '<div class="bar-chart-container">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
+                    htmlMarkup += '</div>';
+                }
+                htmlMarkup += '</div>';
                 
+                // SECTION 3: INDIVIDUAL ZONE PROFILES (Bar Charts)
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     let d1F = d1ZoneTotals[zName].fish;
@@ -807,16 +864,35 @@
                     let totalZMeters = (totalZLen / 100).toFixed(2);
                     
                     let d1ZAvg = 0;
-                    if (d1F > 0) { d1ZAvg = (d1L / d1F).toFixed(1); }
+                    if (d1F > 0) d1ZAvg = (d1L / d1F).toFixed(1); 
                     
                     let d2ZAvg = 0;
-                    if (d2F > 0) { d2ZAvg = (d2L / d2F).toFixed(1); }
+                    if (d2F > 0) d2ZAvg = (d2L / d2F).toFixed(1); 
+
+                    let maxForThisZone = Math.max(d1F, d2F);
+                    let pctD1 = maxForThisZone > 0 ? (d1F / maxForThisZone) * 100 : 0;
+                    let pctD2 = maxForThisZone > 0 ? (d2F / maxForThisZone) * 100 : 0;
+
+                    let d1PctOverall = day1Fish > 0 ? ((d1F / day1Fish) * 100).toFixed(1) : 0;
+                    let d2PctOverall = day2Fish > 0 ? ((d2F / day2Fish) * 100).toFixed(1) : 0;
+                    let barTextColor = zName === 'Yellow Zone' ? '#000' : '#fff';
                     
-                    htmlMarkup += '<div class="stat-card">';
+                    htmlMarkup += '<div class="stat-card" style="padding-bottom: 25px;">';
                     htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + ';">' + zName.toUpperCase() + '</div>';
                     htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + totalZFish + ' <span class="stat-sub">Fish</span> | ' + totalZMeters + ' <span class="stat-sub">m</span></div>';
-                    htmlMarkup += '<div class="stat-desc" style="margin-top: 10px; color: #fff;"><strong>Day 1:</strong> ' + d1F + ' Fish (Avg: ' + d1ZAvg + ' cm)</div>';
-                    htmlMarkup += '<div class="stat-desc" style="color: #fff;"><strong>Day 2:</strong> ' + d2F + ' Fish (Avg: ' + d2ZAvg + ' cm)</div>';
+                    
+                    htmlMarkup += '<div class="bar-chart-container" style="margin-top: 20px;">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + pctD1 + '%; background: ' + zoneColors[zName] + '; color: ' + barTextColor + ';">Day 1: ' + d1F + ' Fish</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">' + d1PctOverall + '%</div>';
+                    htmlMarkup += '</div>';
+                    htmlMarkup += '<div class="stat-desc" style="color: #ccc; text-align: left; margin-bottom: 10px; margin-top: 4px; padding-left: 5px;">Avg Size: ' + d1ZAvg + ' cm</div>';
+
+                    htmlMarkup += '<div class="bar-chart-container">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + pctD2 + '%; background: ' + zoneColors[zName] + '; color: ' + barTextColor + ';">Day 2: ' + d2F + ' Fish</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">' + d2PctOverall + '%</div>';
+                    htmlMarkup += '</div>';
+                    htmlMarkup += '<div class="stat-desc" style="color: #ccc; text-align: left; margin-top: 4px; padding-left: 5px;">Avg Size: ' + d2ZAvg + ' cm</div>';
+                    
                     htmlMarkup += '</div>';
                 }
 
@@ -896,7 +972,6 @@
                 const processedData = rawData.slice(limits.skipRows || 0);
 
                 if (limits.isMultiZone === true) {
-                    // FIX: Reverted to start at index 1 to ignore the Rank column and fix empty row logic
                     const zoneBlocks = [
                         { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
                         { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, 
@@ -931,7 +1006,8 @@
                                 let pnbs = slicedRow[2];
                                 let pt = slicedRow[3];
                                 
-                                // Rename headers automatically
+                                if (String(team).trim().toUpperCase() === "SOLO") team = "";
+                                
                                 if (isFirstRow === true) {
                                     if (String(pnbs).trim().toUpperCase() === "P.N.B.S") {
                                         pnbs = "TIE BREAKERS";
@@ -1002,6 +1078,8 @@
                                 isEmpty = false;
                             }
                             if (isEmpty === true) continue;
+                            
+                            if (String(colC).trim().toUpperCase() === "SOLO") colC = "";
 
                             if (isFirstRow === true) {
                                 slicedRow = ["RANK", "PTS", "ANGLER NAME", "TEAM", "TIE BREAKERS"];
@@ -1066,7 +1144,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.6.6 registered');
+                        console.log('v11.7.0 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
