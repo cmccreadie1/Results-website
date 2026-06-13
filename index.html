@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.2</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.3</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.2
+        Official Results Portal | v11.7.3
     </footer>
 
     <script>
@@ -601,7 +601,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.2
+        // UPDATED: Match Stats Dashboard Function for v11.7.3
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -843,38 +843,34 @@
                 htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 242, 255, 0.05);">';
                 htmlMarkup += '<div class="stat-title">The Field</div>';
                 htmlMarkup += '<div class="stat-value">' + totalAnglers + ' <span class="stat-sub">Competitors</span></div>';
-                htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;">Roster Breakdown: <strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
+                htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
                 htmlMarkup += '</div>';
 
                 // SECTION 2: FIELD DATA
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Total Volume</div>';
+                htmlMarkup += '<div class="stat-title">Total Fish</div>';
                 htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
                 htmlMarkup += '<div class="stat-desc">Total fish caught across both days (Day 1: ' + day1Fish + ' | Day 2: ' + day2Fish + ').</div>';
                 htmlMarkup += '</div>';
 
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Cumulative Length</div>';
+                htmlMarkup += '<div class="stat-title">Total Length</div>';
                 htmlMarkup += '<div class="stat-value">' + totalMeters + ' <span class="stat-sub">Meters</span></div>';
                 htmlMarkup += '<div class="stat-desc">Sum length of all recorded fish over the competition.</div>';
                 htmlMarkup += '</div>';
                 
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Competitor Average</div>';
+                htmlMarkup += '<div class="stat-title">Average Fish Count</div>';
                 htmlMarkup += '<div class="stat-value">' + competitorAverage.toFixed(1) + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">Mean catch per scoring angler.</div>';
+                htmlMarkup += '<div class="stat-desc">Average catch per scoring angler.</div>';
                 htmlMarkup += '</div>';
                 
+                // COMBINED DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Catch Volume Shift</div>';
-                htmlMarkup += '<div class="stat-value">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">' + shiftFishText + '</div>';
-                htmlMarkup += '</div>';
-
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Total Length Shift</div>';
-                htmlMarkup += '<div class="stat-value">' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
+                htmlMarkup += '<div class="stat-title">Daily Changes</div>';
+                htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span> | ' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 8px;">' + shiftFishText + '</div>';
                 htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
@@ -950,7 +946,7 @@
                     htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: #fff; line-height: 1.6;">';
                     
                     htmlMarkup += '<div class="zone-text-row">';
-                    htmlMarkup += '<span><strong>Overall Yield:</strong></span>';
+                    htmlMarkup += '<span><strong>Overall Fish Count:</strong></span>';
                     htmlMarkup += '<span>' + totalZFish + ' Fish | ' + totalZMeters + ' m</span>';
                     htmlMarkup += '</div>';
 
@@ -964,7 +960,7 @@
                     htmlMarkup += '<div style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;"></div>';
 
                     htmlMarkup += '<div class="zone-text-row">';
-                    htmlMarkup += '<span><strong>Zone Average:</strong></span>';
+                    htmlMarkup += '<span><strong>Average Fish Count:</strong></span>';
                     htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish</span>';
                     htmlMarkup += '</div>';
 
@@ -1007,7 +1003,6 @@
                 htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
                 htmlMarkup += '</li>';
 
-                // Smart trigger for Regional Powerhouse
                 if (powerhouseWord !== null) {
                     htmlMarkup += '<li>';
                     htmlMarkup += '<strong style="color: var(--accent-cyan);">🏢 The Regional Powerhouse:</strong><br>';
@@ -1257,7 +1252,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.2 registered');
+                        console.log('v11.7.3 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
