@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.0</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -296,11 +296,11 @@
             position: sticky; 
             top: 0; 
             z-index: 10;
-            text-align: center; /* Enforces Center Justification */
+            text-align: center; 
         }
         td { 
             padding: 14px 12px; 
-            text-align: center; /* Enforces Center Justification */
+            text-align: center; 
         }
         tr:nth-child(even) td { background: rgba(255, 255, 255, 0.08); }
         tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
@@ -366,7 +366,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* NEW: CSS Bar Charts */
+        /* CSS Bar Charts for Zone Performance */
         .bar-chart-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
@@ -400,6 +400,17 @@
             color: rgba(255,255,255,0.9);
             font-weight: 700;
             text-shadow: 0 0 5px #000;
+        }
+        
+        .zone-text-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #fff;
         }
 
         .footer { 
@@ -475,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.0
+        Official Results Portal | v11.7.1
     </footer>
 
     <script>
@@ -591,7 +602,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.0
+        // UPDATED: Match Stats Dashboard Function for v11.7.1
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -620,7 +631,7 @@
             try {
                 const workbook = await fetchWorkbook();
                 
-                // 1. Process Individual Stats for Field Data
+                // 1. Process Individual Stats for Field Data & Insights
                 let foundSheet = null;
                 for (let i = 0; i < workbook.SheetNames.length; i++) {
                     let sheetName = workbook.SheetNames[i];
@@ -644,6 +655,10 @@
                 let day1LengthTotal = 0;
                 let day2LengthTotal = 0;
                 let scoringAnglersCount = 0;
+                
+                // Trackers for Field Insights
+                let pointFrequencies = {};
+                let sizeBins = { '<20': 0, '20-30': 0, '30-40': 0, '40+': 0 };
 
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
@@ -659,6 +674,7 @@
                     let d2Len = parseFloat(row[11]) || 0;
                     let d2Fish = parseFloat(row[12]) || 0;
                     
+                    let zonePts = parseFloat(row[16]);
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
 
@@ -672,8 +688,46 @@
                     totalLengthCm += cLen;
                     day1LengthTotal += d1Len;
                     day2LengthTotal += d2Len;
+                    
+                    // Count frequencies for Photo Finishes & Gridlock
+                    if (!isNaN(zonePts)) {
+                        pointFrequencies[zonePts] = (pointFrequencies[zonePts] || 0) + 1;
+                    }
+                    
+                    // Size Distribution calculation based on angler's average
+                    let avgSize = cLen / cFish;
+                    if (avgSize < 20) {
+                        sizeBins['<20'] += cFish;
+                    } else if (avgSize >= 20 && avgSize < 30) {
+                        sizeBins['20-30'] += cFish;
+                    } else if (avgSize >= 30 && avgSize < 40) {
+                        sizeBins['30-40'] += cFish;
+                    } else {
+                        sizeBins['40+'] += cFish;
+                    }
                 }
                 
+                // Process Field Insights Math
+                let totalTieBreakerAnglers = 0;
+                let maxTiedAnglers = 0;
+                let gridlockPoints = 0;
+                
+                for (const pt in pointFrequencies) {
+                    let anglersWithPoints = pointFrequencies[pt];
+                    if (anglersWithPoints > 1) {
+                        totalTieBreakerAnglers += anglersWithPoints;
+                    }
+                    if (anglersWithPoints > maxTiedAnglers) {
+                        maxTiedAnglers = anglersWithPoints;
+                        gridlockPoints = pt;
+                    }
+                }
+                
+                let pctUnder20 = totalFish > 0 ? ((sizeBins['<20'] / totalFish) * 100).toFixed(1) : 0;
+                let pct20to30 = totalFish > 0 ? ((sizeBins['20-30'] / totalFish) * 100).toFixed(1) : 0;
+                let pct30to40 = totalFish > 0 ? ((sizeBins['30-40'] / totalFish) * 100).toFixed(1) : 0;
+                let pct40Plus = totalFish > 0 ? ((sizeBins['40+'] / totalFish) * 100).toFixed(1) : 0;
+
                 let competitorAverage = totalFish / scoringAnglersCount;
                 let avgSpecimenSize = totalLengthCm / totalFish;
                 let dailyShift = day2Fish - day1Fish;
@@ -686,13 +740,13 @@
                 
                 let overallSizeVariance = d2AvgSize - d1AvgSize;
 
-                // 2. Process Zone Wars 
-                function processZoneSheet(wBook, targetSheet) {
+                // 2. Process Zone Wars and Text Profiles
+                function processZoneSheetDetailed(wBook, targetSheet) {
                     let totals = { 
-                        'Red Zone': { fish: 0, length: 0 }, 
-                        'Yellow Zone': { fish: 0, length: 0 }, 
-                        'Green Zone': { fish: 0, length: 0 }, 
-                        'Blue Zone': { fish: 0, length: 0 } 
+                        'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
+                        'Yellow Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
+                        'Green Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
+                        'Blue Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 } 
                     };
                     let zSheetName = null;
                     for (let i = 0; i < wBook.SheetNames.length; i++) {
@@ -724,9 +778,13 @@
                                         if (parts.length >= 2) {
                                             let lengthVal = parseFloat(parts[0]);
                                             let fishCt = parseFloat(parts[1]);
-                                            if (isNaN(fishCt) === false && isNaN(lengthVal) === false) {
+                                            if (isNaN(fishCt) === false && fishCt > 0) {
                                                 totals[block.name].fish += fishCt;
                                                 totals[block.name].length += lengthVal;
+                                                totals[block.name].anglers += 1;
+                                                if (fishCt > totals[block.name].maxFish) {
+                                                    totals[block.name].maxFish = fishCt;
+                                                }
                                             }
                                         }
                                     }
@@ -737,8 +795,8 @@
                     return totals;
                 }
                 
-                let d1ZoneTotals = processZoneSheet(workbook, 'ZONE 1');
-                let d2ZoneTotals = processZoneSheet(workbook, 'ZONE 2');
+                let d1ZoneTotals = processZoneSheetDetailed(workbook, 'ZONE 1');
+                let d2ZoneTotals = processZoneSheetDetailed(workbook, 'ZONE 2');
 
                 let d1MaxFish = 0;
                 let d2MaxFish = 0;
@@ -807,7 +865,7 @@
                 htmlMarkup += '<div class="stat-desc">Change in average specimen length from Day 1 to Day 2. ' + sizeVarText + '</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 2: ZONE WARS (4-Way Comparisons)
+                // SECTION 2: ZONE PERFORMANCE (4-Way CSS Comparisons)
                 const zoneColors = {
                     'Red Zone': '#ff5252',
                     'Blue Zone': '#448aff',
@@ -815,10 +873,10 @@
                     'Yellow Zone': '#ffd600'
                 };
 
-                // Day 1 Zone Wars
+                // Day 1 Zone Performance
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
-                htmlMarkup += '<div class="stat-title">Day 1 Zone Wars</div>';
-                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Saturday.</div>';
+                htmlMarkup += '<div class="stat-title">Day 1 Zone Performance</div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 1.</div>';
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     let zFish = d1ZoneTotals[zName].fish;
@@ -833,10 +891,10 @@
                 }
                 htmlMarkup += '</div>';
 
-                // Day 2 Zone Wars
+                // Day 2 Zone Performance
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
-                htmlMarkup += '<div class="stat-title">Day 2 Zone Wars</div>';
-                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Sunday.</div>';
+                htmlMarkup += '<div class="stat-title">Day 2 Zone Performance</div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 2.</div>';
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     let zFish = d2ZoneTotals[zName].fish;
@@ -851,50 +909,91 @@
                 }
                 htmlMarkup += '</div>';
                 
-                // SECTION 3: INDIVIDUAL ZONE PROFILES (Bar Charts)
+                // SECTION 3: INDIVIDUAL ZONE PROFILES (Clean Text Only)
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
+                    
                     let d1F = d1ZoneTotals[zName].fish;
                     let d1L = d1ZoneTotals[zName].length;
+                    let d1A = d1ZoneTotals[zName].anglers;
+                    let d1Max = d1ZoneTotals[zName].maxFish;
+                    
                     let d2F = d2ZoneTotals[zName].fish;
                     let d2L = d2ZoneTotals[zName].length;
+                    let d2A = d2ZoneTotals[zName].anglers;
+                    let d2Max = d2ZoneTotals[zName].maxFish;
                     
                     let totalZFish = d1F + d2F;
                     let totalZLen = d1L + d2L;
                     let totalZMeters = (totalZLen / 100).toFixed(2);
+                    let totalZAnglers = d1A + d2A;
                     
-                    let d1ZAvg = 0;
-                    if (d1F > 0) d1ZAvg = (d1L / d1F).toFixed(1); 
+                    let d1ZAvg = d1F > 0 ? (d1L / d1F).toFixed(1) : 0;
+                    let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : 0;
                     
-                    let d2ZAvg = 0;
-                    if (d2F > 0) d2ZAvg = (d2L / d2F).toFixed(1); 
+                    let zoneAvg = totalZAnglers > 0 ? (totalZFish / totalZAnglers) : 0;
+                    let topIndivCatch = Math.max(d1Max, d2Max);
 
-                    let maxForThisZone = Math.max(d1F, d2F);
-                    let pctD1 = maxForThisZone > 0 ? (d1F / maxForThisZone) * 100 : 0;
-                    let pctD2 = maxForThisZone > 0 ? (d2F / maxForThisZone) * 100 : 0;
-
-                    let d1PctOverall = day1Fish > 0 ? ((d1F / day1Fish) * 100).toFixed(1) : 0;
-                    let d2PctOverall = day2Fish > 0 ? ((d2F / day2Fish) * 100).toFixed(1) : 0;
-                    let barTextColor = zName === 'Yellow Zone' ? '#000' : '#fff';
+                    htmlMarkup += '<div class="stat-card" style="padding-bottom: 25px; text-align: left;">';
+                    htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px;">' + zName.toUpperCase() + '</div>';
+                    htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: #fff; line-height: 1.6;">';
                     
-                    htmlMarkup += '<div class="stat-card" style="padding-bottom: 25px;">';
-                    htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + ';">' + zName.toUpperCase() + '</div>';
-                    htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + totalZFish + ' <span class="stat-sub">Fish</span> | ' + totalZMeters + ' <span class="stat-sub">m</span></div>';
-                    
-                    htmlMarkup += '<div class="bar-chart-container" style="margin-top: 20px;">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + pctD1 + '%; background: ' + zoneColors[zName] + '; color: ' + barTextColor + ';">Day 1: ' + d1F + ' Fish</div>';
-                    htmlMarkup += '<div class="bar-chart-label-right">' + d1PctOverall + '%</div>';
+                    htmlMarkup += '<div class="zone-text-row">';
+                    htmlMarkup += '<span><strong>Overall Yield:</strong></span>';
+                    htmlMarkup += '<span>' + totalZFish + ' Fish | ' + totalZMeters + ' m</span>';
                     htmlMarkup += '</div>';
-                    htmlMarkup += '<div class="stat-desc" style="color: #ccc; text-align: left; margin-bottom: 10px; margin-top: 4px; padding-left: 5px;">Avg Size: ' + d1ZAvg + ' cm</div>';
 
-                    htmlMarkup += '<div class="bar-chart-container">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + pctD2 + '%; background: ' + zoneColors[zName] + '; color: ' + barTextColor + ';">Day 2: ' + d2F + ' Fish</div>';
-                    htmlMarkup += '<div class="bar-chart-label-right">' + d2PctOverall + '%</div>';
+                    htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">';
+                    htmlMarkup += '<span><strong>Session Breakdown:</strong></span>';
+                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #ccc; font-size: 0.85rem;">';
+                    htmlMarkup += '<li>Day 1: ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)</li>';
+                    htmlMarkup += '<li style="margin-top: 3px;">Day 2: ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)</li>';
+                    htmlMarkup += '</ul>';
                     htmlMarkup += '</div>';
-                    htmlMarkup += '<div class="stat-desc" style="color: #ccc; text-align: left; margin-top: 4px; padding-left: 5px;">Avg Size: ' + d2ZAvg + ' cm</div>';
+                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;"></div>';
+
+                    htmlMarkup += '<div class="zone-text-row">';
+                    htmlMarkup += '<span><strong>Zone Average:</strong></span>';
+                    htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish</span>';
+                    htmlMarkup += '</div>';
+
+                    htmlMarkup += '<div class="zone-text-row" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">';
+                    htmlMarkup += '<span><strong>Top Individual Catch:</strong></span>';
+                    htmlMarkup += '<span style="color: ' + zoneColors[zName] + ';">' + topIndivCatch + ' Fish</span>';
+                    htmlMarkup += '</div>';
                     
+                    htmlMarkup += '</div>';
                     htmlMarkup += '</div>';
                 }
+
+                // SECTION 4: FIELD INSIGHTS (Fun Facts / Match Dynamics)
+                htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.6);">';
+                htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 20px;">Field Insights</div>';
+                htmlMarkup += '<ul style="list-style-type: none; padding: 0; color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.6;">';
+                
+                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">📸 Photo Finishes:</strong><br>';
+                htmlMarkup += totalTieBreakerAnglers + ' final positions across the leaderboard had to be decided purely by countback tie-breakers.';
+                htmlMarkup += '</li>';
+
+                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Gridlock:</strong><br>';
+                htmlMarkup += 'The most fiercely contested score was <strong>' + gridlockPoints + ' points</strong>, with <strong>' + maxTiedAnglers + '</strong> different anglers all locking horns on that exact total.';
+                htmlMarkup += '</li>';
+
+                htmlMarkup += '<li>';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">📏 Size Distribution:</strong><br>';
+                htmlMarkup += '<span style="font-size: 0.8rem; color: #aaa;">(Based on individual angler averages)</span>';
+                htmlMarkup += '<ul style="margin-top: 8px; margin-left: 5px; color: #ccc; list-style-type: square; padding-left: 20px;">';
+                htmlMarkup += '<li style="margin-bottom: 4px;">Under 20 cm: <strong style="color:#fff;">' + pctUnder20 + '%</strong></li>';
+                htmlMarkup += '<li style="margin-bottom: 4px;">20 - 30 cm: <strong style="color:#fff;">' + pct20to30 + '%</strong></li>';
+                htmlMarkup += '<li style="margin-bottom: 4px;">30 - 40 cm: <strong style="color:#fff;">' + pct30to40 + '%</strong></li>';
+                htmlMarkup += '<li>40 cm + (Specimen): <strong style="color:#fff;">' + pct40Plus + '%</strong></li>';
+                htmlMarkup += '</ul>';
+                htmlMarkup += '</li>';
+
+                htmlMarkup += '</ul>';
+                htmlMarkup += '</div>';
 
                 htmlMarkup += '</div>';
                 
@@ -1144,7 +1243,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.0 registered');
+                        console.log('v11.7.1 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
