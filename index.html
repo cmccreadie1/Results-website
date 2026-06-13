@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.3</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.6</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.3
+        Official Results Portal | v11.7.6
     </footer>
 
     <script>
@@ -601,7 +601,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.3
+        // UPDATED: Match Stats Dashboard Function for v11.7.6 (Umbrella Shield Integration)
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -630,7 +630,6 @@
             try {
                 const workbook = await fetchWorkbook();
                 
-                // 1. Process Individual Stats for Field Data & Insights
                 let foundSheet = null;
                 for (let i = 0; i < workbook.SheetNames.length; i++) {
                     let sheetName = workbook.SheetNames[i];
@@ -661,9 +660,9 @@
                 
                 let pointFrequencies = {};
                 let teamLengths = {};
-                let teamFishCounts = {};
-                let teamOriginalNames = {};
                 let individualPts = [];
+                let detailedAnglers = [];
+                let exactTeamStats = {};
 
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
@@ -671,7 +670,11 @@
                     
                     if (name === "" || name === "ANGLER NAME") continue;
 
-                    let team = String(row[2] || "").trim();
+                    let rankStr = String(row[0] || "").trim();
+                    let rankVal = parseInt(rankStr.replace(/[^0-9]/g, ''));
+                    let teamRaw = String(row[2] || "").trim().toUpperCase();
+                    let team = teamRaw === "SOLO" ? "" : teamRaw;
+                    
                     let d1Len = parseFloat(row[5]) || 0;
                     let d1Fish = parseFloat(row[6]) || 0;
                     let d2Len = parseFloat(row[11]) || 0;
@@ -679,6 +682,8 @@
                     let zonePts = parseFloat(row[16]);
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
+                    let biggestFish = parseFloat(row[19]) || 0;
+                    let dailySpecies = parseFloat(row[20]) || 0;
 
                     totalAnglers++;
                     if (cFish === 0) blankers++;
@@ -695,24 +700,65 @@
                         individualPts.push(zonePts);
                     }
                     
-                    if (team.toUpperCase() === "SOLO" || team === "") {
+                    if (!isNaN(rankVal)) {
+                        detailedAnglers.push({
+                            rank: rankVal,
+                            pts: zonePts,
+                            len: cLen,
+                            fish: cFish,
+                            biggest: biggestFish,
+                            species: dailySpecies
+                        });
+                    }
+
+                    if (team === "") {
                         soloCount++;
                     } else {
-                        teamsSet.add(team.toUpperCase());
-                        let firstWord = team.trim().split(" ")[0].toUpperCase();
+                        teamsSet.add(team);
+                        if (!exactTeamStats[team]) exactTeamStats[team] = { len: 0, fish: 0 };
+                        exactTeamStats[team].len += cLen;
+                        exactTeamStats[team].fish += cFish;
                         
-                        if (!teamFishCounts[firstWord]) teamFishCounts[firstWord] = 0;
-                        teamFishCounts[firstWord] += cFish;
-                        
-                        if (!teamLengths[team.toUpperCase()]) teamLengths[team.toUpperCase()] = 0;
-                        teamLengths[team.toUpperCase()] += cLen;
-                        
-                        if (!teamOriginalNames[firstWord]) teamOriginalNames[firstWord] = new Set();
-                        teamOriginalNames[firstWord].add(team.toUpperCase());
+                        if (!teamLengths[team]) teamLengths[team] = 0;
+                        teamLengths[team] += cLen;
                     }
                 }
                 
-                // Match Insights Math
+                // Construct Parent Umbrellas for the Mini-Tournament
+                let parentUmbrellas = {};
+                for (let t in exactTeamStats) {
+                    let parentName = t;
+                    // Trigger: Find team names ending in space + single letter (A-Z)
+                    let match = t.match(/^(.*?)\s+[A-Z]$/i);
+                    if (match) {
+                        parentName = match[1].trim();
+                    }
+
+                    if (!parentUmbrellas[parentName]) {
+                        parentUmbrellas[parentName] = { squads: 0, totalLen: 0, totalFish: 0 };
+                    }
+                    parentUmbrellas[parentName].squads += 1;
+                    parentUmbrellas[parentName].totalLen += exactTeamStats[t].len;
+                    parentUmbrellas[parentName].totalFish += exactTeamStats[t].fish;
+                }
+
+                let parentArray = [];
+                for (let p in parentUmbrellas) {
+                    let pObj = parentUmbrellas[p];
+                    parentArray.push({
+                        name: p,
+                        squads: pObj.squads,
+                        avgLen: pObj.totalLen / pObj.squads,
+                        avgFish: pObj.totalFish / pObj.squads
+                    });
+                }
+
+                // Sort: 1st by Average Length (descending), 2nd by Average Fish (descending)
+                parentArray.sort((a, b) => {
+                    if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
+                    return b.avgFish - a.avgFish;
+                });
+                
                 let totalTieBreakerAnglers = 0;
                 let maxTiedAnglers = 0;
                 let gridlockPoints = 0;
@@ -743,15 +789,64 @@
                     teamPodiumSpread = ((teamLenArray[0] - teamLenArray[2]) / 100).toFixed(2);
                 }
 
-                let powerhouseWord = null;
-                let maxRegionalFish = 0;
-                for (let word in teamFishCounts) {
-                    if (teamOriginalNames[word].size > 1) {
-                        if (teamFishCounts[word] > maxRegionalFish) {
-                            maxRegionalFish = teamFishCounts[word];
-                            powerhouseWord = word;
+                // Tightest Margin Computation
+                detailedAnglers.sort((a, b) => a.rank - b.rank);
+                let tightestTie = { stage: 0, margin: Infinity, rank: Infinity };
+                
+                for (let i = 0; i < detailedAnglers.length - 1; i++) {
+                    let a1 = detailedAnglers[i];
+                    let a2 = detailedAnglers[i+1];
+                    
+                    if (a1.rank > 15) continue;
+                    
+                    if (a1.pts === a2.pts) {
+                        let stage = 0;
+                        let margin = 0;
+                        
+                        if (a1.len !== a2.len) {
+                            stage = 1;
+                            margin = Math.abs(a1.len - a2.len);
+                        } else if (a1.fish !== a2.fish) {
+                            stage = 2;
+                            margin = Math.abs(a1.fish - a2.fish);
+                        } else if (a1.biggest !== a2.biggest) {
+                            stage = 3;
+                            margin = Math.abs(a1.biggest - a2.biggest);
+                        } else if (a1.species !== a2.species) {
+                            stage = 4;
+                            margin = Math.abs(a1.species - a2.species);
+                        }
+
+                        if (stage > 0) {
+                            let isTighter = false;
+                            if (stage > tightestTie.stage) {
+                                isTighter = true;
+                            } else if (stage === tightestTie.stage) {
+                                if (margin < tightestTie.margin) {
+                                    isTighter = true;
+                                } else if (margin === tightestTie.margin) {
+                                    if (a1.rank < tightestTie.rank) {
+                                        isTighter = true;
+                                    }
+                                }
+                            }
+
+                            if (isTighter) {
+                                tightestTie = { stage: stage, margin: margin, rank: a1.rank };
+                            }
                         }
                     }
+                }
+
+                let tightestNarrative = "";
+                if (tightestTie.stage === 1) {
+                    tightestNarrative = "Two anglers in the top tier tied on points and had to be separated by their cumulative length—with just <strong>" + tightestTie.margin.toFixed(1) + " cm</strong> dividing their final positions.";
+                } else if (tightestTie.stage === 2) {
+                    tightestNarrative = "After tying on both points and total length, a top-tier battle had to be separated by raw catch rate—with just <strong>" + tightestTie.margin + " fish</strong> deciding the victor.";
+                } else if (tightestTie.stage === 3) {
+                    tightestNarrative = "After tying on points, total length, AND total fish count, an incredible battle was finally decided by the 'Biggest Fish' rule—with a mere <strong>" + tightestTie.margin.toFixed(1) + " cm</strong> making the difference.";
+                } else if (tightestTie.stage === 4) {
+                    tightestNarrative = "In a statistically miraculous dead-heat on points, length, fish, and biggest fish, the tie was broken by the daily species count—with just <strong>" + tightestTie.margin + " species</strong> separating them.";
                 }
 
                 let scoringAnglersCount = totalAnglers - blankers;
@@ -769,7 +864,6 @@
                 else if (shiftLen < 0) shiftLenText = "The field recorded " + Math.abs(shiftLen).toFixed(2) + " fewer meters of fish on Day 2.";
                 else shiftLenText = "The field recorded exactly the same meters of fish on Day 2.";
 
-                // 2. Process Zone Wars
                 function processZoneSheetDetailed(wBook, targetSheet) {
                     let totals = { 
                         'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
@@ -866,7 +960,6 @@
                 htmlMarkup += '<div class="stat-desc">Average catch per scoring angler.</div>';
                 htmlMarkup += '</div>';
                 
-                // COMBINED DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Daily Changes</div>';
                 htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span> | ' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
@@ -983,6 +1076,13 @@
                 htmlMarkup += totalTieBreakerAnglers + ' final positions across the leaderboard had to be decided purely by countback tie-breakers.';
                 htmlMarkup += '</li>';
 
+                if (tightestTie.stage > 0) {
+                    htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
+                    htmlMarkup += '<strong style="color: var(--accent-cyan);">⚖️ The Tightest Margin:</strong><br>';
+                    htmlMarkup += tightestNarrative;
+                    htmlMarkup += '</li>';
+                }
+
                 htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
                 htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Gridlock:</strong><br>';
                 htmlMarkup += 'The most fiercely contested score was <strong>' + gridlockPoints + ' points</strong>, with <strong>' + maxTiedAnglers + '</strong> different anglers all locking horns on that exact total.';
@@ -998,16 +1098,44 @@
                 htmlMarkup += 'The race for the individual championship was decided by the finest of margins, with just <strong>' + indPodiumSpread + ' zone points</strong> separating the 1st place angler from 3rd place.';
                 htmlMarkup += '</li>';
 
-                htmlMarkup += '<li ' + (powerhouseWord !== null ? 'style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;"' : '') + '>';
+                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
                 htmlMarkup += '<strong style="color: var(--accent-cyan);">🎣 Angler Success Rate:</strong><br>';
                 htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
                 htmlMarkup += '</li>';
 
-                if (powerhouseWord !== null) {
-                    htmlMarkup += '<li>';
-                    htmlMarkup += '<strong style="color: var(--accent-cyan);">🏢 The Regional Powerhouse:</strong><br>';
-                    htmlMarkup += 'The overarching <strong>"' + powerhouseWord + '"</strong> contingent brought in the highest combined regional haul, landing a massive <strong>' + maxRegionalFish + ' fish</strong> across all their respective squads.';
-                    htmlMarkup += '</li>';
+                // Umbrella Shield Side-Bet UI
+                if (parentArray.length > 0) {
+                    htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px;">';
+                    htmlMarkup += '<strong style="color: var(--accent-cyan);">🎣 The Umbrella Shield (Fun Side-Bet):</strong><br>';
+                    htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">To ensure a level playing field between massive organizations and single independent squads, this mini-tournament ranks clubs by their <strong>Average Team Haul</strong>. The total combined length of all sub-teams under a parent name is divided by the number of squads they fielded. Ties are broken by the average number of fish caught.</div>';
+                    
+                    htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
+                    htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 300px; text-align: left;">';
+                    htmlMarkup += '<tr>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">CLUB</th>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">SQUADS</th>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG LENGTH</th>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG FISH</th>';
+                    htmlMarkup += '</tr>';
+
+                    for (let i = 0; i < parentArray.length; i++) {
+                        let p = parentArray[i];
+                        let rankDisp = (i + 1);
+                        if (i === 0) rankDisp = "🥇 1";
+                        else if (i === 1) rankDisp = "🥈 2";
+                        else if (i === 2) rankDisp = "🥉 3";
+
+                        htmlMarkup += '<tr>';
+                        htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
+                        htmlMarkup += '<td style="padding: 6px; text-align: left;">' + p.name + '</td>';
+                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.squads + '</td>';
+                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + (p.avgLen / 100).toFixed(2) + ' m</td>';
+                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.avgFish.toFixed(1) + '</td>';
+                        htmlMarkup += '</tr>';
+                    }
+
+                    htmlMarkup += '</table></div></li>';
                 }
 
                 htmlMarkup += '</ul>';
@@ -1252,7 +1380,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.3 registered');
+                        console.log('v11.7.6 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
