@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.6</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.7</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.6
+        Official Results Portal | v11.7.7
     </footer>
 
     <script>
@@ -601,7 +601,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.6 (Umbrella Shield Integration)
+        // UPDATED: Match Stats Dashboard Function for v11.7.7
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -724,11 +724,10 @@
                     }
                 }
                 
-                // Construct Parent Umbrellas for the Mini-Tournament
+                // Construct Parent Organizations for the Mini-Tournament
                 let parentUmbrellas = {};
                 for (let t in exactTeamStats) {
                     let parentName = t;
-                    // Trigger: Find team names ending in space + single letter (A-Z)
                     let match = t.match(/^(.*?)\s+[A-Z]$/i);
                     if (match) {
                         parentName = match[1].trim();
@@ -851,6 +850,7 @@
 
                 let scoringAnglersCount = totalAnglers - blankers;
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
+                let totalMeters = (totalLengthCm / 100).toFixed(2);
                 
                 let shiftFish = day2Fish - day1Fish;
                 let shiftFishText = "";
@@ -940,26 +940,35 @@
                 htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 2: FIELD DATA
+                // SECTION 2: COMBINED FIELD DATA (NEW FOR v11.7.7)
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Total Fish</div>';
-                htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">Total fish caught across both days (Day 1: ' + day1Fish + ' | Day 2: ' + day2Fish + ').</div>';
+                htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
+                htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; margin: 15px 0;">';
+                
+                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
+                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + totalFish + '</div>';
+                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Fish</div>';
+                htmlMarkup += '</div>';
+                
+                htmlMarkup += '<div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>';
+                
+                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
+                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + totalMeters + '</div>';
+                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Meters</div>';
                 htmlMarkup += '</div>';
 
-                let totalMeters = (totalLengthCm / 100).toFixed(2);
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Total Length</div>';
-                htmlMarkup += '<div class="stat-value">' + totalMeters + ' <span class="stat-sub">Meters</span></div>';
-                htmlMarkup += '<div class="stat-desc">Sum length of all recorded fish over the competition.</div>';
+                htmlMarkup += '<div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>';
+
+                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
+                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + competitorAverage.toFixed(1) + '</div>';
+                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg / Angler</div>';
                 htmlMarkup += '</div>';
                 
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Average Fish Count</div>';
-                htmlMarkup += '<div class="stat-value">' + competitorAverage.toFixed(1) + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">Average catch per scoring angler.</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish | Day 2: ' + day2Fish + ' Fish</div>';
                 htmlMarkup += '</div>';
                 
+                // COMBINED DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Daily Changes</div>';
                 htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span> | ' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
@@ -1103,18 +1112,17 @@
                 htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
                 htmlMarkup += '</li>';
 
-                // Umbrella Shield Side-Bet UI
+                // NEW FOR v11.7.7: The Competition Within the Competition Side-Bet
                 if (parentArray.length > 0) {
                     htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px;">';
-                    htmlMarkup += '<strong style="color: var(--accent-cyan);">🎣 The Umbrella Shield (Fun Side-Bet):</strong><br>';
-                    htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">To ensure a level playing field between massive organizations and single independent squads, this mini-tournament ranks clubs by their <strong>Average Team Haul</strong>. The total combined length of all sub-teams under a parent name is divided by the number of squads they fielded. Ties are broken by the average number of fish caught.</div>';
+                    htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Competition Within the Competition:</strong><br>';
+                    htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">This fun side-event ranks entire organizations against each other. By calculating the mean average of each parent organisation, the math is completely leveled. Whether your organization fielded four full teams or you fished as a single independent team, no one is at a statistical disadvantage.</div>';
                     
                     htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
                     htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 300px; text-align: left;">';
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">CLUB</th>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">SQUADS</th>';
+                    htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">ORGANIZATION</th>';
                     htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG LENGTH</th>';
                     htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG FISH</th>';
                     htmlMarkup += '</tr>';
@@ -1129,7 +1137,6 @@
                         htmlMarkup += '<tr>';
                         htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
                         htmlMarkup += '<td style="padding: 6px; text-align: left;">' + p.name + '</td>';
-                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.squads + '</td>';
                         htmlMarkup += '<td style="padding: 6px; text-align: center;">' + (p.avgLen / 100).toFixed(2) + ' m</td>';
                         htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.avgFish.toFixed(1) + '</td>';
                         htmlMarkup += '</tr>';
@@ -1380,7 +1387,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.6 registered');
+                        console.log('v11.7.7 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
