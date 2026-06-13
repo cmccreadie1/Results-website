@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.1</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
             align-items: center;
         }
 
-        /* Branding Header - Spacing Tightened */
+        /* Branding Header */
         .dynamic-hub { 
             margin-top: 20px; 
             margin-bottom: 15px; 
@@ -71,7 +71,7 @@
             letter-spacing: 2px; 
         }
 
-        /* Live Status Badge - Spacing Tightened */
+        /* Live Status Badge */
         .live-status-badge {
             display: flex; 
             align-items: center; 
@@ -93,7 +93,7 @@
             animation: flash 2s infinite;
         }
 
-        /* Navigation Menu Stack - Horizontal Refinement */
+        /* Navigation Menu Stack */
         .button-stack { 
             width: 100%; 
             max-width: 450px; 
@@ -272,7 +272,7 @@
             100% { transform: translateX(100%); } 
         }
 
-        /* Table Styles - Enforced Center Justification */
+        /* Table Styles */
         table { 
             border-collapse: separate; 
             border-spacing: 0; 
@@ -366,7 +366,7 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* CSS Bar Charts for Zone Performance */
+        /* CSS Bar Charts */
         .bar-chart-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
@@ -486,11 +486,10 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.1
+        Official Results Portal | v11.7.2
     </footer>
 
     <script>
-        // CONFIGURATION: Map columns and determine skip rows.
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
                 isIndividualCustom: true,
@@ -602,7 +601,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.1
+        // UPDATED: Match Stats Dashboard Function for v11.7.2
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -654,60 +653,66 @@
                 let totalLengthCm = 0;
                 let day1LengthTotal = 0;
                 let day2LengthTotal = 0;
-                let scoringAnglersCount = 0;
                 
-                // Trackers for Field Insights
+                let totalAnglers = 0;
+                let blankers = 0;
+                let soloCount = 0;
+                let teamsSet = new Set();
+                
                 let pointFrequencies = {};
-                let sizeBins = { '<20': 0, '20-30': 0, '30-40': 0, '40+': 0 };
+                let teamLengths = {};
+                let teamFishCounts = {};
+                let teamOriginalNames = {};
+                let individualPts = [];
 
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
                     let name = String(row[1] || "").trim();
                     
-                    if (name === "" || name === "ANGLER NAME") {
-                        continue;
-                    }
+                    if (name === "" || name === "ANGLER NAME") continue;
 
+                    let team = String(row[2] || "").trim();
                     let d1Len = parseFloat(row[5]) || 0;
                     let d1Fish = parseFloat(row[6]) || 0;
-                    
                     let d2Len = parseFloat(row[11]) || 0;
                     let d2Fish = parseFloat(row[12]) || 0;
-                    
                     let zonePts = parseFloat(row[16]);
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
 
-                    if (cFish === 0) continue; 
+                    totalAnglers++;
+                    if (cFish === 0) blankers++;
                     
-                    scoringAnglersCount++;
                     totalFish += cFish;
                     day1Fish += d1Fish;
                     day2Fish += d2Fish;
-                    
                     totalLengthCm += cLen;
                     day1LengthTotal += d1Len;
                     day2LengthTotal += d2Len;
                     
-                    // Count frequencies for Photo Finishes & Gridlock
                     if (!isNaN(zonePts)) {
                         pointFrequencies[zonePts] = (pointFrequencies[zonePts] || 0) + 1;
+                        individualPts.push(zonePts);
                     }
                     
-                    // Size Distribution calculation based on angler's average
-                    let avgSize = cLen / cFish;
-                    if (avgSize < 20) {
-                        sizeBins['<20'] += cFish;
-                    } else if (avgSize >= 20 && avgSize < 30) {
-                        sizeBins['20-30'] += cFish;
-                    } else if (avgSize >= 30 && avgSize < 40) {
-                        sizeBins['30-40'] += cFish;
+                    if (team.toUpperCase() === "SOLO" || team === "") {
+                        soloCount++;
                     } else {
-                        sizeBins['40+'] += cFish;
+                        teamsSet.add(team.toUpperCase());
+                        let firstWord = team.trim().split(" ")[0].toUpperCase();
+                        
+                        if (!teamFishCounts[firstWord]) teamFishCounts[firstWord] = 0;
+                        teamFishCounts[firstWord] += cFish;
+                        
+                        if (!teamLengths[team.toUpperCase()]) teamLengths[team.toUpperCase()] = 0;
+                        teamLengths[team.toUpperCase()] += cLen;
+                        
+                        if (!teamOriginalNames[firstWord]) teamOriginalNames[firstWord] = new Set();
+                        teamOriginalNames[firstWord].add(team.toUpperCase());
                     }
                 }
                 
-                // Process Field Insights Math
+                // Match Insights Math
                 let totalTieBreakerAnglers = 0;
                 let maxTiedAnglers = 0;
                 let gridlockPoints = 0;
@@ -723,24 +728,48 @@
                     }
                 }
                 
-                let pctUnder20 = totalFish > 0 ? ((sizeBins['<20'] / totalFish) * 100).toFixed(1) : 0;
-                let pct20to30 = totalFish > 0 ? ((sizeBins['20-30'] / totalFish) * 100).toFixed(1) : 0;
-                let pct30to40 = totalFish > 0 ? ((sizeBins['30-40'] / totalFish) * 100).toFixed(1) : 0;
-                let pct40Plus = totalFish > 0 ? ((sizeBins['40+'] / totalFish) * 100).toFixed(1) : 0;
+                let successRate = 0;
+                if (totalAnglers > 0) successRate = (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0);
 
-                let competitorAverage = totalFish / scoringAnglersCount;
-                let avgSpecimenSize = totalLengthCm / totalFish;
-                let dailyShift = day2Fish - day1Fish;
-                
-                let d1AvgSize = 0;
-                if (day1Fish > 0) d1AvgSize = day1LengthTotal / day1Fish;
-                
-                let d2AvgSize = 0;
-                if (day2Fish > 0) d2AvgSize = day2LengthTotal / day2Fish;
-                
-                let overallSizeVariance = d2AvgSize - d1AvgSize;
+                individualPts.sort((a,b) => a - b);
+                let indPodiumSpread = 0;
+                if (individualPts.length >= 3) {
+                    indPodiumSpread = Math.abs(individualPts[2] - individualPts[0]);
+                }
 
-                // 2. Process Zone Wars and Text Profiles
+                let teamLenArray = Object.values(teamLengths).sort((a,b) => b - a);
+                let teamPodiumSpread = 0;
+                if (teamLenArray.length >= 3) {
+                    teamPodiumSpread = ((teamLenArray[0] - teamLenArray[2]) / 100).toFixed(2);
+                }
+
+                let powerhouseWord = null;
+                let maxRegionalFish = 0;
+                for (let word in teamFishCounts) {
+                    if (teamOriginalNames[word].size > 1) {
+                        if (teamFishCounts[word] > maxRegionalFish) {
+                            maxRegionalFish = teamFishCounts[word];
+                            powerhouseWord = word;
+                        }
+                    }
+                }
+
+                let scoringAnglersCount = totalAnglers - blankers;
+                let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
+                
+                let shiftFish = day2Fish - day1Fish;
+                let shiftFishText = "";
+                if (shiftFish > 0) shiftFishText = "The field caught " + shiftFish + " more fish on Day 2.";
+                else if (shiftFish < 0) shiftFishText = "The field caught " + Math.abs(shiftFish) + " fewer fish on Day 2.";
+                else shiftFishText = "The field caught the exact same amount of fish on Day 2.";
+
+                let shiftLen = (day2LengthTotal - day1LengthTotal) / 100;
+                let shiftLenText = "";
+                if (shiftLen > 0) shiftLenText = "The field recorded " + shiftLen.toFixed(2) + " more meters of fish on Day 2.";
+                else if (shiftLen < 0) shiftLenText = "The field recorded " + Math.abs(shiftLen).toFixed(2) + " fewer meters of fish on Day 2.";
+                else shiftLenText = "The field recorded exactly the same meters of fish on Day 2.";
+
+                // 2. Process Zone Wars
                 function processZoneSheetDetailed(wBook, targetSheet) {
                     let totals = { 
                         'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
@@ -810,8 +839,14 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                // SECTION 1: CLEAN FIELD DATA CARDS
-                
+                // SECTION 1: THE FIELD
+                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 242, 255, 0.05);">';
+                htmlMarkup += '<div class="stat-title">The Field</div>';
+                htmlMarkup += '<div class="stat-value">' + totalAnglers + ' <span class="stat-sub">Competitors</span></div>';
+                htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;">Roster Breakdown: <strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
+                htmlMarkup += '</div>';
+
+                // SECTION 2: FIELD DATA
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Total Volume</div>';
                 htmlMarkup += '<div class="stat-value">' + totalFish + ' <span class="stat-sub">Fish</span></div>';
@@ -832,40 +867,18 @@
                 htmlMarkup += '</div>';
                 
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Average Specimen</div>';
-                htmlMarkup += '<div class="stat-value">' + avgSpecimenSize.toFixed(1) + ' <span class="stat-sub">cm</span></div>';
-                htmlMarkup += '<div class="stat-desc">Mean length of a single fish across the entire competition.</div>';
-                htmlMarkup += '</div>';
-                
-                let dailyShiftText = "";
-                if (dailyShift > 0) {
-                    dailyShiftText = "Yield increased by " + dailyShift + " fish on Day 2.";
-                } else if (dailyShift < 0) {
-                    dailyShiftText = "Yield decreased by " + Math.abs(dailyShift) + " fish on Day 2.";
-                } else {
-                    dailyShiftText = "Identical yield across both sessions.";
-                }
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">The Daily Shift</div>';
-                htmlMarkup += '<div class="stat-value">' + (dailyShift > 0 ? '+' : '') + dailyShift + ' <span class="stat-sub">Fish</span></div>';
-                htmlMarkup += '<div class="stat-desc">Variance in total field yield between sessions. ' + dailyShiftText + '</div>';
+                htmlMarkup += '<div class="stat-title">Catch Volume Shift</div>';
+                htmlMarkup += '<div class="stat-value">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span></div>';
+                htmlMarkup += '<div class="stat-desc">' + shiftFishText + '</div>';
                 htmlMarkup += '</div>';
 
-                let sizeVarText = "";
-                if (overallSizeVariance > 0) {
-                    sizeVarText = "Average fish size increased by " + overallSizeVariance.toFixed(1) + " cm on Day 2.";
-                } else if (overallSizeVariance < 0) {
-                    sizeVarText = "Average fish size decreased by " + Math.abs(overallSizeVariance).toFixed(1) + " cm on Day 2.";
-                } else {
-                    sizeVarText = "Average fish size remained identical on Day 2.";
-                }
                 htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Overall Size Variance</div>';
-                htmlMarkup += '<div class="stat-value">' + (overallSizeVariance > 0 ? '+' : '') + overallSizeVariance.toFixed(1) + ' <span class="stat-sub">cm</span></div>';
-                htmlMarkup += '<div class="stat-desc">Change in average specimen length from Day 1 to Day 2. ' + sizeVarText + '</div>';
+                htmlMarkup += '<div class="stat-title">Total Length Shift</div>';
+                htmlMarkup += '<div class="stat-value">' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
+                htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 2: ZONE PERFORMANCE (4-Way CSS Comparisons)
+                // SECTION 3: ZONE PERFORMANCE (CSS Bar Charts)
                 const zoneColors = {
                     'Red Zone': '#ff5252',
                     'Blue Zone': '#448aff',
@@ -873,7 +886,6 @@
                     'Yellow Zone': '#ffd600'
                 };
 
-                // Day 1 Zone Performance
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
                 htmlMarkup += '<div class="stat-title">Day 1 Zone Performance</div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 1.</div>';
@@ -891,7 +903,6 @@
                 }
                 htmlMarkup += '</div>';
 
-                // Day 2 Zone Performance
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
                 htmlMarkup += '<div class="stat-title">Day 2 Zone Performance</div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 2.</div>';
@@ -909,7 +920,7 @@
                 }
                 htmlMarkup += '</div>';
                 
-                // SECTION 3: INDIVIDUAL ZONE PROFILES (Clean Text Only)
+                // SECTION 4: INDIVIDUAL ZONE PROFILES
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     
@@ -966,9 +977,9 @@
                     htmlMarkup += '</div>';
                 }
 
-                // SECTION 4: FIELD INSIGHTS (Fun Facts / Match Dynamics)
+                // SECTION 5: MATCH INSIGHTS
                 htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.6);">';
-                htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 20px;">Field Insights</div>';
+                htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 20px;">Match Insights</div>';
                 htmlMarkup += '<ul style="list-style-type: none; padding: 0; color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.6;">';
                 
                 htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
@@ -981,16 +992,28 @@
                 htmlMarkup += 'The most fiercely contested score was <strong>' + gridlockPoints + ' points</strong>, with <strong>' + maxTiedAnglers + '</strong> different anglers all locking horns on that exact total.';
                 htmlMarkup += '</li>';
 
-                htmlMarkup += '<li>';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">📏 Size Distribution:</strong><br>';
-                htmlMarkup += '<span style="font-size: 0.8rem; color: #aaa;">(Based on individual angler averages)</span>';
-                htmlMarkup += '<ul style="margin-top: 8px; margin-left: 5px; color: #ccc; list-style-type: square; padding-left: 20px;">';
-                htmlMarkup += '<li style="margin-bottom: 4px;">Under 20 cm: <strong style="color:#fff;">' + pctUnder20 + '%</strong></li>';
-                htmlMarkup += '<li style="margin-bottom: 4px;">20 - 30 cm: <strong style="color:#fff;">' + pct20to30 + '%</strong></li>';
-                htmlMarkup += '<li style="margin-bottom: 4px;">30 - 40 cm: <strong style="color:#fff;">' + pct30to40 + '%</strong></li>';
-                htmlMarkup += '<li>40 cm + (Specimen): <strong style="color:#fff;">' + pct40Plus + '%</strong></li>';
-                htmlMarkup += '</ul>';
+                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">🛡️ Team Podium Spread:</strong><br>';
+                htmlMarkup += 'The battle for the team gold was incredibly tight, with only <strong>' + teamPodiumSpread + ' meters</strong> of total fish separating the 1st place team from 3rd place.';
                 htmlMarkup += '</li>';
+
+                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">🥇 Individual Podium Spread:</strong><br>';
+                htmlMarkup += 'The race for the individual championship was decided by the finest of margins, with just <strong>' + indPodiumSpread + ' zone points</strong> separating the 1st place angler from 3rd place.';
+                htmlMarkup += '</li>';
+
+                htmlMarkup += '<li ' + (powerhouseWord !== null ? 'style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;"' : '') + '>';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">🎣 Angler Success Rate:</strong><br>';
+                htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
+                htmlMarkup += '</li>';
+
+                // Smart trigger for Regional Powerhouse
+                if (powerhouseWord !== null) {
+                    htmlMarkup += '<li>';
+                    htmlMarkup += '<strong style="color: var(--accent-cyan);">🏢 The Regional Powerhouse:</strong><br>';
+                    htmlMarkup += 'The overarching <strong>"' + powerhouseWord + '"</strong> contingent brought in the highest combined regional haul, landing a massive <strong>' + maxRegionalFish + ' fish</strong> across all their respective squads.';
+                    htmlMarkup += '</li>';
+                }
 
                 htmlMarkup += '</ul>';
                 htmlMarkup += '</div>';
@@ -1010,14 +1033,12 @@
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
             
-            // Restore visibility of standard features
             document.getElementById('search-box').style.display = 'block';
             document.querySelector('.scroll-hint').style.display = 'block';
             
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
             
-            // Show Skeleton Loader
             output.innerHTML = `
                 <div class="skeleton-wrapper">
                     <div class="skeleton-row"></div>
@@ -1031,7 +1052,6 @@
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            // ARTIFICIAL DELAY FOR POLISH (400ms)
             await new Promise(function(resolve) {
                 setTimeout(resolve, 400);
             });
@@ -1059,7 +1079,6 @@
                 
                 let htmlMarkup = '';
 
-                // SINGLE LINE RIBBON GENERATOR WITH SPACING
                 if (limits.staticRules !== undefined) {
                     htmlMarkup += '<div class="info-banner">';
                     for (let i = 0; i < limits.staticRules.length; i++) {
@@ -1098,7 +1117,6 @@
                             }
                             if (isEmpty === true) continue;
                             
-                            // Reorder logic: Move 'Points' (index 3) to the left side
                             if (slicedRow.length >= 4) {
                                 let name = slicedRow[0];
                                 let team = slicedRow[1];
@@ -1108,12 +1126,8 @@
                                 if (String(team).trim().toUpperCase() === "SOLO") team = "";
                                 
                                 if (isFirstRow === true) {
-                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") {
-                                        pnbs = "TIE BREAKERS";
-                                    }
-                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") {
-                                        pt = "PTS";
-                                    }
+                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") pnbs = "TIE BREAKERS";
+                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") pt = "PTS";
                                 }
                                 
                                 slicedRow = [pt, name, team, pnbs];
@@ -1243,7 +1257,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.1 registered');
+                        console.log('v11.7.2 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
