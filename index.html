@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.8</title>
+    <title>SPRA Scottish Shore 2026 | v1.0.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.8
+        Official Results Portal | v1.0.0
     </footer>
 
     <script>
@@ -601,7 +601,7 @@
             });
         }
 
-        // MATCH STATS DASHBOARD - v11.7.8 (Added What If Scenario Dynamic Tables)
+        // MATCH STATS DASHBOARD - v1.0.0 (Launch Version)
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -658,15 +658,10 @@
                 let soloCount = 0;
                 let teamsSet = new Set();
                 
-                let pointFrequencies = {};
-                let teamLengths = {};
-                
                 let teamD1Lens = {};
                 let teamFinalLens = {};
 
-                let individualPts = [];
                 let detailedAnglers = [];
-                let exactTeamStats = {};
 
                 for (let r = 1; r < rawData.length; r++) {
                     let row = rawData[r];
@@ -686,8 +681,6 @@
                     let zonePts = parseFloat(row[16]);
                     let cLen = parseFloat(row[17]) || 0;
                     let cFish = parseFloat(row[18]) || 0;
-                    let biggestFish = parseFloat(row[19]) || 0;
-                    let dailySpecies = parseFloat(row[20]) || 0;
 
                     totalAnglers++;
                     if (cFish === 0) blankers++;
@@ -699,20 +692,10 @@
                     day1LengthTotal += d1Len;
                     day2LengthTotal += d2Len;
                     
-                    if (!isNaN(zonePts)) {
-                        pointFrequencies[zonePts] = (pointFrequencies[zonePts] || 0) + 1;
-                        individualPts.push(zonePts);
-                    }
-                    
                     if (!isNaN(rankVal)) {
                         detailedAnglers.push({
                             rank: rankVal,
-                            name: name,
-                            pts: zonePts,
-                            len: cLen,
-                            fish: cFish,
-                            biggest: biggestFish,
-                            species: dailySpecies
+                            name: name
                         });
                     }
 
@@ -720,13 +703,6 @@
                         soloCount++;
                     } else {
                         teamsSet.add(team);
-                        
-                        if (!exactTeamStats[team]) exactTeamStats[team] = { len: 0, fish: 0 };
-                        exactTeamStats[team].len += cLen;
-                        exactTeamStats[team].fish += cFish;
-                        
-                        if (!teamLengths[team]) teamLengths[team] = 0;
-                        teamLengths[team] += cLen;
 
                         if (teamD1Lens[team] === undefined) teamD1Lens[team] = 0;
                         if (teamFinalLens[team] === undefined) teamFinalLens[team] = 0;
@@ -811,129 +787,11 @@
                     if (b.len !== a.len) return b.len - a.len;
                     return b.fish - a.fish;
                 });
-
-                // Construct Parent Organizations for the Mini-Tournament
-                let parentUmbrellas = {};
-                for (let t in exactTeamStats) {
-                    let parentName = t;
-                    let match = t.match(/^(.*?)\s+[A-Z]$/i);
-                    if (match) {
-                        parentName = match[1].trim();
-                    }
-
-                    if (!parentUmbrellas[parentName]) {
-                        parentUmbrellas[parentName] = { squads: 0, totalLen: 0, totalFish: 0 };
-                    }
-                    parentUmbrellas[parentName].squads += 1;
-                    parentUmbrellas[parentName].totalLen += exactTeamStats[t].len;
-                    parentUmbrellas[parentName].totalFish += exactTeamStats[t].fish;
-                }
-
-                let parentArray = [];
-                for (let p in parentUmbrellas) {
-                    let pObj = parentUmbrellas[p];
-                    parentArray.push({
-                        name: p,
-                        squads: pObj.squads,
-                        avgLen: pObj.totalLen / pObj.squads,
-                        avgFish: pObj.totalFish / pObj.squads
-                    });
-                }
-
-                parentArray.sort((a, b) => {
-                    if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
-                    return b.avgFish - a.avgFish;
-                });
-                
-                let totalTieBreakerAnglers = 0;
-                let maxTiedAnglers = 0;
-                let gridlockPoints = 0;
-                
-                for (const pt in pointFrequencies) {
-                    let anglersWithPoints = pointFrequencies[pt];
-                    if (anglersWithPoints > 1) {
-                        totalTieBreakerAnglers += anglersWithPoints;
-                    }
-                    if (anglersWithPoints > maxTiedAnglers) {
-                        maxTiedAnglers = anglersWithPoints;
-                        gridlockPoints = pt;
-                    }
-                }
                 
                 let successRate = 0;
-                if (totalAnglers > 0) successRate = (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0);
-
-                individualPts.sort((a,b) => a - b);
-                let indPodiumSpread = 0;
-                if (individualPts.length >= 3) {
-                    indPodiumSpread = Math.abs(individualPts[2] - individualPts[0]);
-                }
-
-                let teamLenArray = Object.values(teamLengths).sort((a,b) => b - a);
-                let teamPodiumSpread = 0;
-                if (teamLenArray.length >= 3) {
-                    teamPodiumSpread = ((teamLenArray[0] - teamLenArray[2]) / 100).toFixed(2);
-                }
-
-                let tightestTie = { stage: 0, margin: Infinity, rank: Infinity };
-                
-                for (let i = 0; i < detailedAnglers.length - 1; i++) {
-                    let a1 = detailedAnglers[i];
-                    let a2 = detailedAnglers[i+1];
-                    
-                    if (a1.rank > 15) continue;
-                    
-                    if (a1.pts === a2.pts) {
-                        let stage = 0;
-                        let margin = 0;
-                        
-                        if (a1.len !== a2.len) {
-                            stage = 1;
-                            margin = Math.abs(a1.len - a2.len);
-                        } else if (a1.fish !== a2.fish) {
-                            stage = 2;
-                            margin = Math.abs(a1.fish - a2.fish);
-                        } else if (a1.biggest !== a2.biggest) {
-                            stage = 3;
-                            margin = Math.abs(a1.biggest - a2.biggest);
-                        } else if (a1.species !== a2.species) {
-                            stage = 4;
-                            margin = Math.abs(a1.species - a2.species);
-                        }
-
-                        if (stage > 0) {
-                            let isTighter = false;
-                            if (stage > tightestTie.stage) {
-                                isTighter = true;
-                            } else if (stage === tightestTie.stage) {
-                                if (margin < tightestTie.margin) {
-                                    isTighter = true;
-                                } else if (margin === tightestTie.margin) {
-                                    if (a1.rank < tightestTie.rank) {
-                                        isTighter = true;
-                                    }
-                                }
-                            }
-
-                            if (isTighter) {
-                                tightestTie = { stage: stage, margin: margin, rank: a1.rank };
-                            }
-                        }
-                    }
-                }
-
-                let tightestNarrative = "";
-                if (tightestTie.stage === 1) {
-                    tightestNarrative = "Two anglers in the top tier tied on points and had to be separated by their cumulative length—with just <strong>" + tightestTie.margin.toFixed(1) + " cm</strong> dividing their final positions.";
-                } else if (tightestTie.stage === 2) {
-                    tightestNarrative = "After tying on both points and total length, a top-tier battle had to be separated by raw catch rate—with just <strong>" + tightestTie.margin + " fish</strong> deciding the victor.";
-                } else if (tightestTie.stage === 3) {
-                    tightestNarrative = "After tying on points, total length, AND total fish count, an incredible battle was finally decided by the 'Biggest Fish' rule—with a mere <strong>" + tightestTie.margin.toFixed(1) + " cm</strong> making the difference.";
-                } else if (tightestTie.stage === 4) {
-                    tightestNarrative = "In a statistically miraculous dead-heat on points, length, fish, and biggest fish, the tie was broken by the daily species count—with just <strong>" + tightestTie.margin + " species</strong> separating them.";
-                }
-
                 let scoringAnglersCount = totalAnglers - blankers;
+                if (totalAnglers > 0) successRate = ((scoringAnglersCount / totalAnglers) * 100).toFixed(0);
+
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 
@@ -1061,6 +919,13 @@
                 htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
+                // NEW FOR v1.0.0: ANGLER SUCCESS RATE CARD
+                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 242, 255, 0.05);">';
+                htmlMarkup += '<div class="stat-title">Angler Success Rate</div>';
+                htmlMarkup += '<div class="stat-value" style="font-size: 2.2rem; color: var(--accent-cyan);">' + successRate + '<span style="font-size: 1.2rem; color: #fff;">%</span></div>';
+                htmlMarkup += '<div class="stat-desc" style="margin-top: 10px;"><strong>' + scoringAnglersCount + '</strong> out of <strong>' + totalAnglers + '</strong> competitors successfully weighed in at least one fish during the match.</div>';
+                htmlMarkup += '</div>';
+
                 // SECTION 3: ZONE PERFORMANCE
                 const zoneColors = {
                     'Red Zone': '#ff5252',
@@ -1160,56 +1025,19 @@
                     htmlMarkup += '</div>';
                 }
 
-                // SECTION 5: MATCH INSIGHTS
+                // SECTION 5: THE WHAT IF SCENARIO (Upgraded for v1.0.0)
                 htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.6);">';
-                htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 20px;">Match Insights</div>';
-                htmlMarkup += '<ul style="list-style-type: none; padding: 0; color: rgba(255,255,255,0.9); font-size: 0.9rem; line-height: 1.6;">';
-                
-                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">📸 Photo Finishes:</strong><br>';
-                htmlMarkup += totalTieBreakerAnglers + ' final positions across the leaderboard had to be decided purely by countback tie-breakers.';
-                htmlMarkup += '</li>';
-
-                if (tightestTie.stage > 0) {
-                    htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                    htmlMarkup += '<strong style="color: var(--accent-cyan);">⚖️ The Tightest Margin:</strong><br>';
-                    htmlMarkup += tightestNarrative;
-                    htmlMarkup += '</li>';
-                }
-
-                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Gridlock:</strong><br>';
-                htmlMarkup += 'The most fiercely contested score was <strong>' + gridlockPoints + ' points</strong>, with <strong>' + maxTiedAnglers + '</strong> different anglers all locking horns on that exact total.';
-                htmlMarkup += '</li>';
-
-                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">🛡️ Team Podium Spread:</strong><br>';
-                htmlMarkup += 'The battle for the team gold was incredibly tight, with only <strong>' + teamPodiumSpread + ' meters</strong> of total fish separating the 1st place team from 3rd place.';
-                htmlMarkup += '</li>';
-
-                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">🥇 Individual Podium Spread:</strong><br>';
-                htmlMarkup += 'The race for the individual championship was decided by the finest of margins, with just <strong>' + indPodiumSpread + ' zone points</strong> separating the 1st place angler from 3rd place.';
-                htmlMarkup += '</li>';
-
-                htmlMarkup += '<li style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">🎣 Angler Success Rate:</strong><br>';
-                htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
-                htmlMarkup += '</li>';
-
-                // SECTION 6: THE WHAT IF SCENARIO (NEW FOR v11.7.8)
-                htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">';
-                htmlMarkup += '<strong style="color: var(--accent-cyan);">⏳ The "What If?" Scenario:</strong><br>';
-                htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Saturday, versus the final official standings.</div>';
+                htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 5px;">⏳ The "What If?" Scenario</div>';
+                htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Day 1, versus the final official standings.</div>';
 
                 // Individual Comparison Table
-                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase;">Top Individuals</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto; margin-bottom: 20px;">';
-                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 450px; text-align: left;">';
+                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; margin-bottom: 25px;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; text-align: left;">';
                 htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">DAY 1 STANDINGS (If Stopped Early)</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">FINAL STANDINGS (Full Tournament)</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">DAY 1 STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">FINAL STANDINGS</th>';
                 htmlMarkup += '</tr>';
 
                 let maxIndRows = Math.min(10, Math.max(day1Anglers.length, detailedAnglers.length));
@@ -1222,8 +1050,8 @@
                     else if (i === 1) rankDisp = "🥈 2";
                     else if (i === 2) rankDisp = "🥉 3";
 
-                    let d1Str = d1 ? `${d1.name} (${d1.pts} pts | ${(d1.len / 100).toFixed(2)} m)` : "-";
-                    let fStr = f ? `${f.name} (${f.pts} pts | ${(f.len / 100).toFixed(2)} m)` : "-";
+                    let d1Str = d1 ? d1.name : "-";
+                    let fStr = f ? f.name : "-";
 
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
@@ -1234,13 +1062,13 @@
                 htmlMarkup += '</table></div>';
 
                 // Team Comparison Table
-                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase;">Top Teams</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto; margin-bottom: 20px;">';
-                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 400px; text-align: left;">';
+                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Teams</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; text-align: left;">';
                 htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">DAY 1 STANDINGS (If Stopped Early)</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">FINAL STANDINGS (Full Tournament)</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">DAY 1 STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">FINAL STANDINGS</th>';
                 htmlMarkup += '</tr>';
 
                 let maxTeamRows = Math.min(10, Math.max(d1TeamsArray.length, finalTeamsArray.length));
@@ -1253,8 +1081,8 @@
                     else if (i === 1) rankDisp = "🥈 2";
                     else if (i === 2) rankDisp = "🥉 3";
 
-                    let d1Str = d1 ? `${d1.name} (${(d1.len / 100).toFixed(2)} m)` : "-";
-                    let fStr = f ? `${f.name} (${(f.len / 100).toFixed(2)} m)` : "-";
+                    let d1Str = d1 ? d1.name : "-";
+                    let fStr = f ? f.name : "-";
 
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
@@ -1262,43 +1090,7 @@
                     htmlMarkup += '<td style="padding: 6px; text-align: left;">' + fStr + '</td>';
                     htmlMarkup += '</tr>';
                 }
-                htmlMarkup += '</table></div></li>';
-
-
-                // SECTION 7: The Competition Within the Competition Side-Bet
-                if (parentArray.length > 0) {
-                    htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">';
-                    htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Competition Within the Competition:</strong><br>';
-                    htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">This fun side-event ranks entire organizations against each other. By calculating the mean average of each parent organisation, the math is completely leveled. Whether your organization fielded four full teams or you fished as a single independent team, no one is at a statistical disadvantage.</div>';
-                    
-                    htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
-                    htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 300px; text-align: left;">';
-                    htmlMarkup += '<tr>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">ORGANIZATION</th>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG LENGTH</th>';
-                    htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">AVG FISH</th>';
-                    htmlMarkup += '</tr>';
-
-                    for (let i = 0; i < parentArray.length; i++) {
-                        let p = parentArray[i];
-                        let rankDisp = (i + 1);
-                        if (i === 0) rankDisp = "🥇 1";
-                        else if (i === 1) rankDisp = "🥈 2";
-                        else if (i === 2) rankDisp = "🥉 3";
-
-                        htmlMarkup += '<tr>';
-                        htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
-                        htmlMarkup += '<td style="padding: 6px; text-align: left;">' + p.name + '</td>';
-                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + (p.avgLen / 100).toFixed(2) + ' m</td>';
-                        htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.avgFish.toFixed(1) + '</td>';
-                        htmlMarkup += '</tr>';
-                    }
-
-                    htmlMarkup += '</table></div></li>';
-                }
-
-                htmlMarkup += '</ul>';
+                htmlMarkup += '</table></div>';
                 htmlMarkup += '</div>';
 
                 htmlMarkup += '</div>';
@@ -1540,7 +1332,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.8 registered');
+                        console.log('v1.0.0 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
