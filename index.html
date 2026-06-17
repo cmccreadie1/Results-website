@@ -1046,17 +1046,15 @@
                     let f = detailedAnglers[i]; 
 
                     let rankDisp = (i + 1);
-                    if (i === 0) rankDisp = "🥇 1";
-                    else if (i === 1) rankDisp = "🥈 2";
-                    else if (i === 2) rankDisp = "🥉 3";
+                   
 
                     let d1Str = d1 ? d1.name : "-";
                     let fStr = f ? f.name : "-";
 
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + d1Str + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + fStr + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + d1Str + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: centre;">' + fStr + '</td>';
                     htmlMarkup += '</tr>';
                 }
                 htmlMarkup += '</table></div>';
@@ -1077,9 +1075,7 @@
                     let f = finalTeamsArray[i];
 
                     let rankDisp = (i + 1);
-                    if (i === 0) rankDisp = "🥇 1";
-                    else if (i === 1) rankDisp = "🥈 2";
-                    else if (i === 2) rankDisp = "🥉 3";
+                    
 
                     let d1Str = d1 ? d1.name : "-";
                     let fStr = f ? f.name : "-";
