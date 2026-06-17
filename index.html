@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v11.7.7</title>
+    <title>SPRA Scottish Shore 2026 | v11.7.8</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -486,7 +486,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v11.7.7
+        Official Results Portal | v11.7.8
     </footer>
 
     <script>
@@ -601,7 +601,7 @@
             });
         }
 
-        // UPDATED: Match Stats Dashboard Function for v11.7.7
+        // MATCH STATS DASHBOARD - v11.7.8 (Added What If Scenario Dynamic Tables)
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -660,6 +660,10 @@
                 
                 let pointFrequencies = {};
                 let teamLengths = {};
+                
+                let teamD1Lens = {};
+                let teamFinalLens = {};
+
                 let individualPts = [];
                 let detailedAnglers = [];
                 let exactTeamStats = {};
@@ -703,6 +707,7 @@
                     if (!isNaN(rankVal)) {
                         detailedAnglers.push({
                             rank: rankVal,
+                            name: name,
                             pts: zonePts,
                             len: cLen,
                             fish: cFish,
@@ -715,15 +720,98 @@
                         soloCount++;
                     } else {
                         teamsSet.add(team);
+                        
                         if (!exactTeamStats[team]) exactTeamStats[team] = { len: 0, fish: 0 };
                         exactTeamStats[team].len += cLen;
                         exactTeamStats[team].fish += cFish;
                         
                         if (!teamLengths[team]) teamLengths[team] = 0;
                         teamLengths[team] += cLen;
+
+                        if (teamD1Lens[team] === undefined) teamD1Lens[team] = 0;
+                        if (teamFinalLens[team] === undefined) teamFinalLens[team] = 0;
+                        teamD1Lens[team] += d1Len;
+                        teamFinalLens[team] += cLen;
                     }
                 }
                 
+                // Construct Teams arrays for What If comparison
+                let d1TeamsArray = [];
+                let finalTeamsArray = [];
+                for (let t in teamD1Lens) {
+                    d1TeamsArray.push({ name: t, len: teamD1Lens[t] });
+                    finalTeamsArray.push({ name: t, len: teamFinalLens[t] });
+                }
+                d1TeamsArray.sort((a,b) => b.len - a.len);
+                finalTeamsArray.sort((a,b) => b.len - a.len);
+
+                detailedAnglers.sort((a, b) => a.rank - b.rank);
+
+                // Construct Day 1 Individual Anglers for What If comparison
+                let day1Anglers = [];
+                let z1SheetName = null;
+                for (let i = 0; i < workbook.SheetNames.length; i++) {
+                    if (workbook.SheetNames[i].trim().toUpperCase() === 'ZONE 1') z1SheetName = workbook.SheetNames[i];
+                }
+                if (z1SheetName) {
+                    let zWorksheet = workbook.Sheets[z1SheetName];
+                    let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
+                    let zProcessedData = zRawData.slice(1);
+                    const zBlocks = [
+                        { start: 1, end: 4 },
+                        { start: 6, end: 9 },
+                        { start: 11, end: 14 },
+                        { start: 16, end: 19 }
+                    ];
+                    for (let z = 0; z < zBlocks.length; z++) {
+                        let block = zBlocks[z];
+                        let isFirstHeaderRow = true;
+                        for (let r = 0; r < zProcessedData.length; r++) {
+                            let row = zProcessedData[r];
+                            let slicedRow = row.slice(block.start, block.end + 1);
+                            
+                            let isEmpty = true;
+                            for (let c = 0; c < slicedRow.length; c++) {
+                                let checkContent = String(slicedRow[c]).trim();
+                                if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
+                                    isEmpty = false;
+                                }
+                            }
+                            if (isEmpty) continue;
+
+                            if (isFirstHeaderRow) {
+                                isFirstHeaderRow = false;
+                                continue;
+                            }
+
+                            let nameStr = String(slicedRow[0]).trim();
+                            let pnbsStr = String(slicedRow[2]).trim();
+                            let ptStr = String(slicedRow[3]).trim();
+
+                            if (nameStr && nameStr !== "///" && nameStr !== "/") {
+                                let pt = parseFloat(ptStr);
+                                let len = 0, fish = 0;
+                                if (pnbsStr && pnbsStr !== "///" && pnbsStr !== "/") {
+                                    let parts = pnbsStr.split("/");
+                                    if (parts.length >= 2) {
+                                        len = parseFloat(parts[0]) || 0;
+                                        fish = parseFloat(parts[1]) || 0;
+                                    }
+                                }
+                                if (!isNaN(pt)) {
+                                    day1Anglers.push({ name: nameStr, pts: pt, len: len, fish: fish });
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                day1Anglers.sort((a, b) => {
+                    if (a.pts !== b.pts) return a.pts - b.pts;
+                    if (b.len !== a.len) return b.len - a.len;
+                    return b.fish - a.fish;
+                });
+
                 // Construct Parent Organizations for the Mini-Tournament
                 let parentUmbrellas = {};
                 for (let t in exactTeamStats) {
@@ -752,7 +840,6 @@
                     });
                 }
 
-                // Sort: 1st by Average Length (descending), 2nd by Average Fish (descending)
                 parentArray.sort((a, b) => {
                     if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
                     return b.avgFish - a.avgFish;
@@ -788,8 +875,6 @@
                     teamPodiumSpread = ((teamLenArray[0] - teamLenArray[2]) / 100).toFixed(2);
                 }
 
-                // Tightest Margin Computation
-                detailedAnglers.sort((a, b) => a.rank - b.rank);
                 let tightestTie = { stage: 0, margin: Infinity, rank: Infinity };
                 
                 for (let i = 0; i < detailedAnglers.length - 1; i++) {
@@ -940,7 +1025,7 @@
                 htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 2: COMBINED FIELD DATA (NEW FOR v11.7.7)
+                // SECTION 2: COMBINED FIELD DATA
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
                 htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; margin: 15px 0;">';
@@ -976,7 +1061,7 @@
                 htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 3: ZONE PERFORMANCE (CSS Bar Charts)
+                // SECTION 3: ZONE PERFORMANCE
                 const zoneColors = {
                     'Red Zone': '#ff5252',
                     'Blue Zone': '#448aff',
@@ -1112,9 +1197,77 @@
                 htmlMarkup += '<strong>' + successRate + '%</strong> of the field successfully avoided a blank and recorded at least one fish during the competition.';
                 htmlMarkup += '</li>';
 
-                // NEW FOR v11.7.7: The Competition Within the Competition Side-Bet
+                // SECTION 6: THE WHAT IF SCENARIO (NEW FOR v11.7.8)
+                htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">';
+                htmlMarkup += '<strong style="color: var(--accent-cyan);">⏳ The "What If?" Scenario:</strong><br>';
+                htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Saturday, versus the final official standings.</div>';
+
+                // Individual Comparison Table
+                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase;">Top Individuals</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto; margin-bottom: 20px;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 450px; text-align: left;">';
+                htmlMarkup += '<tr>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">DAY 1 STANDINGS (If Stopped Early)</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">FINAL STANDINGS (Full Tournament)</th>';
+                htmlMarkup += '</tr>';
+
+                let maxIndRows = Math.min(10, Math.max(day1Anglers.length, detailedAnglers.length));
+                for (let i = 0; i < maxIndRows; i++) {
+                    let d1 = day1Anglers[i];
+                    let f = detailedAnglers[i]; 
+
+                    let rankDisp = (i + 1);
+                    if (i === 0) rankDisp = "🥇 1";
+                    else if (i === 1) rankDisp = "🥈 2";
+                    else if (i === 2) rankDisp = "🥉 3";
+
+                    let d1Str = d1 ? `${d1.name} (${d1.pts} pts | ${(d1.len / 100).toFixed(2)} m)` : "-";
+                    let fStr = f ? `${f.name} (${f.pts} pts | ${(f.len / 100).toFixed(2)} m)` : "-";
+
+                    htmlMarkup += '<tr>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + d1Str + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + fStr + '</td>';
+                    htmlMarkup += '</tr>';
+                }
+                htmlMarkup += '</table></div>';
+
+                // Team Comparison Table
+                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase;">Top Teams</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto; margin-bottom: 20px;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; min-width: 400px; text-align: left;">';
+                htmlMarkup += '<tr>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">DAY 1 STANDINGS (If Stopped Early)</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff;">FINAL STANDINGS (Full Tournament)</th>';
+                htmlMarkup += '</tr>';
+
+                let maxTeamRows = Math.min(10, Math.max(d1TeamsArray.length, finalTeamsArray.length));
+                for (let i = 0; i < maxTeamRows; i++) {
+                    let d1 = d1TeamsArray[i];
+                    let f = finalTeamsArray[i];
+
+                    let rankDisp = (i + 1);
+                    if (i === 0) rankDisp = "🥇 1";
+                    else if (i === 1) rankDisp = "🥈 2";
+                    else if (i === 2) rankDisp = "🥉 3";
+
+                    let d1Str = d1 ? `${d1.name} (${(d1.len / 100).toFixed(2)} m)` : "-";
+                    let fStr = f ? `${f.name} (${(f.len / 100).toFixed(2)} m)` : "-";
+
+                    htmlMarkup += '<tr>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + d1Str + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + fStr + '</td>';
+                    htmlMarkup += '</tr>';
+                }
+                htmlMarkup += '</table></div></li>';
+
+
+                // SECTION 7: The Competition Within the Competition Side-Bet
                 if (parentArray.length > 0) {
-                    htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px;">';
+                    htmlMarkup += '<li style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">';
                     htmlMarkup += '<strong style="color: var(--accent-cyan);">⚔️ The Competition Within the Competition:</strong><br>';
                     htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; margin-top: 5px; margin-bottom: 12px; line-height: 1.4;">This fun side-event ranks entire organizations against each other. By calculating the mean average of each parent organisation, the math is completely leveled. Whether your organization fielded four full teams or you fished as a single independent team, no one is at a statistical disadvantage.</div>';
                     
@@ -1387,7 +1540,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v11.7.7 registered');
+                        console.log('v11.7.8 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
