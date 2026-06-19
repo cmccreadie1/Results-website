@@ -808,6 +808,7 @@
 
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
+                let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
                 
                 let shiftFish = day2Fish - day1Fish;
                 let shiftFishText = "";
@@ -922,8 +923,11 @@
                 htmlMarkup += '</div>';
                 
                 htmlMarkup += '</div>';
-                htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish | Day 2: ' + day2Fish + ' Fish</div>';
-                htmlMarkup += '</div>';
+                htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 12px 0 8px 0; padding-top: 12px;">';
+htmlMarkup += '<div style="font-size: 1.2rem; font-weight: 700; color: #fff;">' + avgFishLength + ' <span style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">cm Avg Fish Length</span></div>';
+htmlMarkup += '</div>';
+htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish | Day 2: ' + day2Fish + ' Fish</div>';
+htmlMarkup += '</div>';
                 
                 // COMBINED DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
