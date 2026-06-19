@@ -1287,7 +1287,7 @@
                         htmlMarkup += '<tr>';
                         for (let c = 0; c < slicedRow.length; c++) {
                             let cellContent = String(slicedRow[c]).trim();
-                            let displayContent = cellContent;
+let displayContent = cellContent.replace(/\n/g, '<br>');
                             
                             if (isFirstRow === false && c === 0) {
                                 if (cellContent === "1") displayContent = "🥇 " + cellContent;
