@@ -899,34 +899,39 @@
                 htmlMarkup += '</div>';
 
                 // SECTION 2: COMBINED FIELD DATA
-                htmlMarkup += '<div class="stat-card">';
-                htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
-                htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; margin: 15px 0;">';
-                
-                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
-                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + totalFish + '</div>';
-                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Fish</div>';
-                htmlMarkup += '</div>';
-                
-                htmlMarkup += '<div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>';
-                
-                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
-                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + totalMeters + '</div>';
-                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Meters</div>';
-                htmlMarkup += '</div>';
+htmlMarkup += '<div class="stat-card">';
+htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
 
-                htmlMarkup += '<div style="width: 1px; height: 30px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>';
-
-                htmlMarkup += '<div style="text-align: center; margin: 5px 0;">';
-                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + competitorAverage.toFixed(1) + '</div>';
-                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg / Angler</div>';
-                htmlMarkup += '</div>';
-                
-                htmlMarkup += '</div>';
-                htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 12px 0 8px 0; padding-top: 12px;">';
-htmlMarkup += '<div style="font-size: 1.2rem; font-weight: 700; color: #fff;">' + avgFishLength + ' <span style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">cm Avg Fish Length</span></div>';
+// 1. Total Fish & Breakdown
+htmlMarkup += '<div style="margin: 15px 0 15px 0;">';
+htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: #fff;">' + totalFish + '</div>';
+htmlMarkup += '<div style="font-size: 0.85rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Fish Caught</div>';
+htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish &nbsp;|&nbsp; Day 2: ' + day2Fish + ' Fish</div>';
 htmlMarkup += '</div>';
-htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish | Day 2: ' + day2Fish + ' Fish</div>';
+
+htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;"></div>';
+
+// 2. Length & Size
+htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; margin: 15px 0;">';
+htmlMarkup += '<div style="text-align: center;">';
+htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: #fff;">' + totalMeters + '<span style="font-size: 1rem; color: #aaa;">m</span></div>';
+htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Length</div>';
+htmlMarkup += '</div>';
+htmlMarkup += '<div style="width: 1px; height: 35px; background: rgba(255,255,255,0.1);"></div>';
+htmlMarkup += '<div style="text-align: center;">';
+htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: #fff;">' + avgFishLength + '<span style="font-size: 1rem; color: #aaa;">cm</span></div>';
+htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg Fish Size</div>';
+htmlMarkup += '</div>';
+htmlMarkup += '</div>';
+
+htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;"></div>';
+
+// 3. Angler Average
+htmlMarkup += '<div style="margin: 15px 0 5px 0;">';
+htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + competitorAverage.toFixed(1) + '</div>';
+htmlMarkup += '<div style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Average Catch Per Angler</div>';
+htmlMarkup += '</div>';
+
 htmlMarkup += '</div>';
                 
                 // COMBINED DAILY CHANGES CARD
