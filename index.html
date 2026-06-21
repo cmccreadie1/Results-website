@@ -1110,9 +1110,74 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     htmlMarkup += '</tr>';
                 }
                 htmlMarkup += '</table></div>';
-                htmlMarkup += '</div>';
+                
+                // THE COMPETITION WITHIN THE COMPETITION
+                let parentUmbrellas = {};
+                for (let r = 1; r < rawData.length; r++) {
+                    let tName = String(rawData[r][2] || "").trim().toUpperCase();
+                    let cLen = parseFloat(rawData[r][17]) || 0;
+                    let cFish = parseFloat(rawData[r][18]) || 0;
+                    
+                    // Skip solo anglers and blank cells
+                    if (tName === "" || tName === "SOLO") continue;
+                    
+                    // Strip the trailing space and single letter (e.g., "SHAPES A" becomes "SHAPES")
+                    let pName = tName;
+                    let match = tName.match(/^(.*?)\s+[A-Z]$/i);
+                    if (match) pName = match[1].trim();
 
-                htmlMarkup += '</div>';
+                    if (!parentUmbrellas[pName]) parentUmbrellas[pName] = { len: 0, fish: 0, members: 0 };
+                    parentUmbrellas[pName].len += cLen;
+                    parentUmbrellas[pName].fish += cFish;
+                    parentUmbrellas[pName].members += 1;
+                }
+                
+                let parentArray = [];
+                for (let p in parentUmbrellas) {
+                    parentArray.push({
+                        name: p,
+                        avgLen: parentUmbrellas[p].len / parentUmbrellas[p].members,
+                        avgFish: parentUmbrellas[p].fish / parentUmbrellas[p].members
+                    });
+                }
+                
+                // Sort by Average Length, then Average Fish
+                parentArray.sort((a, b) => {
+                    if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
+                    return b.avgFish - a.avgFish;
+                });
+
+                htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; padding-top: 20px;">';
+                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">⚔️ The Competition Within The Competition</div>';
+                htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px; line-height: 1.4;"><strong>FUN STAT:</strong> This metric levels the playing field by calculating the per-angler average for every parent organization. Whether your club fielded a single 4-man squad or three full sub-teams, this reveals which overarching group performed the best overall.</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
+                htmlMarkup += '<tr>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 45%;">ORGANIZATION</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 20%;">AVG LEN</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 20%;">AVG FISH</th>';
+                htmlMarkup += '</tr>';
+
+                for (let i = 0; i < parentArray.length; i++) {
+                    let p = parentArray[i];
+                    let rankDisp = (i + 1);
+                    if (i === 0) rankDisp = "🥇 1";
+                    else if (i === 1) rankDisp = "🥈 2";
+                    else if (i === 2) rankDisp = "🥉 3";
+                    
+                    htmlMarkup += '<tr>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + p.name + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + (p.avgLen / 100).toFixed(2) + 'm</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.avgFish.toFixed(1) + '</td>';
+                    htmlMarkup += '</tr>';
+                }
+                
+                htmlMarkup += '</table></div></div>';
+                htmlMarkup += '</div>'; // Closes the What If Card
+
+                htmlMarkup += '</div>'; // Closes the entire stat-grid
                 
                 output.innerHTML = htmlMarkup;
 
