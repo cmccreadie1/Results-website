@@ -501,7 +501,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v1.0.0
+        Official Results Portal | v1.0.1
     </footer>
 
     <script>
@@ -613,7 +613,7 @@
             });
         }
 
-        // MATCH STATS DASHBOARD - v1.0.0 (Launch Version)
+        // MATCH STATS DASHBOARD
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -734,12 +734,6 @@
                 finalTeamsArray.sort((a,b) => b.len - a.len);
 
                 detailedAnglers.sort((a, b) => a.rank - b.rank);
-                
-                // Calculate Top 10 Names for Zone Intel later
-                let top10Names = [];
-                for (let i = 0; i < Math.min(10, detailedAnglers.length); i++) {
-                    top10Names.push(detailedAnglers[i].name);
-                }
 
                 // Construct Day 1 Individual Anglers for What If comparison
                 let day1Anglers = [];
@@ -873,7 +867,7 @@
                                                 if (isNaN(fishCt) === false && fishCt > 0) {
                                                     totals[block.name].fish += fishCt;
                                                     totals[block.name].length += lengthVal;
-                                                    totals[block.name].anglers += 1; // scoring anglers
+                                                    totals[block.name].anglers += 1; 
                                                     if (fishCt > totals[block.name].maxFish) {
                                                         totals[block.name].maxFish = fishCt;
                                                     }
@@ -952,7 +946,7 @@
                 htmlMarkup += '<div class="stat-desc" style="margin-top: 10px;"><strong>' + scoringAnglersCount + '</strong> out of <strong>' + totalAnglers + '</strong> competitors successfully weighed in at least one fish during the match.</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 3: ZONE PERFORMANCE
+                // SECTION 3: ZONE PERFORMANCE (BAR CHARTS - KEPT FOR MACRO VIEW)
                 const zoneColors = {
                     'Red Zone': '#ff5252',
                     'Blue Zone': '#2979ff',
@@ -994,7 +988,7 @@
                 }
                 htmlMarkup += '</div>';
                 
-                // SECTION 4: INDIVIDUAL ZONE PROFILES & ZONE INTEL
+                // SECTION 4: INDIVIDUAL ZONE PROFILES (NEW MICRO BREAKDOWN)
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     
@@ -1017,27 +1011,10 @@
                     let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : 0;
                     
                     let zoneAvg = totalZAnglers > 0 ? (totalZFish / totalZAnglers) : 0;
-                    let topIndivCatch = Math.max(d1Max, d2Max);
 
-                    // ZONE INTEL CALCULATIONS
-                    let combinedCompetitors = d1ZoneTotals[zName].totalCompetitors + d2ZoneTotals[zName].totalCompetitors;
-                    let combinedScoring = d1ZoneTotals[zName].anglers + d2ZoneTotals[zName].anglers;
-                    let blankRate = combinedCompetitors > 0 ? (((combinedCompetitors - combinedScoring) / combinedCompetitors) * 100).toFixed(0) : 0;
-                    
-                    let d1AvgCatch = d1ZoneTotals[zName].totalCompetitors > 0 ? (d1F / d1ZoneTotals[zName].totalCompetitors) : 0;
-                    let d2AvgCatch = d2ZoneTotals[zName].totalCompetitors > 0 ? (d2F / d2ZoneTotals[zName].totalCompetitors) : 0;
-                    let trend = d1AvgCatch > 0 ? (((d2AvgCatch - d1AvgCatch) / d1AvgCatch) * 100).toFixed(0) : 0;
-                    let trendIcon = trend > 0 ? '↑' : (trend < 0 ? '↓' : '→');
-                    let trendText = trend > 0 ? `+${trend}%` : `${trend}%`;
-                    
-                    let top10Count = 0;
-                    let zoneAnglers = new Set([...d1ZoneTotals[zName].anglerNames, ...d2ZoneTotals[zName].anglerNames]);
-                    for(let name of top10Names) {
-                        if(zoneAnglers.has(name)) top10Count++;
-                    }
-                    
-                    let zAvgLen = totalZFish > 0 ? totalZLen / totalZFish : 0;
-                    let profile = zAvgLen > fleetAvgLenFloat ? 'Target (Large)' : 'Volume (Small)';
+                    // Daily Blank Rate Math
+                    let d1BlankRate = d1ZoneTotals[zName].totalCompetitors > 0 ? (((d1ZoneTotals[zName].totalCompetitors - d1ZoneTotals[zName].anglers) / d1ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
+                    let d2BlankRate = d2ZoneTotals[zName].totalCompetitors > 0 ? (((d2ZoneTotals[zName].totalCompetitors - d2ZoneTotals[zName].anglers) / d2ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
 
                     htmlMarkup += '<div class="stat-card" style="padding-bottom: 20px; text-align: left;">';
                     htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px;">' + zName.toUpperCase() + '</div>';
@@ -1048,32 +1025,20 @@
                     htmlMarkup += '<span>' + totalZFish + ' Fish | ' + totalZMeters + ' m</span>';
                     htmlMarkup += '</div>';
 
+                    // Upgraded Session Breakdown
                     htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">';
                     htmlMarkup += '<span><strong>Session Breakdown:</strong></span>';
-                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #555c66; font-size: 0.85rem;">';
-                    htmlMarkup += '<li>Day 1: ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)</li>';
-                    htmlMarkup += '<li style="margin-top: 3px;">Day 2: ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)</li>';
+                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #555c66; font-size: 0.85rem; list-style-type: none; padding-left: 0;">';
+                    htmlMarkup += '<li style="margin-bottom: 6px;">• Day 1: ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d1BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Catch: ' + d1Max + ' Fish</em></span></li>';
+                    htmlMarkup += '<li>• Day 2: ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d2BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Catch: ' + d2Max + ' Fish</em></span></li>';
                     htmlMarkup += '</ul>';
                     htmlMarkup += '</div>';
-                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 8px;"></div>';
+                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 8px; margin-top: 8px;"></div>';
 
-                    htmlMarkup += '<div class="zone-text-row">';
+                    htmlMarkup += '<div class="zone-text-row" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">';
                     htmlMarkup += '<span><strong>Average Fish Count:</strong></span>';
                     htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish</span>';
                     htmlMarkup += '</div>';
-
-                    htmlMarkup += '<div class="zone-text-row" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">';
-                    htmlMarkup += '<span><strong>Top Individual Catch:</strong></span>';
-                    htmlMarkup += '<span style="color: ' + zoneColors[zName] + ';">' + topIndivCatch + ' Fish</span>';
-                    htmlMarkup += '</div>';
-                    
-                    // ZONE INTEL 2x2 GRID
-                    htmlMarkup += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px;">';
-                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🛡️ Blank Rate</div><div style="color: #555c66;">' + blankRate + '%</div></div>';
-                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">📈 Day 2 Trend</div><div style="color: #555c66;">' + trendIcon + ' ' + trendText + '</div></div>';
-                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🏆 Podium Path</div><div style="color: #555c66;">' + top10Count + ' of Top 10</div></div>';
-                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🎯 Profile</div><div style="color: #555c66;">' + profile + '</div></div>';
-                    htmlMarkup += '</div>'; // End Zone Intel Grid
                     
                     htmlMarkup += '</div>';
                     htmlMarkup += '</div>';
@@ -1425,7 +1390,7 @@
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
                     .then(function(registration) {
-                        console.log('v1.0.0 registered');
+                        console.log('v1.0.1 registered');
                     })
                     .catch(function(err) {
                         console.error('SW failed', err);
