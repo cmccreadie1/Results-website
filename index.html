@@ -12,12 +12,12 @@
 
     <style>
         :root {
-    --bg-overlay: rgba(245, 247, 250, 0.95);
-    --surface-color: rgba(255, 255, 255, 0.85);
-    --accent-cyan: #0066cc;
-    --text-main: #1a1e26;
-    --text-muted: #555c66;
-}
+            --bg-overlay: rgba(245, 247, 250, 0.95); 
+            --surface-color: rgba(255, 255, 255, 0.85); 
+            --accent-cyan: #0066cc;
+            --text-main: #1a1e26;
+            --glass-border: rgba(0, 102, 204, 0.2);
+        }
 
         * { 
             box-sizing: border-box; 
@@ -49,7 +49,7 @@
             justify-content: center; 
         }
         .hub-pill {
-            background: rgba(10, 11, 14, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             padding: 10px 20px;
@@ -57,12 +57,12 @@
             display: flex; 
             align-items: center; 
             gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .assoc-logo { 
             height: 50px; 
             width: auto; 
-            filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.4)); 
+            filter: drop-shadow(0 0 8px rgba(0, 102, 204, 0.2)); 
         }
         .hub-text h1 { 
             font-family: 'Oswald', sans-serif; 
@@ -78,7 +78,7 @@
             justify-content: center; 
             gap: 8px; 
             margin-bottom: 15px; 
-            color: #999;
+            color: #666;
             font-size: 0.7rem; 
             text-transform: uppercase; 
             letter-spacing: 1px; 
@@ -108,7 +108,7 @@
             background: var(--surface-color);
             backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 15px 12px;
             border-radius: 10px;
             color: var(--text-main);
@@ -128,9 +128,9 @@
         .slide-btn:active { 
             transform: scale(0.96); 
             background: var(--accent-cyan);
-            color: #000;
-            border-color: #fff;
-            box-shadow: 0 0 20px var(--accent-cyan);
+            color: #fff;
+            border-color: #004c99;
+            box-shadow: 0 0 15px rgba(0, 102, 204, 0.4);
         }
 
         /* Full Screen Native Table Viewer Overlay */
@@ -140,7 +140,7 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: #000;
+            background: #f0f2f5;
             display: none; 
             flex-direction: column; 
             z-index: 2000;
@@ -150,14 +150,14 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            background: #000; 
+            background: #fff; 
             border-bottom: 2px solid var(--accent-cyan); 
             flex-shrink: 0; 
             z-index: 20; 
         }
         .back-btn {
             background: var(--accent-cyan); 
-            color: #000; 
+            color: #fff; 
             border: none; 
             padding: 10px 16px; 
             border-radius: 8px;
@@ -179,9 +179,9 @@
             text-overflow: ellipsis;
         }
         .search-box {
-            background: #111; 
+            background: #fff; 
             border: 1px solid var(--accent-cyan); 
-            color: #fff; 
+            color: var(--text-main); 
             padding: 8px 15px; 
             border-radius: 20px;
             font-family: 'Inter', sans-serif; 
@@ -192,18 +192,18 @@
         }
         .search-box:focus { 
             width: 180px; 
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3); 
+            box-shadow: 0 0 10px rgba(0, 102, 204, 0.2); 
         }
 
         /* Scroll Hint Indicator */
         .scroll-hint {
-            background: #000;
+            background: #e4e7eb;
             color: var(--accent-cyan);
             font-family: 'Oswald', sans-serif;
             font-size: 0.8rem;
             text-align: center;
             padding: 10px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #ccc;
             text-transform: uppercase;
             letter-spacing: 1px;
             pointer-events: none;
@@ -219,7 +219,7 @@
         }
         @keyframes swipeHint {
             0% { transform: translateX(-5px); opacity: 0.5; }
-            50% { transform: translateX(8px); opacity: 1; text-shadow: 0 0 10px var(--accent-cyan); }
+            50% { transform: translateX(8px); opacity: 1; text-shadow: 0 0 10px rgba(0, 102, 204, 0.4); }
             100% { transform: translateX(-5px); opacity: 0.5; }
         }
 
@@ -228,19 +228,19 @@
             overflow-x: auto; 
             overflow-y: auto; 
             padding: 0 15px 15px 15px; 
-            background: #11141a;
+            background: #f0f2f5;
             -webkit-overflow-scrolling: touch;
         }
 
         /* Ribbon Styles */
         .info-banner {
-            background: rgba(0, 242, 255, 0.03); 
-            border: 1px solid rgba(0, 242, 255, 0.25); 
+            background: rgba(0, 102, 204, 0.05); 
+            border: 1px solid rgba(0, 102, 204, 0.25); 
             border-radius: 6px;
             padding: 8px 12px; 
             margin: 12px auto 15px auto; 
             max-width: 95%; 
-            color: rgba(255, 255, 255, 0.75);
+            color: var(--text-main);
             font-family: 'Inter', sans-serif; 
             font-size: 0.75rem; 
             line-height: 1.4; 
@@ -266,7 +266,7 @@
         }
         .skeleton-row { 
             height: 40px; 
-            background: #1a1e26; 
+            background: #e4e7eb; 
             border-radius: 4px; 
             position: relative; 
             overflow: hidden; 
@@ -278,7 +278,7 @@
             right: 0; 
             bottom: 0; 
             left: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             animation: shimmer 1.5s infinite;
         }
         @keyframes shimmer { 
@@ -291,7 +291,7 @@
             border-collapse: separate; 
             border-spacing: 0; 
             width: 100%; 
-            color: #fff; 
+            color: var(--text-main); 
             font-family: 'Inter', sans-serif; 
             font-size: 0.9rem; 
             margin-bottom: 30px; 
@@ -299,29 +299,34 @@
         }
         table:first-child { margin-top: 15px; }
         th {
-    padding: 10px;
-    text-align: center;
-    background: #e4e7eb;
-    color: var(--accent-cyan);
-    border-bottom: 2px solid var(--accent-cyan);
-}
+            background: #e4e7eb; 
+            color: var(--accent-cyan); 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase;
+            font-weight: 700; 
+            letter-spacing: 1px; 
+            padding: 14px 12px; 
+            border-bottom: 2px solid var(--accent-cyan);
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+            text-align: center; 
+        }
         td { 
             padding: 14px 12px; 
             text-align: center; 
         }
-       tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.03);
-}
-        tr:nth-child(odd) td { background: rgba(0, 0, 0, 0.4); }
+        tr:nth-child(even) td { background: rgba(0, 0, 0, 0.03); }
+        tr:nth-child(odd) td { background: rgba(255, 255, 255, 0.5); }
 
         .zone-red { color: #ff5252; } 
-        .zone-yellow { color: #ffd600; } 
-        .zone-green { color: #00e676; } 
-        .zone-blue { color: #448aff; }
+        .zone-yellow { color: #d4a000; } 
+        .zone-green { color: #00b35c; } 
+        .zone-blue { color: #2979ff; }
         table.zone-red th { border-bottom-color: #ff5252; color: #ff5252; }
-        table.zone-yellow th { border-bottom-color: #ffd600; color: #ffd600; }
-        table.zone-green th { border-bottom-color: #00e676; color: #00e676; }
-        table.zone-blue th { border-bottom-color: #448aff; color: #448aff; }
+        table.zone-yellow th { border-bottom-color: #d4a000; color: #d4a000; }
+        table.zone-green th { border-bottom-color: #00b35c; color: #00b35c; }
+        table.zone-blue th { border-bottom-color: #2979ff; color: #2979ff; }
 
         .status-msg { 
             font-family: 'Oswald', sans-serif; 
@@ -341,13 +346,14 @@
             margin-bottom: 40px;
         }
         .stat-card {
-    background: var(--surface-color);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 102, 204, 0.2);
-}
+            background: var(--surface-color);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
         .stat-title {
             color: var(--accent-cyan);
             font-family: 'Oswald', sans-serif;
@@ -360,30 +366,30 @@
             font-family: 'Inter', sans-serif;
             font-weight: 700;
             font-size: 1.8rem;
-            color: #fff;
+            color: var(--text-main);
             margin-bottom: 5px;
         }
         .stat-sub {
             font-size: 0.9rem;
-            color: #aaa;
+            color: #555c66;
             font-weight: 400;
         }
         .stat-desc {
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: #555c66;
         }
 
         /* CSS Bar Charts */
         .bar-chart-container {
             width: 100%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 6px;
             margin: 8px 0;
             height: 32px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
         }
         .bar-chart-fill {
             height: 100%;
@@ -405,27 +411,26 @@
             align-items: center;
             font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-main);
             font-weight: 700;
-            text-shadow: 0 0 5px #000;
         }
         
         .zone-text-row {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
             padding-bottom: 8px;
             margin-bottom: 8px;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            color: #fff;
+            color: var(--text-main);
         }
 
         .footer { 
             margin-top: auto; 
             padding: 30px; 
             font-size: 0.7rem; 
-            color: rgba(255,255,255,0.6); 
+            color: #666; 
             text-align: center; 
             text-transform: uppercase; 
         }
@@ -886,10 +891,10 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
                 // SECTION 1: THE FIELD
-                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 242, 255, 0.05);">';
+                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 102, 204, 0.05);">';
                 htmlMarkup += '<div class="stat-title">The Field</div>';
                 htmlMarkup += '<div class="stat-value">' + totalAnglers + ' <span class="stat-sub">Competitors</span></div>';
-                htmlMarkup += '<div class="stat-desc" style="color: #fff; margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
+                htmlMarkup += '<div class="stat-desc" style="color: var(--text-main); margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
                 htmlMarkup += '</div>';
 
                 // SECTION 2: COMBINED FIELD DATA
@@ -898,31 +903,31 @@ htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
 
 // 1. Total Fish & Breakdown
 htmlMarkup += '<div style="margin: 15px 0 15px 0;">';
-htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: #fff;">' + totalFish + '</div>';
+htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: var(--text-main);">' + totalFish + '</div>';
 htmlMarkup += '<div style="font-size: 0.85rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Fish Caught</div>';
 htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish &nbsp;|&nbsp; Day 2: ' + day2Fish + ' Fish</div>';
 htmlMarkup += '</div>';
 
-htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;"></div>';
+htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
 
 // 2. Length & Size
 htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; margin: 15px 0;">';
 htmlMarkup += '<div style="text-align: center;">';
-htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: #fff;">' + totalMeters + '<span style="font-size: 1rem; color: #aaa;">m</span></div>';
+htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + totalMeters + '<span style="font-size: 1rem; color: #555c66;">m</span></div>';
 htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Length</div>';
 htmlMarkup += '</div>';
-htmlMarkup += '<div style="width: 1px; height: 35px; background: rgba(255,255,255,0.1);"></div>';
+htmlMarkup += '<div style="width: 1px; height: 35px; background: rgba(0,0,0,0.1);"></div>';
 htmlMarkup += '<div style="text-align: center;">';
-htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: #fff;">' + avgFishLength + '<span style="font-size: 1rem; color: #aaa;">cm</span></div>';
+htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + avgFishLength + '<span style="font-size: 1rem; color: #555c66;">cm</span></div>';
 htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg Fish Size</div>';
 htmlMarkup += '</div>';
 htmlMarkup += '</div>';
 
-htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;"></div>';
+htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
 
 // 3. Angler Average
 htmlMarkup += '<div style="margin: 15px 0 5px 0;">';
-htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: #fff;">' + competitorAverage.toFixed(1) + '</div>';
+htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);">' + competitorAverage.toFixed(1) + '</div>';
 htmlMarkup += '<div style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Average Catch Per Angler</div>';
 htmlMarkup += '</div>';
 
@@ -937,18 +942,18 @@ htmlMarkup += '</div>';
                 htmlMarkup += '</div>';
 
                 // NEW FOR v1.0.0: ANGLER SUCCESS RATE CARD
-                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 242, 255, 0.05);">';
+                htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 102, 204, 0.05);">';
                 htmlMarkup += '<div class="stat-title">Angler Success Rate</div>';
-                htmlMarkup += '<div class="stat-value" style="font-size: 2.2rem; color: var(--accent-cyan);">' + successRate + '<span style="font-size: 1.2rem; color: #fff;">%</span></div>';
+                htmlMarkup += '<div class="stat-value" style="font-size: 2.2rem; color: var(--accent-cyan);">' + successRate + '<span style="font-size: 1.2rem; color: var(--text-main);">%</span></div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-top: 10px;"><strong>' + scoringAnglersCount + '</strong> out of <strong>' + totalAnglers + '</strong> competitors successfully weighed in at least one fish during the match.</div>';
                 htmlMarkup += '</div>';
 
                 // SECTION 3: ZONE PERFORMANCE
                 const zoneColors = {
                     'Red Zone': '#ff5252',
-                    'Blue Zone': '#448aff',
-                    'Green Zone': '#00e676',
-                    'Yellow Zone': '#ffd600'
+                    'Blue Zone': '#2979ff',
+                    'Green Zone': '#00b35c',
+                    'Yellow Zone': '#d4a000'
                 };
 
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
@@ -959,7 +964,7 @@ htmlMarkup += '</div>';
                     let zFish = d1ZoneTotals[zName].fish;
                     let percent = d1MaxFish > 0 ? (zFish / d1MaxFish) * 100 : 0;
                     let overallPct = day1Fish > 0 ? ((zFish / day1Fish) * 100).toFixed(1) : 0;
-                    let textColor = zName === 'Yellow Zone' ? '#000' : '#fff';
+                    let textColor = '#fff';
                     
                     htmlMarkup += '<div class="bar-chart-container">';
                     htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish</div>';
@@ -976,7 +981,7 @@ htmlMarkup += '</div>';
                     let zFish = d2ZoneTotals[zName].fish;
                     let percent = d2MaxFish > 0 ? (zFish / d2MaxFish) * 100 : 0;
                     let overallPct = day2Fish > 0 ? ((zFish / day2Fish) * 100).toFixed(1) : 0;
-                    let textColor = zName === 'Yellow Zone' ? '#000' : '#fff';
+                    let textColor = '#fff';
                     
                     htmlMarkup += '<div class="bar-chart-container">';
                     htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish</div>';
@@ -1012,7 +1017,7 @@ htmlMarkup += '</div>';
 
                     htmlMarkup += '<div class="stat-card" style="padding-bottom: 25px; text-align: left;">';
                     htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px;">' + zName.toUpperCase() + '</div>';
-                    htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: #fff; line-height: 1.6;">';
+                    htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: var(--text-main); line-height: 1.6;">';
                     
                     htmlMarkup += '<div class="zone-text-row">';
                     htmlMarkup += '<span><strong>Overall Fish Count:</strong></span>';
@@ -1021,12 +1026,12 @@ htmlMarkup += '</div>';
 
                     htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">';
                     htmlMarkup += '<span><strong>Session Breakdown:</strong></span>';
-                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #ccc; font-size: 0.85rem;">';
+                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #555c66; font-size: 0.85rem;">';
                     htmlMarkup += '<li>Day 1: ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)</li>';
                     htmlMarkup += '<li style="margin-top: 3px;">Day 2: ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)</li>';
                     htmlMarkup += '</ul>';
                     htmlMarkup += '</div>';
-                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px;"></div>';
+                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 8px;"></div>';
 
                     htmlMarkup += '<div class="zone-text-row">';
                     htmlMarkup += '<span><strong>Average Fish Count:</strong></span>';
@@ -1043,18 +1048,18 @@ htmlMarkup += '</div>';
                 }
 
                 // SECTION 5: THE WHAT IF SCENARIO (Upgraded for v1.0.0)
-                htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 242, 255, 0.05); border-color: rgba(0, 242, 255, 0.6);">';
+                htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 102, 204, 0.05); border-color: rgba(0, 102, 204, 0.6);">';
                 htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 5px;">⏳ The "What If?" Scenario</div>';
                 htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Day 1, versus the final official standings.</div>';
 
                 // Individual Comparison Table
-                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; margin-bottom: 25px; overflow-x: auto;">';
+                htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; margin-bottom: 25px; overflow-x: auto;">';
 htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
                 htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">DAY 1 STANDINGS</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">FINAL STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">FINAL STANDINGS</th>';
                 htmlMarkup += '</tr>';
 
                 let maxIndRows = Math.min(10, Math.max(day1Anglers.length, detailedAnglers.length));
@@ -1077,13 +1082,13 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                 htmlMarkup += '</table></div>';
 
                 // Team Comparison Table
-                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Teams</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
+                htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Teams</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; overflow-x: auto;">';
 htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
                 htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">DAY 1 STANDINGS</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 42.5%;">FINAL STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">FINAL STANDINGS</th>';
                 htmlMarkup += '</tr>';
 
                 let maxTeamRows = Math.min(10, Math.max(d1TeamsArray.length, finalTeamsArray.length));
@@ -1141,16 +1146,16 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     return b.avgFish - a.avgFish;
                 });
 
-                htmlMarkup += '<div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 15px; padding-top: 20px;">';
-                htmlMarkup += '<div style="color: #fff; font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">⚔️ The Competition Within The Competition</div>';
-                htmlMarkup += '<div style="font-size: 0.8rem; color: #aaa; text-align: center; margin-bottom: 15px; line-height: 1.4;"><strong>FUN STAT:</strong> This metric levels the playing field by calculating the per-angler average for every parent organization. Whether your club fielded a single 4-man squad or three full sub-teams, this reveals which overarching group performed the best overall.</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px; overflow-x: auto;">';
+                htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin-top: 15px; padding-top: 20px;">';
+                htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">⚔️ The Competition Within The Competition</div>';
+                htmlMarkup += '<div style="font-size: 0.8rem; color: #555c66; text-align: center; margin-bottom: 15px; line-height: 1.4;"><strong>FUN STAT:</strong> This metric levels the playing field by calculating the per-angler average for every parent organization. Whether your club fielded a single 4-man squad or three full sub-teams, this reveals which overarching group performed the best overall.</div>';
+                htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; overflow-x: auto;">';
                 htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
                 htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 45%;">ORGANIZATION</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 20%;">AVG LEN</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: transparent; border-bottom: 1px solid var(--accent-cyan); color: #fff; width: 20%;">AVG FISH</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 45%;">ORGANIZATION</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 20%;">AVG LEN</th>';
+                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 20%;">AVG FISH</th>';
                 htmlMarkup += '</tr>';
 
                 for (let i = 0; i < parentArray.length; i++) {
