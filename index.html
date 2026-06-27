@@ -146,7 +146,7 @@
             z-index: 2000;
         }
         .viewer-nav {
-            padding: 15px 20px; 
+            padding: 10px 15px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
@@ -159,13 +159,14 @@
             background: var(--accent-cyan); 
             color: #fff; 
             border: none; 
-            padding: 10px 16px; 
+            padding: 8px 12px; 
             border-radius: 8px;
             font-family: 'Oswald', sans-serif; 
             font-weight: 700; 
             cursor: pointer; 
             text-transform: uppercase; 
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
         }
         #current-title {
             color: var(--accent-cyan); 
@@ -177,21 +178,22 @@
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis;
+            margin: 0 10px;
         }
         .search-box {
             background: #fff; 
             border: 1px solid var(--accent-cyan); 
             color: var(--text-main); 
-            padding: 8px 15px; 
+            padding: 8px 12px; 
             border-radius: 20px;
             font-family: 'Inter', sans-serif; 
             font-size: 0.85rem; 
             outline: none; 
-            width: 130px; 
+            width: 120px; 
             transition: width 0.3s;
         }
         .search-box:focus { 
-            width: 180px; 
+            width: 160px; 
             box-shadow: 0 0 10px rgba(0, 102, 204, 0.2); 
         }
 
@@ -200,9 +202,9 @@
             background: #e4e7eb;
             color: var(--accent-cyan);
             font-family: 'Oswald', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: center;
-            padding: 10px;
+            padding: 6px;
             border-bottom: 1px solid #ccc;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -214,7 +216,7 @@
         }
         .hint-icon {
             display: inline-block;
-            font-size: 1.2rem;
+            font-size: 1rem;
             animation: swipeHint 1.5s infinite ease-in-out;
         }
         @keyframes swipeHint {
@@ -245,11 +247,6 @@
             font-size: 0.75rem; 
             line-height: 1.4; 
             text-align: center;
-        }
-        .banner-bullet { 
-            color: var(--accent-cyan); 
-            margin-right: 5px; 
-            font-weight: bold; 
         }
         .rule-segment { 
             margin-right: 12px; 
@@ -298,6 +295,11 @@
             white-space: nowrap; 
         }
         table:first-child { margin-top: 15px; }
+        
+        /* Column width controls for standard layouts */
+        table th:nth-child(1), table td:nth-child(1) { width: 1%; white-space: nowrap; } /* Rank */
+        table th:nth-child(2), table td:nth-child(2) { width: 1%; white-space: nowrap; } /* Points */
+
         th {
             background: #e4e7eb; 
             color: var(--accent-cyan); 
@@ -305,7 +307,7 @@
             text-transform: uppercase;
             font-weight: 700; 
             letter-spacing: 1px; 
-            padding: 14px 12px; 
+            padding: 6px 8px; 
             border-bottom: 2px solid var(--accent-cyan);
             position: sticky; 
             top: 0; 
@@ -313,7 +315,7 @@
             text-align: center; 
         }
         td { 
-            padding: 14px 12px; 
+            padding: 6px 8px; 
             text-align: center; 
         }
         tr:nth-child(even) td { background: rgba(0, 0, 0, 0.03); }
@@ -508,8 +510,7 @@
                 isIndividualCustom: true,
                 skipRows: 1, 
                 staticRules: [
-                    "<strong>Winner:</strong> Lowest Zone Points", 
-                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
+                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
                 ]
             }, 
             'TEAM RESULT': { 
@@ -531,16 +532,14 @@
                 isMultiZone: true, 
                 skipRows: 1,
                 staticRules: [
-                    "<strong>Winner:</strong> Lowest Zone Points", 
-                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
+                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
                 ]
             },                 
             'ZONE 2': { 
                 isMultiZone: true, 
                 skipRows: 1,
                 staticRules: [
-                    "<strong>Winner:</strong> Lowest Zone Points", 
-                    "<strong>If Tied:</strong> Length (cm) ➔ then Fish Count ➔ then Biggest Fish ➔ then Daily Species"
+                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
                 ]
             }                  
         };
@@ -735,6 +734,12 @@
                 finalTeamsArray.sort((a,b) => b.len - a.len);
 
                 detailedAnglers.sort((a, b) => a.rank - b.rank);
+                
+                // Calculate Top 10 Names for Zone Intel later
+                let top10Names = [];
+                for (let i = 0; i < Math.min(10, detailedAnglers.length); i++) {
+                    top10Names.push(detailedAnglers[i].name);
+                }
 
                 // Construct Day 1 Individual Anglers for What If comparison
                 let day1Anglers = [];
@@ -808,6 +813,7 @@
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
+                let fleetAvgLenFloat = totalFish > 0 ? (totalLengthCm / totalFish) : 0;
                 
                 let shiftFish = day2Fish - day1Fish;
                 let shiftFishText = "";
@@ -823,10 +829,10 @@
 
                 function processZoneSheetDetailed(wBook, targetSheet) {
                     let totals = { 
-                        'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
-                        'Yellow Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
-                        'Green Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 }, 
-                        'Blue Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0 } 
+                        'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
+                        'Yellow Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
+                        'Green Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
+                        'Blue Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] } 
                     };
                     let zSheetName = null;
                     for (let i = 0; i < wBook.SheetNames.length; i++) {
@@ -852,18 +858,25 @@
                                 let row = zProcessedData[r];
                                 let slicedRow = row.slice(block.start, block.end + 1);
                                 if (slicedRow.length >= 4) {
+                                    let nameStr = String(slicedRow[0]).trim();
                                     let pnbs = String(slicedRow[2]).trim();
-                                    if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
-                                        let parts = pnbs.split("/");
-                                        if (parts.length >= 2) {
-                                            let lengthVal = parseFloat(parts[0]);
-                                            let fishCt = parseFloat(parts[1]);
-                                            if (isNaN(fishCt) === false && fishCt > 0) {
-                                                totals[block.name].fish += fishCt;
-                                                totals[block.name].length += lengthVal;
-                                                totals[block.name].anglers += 1;
-                                                if (fishCt > totals[block.name].maxFish) {
-                                                    totals[block.name].maxFish = fishCt;
+                                    
+                                    if (nameStr !== "" && nameStr !== "///" && nameStr !== "/" && nameStr.toUpperCase() !== "ANGLER NAME") {
+                                        totals[block.name].totalCompetitors += 1;
+                                        totals[block.name].anglerNames.push(nameStr);
+                                        
+                                        if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
+                                            let parts = pnbs.split("/");
+                                            if (parts.length >= 2) {
+                                                let lengthVal = parseFloat(parts[0]);
+                                                let fishCt = parseFloat(parts[1]);
+                                                if (isNaN(fishCt) === false && fishCt > 0) {
+                                                    totals[block.name].fish += fishCt;
+                                                    totals[block.name].length += lengthVal;
+                                                    totals[block.name].anglers += 1; // scoring anglers
+                                                    if (fishCt > totals[block.name].maxFish) {
+                                                        totals[block.name].maxFish = fishCt;
+                                                    }
                                                 }
                                             }
                                         }
@@ -898,40 +911,31 @@
                 htmlMarkup += '</div>';
 
                 // SECTION 2: COMBINED FIELD DATA
-htmlMarkup += '<div class="stat-card">';
-htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
-
-// 1. Total Fish & Breakdown
-htmlMarkup += '<div style="margin: 15px 0 15px 0;">';
-htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: var(--text-main);">' + totalFish + '</div>';
-htmlMarkup += '<div style="font-size: 0.85rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Fish Caught</div>';
-htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish &nbsp;|&nbsp; Day 2: ' + day2Fish + ' Fish</div>';
-htmlMarkup += '</div>';
-
-htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
-
-// 2. Length & Size
-htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; margin: 15px 0;">';
-htmlMarkup += '<div style="text-align: center;">';
-htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + totalMeters + '<span style="font-size: 1rem; color: #555c66;">m</span></div>';
-htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Length</div>';
-htmlMarkup += '</div>';
-htmlMarkup += '<div style="width: 1px; height: 35px; background: rgba(0,0,0,0.1);"></div>';
-htmlMarkup += '<div style="text-align: center;">';
-htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + avgFishLength + '<span style="font-size: 1rem; color: #555c66;">cm</span></div>';
-htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg Fish Size</div>';
-htmlMarkup += '</div>';
-htmlMarkup += '</div>';
-
-htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
-
-// 3. Angler Average
-htmlMarkup += '<div style="margin: 15px 0 5px 0;">';
-htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);">' + competitorAverage.toFixed(1) + '</div>';
-htmlMarkup += '<div style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Average Catch Per Angler</div>';
-htmlMarkup += '</div>';
-
-htmlMarkup += '</div>';
+                htmlMarkup += '<div class="stat-card">';
+                htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
+                htmlMarkup += '<div style="margin: 15px 0 15px 0;">';
+                htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: var(--text-main);">' + totalFish + '</div>';
+                htmlMarkup += '<div style="font-size: 0.85rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Fish Caught</div>';
+                htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish &nbsp;|&nbsp; Day 2: ' + day2Fish + ' Fish</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
+                htmlMarkup += '<div style="display: flex; justify-content: space-around; align-items: center; margin: 15px 0;">';
+                htmlMarkup += '<div style="text-align: center;">';
+                htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + totalMeters + '<span style="font-size: 1rem; color: #555c66;">m</span></div>';
+                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Total Length</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '<div style="width: 1px; height: 35px; background: rgba(0,0,0,0.1);"></div>';
+                htmlMarkup += '<div style="text-align: center;">';
+                htmlMarkup += '<div style="font-size: 1.5rem; font-weight: 700; color: var(--text-main);">' + avgFishLength + '<span style="font-size: 1rem; color: #555c66;">cm</span></div>';
+                htmlMarkup += '<div style="font-size: 0.75rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Avg Fish Size</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 15px 0;"></div>';
+                htmlMarkup += '<div style="margin: 15px 0 5px 0;">';
+                htmlMarkup += '<div style="font-size: 1.6rem; font-weight: 700; color: var(--text-main);">' + competitorAverage.toFixed(1) + '</div>';
+                htmlMarkup += '<div style="font-size: 0.8rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px;">Average Catch Per Angler</div>';
+                htmlMarkup += '</div>';
+                htmlMarkup += '</div>';
                 
                 // COMBINED DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
@@ -941,7 +945,7 @@ htmlMarkup += '</div>';
                 htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
-                // NEW FOR v1.0.0: ANGLER SUCCESS RATE CARD
+                // ANGLER SUCCESS RATE CARD
                 htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 102, 204, 0.05);">';
                 htmlMarkup += '<div class="stat-title">Angler Success Rate</div>';
                 htmlMarkup += '<div class="stat-value" style="font-size: 2.2rem; color: var(--accent-cyan);">' + successRate + '<span style="font-size: 1.2rem; color: var(--text-main);">%</span></div>';
@@ -990,7 +994,7 @@ htmlMarkup += '</div>';
                 }
                 htmlMarkup += '</div>';
                 
-                // SECTION 4: INDIVIDUAL ZONE PROFILES
+                // SECTION 4: INDIVIDUAL ZONE PROFILES & ZONE INTEL
                 for (let i = 0; i < zoneKeys.length; i++) {
                     let zName = zoneKeys[i];
                     
@@ -1015,7 +1019,27 @@ htmlMarkup += '</div>';
                     let zoneAvg = totalZAnglers > 0 ? (totalZFish / totalZAnglers) : 0;
                     let topIndivCatch = Math.max(d1Max, d2Max);
 
-                    htmlMarkup += '<div class="stat-card" style="padding-bottom: 25px; text-align: left;">';
+                    // ZONE INTEL CALCULATIONS
+                    let combinedCompetitors = d1ZoneTotals[zName].totalCompetitors + d2ZoneTotals[zName].totalCompetitors;
+                    let combinedScoring = d1ZoneTotals[zName].anglers + d2ZoneTotals[zName].anglers;
+                    let blankRate = combinedCompetitors > 0 ? (((combinedCompetitors - combinedScoring) / combinedCompetitors) * 100).toFixed(0) : 0;
+                    
+                    let d1AvgCatch = d1ZoneTotals[zName].totalCompetitors > 0 ? (d1F / d1ZoneTotals[zName].totalCompetitors) : 0;
+                    let d2AvgCatch = d2ZoneTotals[zName].totalCompetitors > 0 ? (d2F / d2ZoneTotals[zName].totalCompetitors) : 0;
+                    let trend = d1AvgCatch > 0 ? (((d2AvgCatch - d1AvgCatch) / d1AvgCatch) * 100).toFixed(0) : 0;
+                    let trendIcon = trend > 0 ? '↑' : (trend < 0 ? '↓' : '→');
+                    let trendText = trend > 0 ? `+${trend}%` : `${trend}%`;
+                    
+                    let top10Count = 0;
+                    let zoneAnglers = new Set([...d1ZoneTotals[zName].anglerNames, ...d2ZoneTotals[zName].anglerNames]);
+                    for(let name of top10Names) {
+                        if(zoneAnglers.has(name)) top10Count++;
+                    }
+                    
+                    let zAvgLen = totalZFish > 0 ? totalZLen / totalZFish : 0;
+                    let profile = zAvgLen > fleetAvgLenFloat ? 'Target (Large)' : 'Volume (Small)';
+
+                    htmlMarkup += '<div class="stat-card" style="padding-bottom: 20px; text-align: left;">';
                     htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px;">' + zName.toUpperCase() + '</div>';
                     htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: var(--text-main); line-height: 1.6;">';
                     
@@ -1043,11 +1067,19 @@ htmlMarkup += '</div>';
                     htmlMarkup += '<span style="color: ' + zoneColors[zName] + ';">' + topIndivCatch + ' Fish</span>';
                     htmlMarkup += '</div>';
                     
+                    // ZONE INTEL 2x2 GRID
+                    htmlMarkup += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px;">';
+                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🛡️ Blank Rate</div><div style="color: #555c66;">' + blankRate + '%</div></div>';
+                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">📈 Day 2 Trend</div><div style="color: #555c66;">' + trendIcon + ' ' + trendText + '</div></div>';
+                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🏆 Podium Path</div><div style="color: #555c66;">' + top10Count + ' of Top 10</div></div>';
+                    htmlMarkup += '<div style="background: rgba(0,0,0,0.03); padding: 8px; border-radius: 6px; font-size: 0.8rem; text-align: center;"><div style="font-weight: bold; margin-bottom: 2px;">🎯 Profile</div><div style="color: #555c66;">' + profile + '</div></div>';
+                    htmlMarkup += '</div>'; // End Zone Intel Grid
+                    
                     htmlMarkup += '</div>';
                     htmlMarkup += '</div>';
                 }
 
-                // SECTION 5: THE WHAT IF SCENARIO (Upgraded for v1.0.0)
+                // SECTION 5: THE WHAT IF SCENARIO
                 htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 102, 204, 0.05); border-color: rgba(0, 102, 204, 0.6);">';
                 htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 5px;">⏳ The "What If?" Scenario</div>';
                 htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Day 1, versus the final official standings.</div>';
@@ -1055,7 +1087,7 @@ htmlMarkup += '</div>';
                 // Individual Comparison Table
                 htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
                 htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; margin-bottom: 25px; overflow-x: auto;">';
-htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
                 htmlMarkup += '<tr>';
                 htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
                 htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
@@ -1068,15 +1100,13 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     let f = detailedAnglers[i]; 
 
                     let rankDisp = (i + 1);
-                   
-
                     let d1Str = d1 ? d1.name : "-";
                     let fStr = f ? f.name : "-";
 
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center;">' + d1Str + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: centre;">' + fStr + '</td>';
+                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + fStr + '</td>';
                     htmlMarkup += '</tr>';
                 }
                 htmlMarkup += '</table></div>';
@@ -1084,7 +1114,7 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                 // Team Comparison Table
                 htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Teams</div>';
                 htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; overflow-x: auto;">';
-htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
                 htmlMarkup += '<tr>';
                 htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
                 htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
@@ -1097,8 +1127,6 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     let f = finalTeamsArray[i];
 
                     let rankDisp = (i + 1);
-                    
-
                     let d1Str = d1 ? d1.name : "-";
                     let fStr = f ? f.name : "-";
 
@@ -1117,10 +1145,8 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     let cLen = parseFloat(rawData[r][17]) || 0;
                     let cFish = parseFloat(rawData[r][18]) || 0;
                     
-                    // Skip solo anglers and blank cells
                     if (tName === "" || tName === "SOLO") continue;
                     
-                    // Strip the trailing space and single letter (e.g., "SHAPES A" becomes "SHAPES")
                     let pName = tName;
                     let match = tName.match(/^(.*?)\s+[A-Z]$/i);
                     if (match) pName = match[1].trim();
@@ -1140,7 +1166,6 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                     });
                 }
                 
-                // Sort by Average Length, then Average Fish
                 parentArray.sort((a, b) => {
                     if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
                     return b.avgFish - a.avgFish;
@@ -1161,9 +1186,6 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                 for (let i = 0; i < parentArray.length; i++) {
                     let p = parentArray[i];
                     let rankDisp = (i + 1);
-                    if (i === 0) rankDisp = "🥇 1";
-                    else if (i === 1) rankDisp = "🥈 2";
-                    else if (i === 2) rankDisp = "🥉 3";
                     
                     htmlMarkup += '<tr>';
                     htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
@@ -1192,7 +1214,7 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'block';
-            document.querySelector('.scroll-hint').style.display = 'block';
+            document.querySelector('.scroll-hint').style.display = 'flex';
             
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
@@ -1240,7 +1262,7 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                 if (limits.staticRules !== undefined) {
                     htmlMarkup += '<div class="info-banner">';
                     for (let i = 0; i < limits.staticRules.length; i++) {
-                        htmlMarkup += '<span class="rule-segment"><span class="banner-bullet">▪</span>' + limits.staticRules[i] + '</span>';
+                        htmlMarkup += '<span class="rule-segment">' + limits.staticRules[i] + '</span>';
                     }
                     htmlMarkup += '</div>';
                 }
@@ -1298,12 +1320,6 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                                 let cellContent = String(slicedRow[c]).trim();
                                 let displayContent = cellContent;
                                 
-                                if (isFirstRow === false && c === 0) {
-                                    if (cellContent === "1") displayContent = "🥇 " + cellContent;
-                                    else if (cellContent === "2") displayContent = "🥈 " + cellContent;
-                                    else if (cellContent === "3") displayContent = "🥉 " + cellContent;
-                                }
-
                                 if (isFirstRow === true) {
                                     blockHtml += '<th>' + displayContent + '</th>';
                                 } else {
@@ -1374,14 +1390,8 @@ htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; w
                         htmlMarkup += '<tr>';
                         for (let c = 0; c < slicedRow.length; c++) {
                             let cellContent = String(slicedRow[c]).trim();
-let displayContent = cellContent.replace(/\n/g, '<br>');
+                            let displayContent = cellContent.replace(/\n/g, '<br>');
                             
-                            if (isFirstRow === false && c === 0) {
-                                if (cellContent === "1") displayContent = "🥇 " + cellContent;
-                                else if (cellContent === "2") displayContent = "🥈 " + cellContent;
-                                else if (cellContent === "3") displayContent = "🥉 " + cellContent;
-                            }
-
                             if (isFirstRow === true) {
                                 htmlMarkup += '<th>' + displayContent + '</th>';
                             } else {
