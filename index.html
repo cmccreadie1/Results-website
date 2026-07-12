@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v1.1.0</title>
+    <title>SPRA Scottish Shore 2026 | v1.1.1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -398,11 +398,12 @@
             padding-left: 10px;
             font-family: 'Inter', sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             white-space: nowrap;
             transition: width 1s ease-out;
             position: relative;
             z-index: 2;
+            border-radius: 4px;
         }
         .bar-chart-label-right {
             position: absolute;
@@ -416,7 +417,7 @@
             color: var(--text-main);
             font-weight: 700;
             z-index: 3;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.8);
             padding: 0 4px;
             border-radius: 4px;
         }
@@ -505,7 +506,7 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v1.1.0
+        Official Results Portal | v1.1.1
     </footer>
 
     <script>
@@ -577,7 +578,7 @@
             });
         }
 
-        // MATCH STATS DASHBOARD (COMPLETELY DYNAMIC ENGINE)
+        // MATCH STATS DASHBOARD (UPGRADED TO V1.1.1 INTEGRATED PROFILE CARDS)
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -604,7 +605,6 @@
             try {
                 const anglers = await fetchScores();
                 
-                // Initialize math trackers
                 let totalAnglers = anglers.length;
                 let totalFish = 0;
                 let day1Fish = 0;
@@ -615,12 +615,6 @@
                 let blankers = 0;
                 let soloCount = 0;
                 let teamsSet = new Set();
-                
-                // Track dynamic macro lunkers across variables
-                let day1LunkerZone = "None";
-                let day1LunkerSize = 0;
-                let day2LunkerZone = "None";
-                let day2LunkerSize = 0;
 
                 let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
                 let d1ZoneTotals = {}, d2ZoneTotals = {};
@@ -644,7 +638,6 @@
                         teamsSet.add(teamRaw);
                     }
 
-                    // Parse Day 1 Sub-Objects
                     if (item.day1 && item.day1.zone) {
                         let z = item.day1.zone;
                         day1Fish += item.day1.fishCount || 0;
@@ -658,13 +651,8 @@
                                 if (item.day1.fishCount > d1ZoneTotals[z].maxFish) d1ZoneTotals[z].maxFish = item.day1.fishCount;
                             }
                         }
-                        if (item.day1.biggestFishCm > day1LunkerSize) {
-                            day1LunkerSize = item.day1.biggestFishCm;
-                            day1LunkerZone = z;
-                        }
                     }
 
-                    // Parse Day 2 Sub-Objects
                     if (item.day2 && item.day2.zone) {
                         let z = item.day2.zone;
                         day2Fish += item.day2.fishCount || 0;
@@ -677,10 +665,6 @@
                                 d2ZoneTotals[z].anglers++;
                                 if (item.day2.fishCount > d2ZoneTotals[z].maxFish) d2ZoneTotals[z].maxFish = item.day2.fishCount;
                             }
-                        }
-                        if (item.day2.biggestFishCm > day2LunkerSize) {
-                            day2LunkerSize = item.day2.biggestFishCm;
-                            day2LunkerZone = z;
                         }
                     }
                 });
@@ -696,8 +680,18 @@
                 let shiftLen = (day2LengthTotal - day1LengthTotal) / 100;
                 let shiftLenText = shiftLen > 0 ? `The field recorded ${shiftLen.toFixed(2)} more meters of fish on Day 2.` : (shiftLen < 0 ? `The field recorded ${Math.abs(shiftLen).toFixed(2)} fewer meters of fish on Day 2.` : "The field recorded exactly the same meters of fish on Day 2.");
 
-                let d1MaxZoneFish = Math.max(...zoneKeys.map(k => d1ZoneTotals[k].fish));
-                let d2MaxZoneFish = Math.max(...zoneKeys.map(k => d2ZoneTotals[k].fish));
+                // Precompute Maximum Benchmarks across zones for scaling Matrix Bars
+                let maxZoneCombinedFish = 0;
+                let maxZoneCombinedAvgSize = 0;
+
+                zoneKeys.forEach(zName => {
+                    let combinedFish = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
+                    let combinedLen = d1ZoneTotals[zName].length + d2ZoneTotals[zName].length;
+                    let combinedAvg = combinedFish > 0 ? (combinedLen / combinedFish) : 0;
+                    
+                    if (combinedFish > maxZoneCombinedFish) maxZoneCombinedFish = combinedFish;
+                    if (combinedAvg > maxZoneCombinedAvgSize) maxZoneCombinedAvgSize = combinedAvg;
+                });
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
@@ -750,42 +744,9 @@
                 htmlMarkup += '<div class="stat-desc" style="margin-top: 10px;"><strong>' + scoringAnglersCount + '</strong> out of <strong>' + totalAnglers + '</strong> competitors successfully weighed in at least one fish during the match.</div>';
                 htmlMarkup += '</div>';
 
-                // MACRO VIEW BAR CHARTS WITH DYNAMIC AUTOMATED LUNKER MATCHING
+                // SECTION 4: CONSOLIDATED INTEGRATED ZONE PROFILE CARDS
                 const zoneColors = { 'Red Zone': '#ff5252', 'Blue Zone': '#2979ff', 'Green Zone': '#00b35c', 'Yellow Zone': '#d4a000' };
 
-                htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
-                htmlMarkup += '<div class="stat-title">Day 1 Zone Performance</div>';
-                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 1.</div>';
-                zoneKeys.forEach(zName => {
-                    let zFish = d1ZoneTotals[zName].fish;
-                    let percent = d1MaxZoneFish > 0 ? (zFish / d1MaxZoneFish) * 100 : 0;
-                    let overallPct = day1Fish > 0 ? ((zFish / day1Fish) * 100).toFixed(1) : 0;
-                    let lunkerTag = (zName === day1LunkerZone && day1LunkerSize > 0) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day1LunkerSize + 'cm Lunker' : '';
-                    
-                    htmlMarkup += '<div class="bar-chart-container">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: #fff;">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
-                    htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
-                    htmlMarkup += '</div>';
-                });
-                htmlMarkup += '</div>';
-
-                htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
-                htmlMarkup += '<div class="stat-title">Day 2 Zone Performance</div>';
-                htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 2.</div>';
-                zoneKeys.forEach(zName => {
-                    let zFish = d2ZoneTotals[zName].fish;
-                    let percent = d2MaxZoneFish > 0 ? (zFish / d2MaxZoneFish) * 100 : 0;
-                    let overallPct = day2Fish > 0 ? ((zFish / day2Fish) * 100).toFixed(1) : 0;
-                    let lunkerTag = (zName === day2LunkerZone && day2LunkerSize > 0) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day2LunkerSize + 'cm Lunker' : '';
-
-                    htmlMarkup += '<div class="bar-chart-container">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: #fff;">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
-                    htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
-                    htmlMarkup += '</div>';
-                });
-                htmlMarkup += '</div>';
-                
-                // INDIVIDUAL ZONE CARDS WITH DYNAMIC SWING EQUATIONS
                 zoneKeys.forEach(zName => {
                     let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
                     let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
@@ -793,45 +754,77 @@
                     let totalZFish = d1F + d2F;
                     let totalZLen = d1L + d2L;
                     let totalZMeters = (totalZLen / 100).toFixed(2);
-                    let totalZAnglers = d1A + d2A;
                     
                     let d1ZAvg = d1F > 0 ? (d1L / d1F).toFixed(1) : "0.0";
                     let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : "0.0";
-                    let zoneAvg = totalZAnglers > 0 ? (totalZFish / (d1ZoneTotals[zName].totalCompetitors + d2ZoneTotals[zName].totalCompetitors)) : 0;
+                    let overallZAvg = totalZFish > 0 ? (totalZLen / totalZFish).toFixed(1) : "0.0";
+                    
+                    let totalZoneMatches = d1ZoneTotals[zName].totalCompetitors + d2ZoneTotals[zName].totalCompetitors;
+                    let zoneAvgPerCapita = totalZoneMatches > 0 ? (totalZFish / totalZoneMatches) : 0;
 
                     let d1BlankRate = d1ZoneTotals[zName].totalCompetitors > 0 ? (((d1ZoneTotals[zName].totalCompetitors - d1ZoneTotals[zName].anglers) / d1ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
                     let d2BlankRate = d2ZoneTotals[zName].totalCompetitors > 0 ? (((d2ZoneTotals[zName].totalCompetitors - d2ZoneTotals[zName].anglers) / d2ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
 
+                    // Matrix Scaling Logic Equations
+                    let volumeWidthPercent = maxZoneCombinedFish > 0 ? (totalZFish / maxZoneCombinedFish) * 100 : 0;
+                    let sizeWidthPercent = maxZoneCombinedAvgSize > 0 ? (parseFloat(overallZAvg) / maxZoneCombinedAvgSize) * 100 : 0;
+                    let overallTournamentShare = totalFish > 0 ? ((totalZFish / totalFish) * 100).toFixed(1) : 0;
+
+                    // The Session Swing Calculus (Day 1 baseline transformed to Day 2 metrics)
                     let fishSwing = d2F - d1F;
-                    let fishSwingText = fishSwing > 0 ? '▲ +' + fishSwing : (fishSwing < 0 ? '▼ ' + Math.abs(fishSwing) : '► 0');
+                    let fishSwingText = fishSwing > 0 ? '▲ +' + fishSwing : (fishSwing < 0 ? '▼ ' + fishSwing : '► 0');
                     let sizeSwing = (parseFloat(d2ZAvg) - parseFloat(d1ZAvg)).toFixed(1);
-                    let sizeSwingText = sizeSwing > 0 ? '▲ +' + sizeSwing : (sizeSwing < 0 ? '▼ ' + Math.abs(sizeSwing) : '► 0.0');
+                    let sizeSwingText = sizeSwing > 0 ? '▲ +' + sizeSwing : (sizeSwing < 0 ? '▼ ' + sizeSwing : '► 0.0');
                     let blankSwing = d2BlankRate - d1BlankRate;
-                    let blankSwingText = blankSwing > 0 ? '▲ +' + blankSwing + '%' : (blankSwing < 0 ? '▼ ' + Math.abs(blankSwing) + '%' : '► 0%');
+                    let blankSwingText = blankSwing > 0 ? '▲ +' + blankSwing + '%' : (blankSwing < 0 ? '▼ ' + blankSwing + '%' : '► 0%');
 
                     htmlMarkup += '<div class="stat-card" style="padding-bottom: 20px; text-align: left;">';
-                    htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px;">' + zName.toUpperCase() + '</div>';
+                    htmlMarkup += '<div class="stat-title" style="color: ' + zoneColors[zName] + '; text-align: center; margin-bottom: 15px; font-size:1.2rem;">' + zName.toUpperCase() + '</div>';
                     htmlMarkup += '<div style="font-family: \'Inter\', sans-serif; font-size: 0.95rem; color: var(--text-main); line-height: 1.6;">';
                     
+                    // Header Total row
                     htmlMarkup += '<div class="zone-text-row">';
-                    htmlMarkup += '<span><strong>Overall Fish Count:</strong></span>';
+                    htmlMarkup += '<span><strong>Overall Performance:</strong></span>';
                     htmlMarkup += '<span>' + totalZFish + ' Fish | ' + totalZMeters + ' m</span>';
                     htmlMarkup += '</div>';
 
-                    htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">';
+                    // High Contrast Zone Matrix Section
+                    htmlMarkup += '<div style="margin: 12px 0 16px 0;">';
+                    htmlMarkup += '<div style="font-size:0.75rem; color:#555c66; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Zone Profile (Venue Comparison)</div>';
+                    
+                    // Volume Bar
+                    htmlMarkup += '<div class="bar-chart-container" style="height:26px; margin:4px 0 10px 0;">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + volumeWidthPercent + '%; background: ' + zoneColors[zName] + '; color: #fff;">Catch Volume: ' + totalZFish + ' Fish</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">' + overallTournamentShare + '% share</div>';
+                    htmlMarkup += '</div>';
+
+                    // Size Bar
+                    htmlMarkup += '<div class="bar-chart-container" style="height:26px; margin:4px 0 4px 0;">';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + sizeWidthPercent + '%; background: #555c66; color: #fff;">Average Size: ' + overallZAvg + ' cm</div>';
+                    htmlMarkup += '<div class="bar-chart-label-right">Quality Index</div>';
+                    htmlMarkup += '</div>';
+                    htmlMarkup += '</div>';
+
+                    // Deep Breakdown Layout Stack + Dynamic Verified Sunday Swings
+                    htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0; margin-bottom:0;">';
                     htmlMarkup += '<span><strong>Session Breakdown:</strong></span>';
-                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #555c66; font-size: 0.85rem; list-style-type: none; padding-left: 0;">';
-                    htmlMarkup += '<li style="margin-bottom: 6px;">• Day 1: ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d1BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Catch: ' + d1Max + ' Fish</em></span></li>';
-                    htmlMarkup += '<li style="margin-bottom: 6px;">• Day 2: ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d2BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Catch: ' + d2Max + ' Fish</em></span></li>';
-                    htmlMarkup += '<li style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.1);"><strong>• The Swing:</strong> <span style="color: var(--text-main);">' + fishSwingText + ' Fish &nbsp;|&nbsp; ' + sizeSwingText + ' cm Avg &nbsp;|&nbsp; ' + blankSwingText + ' Blank Rate</span></li>';
+                    htmlMarkup += '<ul style="margin-top: 5px; margin-left: 15px; color: #555c66; font-size: 0.85rem; list-style-type: none; padding-left: 0;">';
+                    htmlMarkup += '<li style="margin-bottom: 6px;">• <strong>Day 1:</strong> ' + d1F + ' Fish (Avg Size: ' + d1ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d1BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Bag: ' + d1Max + ' Fish</em></span></li>';
+                    htmlMarkup += '<li style="margin-bottom: 6px;">• <strong>Day 2:</strong> ' + d2F + ' Fish (Avg Size: ' + d2ZAvg + ' cm)<br><span style="color: var(--accent-cyan); font-size: 0.75rem; margin-left: 10px;">↳ <em>Stats: ' + d2BlankRate + '% Blank Rate &nbsp;|&nbsp; Top Bag: ' + d2Max + ' Fish</em></span></li>';
+                    htmlMarkup += '<li style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.15); font-size:0.82rem; color:var(--text-main);">';
+                    htmlMarkup += '<strong>• The Swing (From Day 1 to Day 2):</strong><br>';
+                    htmlMarkup += '<span style="display:inline-block; margin-top:2px; font-weight:bold; background:rgba(0,0,0,0.04); padding: 2px 6px; border-radius:4px; letter-spacing:0.2px;">' + fishSwingText + ' Fish &nbsp;|&nbsp; ' + sizeSwingText + ' cm &nbsp;|&nbsp; ' + blankSwingText + ' Blanks</span>';
+                    htmlMarkup += '</li>';
                     htmlMarkup += '</ul>';
                     htmlMarkup += '</div>';
-                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 8px; margin-top: 8px;"></div>';
+                    
+                    htmlMarkup += '<div style="border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 8px; margin-top: 12px;"></div>';
 
                     htmlMarkup += '<div class="zone-text-row" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">';
                     htmlMarkup += '<span><strong>Average Fish Count:</strong></span>';
-                    htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish / Angler</span>';
+                    htmlMarkup += '<span>' + zoneAvgPerCapita.toFixed(1) + ' Fish / Angler</span>';
                     htmlMarkup += '</div>';
+                    
                     htmlMarkup += '</div>';
                     htmlMarkup += '</div>';
                 });
@@ -845,7 +838,7 @@
 
                 htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 102, 204, 0.05); border-color: rgba(0, 102, 204, 0.6);">';
                 htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 5px;">⏳ The "What If?" Scenario</div>';
-                htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing leaderboards exactly as they stood at the close of play on Day 1, versus the final standings.</div>';
+                htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing leaderboards exactly as they stood at the close of play on Day 1, versus the final standing array.</div>';
 
                 htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
                 htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; margin-bottom: 25px; overflow-x: auto;">';
@@ -858,7 +851,7 @@
                 }
                 htmlMarkup += '</table></div>';
 
-                // THE PARENT COMPETITION WITHIN THE COMPETITION
+                // COMPETITION WITHIN THE COMPETITION
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -899,7 +892,7 @@
             }
         }
 
-        // UNIFIED NAVIGATION COMPONENT
+        // NAVIGATION COMPONENT VIEW RENDERING CONNECTIONS
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -1070,7 +1063,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.1.0 registered'))
+                    .then(reg => console.log('v1.1.1 registered'))
                     .catch(err => console.error('SW connection failed', err));
             });
         }
