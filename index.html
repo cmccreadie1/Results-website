@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SPRA Scottish Shore 2026 | v1.0.2</title>
+    <title>SPRA Scottish Shore 2026 | v1.1.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-
     <style>
         :root {
             --bg-overlay: rgba(245, 247, 250, 0.95); 
@@ -296,9 +294,8 @@
         }
         table:first-child { margin-top: 15px; }
         
-        /* Column width controls for standard layouts */
-        table th:nth-child(1), table td:nth-child(1) { width: 1%; white-space: nowrap; } /* Rank */
-        table th:nth-child(2), table td:nth-child(2) { width: 1%; white-space: nowrap; } /* Points */
+        table th:nth-child(1), table td:nth-child(1) { width: 1%; white-space: nowrap; } 
+        table th:nth-child(2), table td:nth-child(2) { width: 1%; white-space: nowrap; } 
 
         th {
             background: #e4e7eb; 
@@ -390,7 +387,6 @@
             margin: 8px 0;
             height: 32px;
             position: relative;
-            /* Changed to visible to allow the Lunker Tag to overflow if the bar is too short */
             overflow: visible;
             border: 1px solid rgba(0,0,0,0.1);
             z-index: 1;
@@ -509,66 +505,30 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v1.0.2
+        Official Results Portal | v1.1.0
     </footer>
 
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                isIndividualCustom: true,
-                skipRows: 1, 
-                staticRules: [
-                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
-                ]
-            }, 
-            'TEAM RESULT': { 
-                startCol: 0, 
-                endCol: 8, 
-                skipRows: 1 
-            },       
-            'BIGGEST FISH': { 
-                startCol: 0, 
-                endCol: 4, 
-                skipRows: 1 
-            },      
-            'SECRET PAIRS': { 
-                startCol: 0, 
-                endCol: 2,   
-                skipRows: 2 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Total Fish Count ➔ Biggest Fish"]
             }, 
             'ZONE 1': { 
-                isMultiZone: true, 
-                skipRows: 1,
-                staticRules: [
-                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
-                ]
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
             },                 
             'ZONE 2': { 
-                isMultiZone: true, 
-                skipRows: 1,
-                staticRules: [
-                    "<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Length ➔ Fish Count ➔ Biggest Fish ➔ Species"
-                ]
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
             }                  
         };
 
-        const ALLOWED_TABS = [
-            'ZONE 1', 
-            'ZONE 2', 
-            'INDIVIDUAL RESULT', 
-            'TEAM RESULT',
-            'BIGGEST FISH',
-            'SECRET PAIRS'
-        ];
-
-        let cachedWorkbook = null;
+        let cachedScores = null;
 
         document.addEventListener("DOMContentLoaded", updateSyncTime);
 
         async function updateSyncTime() {
             try {
                 const timestampForFetch = new Date().getTime();
-                const response = await fetch('scores.xlsx?v=' + timestampForFetch, { method: 'HEAD' });
+                const response = await fetch('scores.json?v=' + timestampForFetch, { method: 'HEAD' });
                 
                 if (response.ok === true) {
                     const lastMod = response.headers.get('Last-Modified');
@@ -586,21 +546,17 @@
             }
         }
 
-        async function fetchWorkbook() {
-            if (cachedWorkbook !== null) {
-                return cachedWorkbook;
+        async function fetchScores() {
+            if (cachedScores !== null) {
+                return cachedScores;
             }
-
             const timestampForFetch = new Date().getTime();
-            const response = await fetch('scores.xlsx?v=' + timestampForFetch);
-            
+            const response = await fetch('scores.json?v=' + timestampForFetch);
             if (response.ok === false) {
-                throw new Error("Workbook file not found.");
+                throw new Error("Scores JSON file not found.");
             }
-
-            const arrayBuffer = await response.arrayBuffer();
-            cachedWorkbook = XLSX.read(arrayBuffer, { type: "array" });
-            return cachedWorkbook;
+            cachedScores = await response.json();
+            return cachedScores;
         }
 
         function filterTable() {
@@ -621,18 +577,8 @@
             });
         }
 
-        // MATCH STATS DASHBOARD
+        // MATCH STATS DASHBOARD (COMPLETELY DYNAMIC ENGINE)
         async function loadMatchStats(displayTitle) {
-            
-            // --- BIGGEST FISH PLACEHOLDERS ---
-            // Update these values by parsing your BIGGEST FISH sheet, or manually typing the results here.
-            let day1LunkerZone = "Red Zone";
-            let day1LunkerSize = "85cm";
-            
-            let day2LunkerZone = "Blue Zone";
-            let day2LunkerSize = "92cm";
-            // ---------------------------------
-            
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
             const titleDisplay = document.getElementById('current-title');
@@ -653,278 +599,119 @@
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            await new Promise(function(resolve) {
-                setTimeout(resolve, 400);
-            });
+            await new Promise(resolve => setTimeout(resolve, 400));
 
             try {
-                const workbook = await fetchWorkbook();
+                const anglers = await fetchScores();
                 
-                let foundSheet = null;
-                for (let i = 0; i < workbook.SheetNames.length; i++) {
-                    let sheetName = workbook.SheetNames[i];
-                    if (sheetName.trim().toUpperCase() === 'INDIVIDUAL RESULT') {
-                        foundSheet = sheetName;
-                    }
-                }
-
-                if (foundSheet === null) {
-                    output.innerHTML = '<div class="status-msg">Section Offline: Data sheet could not be located.</div>';
-                    return;
-                }
-
-                const worksheet = workbook.Sheets[foundSheet];
-                const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
-                
+                // Initialize math trackers
+                let totalAnglers = anglers.length;
                 let totalFish = 0;
                 let day1Fish = 0;
                 let day2Fish = 0;
                 let totalLengthCm = 0;
                 let day1LengthTotal = 0;
                 let day2LengthTotal = 0;
-                
-                let totalAnglers = 0;
                 let blankers = 0;
                 let soloCount = 0;
                 let teamsSet = new Set();
                 
-                let teamD1Lens = {};
-                let teamFinalLens = {};
+                // Track dynamic macro lunkers across variables
+                let day1LunkerZone = "None";
+                let day1LunkerSize = 0;
+                let day2LunkerZone = "None";
+                let day2LunkerSize = 0;
 
-                let detailedAnglers = [];
+                let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+                let d1ZoneTotals = {}, d2ZoneTotals = {};
+                zoneKeys.forEach(k => {
+                    d1ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0 };
+                    d2ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0 };
+                });
 
-                for (let r = 1; r < rawData.length; r++) {
-                    let row = rawData[r];
-                    let name = String(row[1] || "").trim();
-                    
-                    if (name === "" || name === "ANGLER NAME") continue;
-
-                    let rankStr = String(row[0] || "").trim();
-                    let rankVal = parseInt(rankStr.replace(/[^0-9]/g, ''));
-                    let teamRaw = String(row[2] || "").trim().toUpperCase();
-                    let team = teamRaw === "SOLO" ? "" : teamRaw;
-                    
-                    let d1Len = parseFloat(row[5]) || 0;
-                    let d1Fish = parseFloat(row[6]) || 0;
-                    let d2Len = parseFloat(row[11]) || 0;
-                    let d2Fish = parseFloat(row[12]) || 0;
-                    let zonePts = parseFloat(row[16]);
-                    let cLen = parseFloat(row[17]) || 0;
-                    let cFish = parseFloat(row[18]) || 0;
-
-                    totalAnglers++;
-                    if (cFish === 0) blankers++;
+                anglers.forEach(item => {
+                    let cFish = item.totals.cumulativeFish || 0;
+                    let cLen = item.totals.cumulativeLengthCm || 0;
+                    let teamRaw = String(item.teamName || "").trim();
                     
                     totalFish += cFish;
-                    day1Fish += d1Fish;
-                    day2Fish += d2Fish;
                     totalLengthCm += cLen;
-                    day1LengthTotal += d1Len;
-                    day2LengthTotal += d2Len;
+                    if (cFish === 0) blankers++;
                     
-                    if (!isNaN(rankVal)) {
-                        detailedAnglers.push({
-                            rank: rankVal,
-                            name: name
-                        });
-                    }
-
-                    if (team === "") {
+                    if (teamRaw === "" || teamRaw.toUpperCase() === "SOLO") {
                         soloCount++;
                     } else {
-                        teamsSet.add(team);
-
-                        if (teamD1Lens[team] === undefined) teamD1Lens[team] = 0;
-                        if (teamFinalLens[team] === undefined) teamFinalLens[team] = 0;
-                        teamD1Lens[team] += d1Len;
-                        teamFinalLens[team] += cLen;
+                        teamsSet.add(teamRaw);
                     }
-                }
-                
-                // Construct Teams arrays for What If comparison
-                let d1TeamsArray = [];
-                let finalTeamsArray = [];
-                for (let t in teamD1Lens) {
-                    d1TeamsArray.push({ name: t, len: teamD1Lens[t] });
-                    finalTeamsArray.push({ name: t, len: teamFinalLens[t] });
-                }
-                d1TeamsArray.sort((a,b) => b.len - a.len);
-                finalTeamsArray.sort((a,b) => b.len - a.len);
 
-                detailedAnglers.sort((a, b) => a.rank - b.rank);
-
-                // Construct Day 1 Individual Anglers for What If comparison
-                let day1Anglers = [];
-                let z1SheetName = null;
-                for (let i = 0; i < workbook.SheetNames.length; i++) {
-                    if (workbook.SheetNames[i].trim().toUpperCase() === 'ZONE 1') z1SheetName = workbook.SheetNames[i];
-                }
-                if (z1SheetName) {
-                    let zWorksheet = workbook.Sheets[z1SheetName];
-                    let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
-                    let zProcessedData = zRawData.slice(1);
-                    const zBlocks = [
-                        { start: 1, end: 4 },
-                        { start: 6, end: 9 },
-                        { start: 11, end: 14 },
-                        { start: 16, end: 19 }
-                    ];
-                    for (let z = 0; z < zBlocks.length; z++) {
-                        let block = zBlocks[z];
-                        let isFirstHeaderRow = true;
-                        for (let r = 0; r < zProcessedData.length; r++) {
-                            let row = zProcessedData[r];
-                            let slicedRow = row.slice(block.start, block.end + 1);
-                            
-                            let isEmpty = true;
-                            for (let c = 0; c < slicedRow.length; c++) {
-                                let checkContent = String(slicedRow[c]).trim();
-                                if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
-                                    isEmpty = false;
-                                }
-                            }
-                            if (isEmpty) continue;
-
-                            if (isFirstHeaderRow) {
-                                isFirstHeaderRow = false;
-                                continue;
-                            }
-
-                            let nameStr = String(slicedRow[0]).trim();
-                            let pnbsStr = String(slicedRow[2]).trim();
-                            let ptStr = String(slicedRow[3]).trim();
-
-                            if (nameStr && nameStr !== "///" && nameStr !== "/") {
-                                let pt = parseFloat(ptStr);
-                                let len = 0, fish = 0;
-                                if (pnbsStr && pnbsStr !== "///" && pnbsStr !== "/") {
-                                    let parts = pnbsStr.split("/");
-                                    if (parts.length >= 2) {
-                                        len = parseFloat(parts[0]) || 0;
-                                        fish = parseFloat(parts[1]) || 0;
-                                    }
-                                }
-                                if (!isNaN(pt)) {
-                                    day1Anglers.push({ name: nameStr, pts: pt, len: len, fish: fish });
-                                }
+                    // Parse Day 1 Sub-Objects
+                    if (item.day1 && item.day1.zone) {
+                        let z = item.day1.zone;
+                        day1Fish += item.day1.fishCount || 0;
+                        day1LengthTotal += item.day1.totalLengthCm || 0;
+                        if (d1ZoneTotals[z]) {
+                            d1ZoneTotals[z].totalCompetitors++;
+                            if (item.day1.fishCount > 0) {
+                                d1ZoneTotals[z].fish += item.day1.fishCount;
+                                d1ZoneTotals[z].length += item.day1.totalLengthCm;
+                                d1ZoneTotals[z].anglers++;
+                                if (item.day1.fishCount > d1ZoneTotals[z].maxFish) d1ZoneTotals[z].maxFish = item.day1.fishCount;
                             }
                         }
+                        if (item.day1.biggestFishCm > day1LunkerSize) {
+                            day1LunkerSize = item.day1.biggestFishCm;
+                            day1LunkerZone = z;
+                        }
                     }
-                }
-                
-                day1Anglers.sort((a, b) => {
-                    if (a.pts !== b.pts) return a.pts - b.pts;
-                    if (b.len !== a.len) return b.len - a.len;
-                    return b.fish - a.fish;
-                });
-                
-                let successRate = 0;
-                let scoringAnglersCount = totalAnglers - blankers;
-                if (totalAnglers > 0) successRate = ((scoringAnglersCount / totalAnglers) * 100).toFixed(0);
 
+                    // Parse Day 2 Sub-Objects
+                    if (item.day2 && item.day2.zone) {
+                        let z = item.day2.zone;
+                        day2Fish += item.day2.fishCount || 0;
+                        day2LengthTotal += item.day2.totalLengthCm || 0;
+                        if (d2ZoneTotals[z]) {
+                            d2ZoneTotals[z].totalCompetitors++;
+                            if (item.day2.fishCount > 0) {
+                                d2ZoneTotals[z].fish += item.day2.fishCount;
+                                d2ZoneTotals[z].length += item.day2.totalLengthCm;
+                                d2ZoneTotals[z].anglers++;
+                                if (item.day2.fishCount > d2ZoneTotals[z].maxFish) d2ZoneTotals[z].maxFish = item.day2.fishCount;
+                            }
+                        }
+                        if (item.day2.biggestFishCm > day2LunkerSize) {
+                            day2LunkerSize = item.day2.biggestFishCm;
+                            day2LunkerZone = z;
+                        }
+                    }
+                });
+
+                let scoringAnglersCount = totalAnglers - blankers;
+                let successRate = totalAnglers > 0 ? ((scoringAnglersCount / totalAnglers) * 100).toFixed(0) : 0;
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
                 
                 let shiftFish = day2Fish - day1Fish;
-                let shiftFishText = "";
-                if (shiftFish > 0) shiftFishText = "The field caught " + shiftFish + " more fish on Day 2.";
-                else if (shiftFish < 0) shiftFishText = "The field caught " + Math.abs(shiftFish) + " fewer fish on Day 2.";
-                else shiftFishText = "The field caught the exact same amount of fish on Day 2.";
-
+                let shiftFishText = shiftFish > 0 ? `The field caught ${shiftFish} more fish on Day 2.` : (shiftFish < 0 ? `The field caught ${Math.abs(shiftFish)} fewer fish on Day 2.` : "The field caught the exact same amount of fish on Day 2.");
                 let shiftLen = (day2LengthTotal - day1LengthTotal) / 100;
-                let shiftLenText = "";
-                if (shiftLen > 0) shiftLenText = "The field recorded " + shiftLen.toFixed(2) + " more meters of fish on Day 2.";
-                else if (shiftLen < 0) shiftLenText = "The field recorded " + Math.abs(shiftLen).toFixed(2) + " fewer meters of fish on Day 2.";
-                else shiftLenText = "The field recorded exactly the same meters of fish on Day 2.";
+                let shiftLenText = shiftLen > 0 ? `The field recorded ${shiftLen.toFixed(2)} more meters of fish on Day 2.` : (shiftLen < 0 ? `The field recorded ${Math.abs(shiftLen).toFixed(2)} fewer meters of fish on Day 2.` : "The field recorded exactly the same meters of fish on Day 2.");
 
-                function processZoneSheetDetailed(wBook, targetSheet) {
-                    let totals = { 
-                        'Red Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
-                        'Yellow Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
-                        'Green Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] }, 
-                        'Blue Zone': { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, anglerNames: [] } 
-                    };
-                    let zSheetName = null;
-                    for (let i = 0; i < wBook.SheetNames.length; i++) {
-                        if (wBook.SheetNames[i].trim().toUpperCase() === targetSheet) {
-                            zSheetName = wBook.SheetNames[i];
-                        }
-                    }
-                    if (zSheetName !== null) {
-                        let zWorksheet = wBook.Sheets[zSheetName];
-                        let zRawData = XLSX.utils.sheet_to_json(zWorksheet, { header: 1, defval: "" });
-                        let zProcessedData = zRawData.slice(1);
-                        
-                        const zBlocks = [
-                            { name: 'Red Zone', start: 1, end: 4 },
-                            { name: 'Yellow Zone', start: 6, end: 9 },
-                            { name: 'Green Zone', start: 11, end: 14 },
-                            { name: 'Blue Zone', start: 16, end: 19 }
-                        ];
-                        
-                        for (let z = 0; z < zBlocks.length; z++) {
-                            let block = zBlocks[z];
-                            for (let r = 0; r < zProcessedData.length; r++) {
-                                let row = zProcessedData[r];
-                                let slicedRow = row.slice(block.start, block.end + 1);
-                                if (slicedRow.length >= 4) {
-                                    let nameStr = String(slicedRow[0]).trim();
-                                    let pnbs = String(slicedRow[2]).trim();
-                                    
-                                    if (nameStr !== "" && nameStr !== "///" && nameStr !== "/" && nameStr.toUpperCase() !== "ANGLER NAME") {
-                                        totals[block.name].totalCompetitors += 1;
-                                        totals[block.name].anglerNames.push(nameStr);
-                                        
-                                        if (pnbs !== "" && pnbs !== "///" && pnbs !== "/") {
-                                            let parts = pnbs.split("/");
-                                            if (parts.length >= 2) {
-                                                let lengthVal = parseFloat(parts[0]);
-                                                let fishCt = parseFloat(parts[1]);
-                                                if (isNaN(fishCt) === false && fishCt > 0) {
-                                                    totals[block.name].fish += fishCt;
-                                                    totals[block.name].length += lengthVal;
-                                                    totals[block.name].anglers += 1; 
-                                                    if (fishCt > totals[block.name].maxFish) {
-                                                        totals[block.name].maxFish = fishCt;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return totals;
-                }
-                
-                let d1ZoneTotals = processZoneSheetDetailed(workbook, 'ZONE 1');
-                let d2ZoneTotals = processZoneSheetDetailed(workbook, 'ZONE 2');
-
-                let d1MaxFish = 0;
-                let d2MaxFish = 0;
-                let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
-                
-                for (let i = 0; i < zoneKeys.length; i++) {
-                    let zName = zoneKeys[i];
-                    if (d1ZoneTotals[zName].fish > d1MaxFish) d1MaxFish = d1ZoneTotals[zName].fish;
-                    if (d2ZoneTotals[zName].fish > d2MaxFish) d2MaxFish = d2ZoneTotals[zName].fish;
-                }
+                let d1MaxZoneFish = Math.max(...zoneKeys.map(k => d1ZoneTotals[k].fish));
+                let d2MaxZoneFish = Math.max(...zoneKeys.map(k => d2ZoneTotals[k].fish));
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                // SECTION 1: THE FIELD
+                // THE FIELD CARD
                 htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 102, 204, 0.05);">';
                 htmlMarkup += '<div class="stat-title">The Field</div>';
                 htmlMarkup += '<div class="stat-value">' + totalAnglers + ' <span class="stat-sub">Competitors</span></div>';
                 htmlMarkup += '<div class="stat-desc" style="color: var(--text-main); margin-top: 10px;"><strong>' + (totalAnglers - soloCount) + '</strong> Anglers across <strong>' + teamsSet.size + '</strong> Teams, plus <strong>' + soloCount + '</strong> Solo Independents.</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 2: COMBINED FIELD DATA
+                // COMBINED FIELD DATA CARD
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Overall Field Catch</div>';
-                htmlMarkup += '<div style="margin: 15px 0 15px 0;">';
+                htmlMarkup += '<div style="margin: 15px 0;">';
                 htmlMarkup += '<div style="font-size: 2.2rem; font-weight: 700; color: var(--text-main);">' + totalFish + '</div>';
                 htmlMarkup += '<div style="font-size: 0.85rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Total Fish Caught</div>';
                 htmlMarkup += '<div class="stat-desc">Day 1: ' + day1Fish + ' Fish &nbsp;|&nbsp; Day 2: ' + day2Fish + ' Fish</div>';
@@ -948,7 +735,7 @@
                 htmlMarkup += '</div>';
                 htmlMarkup += '</div>';
                 
-                // COMBINED DAILY CHANGES CARD
+                // DAILY CHANGES CARD
                 htmlMarkup += '<div class="stat-card">';
                 htmlMarkup += '<div class="stat-title">Daily Changes</div>';
                 htmlMarkup += '<div class="stat-value" style="font-size: 1.4rem;">' + (shiftFish > 0 ? '+' : '') + shiftFish + ' <span class="stat-sub">Fish</span> | ' + (shiftLen > 0 ? '+' : '') + shiftLen.toFixed(2) + ' <span class="stat-sub">m</span></div>';
@@ -956,93 +743,69 @@
                 htmlMarkup += '<div class="stat-desc">' + shiftLenText + '</div>';
                 htmlMarkup += '</div>';
 
-                // ANGLER SUCCESS RATE CARD
+                // SUCCESS RATE CARD
                 htmlMarkup += '<div class="stat-card" style="border-color: var(--accent-cyan); background: rgba(0, 102, 204, 0.05);">';
                 htmlMarkup += '<div class="stat-title">Angler Success Rate</div>';
                 htmlMarkup += '<div class="stat-value" style="font-size: 2.2rem; color: var(--accent-cyan);">' + successRate + '<span style="font-size: 1.2rem; color: var(--text-main);">%</span></div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-top: 10px;"><strong>' + scoringAnglersCount + '</strong> out of <strong>' + totalAnglers + '</strong> competitors successfully weighed in at least one fish during the match.</div>';
                 htmlMarkup += '</div>';
 
-                // SECTION 3: ZONE PERFORMANCE (BAR CHARTS WITH LUNKER TAGS)
-                const zoneColors = {
-                    'Red Zone': '#ff5252',
-                    'Blue Zone': '#2979ff',
-                    'Green Zone': '#00b35c',
-                    'Yellow Zone': '#d4a000'
-                };
+                // MACRO VIEW BAR CHARTS WITH DYNAMIC AUTOMATED LUNKER MATCHING
+                const zoneColors = { 'Red Zone': '#ff5252', 'Blue Zone': '#2979ff', 'Green Zone': '#00b35c', 'Yellow Zone': '#d4a000' };
 
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
                 htmlMarkup += '<div class="stat-title">Day 1 Zone Performance</div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 1.</div>';
-                for (let i = 0; i < zoneKeys.length; i++) {
-                    let zName = zoneKeys[i];
+                zoneKeys.forEach(zName => {
                     let zFish = d1ZoneTotals[zName].fish;
-                    let percent = d1MaxFish > 0 ? (zFish / d1MaxFish) * 100 : 0;
+                    let percent = d1MaxZoneFish > 0 ? (zFish / d1MaxZoneFish) * 100 : 0;
                     let overallPct = day1Fish > 0 ? ((zFish / day1Fish) * 100).toFixed(1) : 0;
-                    let textColor = '#fff';
-                    
-                    let lunkerTag = (zName === day1LunkerZone) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day1LunkerSize + ' Lunker' : '';
+                    let lunkerTag = (zName === day1LunkerZone && day1LunkerSize > 0) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day1LunkerSize + 'cm Lunker' : '';
                     
                     htmlMarkup += '<div class="bar-chart-container">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: #fff;">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
                     htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
                     htmlMarkup += '</div>';
-                }
+                });
                 htmlMarkup += '</div>';
 
                 htmlMarkup += '<div class="stat-card" style="padding-bottom: 30px;">';
                 htmlMarkup += '<div class="stat-title">Day 2 Zone Performance</div>';
                 htmlMarkup += '<div class="stat-desc" style="margin-bottom: 15px;">Relative 4-way performance on Day 2.</div>';
-                for (let i = 0; i < zoneKeys.length; i++) {
-                    let zName = zoneKeys[i];
+                zoneKeys.forEach(zName => {
                     let zFish = d2ZoneTotals[zName].fish;
-                    let percent = d2MaxFish > 0 ? (zFish / d2MaxFish) * 100 : 0;
+                    let percent = d2MaxZoneFish > 0 ? (zFish / d2MaxZoneFish) * 100 : 0;
                     let overallPct = day2Fish > 0 ? ((zFish / day2Fish) * 100).toFixed(1) : 0;
-                    let textColor = '#fff';
-                    
-                    let lunkerTag = (zName === day2LunkerZone) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day2LunkerSize + ' Lunker' : '';
+                    let lunkerTag = (zName === day2LunkerZone && day2LunkerSize > 0) ? ' &nbsp;<span style="color:#ffd600; font-size:0.95rem;">👑</span> ' + day2LunkerSize + 'cm Lunker' : '';
 
                     htmlMarkup += '<div class="bar-chart-container">';
-                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: ' + textColor + ';">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
+                    htmlMarkup += '<div class="bar-chart-fill" style="width: ' + percent + '%; background: ' + zoneColors[zName] + '; color: #fff;">' + zName.replace(' Zone', '') + ': ' + zFish + ' Fish' + lunkerTag + '</div>';
                     htmlMarkup += '<div class="bar-chart-label-right">' + overallPct + '%</div>';
                     htmlMarkup += '</div>';
-                }
+                });
                 htmlMarkup += '</div>';
                 
-                // SECTION 4: INDIVIDUAL ZONE PROFILES (MICRO BREAKDOWN WITH SWING LINE)
-                for (let i = 0; i < zoneKeys.length; i++) {
-                    let zName = zoneKeys[i];
-                    
-                    let d1F = d1ZoneTotals[zName].fish;
-                    let d1L = d1ZoneTotals[zName].length;
-                    let d1A = d1ZoneTotals[zName].anglers;
-                    let d1Max = d1ZoneTotals[zName].maxFish;
-                    
-                    let d2F = d2ZoneTotals[zName].fish;
-                    let d2L = d2ZoneTotals[zName].length;
-                    let d2A = d2ZoneTotals[zName].anglers;
-                    let d2Max = d2ZoneTotals[zName].maxFish;
+                // INDIVIDUAL ZONE CARDS WITH DYNAMIC SWING EQUATIONS
+                zoneKeys.forEach(zName => {
+                    let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
+                    let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
                     
                     let totalZFish = d1F + d2F;
                     let totalZLen = d1L + d2L;
                     let totalZMeters = (totalZLen / 100).toFixed(2);
                     let totalZAnglers = d1A + d2A;
                     
-                    let d1ZAvg = d1F > 0 ? (d1L / d1F).toFixed(1) : 0;
-                    let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : 0;
-                    
-                    let zoneAvg = totalZAnglers > 0 ? (totalZFish / totalZAnglers) : 0;
+                    let d1ZAvg = d1F > 0 ? (d1L / d1F).toFixed(1) : "0.0";
+                    let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : "0.0";
+                    let zoneAvg = totalZAnglers > 0 ? (totalZFish / (d1ZoneTotals[zName].totalCompetitors + d2ZoneTotals[zName].totalCompetitors)) : 0;
 
                     let d1BlankRate = d1ZoneTotals[zName].totalCompetitors > 0 ? (((d1ZoneTotals[zName].totalCompetitors - d1ZoneTotals[zName].anglers) / d1ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
                     let d2BlankRate = d2ZoneTotals[zName].totalCompetitors > 0 ? (((d2ZoneTotals[zName].totalCompetitors - d2ZoneTotals[zName].anglers) / d2ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
 
-                    // Calculate The Session Swing
                     let fishSwing = d2F - d1F;
                     let fishSwingText = fishSwing > 0 ? '▲ +' + fishSwing : (fishSwing < 0 ? '▼ ' + Math.abs(fishSwing) : '► 0');
-                    
-                    let sizeSwing = (d2ZAvg - d1ZAvg).toFixed(1);
+                    let sizeSwing = (parseFloat(d2ZAvg) - parseFloat(d1ZAvg)).toFixed(1);
                     let sizeSwingText = sizeSwing > 0 ? '▲ +' + sizeSwing : (sizeSwing < 0 ? '▼ ' + Math.abs(sizeSwing) : '► 0.0');
-                    
                     let blankSwing = d2BlankRate - d1BlankRate;
                     let blankSwingText = blankSwing > 0 ? '▲ +' + blankSwing + '%' : (blankSwing < 0 ? '▼ ' + Math.abs(blankSwing) + '%' : '► 0%');
 
@@ -1055,7 +818,6 @@
                     htmlMarkup += '<span>' + totalZFish + ' Fish | ' + totalZMeters + ' m</span>';
                     htmlMarkup += '</div>';
 
-                    // Session Breakdown + The Swing Line
                     htmlMarkup += '<div class="zone-text-row" style="flex-direction: column; border-bottom: none; padding-bottom: 0;">';
                     htmlMarkup += '<span><strong>Session Breakdown:</strong></span>';
                     htmlMarkup += '<ul style="margin-top: 5px; margin-left: 20px; color: #555c66; font-size: 0.85rem; list-style-type: none; padding-left: 0;">';
@@ -1068,142 +830,76 @@
 
                     htmlMarkup += '<div class="zone-text-row" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">';
                     htmlMarkup += '<span><strong>Average Fish Count:</strong></span>';
-                    htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish</span>';
-                    htmlMarkup += '</div>';
-                    
+                    htmlMarkup += '<span>' + zoneAvg.toFixed(1) + ' Fish / Angler</span>';
                     htmlMarkup += '</div>';
                     htmlMarkup += '</div>';
-                }
+                    htmlMarkup += '</div>';
+                });
 
-                // SECTION 5: THE WHAT IF SCENARIO
+                // THE WHAT IF SCENARIO TIMELINES
+                let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
+                    if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
+                    return b.day1.totalLengthCm - a.day1.totalLengthCm;
+                });
+                let finalIndStandings = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
+
                 htmlMarkup += '<div class="stat-card" style="text-align: left; background: rgba(0, 102, 204, 0.05); border-color: rgba(0, 102, 204, 0.6);">';
                 htmlMarkup += '<div class="stat-title" style="text-align: center; margin-bottom: 5px;">⏳ The "What If?" Scenario</div>';
-                htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing the leaderboards exactly as they stood at the close of play on Day 1, versus the final official standings.</div>';
+                htmlMarkup += '<div class="stat-desc" style="text-align: center; margin-bottom: 20px;">A direct comparison showing leaderboards exactly as they stood at the close of play on Day 1, versus the final standings.</div>';
 
-                // Individual Comparison Table
                 htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Individuals</div>';
                 htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; margin-bottom: 25px; overflow-x: auto;">';
-                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
-                htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">FINAL STANDINGS</th>';
-                htmlMarkup += '</tr>';
-
-                let maxIndRows = Math.min(10, Math.max(day1Anglers.length, detailedAnglers.length));
-                for (let i = 0; i < maxIndRows; i++) {
-                    let d1 = day1Anglers[i];
-                    let f = detailedAnglers[i]; 
-
-                    let rankDisp = (i + 1);
-                    let d1Str = d1 ? d1.name : "-";
-                    let fStr = f ? f.name : "-";
-
-                    htmlMarkup += '<tr>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + d1Str + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + fStr + '</td>';
-                    htmlMarkup += '</tr>';
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">';
+                htmlMarkup += '<tr><th>RANK</th><th>DAY 1 STANDINGS</th><th>FINAL STANDINGS</th></tr>';
+                for (let i = 0; i < 10; i++) {
+                    let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
+                    let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
+                    htmlMarkup += `<tr><td style="font-weight:bold;">${i+1}</td><td>${d1Str}</td><td>${fStr}</td></tr>`;
                 }
                 htmlMarkup += '</table></div>';
 
-                // Team Comparison Table
-                htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">Top Teams</div>';
-                htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; overflow-x: auto;">';
-                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
-                htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">DAY 1 STANDINGS</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 42.5%;">FINAL STANDINGS</th>';
-                htmlMarkup += '</tr>';
-
-                let maxTeamRows = Math.min(10, Math.max(d1TeamsArray.length, finalTeamsArray.length));
-                for (let i = 0; i < maxTeamRows; i++) {
-                    let d1 = d1TeamsArray[i];
-                    let f = finalTeamsArray[i];
-
-                    let rankDisp = (i + 1);
-                    let d1Str = d1 ? d1.name : "-";
-                    let fStr = f ? f.name : "-";
-
-                    htmlMarkup += '<tr>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + d1Str + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + fStr + '</td>';
-                    htmlMarkup += '</tr>';
-                }
-                htmlMarkup += '</table></div>';
-                
-                // THE COMPETITION WITHIN THE COMPETITION
+                // THE PARENT COMPETITION WITHIN THE COMPETITION
                 let parentUmbrellas = {};
-                for (let r = 1; r < rawData.length; r++) {
-                    let tName = String(rawData[r][2] || "").trim().toUpperCase();
-                    let cLen = parseFloat(rawData[r][17]) || 0;
-                    let cFish = parseFloat(rawData[r][18]) || 0;
-                    
-                    if (tName === "" || tName === "SOLO") continue;
+                anglers.forEach(item => {
+                    let tName = String(item.teamName || "").trim();
+                    if (tName === "" || tName.toUpperCase() === "SOLO" || tName.toUpperCase() === "INDEPENDENT") return;
                     
                     let pName = tName;
                     let match = tName.match(/^(.*?)\s+[A-Z]$/i);
                     if (match) pName = match[1].trim();
 
                     if (!parentUmbrellas[pName]) parentUmbrellas[pName] = { len: 0, fish: 0, members: 0 };
-                    parentUmbrellas[pName].len += cLen;
-                    parentUmbrellas[pName].fish += cFish;
+                    parentUmbrellas[pName].len += item.totals.cumulativeLengthCm || 0;
+                    parentUmbrellas[pName].fish += item.totals.cumulativeFish || 0;
                     parentUmbrellas[pName].members += 1;
-                }
-                
-                let parentArray = [];
-                for (let p in parentUmbrellas) {
-                    parentArray.push({
-                        name: p,
-                        avgLen: parentUmbrellas[p].len / parentUmbrellas[p].members,
-                        avgFish: parentUmbrellas[p].fish / parentUmbrellas[p].members
-                    });
-                }
-                
-                parentArray.sort((a, b) => {
-                    if (b.avgLen !== a.avgLen) return b.avgLen - a.avgLen;
-                    return b.avgFish - a.avgFish;
                 });
+                
+                let parentArray = Object.keys(parentUmbrellas).map(p => ({
+                    name: p,
+                    avgLen: parentUmbrellas[p].len / parentUmbrellas[p].members,
+                    avgFish: parentUmbrellas[p].fish / parentUmbrellas[p].members
+                })).sort((a, b) => b.avgLen - a.avgLen);
 
                 htmlMarkup += '<div style="border-top: 1px solid rgba(0,0,0,0.1); margin-top: 15px; padding-top: 20px;">';
                 htmlMarkup += '<div style="color: var(--text-main); font-family: \'Oswald\'; margin-bottom: 5px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">⚔️ The Competition Within The Competition</div>';
-                htmlMarkup += '<div style="font-size: 0.8rem; color: #555c66; text-align: center; margin-bottom: 15px; line-height: 1.4;"><strong>FUN STAT:</strong> This metric levels the playing field by calculating the per-angler average for every parent organization. Whether your club fielded a single 4-man squad or three full sub-teams, this reveals which overarching group performed the best overall.</div>';
+                htmlMarkup += '<div style="font-size: 0.8rem; color: #555c66; text-align: center; margin-bottom: 15px; line-height: 1.4;"><strong>CLUB METRIC:</strong> Calculates the per-angler average for every parent organization to balance forces with completely different squad counts.</div>';
                 htmlMarkup += '<div style="background: rgba(0,0,0,0.03); border-radius: 6px; padding: 10px; overflow-x: auto;">';
-                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0; white-space: normal; word-break: break-word;">';
-                htmlMarkup += '<tr>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 15%;">RANK</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: left; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 45%;">ORGANIZATION</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 20%;">AVG LEN</th>';
-                htmlMarkup += '<th style="padding: 6px; text-align: center; background: #e4e7eb; border-bottom: 1px solid var(--accent-cyan); color: var(--accent-cyan); width: 20%;">AVG FISH</th>';
-                htmlMarkup += '</tr>';
-
-                for (let i = 0; i < parentArray.length; i++) {
-                    let p = parentArray[i];
-                    let rankDisp = (i + 1);
-                    
-                    htmlMarkup += '<tr>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center; font-weight: bold;">' + rankDisp + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: left;">' + p.name + '</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + (p.avgLen / 100).toFixed(2) + 'm</td>';
-                    htmlMarkup += '<td style="padding: 6px; text-align: center;">' + p.avgFish.toFixed(1) + '</td>';
-                    htmlMarkup += '</tr>';
-                }
-                
-                htmlMarkup += '</table></div></div>';
-                htmlMarkup += '</div>'; // Closes the What If Card
-
-                htmlMarkup += '</div>'; // Closes the entire stat-grid
+                htmlMarkup += '<table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">';
+                htmlMarkup += '<tr><th>RANK</th><th>ORGANIZATION</th><th>AVG LEN</th><th>AVG FISH</th></tr>';
+                parentArray.forEach((p, i) => {
+                    htmlMarkup += `<tr><td style="font-weight:bold;">${i+1}</td><td style="text-align:left;">${p.name}</td><td>${(p.avgLen / 100).toFixed(2)}m</td><td>${p.avgFish.toFixed(1)}</td></tr>`;
+                });
+                htmlMarkup += '</table></div></div></div></div>'; 
                 
                 output.innerHTML = htmlMarkup;
 
             } catch (error) {
                 console.error(error);
-                output.innerHTML = '<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure master workbook is uploaded to GitHub as \'scores.xlsx\'</span></div>';
+                output.innerHTML = '<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure scores data is exported and uploaded to GitHub as \'scores.json\'</span></div>';
             }
         }
 
+        // UNIFIED NAVIGATION COMPONENT
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -1211,14 +907,11 @@
             
             document.getElementById('search-box').style.display = 'block';
             document.querySelector('.scroll-hint').style.display = 'flex';
-            
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
             
             output.innerHTML = `
                 <div class="skeleton-wrapper">
-                    <div class="skeleton-row"></div>
-                    <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
                     <div class="skeleton-row"></div>
@@ -1228,185 +921,142 @@
             overlay.style.display = 'flex';
             document.body.style.overflow = 'hidden';
 
-            await new Promise(function(resolve) {
-                setTimeout(resolve, 400);
-            });
+            await new Promise(resolve => setTimeout(resolve, 400));
 
             try {
-                const workbook = await fetchWorkbook();
-                
-                let foundSheet = null;
-                for (let i = 0; i < workbook.SheetNames.length; i++) {
-                    let sheetName = workbook.SheetNames[i];
-                    if (sheetName.trim().toUpperCase() === targetTabName.trim().toUpperCase()) {
-                        foundSheet = sheetName;
-                    }
-                }
-
-                if (foundSheet === null) {
-                    output.innerHTML = '<div class="status-msg">Section Offline: Data sheet ' + targetTabName + ' could not be located.</div>';
-                    return;
-                }
-
-                const worksheet = workbook.Sheets[foundSheet];
-                const rawData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
-                
-                const limits = TAB_CONFIG[targetTabName.trim().toUpperCase()];
-                
+                const anglers = await fetchScores();
                 let htmlMarkup = '';
 
-                if (limits.staticRules !== undefined) {
+                if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
                     htmlMarkup += '<div class="info-banner">';
-                    for (let i = 0; i < limits.staticRules.length; i++) {
-                        htmlMarkup += '<span class="rule-segment">' + limits.staticRules[i] + '</span>';
-                    }
+                    TAB_CONFIG[targetTabName].staticRules.forEach(r => {
+                        htmlMarkup += '<span class="rule-segment">' + r + '</span>';
+                    });
                     htmlMarkup += '</div>';
                 }
 
-                const processedData = rawData.slice(limits.skipRows || 0);
-
-                if (limits.isMultiZone === true) {
-                    const zoneBlocks = [
-                        { name: 'Red Zone', start: 1, end: 4, colorClass: 'zone-red' },       
-                        { name: 'Yellow Zone', start: 6, end: 9, colorClass: 'zone-yellow' }, 
-                        { name: 'Green Zone', start: 11, end: 14, colorClass: 'zone-green' }, 
-                        { name: 'Blue Zone', start: 16, end: 19, colorClass: 'zone-blue' }    
-                    ];
-
-                    for (let z = 0; z < zoneBlocks.length; z++) {
-                        const block = zoneBlocks[z];
-                        let blockHasData = false;
-                        let blockHtml = '<h3 class="' + block.colorClass + '" style="margin: 25px 0 10px; font-family: \'Oswald\'; text-transform: uppercase;">' + block.name + '</h3>';
-                        blockHtml += '<table class="' + block.colorClass + '">';
-                        let isFirstRow = true;
-
-                        for (let r = 0; r < processedData.length; r++) {
-                            const row = processedData[r];
-                            let slicedRow = row.slice(block.start, block.end + 1);
-                            
-                            let isEmpty = true;
-                            for (let c = 0; c < slicedRow.length; c++) {
-                                let checkContent = String(slicedRow[c]).trim();
-                                if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
-                                    isEmpty = false;
-                                }
-                            }
-                            if (isEmpty === true) continue;
-                            
-                            if (slicedRow.length >= 4) {
-                                let name = slicedRow[0];
-                                let team = slicedRow[1];
-                                let pnbs = slicedRow[2];
-                                let pt = slicedRow[3];
-                                
-                                if (String(team).trim().toUpperCase() === "SOLO") team = "";
-                                
-                                if (isFirstRow === true) {
-                                    if (String(pnbs).trim().toUpperCase() === "P.N.B.S") pnbs = "TIE BREAKERS";
-                                    if (String(pt).trim().toUpperCase() === "PT" || String(pt).trim().toUpperCase() === "PTS") pt = "PTS";
-                                }
-                                
-                                slicedRow = [pt, name, team, pnbs];
-                            }
-                            
-                            blockHasData = true;
-                            blockHtml += '<tr>';
-                            
-                            for (let c = 0; c < slicedRow.length; c++) {
-                                let cellContent = String(slicedRow[c]).trim();
-                                let displayContent = cellContent;
-                                
-                                if (isFirstRow === true) {
-                                    blockHtml += '<th>' + displayContent + '</th>';
-                                } else {
-                                    blockHtml += '<td>' + displayContent + '</td>';
-                                }
-                            }
-                            
-                            blockHtml += '</tr>';
-                            isFirstRow = false;
-                        }
-                        
-                        blockHtml += '</table>';
-                        
-                        if (blockHasData === true) {
-                            htmlMarkup += blockHtml;
-                        }
-                    }
-                } else {
-                    let isFirstRow = true;
-                    let layoutClass = "";
-                    if (limits.startCol === 0 || limits.isIndividualCustom === true) {
-                        layoutClass = 'class="table-layout-standard"';
-                    }
-                    htmlMarkup += '<div ' + layoutClass + '><table>';
-
-                    for (let r = 0; r < processedData.length; r++) {
-                        const row = processedData[r];
-                        let slicedRow = [];
-
-                        if (limits.isIndividualCustom === true) {
-                            let colA = row[0]; if (colA === undefined) colA = "";
-                            let colB = row[1]; if (colB === undefined) colB = "";
-                            let colC = row[2]; if (colC === undefined) colC = "";
-                            
-                            let colQ = row[16]; if (colQ === undefined) colQ = "";
-                            let colR = row[17]; if (colR === undefined) colR = "";
-                            let colS = row[18]; if (colS === undefined) colS = "";
-                            let colT = row[19]; if (colT === undefined) colT = "";
-                            let colU = row[20]; if (colU === undefined) colU = "";
-
-                            let isEmpty = true;
-                            if (String(colA).trim() !== "" || String(colB).trim() !== "") {
-                                isEmpty = false;
-                            }
-                            if (isEmpty === true) continue;
-                            
-                            if (String(colC).trim().toUpperCase() === "SOLO") colC = "";
-
-                            if (isFirstRow === true) {
-                                slicedRow = ["RANK", "PTS", "ANGLER NAME", "TEAM", "TIE BREAKERS"];
-                            } else {
-                                let combined = String(colR).trim() + " | " + String(colS).trim() + " | " + String(colT).trim() + " | " + String(colU).trim();
-                                slicedRow = [String(colA).trim(), String(colQ).trim(), String(colB).trim(), String(colC).trim(), combined];
-                            }
-                        } else {
-                            slicedRow = row.slice(limits.startCol, limits.endCol + 1);
-                            
-                            let isEmpty = true;
-                            for (let c = 0; c < slicedRow.length; c++) {
-                                let checkContent = String(slicedRow[c]).trim();
-                                if (checkContent !== "" && checkContent !== "///" && checkContent !== "/") {
-                                    isEmpty = false;
-                                }
-                            }
-                            if (isEmpty === true) continue;
-                        }
-
-                        htmlMarkup += '<tr>';
-                        for (let c = 0; c < slicedRow.length; c++) {
-                            let cellContent = String(slicedRow[c]).trim();
-                            let displayContent = cellContent.replace(/\n/g, '<br>');
-                            
-                            if (isFirstRow === true) {
-                                htmlMarkup += '<th>' + displayContent + '</th>';
-                            } else {
-                                htmlMarkup += '<td>' + displayContent + '</td>';
-                            }
-                        }
-                        
-                        htmlMarkup += '</tr>';
-                        isFirstRow = false; 
-                    }
-
+                if (targetTabName === 'INDIVIDUAL RESULT') {
+                    let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>PTS</th><th>ANGLER NAME</th><th>TEAM</th><th>TIE BREAKERS</th></tr>';
+                    sorted.forEach(item => {
+                        let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                        let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
+                        let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
+                        htmlMarkup += `<tr><td>${item.totals.overallRank}</td><td>${item.totals.cumulativePoints}</td><td style="text-align:left; font-weight:bold;">${item.anglerName}</td><td>${teamDisp}</td><td>${ties}</td></tr>`;
+                    });
                     htmlMarkup += '</table></div>';
+                } 
+                else if (targetTabName === 'TEAM RESULT') {
+                    let teams = {};
+                    anglers.forEach(item => {
+                        let t = item.teamName ? item.teamName.trim() : "";
+                        if (t === "" || t.toUpperCase() === "SOLO" || t.toUpperCase() === "INDEPENDENT") return;
+                        if (!teams[t]) teams[t] = { name: t, pts: 0, len: 0, fish: 0, count: 0 };
+                        teams[t].pts += item.totals.cumulativePoints || 0;
+                        teams[t].len += item.totals.cumulativeLengthCm || 0;
+                        teams[t].fish += item.totals.cumulativeFish || 0;
+                        teams[t].count++;
+                    });
+                    let teamArray = Object.values(teams).sort((a, b) => {
+                        if (a.pts !== b.pts) return a.pts - b.pts;
+                        return b.len - a.len;
+                    });
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>TEAM NAME</th><th>MEMBERS</th><th>TOTAL PTS</th><th>TOTAL LENGTH</th></tr>';
+                    teamArray.forEach((team, idx) => {
+                        htmlMarkup += `<tr><td>${idx + 1}</td><td style="text-align:left; font-weight:bold;">${team.name}</td><td>${team.count}</td><td>${team.pts}</td><td>${(team.len / 100).toFixed(2)}m</td></tr>`;
+                    });
+                    htmlMarkup += '</table></div>';
+                }
+                else if (targetTabName === 'ZONE 1' || targetTabName === 'ZONE 2') {
+                    const isDay1 = targetTabName === 'ZONE 1';
+                    const zoneBlocks = [
+                        { name: 'Red Zone', colorClass: 'zone-red' },       
+                        { name: 'Yellow Zone', colorClass: 'zone-yellow' }, 
+                        { name: 'Green Zone', colorClass: 'zone-green' }, 
+                        { name: 'Blue Zone', colorClass: 'zone-blue' }    
+                    ];
+                    
+                    zoneBlocks.forEach(block => {
+                        let zoneAnglers = anglers.filter(item => {
+                            let dayData = isDay1 ? item.day1 : item.day2;
+                            return dayData && dayData.zone === block.name;
+                        }).sort((a, b) => {
+                            let dayA = isDay1 ? a.day1 : a.day2;
+                            let dayB = isDay1 ? b.day1 : b.day2;
+                            if (dayA.zonePoints !== dayB.zonePoints) return dayA.zonePoints - dayB.zonePoints;
+                            return dayB.totalLengthCm - dayA.totalLengthCm;
+                        });
+                        
+                        if (zoneAnglers.length > 0) {
+                            htmlMarkup += `<h3 class="${block.colorClass}" style="margin: 25px 0 10px; font-family: 'Oswald'; text-transform: uppercase;">${block.name}</h3>`;
+                            htmlMarkup += `<table class="${block.colorClass}">`;
+                            htmlMarkup += '<tr><th>PTS</th><th>PEG</th><th>ANGLER NAME</th><th>TEAM</th><th>TIE BREAKERS</th></tr>';
+                            zoneAnglers.forEach(item => {
+                                let dayData = isDay1 ? item.day1 : item.day2;
+                                let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                                let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
+                                htmlMarkup += `<tr><td>${dayData.zonePoints}</td><td>${dayData.peg || '-'}</td><td style="text-align:left; font-weight:bold;">${item.anglerName}</td><td>${teamDisp}</td><td>${ties}</td></tr>`;
+                            });
+                            htmlMarkup += '</table>';
+                        }
+                    });
+                }
+                else if (targetTabName === 'BIGGEST FISH') {
+                    let flatFish = [];
+                    anglers.forEach(item => {
+                        if (item.day1 && item.day1.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day1.biggestFishCm, details: `${item.day1.zone} (Day 1)` });
+                        }
+                        if (item.day2 && item.day2.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day2.biggestFishCm, details: `${item.day2.zone} (Day 2)` });
+                        }
+                    });
+                    flatFish.sort((a, b) => b.size - a.size);
+                    
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>ANGLER NAME</th><th>TEAM</th><th>ZONE / SESSION</th><th>SIZE (cm)</th></tr>';
+                    flatFish.forEach((fish, idx) => {
+                        let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
+                        htmlMarkup += `<tr><td>${idx + 1}</td><td style="text-align:left; font-weight:bold;">${fish.name}</td><td>${teamDisp}</td><td>${fish.details}</td><td style="color:var(--accent-cyan); font-weight:bold;">${fish.size} cm</td></tr>`;
+                    });
+                    htmlMarkup += '</table></div>';
+                }
+                else if (targetTabName === 'SECRET PAIRS') {
+                    let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
+                    if (!hasPairsData) {
+                        htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.95rem; text-transform: none; padding: 40px; line-height: 1.6;">';
+                        htmlMarkup += '<strong>Secret Pairs Section Active</strong><br>';
+                        htmlMarkup += 'To output dynamic pairs standings, map a <code>"pairId"</code> or <code>"secretPairPartner"</code> into your input app configuration.</div>';
+                    } else {
+                        let pairs = {};
+                        anglers.forEach(item => {
+                            let pId = item.pairId || item.secretPairPartner || "Unassigned";
+                            if (!pairs[pId]) pairs[pId] = { id: pId, anglers: [], totalPts: 0, totalLen: 0 };
+                            pairs[pId].anglers.push(item);
+                            pairs[pId].totalPts += item.totals.cumulativePoints || 0;
+                            pairs[pId].totalLen += item.totals.cumulativeLengthCm || 0;
+                        });
+                        let pairsArray = Object.values(pairs).sort((a,b) => {
+                            if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
+                            return b.totalLen - a.totalLen;
+                        });
+                        htmlMarkup += '<div class="table-layout-standard"><table>';
+                        htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
+                        pairsArray.forEach((p, idx) => {
+                            let names = p.anglers.map(a => a.anglerName).join(' & ');
+                            htmlMarkup += `<tr><td>${idx + 1}</td><td style="text-align:left; font-weight:bold;">${names}</td><td>${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
+                        });
+                        htmlMarkup += '</table></div>';
+                    }
                 }
 
                 output.innerHTML = htmlMarkup;
 
             } catch (error) {
                 console.error(error);
-                output.innerHTML = '<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Ensure master workbook is uploaded to GitHub as \'scores.xlsx\'</span></div>';
+                output.innerHTML = '<div class="status-msg">No Data Active<br><span style="font-size:0.8rem; color:#666;">Check system network configuration or JSON parsing outputs.</span></div>';
             }
         }
 
@@ -1420,12 +1070,8 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(function(registration) {
-                        console.log('v1.0.2 registered');
-                    })
-                    .catch(function(err) {
-                        console.error('SW failed', err);
-                    });
+                    .then(reg => console.log('v1.1.0 registered'))
+                    .catch(err => console.error('SW connection failed', err));
             });
         }
     </script>
