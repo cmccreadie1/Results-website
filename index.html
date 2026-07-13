@@ -6,8 +6,8 @@
     
     <script>
         const MATCH_CONFIG = {
-            competitionName: "SPRA Scottish Shore Championship 2026",
-            venue:           "Elliot Beach  Lunan Bay",
+            competitionName: "SPRA Scottish Shore Championship",
+            venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
     </script>
@@ -46,13 +46,13 @@
             display: flex; 
             flex-direction: column; 
             align-items: center;
-            padding-bottom: 30px;
+            padding-bottom: 20px;
         }
 
         /* Minimalist Sports-Tech Typographic Header */
         #app-header {
-            margin-top: 30px;
-            margin-bottom: 5px;
+            margin-top: 35px;
+            margin-bottom: 25px;
             text-align: center;
             width: 100%;
             max-width: 450px;
@@ -67,39 +67,21 @@
             line-height: 1.1;
             color: var(--text-main);
         }
-        #app-header .subtitle {
+        .header-divider {
+            width: 85%;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 10px auto 8px auto;
+        }
+        #app-header .subtitle-line {
             font-family: 'Inter', sans-serif;
             font-size: 0.72rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-top: 6px;
-            display: inline-block;
-            border-top: 1px solid var(--border-color);
-            padding-top: 6px;
-            width: 85%;
-        }
-
-        /* Live Status Badge */
-        .live-status-badge {
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 6px; 
-            margin-bottom: 25px; 
-            color: var(--text-muted);
-            font-size: 0.65rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            font-weight: 700;
-        }
-        .pulse-dot {
-            width: 6px; 
-            height: 6px; 
-            background-color: var(--accent-cyan); 
-            border-radius: 50%;
-            animation: flash 2s infinite;
+            line-height: 1.4;
+            display: block;
         }
 
         /* Monochromatic Premium Grid Menu */
@@ -112,7 +94,7 @@
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 10px; 
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         .slide-btn {
             background: var(--surface-color);
@@ -360,7 +342,7 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* elevated pop */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
             text-align: center;
             position: relative;
             transition: transform 0.15s ease;
@@ -471,6 +453,25 @@
         .legend-item { display: flex; align-items: center; gap: 4px; }
         .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
+        /* Highly Styled Bottom Footer Container */
+        .footer {
+            margin-top: auto;
+            padding: 25px 15px 15px 15px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer .live-status-badge {
+            margin-bottom: 0;
+        }
+
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
@@ -478,13 +479,10 @@
 
     <header id="app-header">
         <h1 id="meta-title-inject">Results Portal</h1>
-        <div id="meta-subtitle-inject" class="subtitle">Loading Match Configurations...</div>
+        <div class="header-divider"></div>
+        <div id="meta-venue-inject" class="subtitle-line">Loading Venue...</div>
+        <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
-
-    <div class="live-status-badge">
-        <div class="pulse-dot"></div>
-        <span id="sync-time-text">Checking Portal Sync...</span>
-    </div>
 
     <nav class="button-stack">
         <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
@@ -529,7 +527,11 @@
     </div>
 
     <footer class="footer">
-        Official Results Portal | v1.4.0
+        <div>Official Results Portal | v1.4.1</div>
+        <div class="live-status-badge">
+            <div class="pulse-dot"></div>
+            <span id="sync-time-text">Checking Portal Sync...</span>
+        </div>
     </footer>
 
     <script>
@@ -553,9 +555,10 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.0";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
-            document.getElementById('meta-subtitle-inject').innerHTML = MATCH_CONFIG.venue + " &nbsp;|&nbsp; " + MATCH_CONFIG.dates.toUpperCase() + " &nbsp;|&nbsp; OFFICIAL RESULTS";
+            document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
+            document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
         }
 
         async function updateSyncTime() {
@@ -599,7 +602,7 @@
             });
         }
 
-        // UPGRADED V1.4.0 ANALYTICAL SPORTS ENGINE
+        // ANALYTICAL DASHBOARD GENERATION ENGINE
         async function loadMatchStats(displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -699,7 +702,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.0 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.1 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -732,7 +735,7 @@
                     </div>
                 `;
 
-                // 2] DUAL DAY 1 & DAY 2 DONUT GRAPHS (CATCH DISTRIBUTION)
+                // 2] DUAL DAY 1 & DAY 2 DONUT GRAPHS
                 let radius = 35;
                 let circumference = 2 * Math.PI * radius;
                 const donutColors = { 'Red Zone': '#ff5252', 'Blue Zone': '#2979ff', 'Green Zone': '#00b35c', 'Yellow Zone': '#d4a000' };
@@ -802,7 +805,7 @@
                     </div>
                 `;
 
-                // 4] HIGH-CONTRAST ZONE BREAKDOWN CARDS WITH SIDE-BY-SIDE STAT GRIDS
+                // 4] HIGH-CONTRAST COLOR-CODED ZONE BREAKDOWN CARDS
                 zoneKeys.forEach(zName => {
                     let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
                     let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
@@ -822,7 +825,6 @@
                     let d1BlankRate = d1ZoneTotals[zName].totalCompetitors > 0 ? (((d1ZoneTotals[zName].totalCompetitors - d1ZoneTotals[zName].anglers) / d1ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
                     let d2BlankRate = d2ZoneTotals[zName].totalCompetitors > 0 ? (((d2ZoneTotals[zName].totalCompetitors - d2ZoneTotals[zName].anglers) / d2ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
 
-                    // Compute Average Bag (Total Day Fish in Zone / Competitors assigned to Zone on that Day)
                     let d1AvgBag = d1ZoneTotals[zName].totalCompetitors > 0 ? (d1F / d1ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
                     let d2AvgBag = d2ZoneTotals[zName].totalCompetitors > 0 ? (d2F / d2ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
 
@@ -830,7 +832,6 @@
                     let sizeWidthPercent = maxZoneCombinedAvgSize > 0 ? (parseFloat(overallZAvg) / maxZoneCombinedAvgSize) * 100 : 0;
                     let overallTournamentShare = totalFish > 0 ? ((totalZFish / totalFish) * 100).toFixed(0) : 0;
 
-                    // Sunday Momentum Swing Formulas
                     let fishSwing = d2F - d1F;
                     let sizeSwing = (parseFloat(d2ZAvg) - parseFloat(d1ZAvg)).toFixed(1);
                     let blankSwing = d2BlankRate - d1BlankRate;
@@ -971,7 +972,7 @@
             }
         }
 
-        // LEADERBOARD RENDER CONNECTION CONTROLLER
+        // LEADERBOARD VIEW CONTROLLER
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -1049,7 +1050,7 @@
                             return dayData && dayData.zone === block.name;
                         }).sort((a, b) => {
                             let dayA = isDay1 ? a.day1 : a.day2;
-                            let dayB = isDay1 ? b.day1 : b.day2;
+                            let dayB = isDay1 ? b.day2 : b.day2;
                             if (dayA.zonePoints !== dayB.zonePoints) return dayA.zonePoints - dayB.zonePoints;
                             return dayB.totalLengthCm - dayA.totalLengthCm;
                         });
@@ -1135,7 +1136,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.0 active'))
+                    .then(reg => console.log('v1.4.1 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
