@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
-            competitionName: "SPRA Scottish Shore Championship 2026",
+            competitionName: "SPRA Scottish Shore Championship",
             venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
@@ -527,7 +528,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.1</div>
+        <div>Official Results Portal | v1.4.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -555,7 +556,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.1";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -586,6 +587,13 @@
             if (response.ok === false) throw new Error("JSON payload unavailable.");
             cachedScores = await response.json();
             return cachedScores;
+        }
+
+        // BACKWARDS COMPATIBLE PARSING HELPER
+        function getAnglersList(data) {
+            if (Array.isArray(data)) return data;
+            if (data && Array.isArray(data.anglers)) return data.anglers;
+            return [];
         }
 
         function filterTable() {
@@ -619,7 +627,8 @@
             await new Promise(resolve => setTimeout(resolve, 350));
 
             try {
-                const anglers = await fetchScores();
+                const rawData = await fetchScores();
+                const anglers = getAnglersList(rawData);
                 
                 let totalAnglers = anglers.length;
                 let totalFish = 0, day1Fish = 0, day2Fish = 0;
@@ -702,7 +711,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.1 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.2 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -744,6 +753,7 @@
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
                         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 15px; margin: 15px 0;">
+                            <!-- Day 1 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Saturday (Day 1)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -769,6 +779,7 @@
                                 <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Day 1 Total Catch</div>
                             </div>
                             
+                            <!-- Day 2 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Sunday (Day 2)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -795,6 +806,7 @@
                             </div>
                         </div>
                         
+                        <!-- Consolidated Color Legend -->
                         <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                 `;
                 zoneKeys.forEach(zName => {
@@ -843,6 +855,7 @@
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
                             <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.2rem; margin-bottom: 6px; font-weight: 700;">${zName.toUpperCase()}</div>
                             
+                            <!-- Two Day Combined Metrics Bar Row -->
                             <div style="margin: 10px 0 14px 0;">
                                 <div class="bar-chart-container">
                                     <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #fff;">Volume: ${totalZFish} f</div>
@@ -854,7 +867,9 @@
                                 </div>
                             </div>
 
+                            <!-- Prominent Side-by-Side Day grids -->
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+                                <!-- Saturday Panel -->
                                 <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Saturday (Day 1)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -867,6 +882,7 @@
                                     </div>
                                 </div>
                                 
+                                <!-- Sunday Panel -->
                                 <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Sunday (Day 2)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -880,6 +896,7 @@
                                 </div>
                             </div>
 
+                            <!-- Standardized Sunday Swing Banner -->
                             <div style="background: rgba(0,0,0,0.03); border-radius: 4px; padding: 6px; font-size: 0.72rem; font-weight: 700; color: var(--text-main); text-align: center; letter-spacing: 0.2px;">
                     `;
                     
@@ -990,7 +1007,8 @@
             await new Promise(resolve => setTimeout(resolve, 350));
 
             try {
-                const anglers = await fetchScores();
+                const rawData = await fetchScores();
+                const anglers = getAnglersList(rawData);
                 let htmlMarkup = '';
 
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
@@ -1050,7 +1068,7 @@
                             return dayData && dayData.zone === block.name;
                         }).sort((a, b) => {
                             let dayA = isDay1 ? a.day1 : a.day2;
-                            let dayB = isDay1 ? b.day2 : b.day2;
+                            let dayB = isDay1 ? b.day1 : b.day2;
                             if (dayA.zonePoints !== dayB.zonePoints) return dayA.zonePoints - dayB.zonePoints;
                             return dayB.totalLengthCm - dayA.totalLengthCm;
                         });
@@ -1090,31 +1108,57 @@
                     htmlMarkup += '</table></div>';
                 }
                 else if (targetTabName === 'SECRET PAIRS') {
-                    let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
-                    if (!hasPairsData) {
-                        htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
-                        htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
-                        htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays.</div>';
+                    // DYNAMIC DUAL-COMPATIBLE SECRET PAIRS PARSER
+                    if (rawData && rawData.secretPairs) {
+                        const sp = rawData.secretPairs;
+                        htmlMarkup += `
+                            <div class="info-banner" style="background:#e9ecef; border-color:var(--border-color); text-align:left; padding:12px 15px;">
+                                <strong style="text-transform:uppercase; color:var(--text-main);">Format Structure:</strong> ${sp.description || 'System Computed Secret Pairs'}<br>
+                                <strong style="text-transform:uppercase; color:var(--text-main); margin-top:2px; display:inline-block;">Competition Target Size Limit:</strong> ${sp.targetLength || '15cm'}
+                            </div>
+                        `;
+
+                        if (sp.winners && sp.winners.length > 0) {
+                            htmlMarkup += '<div class="table-layout-standard"><table>';
+                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
+                            sp.winners.forEach(w => {
+                                let combinedLenDisp = w.combinedLengthCm ? `${(w.combinedLengthCm / 100).toFixed(2)}m` : '0.00m';
+                                let names = `${w.angler1} & ${w.angler2}`;
+                                let rankStyle = w.rank === 1 ? 'font-weight:700; color:var(--accent-cyan);' : 'font-weight:700;';
+                                htmlMarkup += `<tr><td style="${rankStyle}">${w.rank}</td><td style="text-align:left; font-weight:bold;">${names}</td><td style="font-weight:600; color:var(--accent-cyan);">${w.combinedPoints}</td><td>${combinedLenDisp}</td></tr>`;
+                            });
+                            htmlMarkup += '</table></div>';
+                        } else {
+                            htmlMarkup += '<div class="status-msg">No Secret Pairs Data Available</div>';
+                        }
                     } else {
-                        let pairs = {};
-                        anglers.forEach(item => {
-                            let pId = item.pairId || item.secretPairPartner || "Unassigned";
-                            if (!pairs[pId]) pairs[pId] = { id: pId, anglers: [], totalPts: 0, totalLen: 0 };
-                            pairs[pId].anglers.push(item);
-                            pairs[pId].totalPts += item.totals.cumulativePoints || 0;
-                            pairs[pId].totalLen += item.totals.cumulativeLengthCm || 0;
-                        });
-                        let pairsArray = Object.values(pairs).sort((a,b) => {
-                            if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
-                            return b.totalLen - a.totalLen;
-                        });
-                        htmlMarkup += '<div class="table-layout-standard"><table>';
-                        htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
-                        pairsArray.forEach((p, idx) => {
-                            let names = p.anglers.map(a => a.anglerName).join(' & ');
-                            htmlMarkup += `<tr><td style="font-weight: 700;">${idx + 1}</td><td style="text-align: left; font-weight: bold;">${names}</td><td style="font-weight: 600; color: var(--accent-cyan);">${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
-                        });
-                        htmlMarkup += '</table></div>';
+                        // LEGACY FALLBACK COMPUTATION ARRAY
+                        let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
+                        if (!hasPairsData) {
+                            htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
+                            htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
+                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays.</div>';
+                        } else {
+                            let pairs = {};
+                            anglers.forEach(item => {
+                                let pId = item.pairId || item.secretPairPartner || "Unassigned";
+                                if (!pairs[pId]) pairs[pId] = { id: pId, anglers: [], totalPts: 0, totalLen: 0 };
+                                pairs[pId].anglers.push(item);
+                                pairs[pId].totalPts += item.totals.cumulativePoints || 0;
+                                pairs[pId].totalLen += item.totals.cumulativeLengthCm || 0;
+                            });
+                            let pairsArray = Object.values(pairs).sort((a,b) => {
+                                if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
+                                return b.totalLen - a.totalLen;
+                            });
+                            htmlMarkup += '<div class="table-layout-standard"><table>';
+                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
+                            pairsArray.forEach((p, idx) => {
+                                let names = p.anglers.map(a => a.anglerName).join(' & ');
+                                htmlMarkup += `<tr><td style="font-weight:700;">${idx + 1}</td><td style="text-align:left; font-weight:bold;">${names}</td><td style="font-weight:600; color:var(--accent-cyan);">${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
+                            });
+                            htmlMarkup += '</table></div>';
+                        }
                     }
                 }
 
@@ -1136,7 +1180,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.1 deployment active'))
+                    .then(reg => console.log('v1.4.2 production framework initialized'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
