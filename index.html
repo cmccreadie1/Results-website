@@ -528,7 +528,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.2</div>
+        <div>Official Results Portal | v1.4.3</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -556,7 +556,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.2";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.3";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -585,15 +585,16 @@
             const timestampForFetch = new Date().getTime();
             const response = await fetch('scores.json?v=' + timestampForFetch);
             if (response.ok === false) throw new Error("JSON payload unavailable.");
-            cachedScores = await response.json();
+            const data = await response.json();
+            
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                cachedScores = data;
+            } else if (Array.isArray(data)) {
+                cachedScores = { anglers: data, secretPairs: null };
+            } else {
+                throw new Error("Invalid JSON structure.");
+            }
             return cachedScores;
-        }
-
-        // BACKWARDS COMPATIBLE PARSING HELPER
-        function getAnglersList(data) {
-            if (Array.isArray(data)) return data;
-            if (data && Array.isArray(data.anglers)) return data.anglers;
-            return [];
         }
 
         function filterTable() {
@@ -627,8 +628,8 @@
             await new Promise(resolve => setTimeout(resolve, 350));
 
             try {
-                const rawData = await fetchScores();
-                const anglers = getAnglersList(rawData);
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
                 
                 let totalAnglers = anglers.length;
                 let totalFish = 0, day1Fish = 0, day2Fish = 0;
@@ -711,7 +712,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.2 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.3 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1007,8 +1008,8 @@
             await new Promise(resolve => setTimeout(resolve, 350));
 
             try {
-                const rawData = await fetchScores();
-                const anglers = getAnglersList(rawData);
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
                 let htmlMarkup = '';
 
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
@@ -1108,36 +1109,63 @@
                     htmlMarkup += '</table></div>';
                 }
                 else if (targetTabName === 'SECRET PAIRS') {
-                    // DYNAMIC DUAL-COMPATIBLE SECRET PAIRS PARSER
-                    if (rawData && rawData.secretPairs) {
-                        const sp = rawData.secretPairs;
+                    const secretPairsData = scoresData.secretPairs;
+
+                    if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
+                        // 1] RENDERS SYSTEM DESIGN EXTRACTED DYNAMICALLY FROM YOUR EXCEL SHEET
                         htmlMarkup += `
-                            <div class="info-banner" style="background:#e9ecef; border-color:var(--border-color); text-align:left; padding:12px 15px;">
-                                <strong style="text-transform:uppercase; color:var(--text-main);">Format Structure:</strong> ${sp.description || 'System Computed Secret Pairs'}<br>
-                                <strong style="text-transform:uppercase; color:var(--text-main); margin-top:2px; display:inline-block;">Competition Target Size Limit:</strong> ${sp.targetLength || '15cm'}
+                            <div class="info-banner" style="background: var(--surface-color); border: 1px solid var(--border-color); text-align: left; padding: 15px;">
+                                <div style="font-family: 'Oswald'; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">Secret Pairs Tournament Parameters</div>
+                                <div style="font-size: 0.8rem; line-height: 1.45; color: var(--text-main); margin-bottom: 10px;">${secretPairsData.description || 'Rules criteria active.'}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight:600;">Target Length Limit: &nbsp;<span style="color:var(--text-main); font-weight:700;">${secretPairsData.targetLength || 'N/A'}</span></div>
                             </div>
                         `;
 
-                        if (sp.winners && sp.winners.length > 0) {
-                            htmlMarkup += '<div class="table-layout-standard"><table>';
-                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
-                            sp.winners.forEach(w => {
-                                let combinedLenDisp = w.combinedLengthCm ? `${(w.combinedLengthCm / 100).toFixed(2)}m` : '0.00m';
-                                let names = `${w.angler1} & ${w.angler2}`;
-                                let rankStyle = w.rank === 1 ? 'font-weight:700; color:var(--accent-cyan);' : 'font-weight:700;';
-                                htmlMarkup += `<tr><td style="${rankStyle}">${w.rank}</td><td style="text-align:left; font-weight:bold;">${names}</td><td style="font-weight:600; color:var(--accent-cyan);">${w.combinedPoints}</td><td>${combinedLenDisp}</td></tr>`;
-                            });
-                            htmlMarkup += '</table></div>';
-                        } else {
-                            htmlMarkup += '<div class="status-msg">No Secret Pairs Data Available</div>';
-                        }
+                        htmlMarkup += '<div class="table-layout-standard"><table>';
+                        htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>TOTAL LENGTH</th><th>VARIANCE (OFF BY)</th></tr>';
+                        
+                        const winnersList = secretPairsData.winners || [];
+                        const otherPairsList = secretPairsData.otherPairs || [];
+
+                        // Render podium winners with highlighting
+                        winnersList.forEach(pair => {
+                            const rowHighlightStyle = 'background-color: rgba(0, 102, 204, 0.03);';
+                            const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                            const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' : '0cm';
+                            
+                            htmlMarkup += `
+                                <tr style="${rowHighlightStyle}">
+                                    <td style="font-weight: 700; color: var(--accent-cyan); font-size:0.95rem;">${pair.rank}</td>
+                                    <td style="text-align: left; font-weight: bold; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
+                                    <td style="font-weight: 600;">${formattedLength}</td>
+                                    <td style="font-weight: 700; color: var(--accent-cyan);">${formattedOffBy}</td>
+                                </tr>
+                            `;
+                        });
+
+                        // Render other pairs
+                        otherPairsList.forEach(pair => {
+                            const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                            const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' : '0cm';
+                            
+                            htmlMarkup += `
+                                <tr>
+                                    <td style="font-weight: 700;">${pair.rank}</td>
+                                    <td style="text-align: left; font-weight: bold;">${pair.angler1} & ${pair.angler2}</td>
+                                    <td style="font-weight: 600;">${formattedLength}</td>
+                                    <td style="font-weight: 600; color: var(--text-muted);">${formattedOffBy}</td>
+                                </tr>
+                            `;
+                        });
+
+                        htmlMarkup += '</table></div>';
                     } else {
-                        // LEGACY FALLBACK COMPUTATION ARRAY
+                        // 2] GRACEFUL FALLBACK TO LOCAL AGENT MATRIX CALCULATOR IF SYSTEM DETECTS FLAT JSON ONLY
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
                         if (!hasPairsData) {
                             htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
                             htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
-                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays.</div>';
+                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
                         } else {
                             let pairs = {};
                             anglers.forEach(item => {
@@ -1155,7 +1183,7 @@
                             htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
                             pairsArray.forEach((p, idx) => {
                                 let names = p.anglers.map(a => a.anglerName).join(' & ');
-                                htmlMarkup += `<tr><td style="font-weight:700;">${idx + 1}</td><td style="text-align:left; font-weight:bold;">${names}</td><td style="font-weight:600; color:var(--accent-cyan);">${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
+                                htmlMarkup += `<tr><td style="font-weight: 700;">${idx + 1}</td><td style="text-align: left; font-weight: bold;">${names}</td><td style="font-weight: 600; color: var(--accent-cyan);">${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
                             });
                             htmlMarkup += '</table></div>';
                         }
@@ -1180,7 +1208,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.2 production framework initialized'))
+                    .then(reg => console.log('v1.4.3 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
