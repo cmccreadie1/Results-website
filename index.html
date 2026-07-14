@@ -309,7 +309,7 @@
             white-space: nowrap;
         }
 
-        /* Responsive Rules Modal Styles */
+        /* Upgraded Layout: Overlay with tight borders to allow wide cards */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
@@ -319,16 +319,17 @@
             justify-content: center; 
             align-items: flex-start; 
             z-index: 3000;
-            padding: 30px 15px; 
+            padding: 30px 10px; 
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
         }
+        /* Upgraded Layout: Reduced horizontal padding to 16px to widen rules text container */
         .modal-card {
             background: var(--surface-color); 
             border-radius: 8px;
             width: 100%; 
             max-width: 420px; 
-            padding: 24px;
+            padding: 24px 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             position: relative;
             text-align: left;
@@ -470,11 +471,12 @@
             margin-bottom: 40px;
             width: 100%;
         }
+        /* Upgraded Layout: Reduced horizontal padding to 12px to widen internal graphics and layouts */
         .stat-card {
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 20px;
+            padding: 20px 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
             text-align: center;
             position: relative;
@@ -691,7 +693,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.5.1</div>
+        <div>Official Results Portal | v1.5.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -719,7 +721,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.5.1";
+            document.title = MATCH_CONFIG.competitionName + " | v1.5.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -905,7 +907,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.5.1 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.5.2 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1496,7 +1498,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.5.1 deployment active'))
+                    .then(reg => console.log('v1.5.2 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
