@@ -528,7 +528,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.3</div>
+        <div>Official Results Portal | v1.4.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -556,7 +556,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.3";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -712,7 +712,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.3 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.4 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1112,53 +1112,110 @@
                     const secretPairsData = scoresData.secretPairs;
 
                     if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
-                        // 1] RENDERS SYSTEM DESIGN EXTRACTED DYNAMICALLY FROM YOUR EXCEL SHEET
+                        // Parse target length integer for Over/Under dynamic matching
+                        let targetNum = parseInt(secretPairsData.targetLength) || 0;
+
+                        // 1] ELEVATED RULES EXPLANATION BOX WITH ENLARGED TEXT
                         htmlMarkup += `
-                            <div class="info-banner" style="background: var(--surface-color); border: 1px solid var(--border-color); text-align: left; padding: 15px;">
-                                <div style="font-family: 'Oswald'; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">Secret Pairs Tournament Parameters</div>
-                                <div style="font-size: 0.8rem; line-height: 1.45; color: var(--text-main); margin-bottom: 10px;">${secretPairsData.description || 'Rules criteria active.'}</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight:600;">Target Length Limit: &nbsp;<span style="color:var(--text-main); font-weight:700;">${secretPairsData.targetLength || 'N/A'}</span></div>
+                            <div class="info-banner" style="background: var(--surface-color); border: 1px solid var(--border-color); text-align: left; padding: 16px; margin-bottom: 15px;">
+                                <div style="font-family: 'Oswald'; font-size: 1rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">Secret Pairs Tournament Parameters</div>
+                                <div style="font-size: 0.9rem; line-height: 1.5; color: var(--text-main); font-weight: 400;">${secretPairsData.description || 'Rules criteria active.'}</div>
                             </div>
                         `;
 
-                        htmlMarkup += '<div class="table-layout-standard"><table>';
-                        htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>TOTAL LENGTH</th><th>VARIANCE (OFF BY)</th></tr>';
-                        
+                        // 2] LARGE CENTER-STAGE RECTANGULAR EMOTICON-FREE TARGET BANNER
+                        htmlMarkup += `
+                            <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 15px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                                <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
+                                <div style="font-family: 'Inter'; font-size: 2.3rem; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">${secretPairsData.targetLength || 'N/A'}</div>
+                            </div>
+                        `;
+
+                        // 3] ISOLATED HIGH-CONTRAST CHAMPION PODIUM CARDS (RANKS 1-3)
                         const winnersList = secretPairsData.winners || [];
                         const otherPairsList = secretPairsData.otherPairs || [];
 
-                        // Render podium winners with highlighting
-                        winnersList.forEach(pair => {
-                            const rowHighlightStyle = 'background-color: rgba(0, 102, 204, 0.03);';
-                            const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
-                            const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' : '0cm';
+                        if (winnersList.length > 0) {
+                            htmlMarkup += '<div style="margin-bottom: 30px; display: flex; flex-direction: column; gap: 12px; width: 100%;">';
                             
-                            htmlMarkup += `
-                                <tr style="${rowHighlightStyle}">
-                                    <td style="font-weight: 700; color: var(--accent-cyan); font-size:0.95rem;">${pair.rank}</td>
-                                    <td style="text-align: left; font-weight: bold; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
-                                    <td style="font-weight: 600;">${formattedLength}</td>
-                                    <td style="font-weight: 700; color: var(--accent-cyan);">${formattedOffBy}</td>
-                                </tr>
-                            `;
-                        });
+                            winnersList.forEach(pair => {
+                                let rankNum = parseInt(pair.rank) || 1;
+                                let borderAccent = 'var(--accent-cyan)';
+                                let medalLabel = 'THIRD PLACE';
+                                
+                                if (rankNum === 1) {
+                                    borderAccent = '#d4a000'; // Gold Accent
+                                    medalLabel = '🥇 TOURNAMENT CHAMPIONS';
+                                } else if (rankNum === 2) {
+                                    borderAccent = '#9aa0a6'; // Silver Accent
+                                    medalLabel = '🥈 SECOND PLACE';
+                                } else if (rankNum === 3) {
+                                    borderAccent = '#b07247'; // Bronze Accent
+                                    medalLabel = '🥉 THIRD PLACE';
+                                }
 
-                        // Render other pairs
-                        otherPairsList.forEach(pair => {
-                            const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
-                            const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' : '0cm';
+                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                                
+                                // Compute dynamic indicator phrase (Over / Under)
+                                let overUnderDirection = '';
+                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
+                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
+                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
+                                    else overUnderDirection = ' (Dead On!)';
+                                }
+                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
+
+                                htmlMarkup += `
+                                    <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-left: 6px solid ${borderAccent}; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); width: 100%;">
+                                        <div>
+                                            <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: ${borderAccent}; font-weight: 700; letter-spacing: 1px;">${medalLabel}</div>
+                                            <div style="font-size: 1.1rem; font-weight: 700; margin-top: 4px; color: var(--text-main); letter-spacing: -0.3px;">${pair.angler1} & ${pair.angler2}</div>
+                                        </div>
+                                        <div style="text-align: right; white-space: nowrap;">
+                                            <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${formattedLength}</div>
+                                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-cyan); margin-top: 1px;">Missed by: ${formattedOffBy}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
                             
-                            htmlMarkup += `
-                                <tr>
-                                    <td style="font-weight: 700;">${pair.rank}</td>
-                                    <td style="text-align: left; font-weight: bold;">${pair.angler1} & ${pair.angler2}</td>
-                                    <td style="font-weight: 600;">${formattedLength}</td>
-                                    <td style="font-weight: 600; color: var(--text-muted);">${formattedOffBy}</td>
-                                </tr>
-                            `;
-                        });
+                            htmlMarkup += '</div>';
+                        }
 
-                        htmlMarkup += '</table></div>';
+                        // 4] SUBDUED LOWER FIELD STANDINGS (RANKS 4+ FOR INFORMATION ONLY)
+                        if (otherPairsList.length > 0) {
+                            htmlMarkup += `
+                                <h3 style="margin: 35px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                                    📊 Field Standings (Informational Only)
+                                </h3>
+                            `;
+                            htmlMarkup += '<div class="table-layout-standard"><table>';
+                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>TOTAL LENGTH</th><th>VARIANCE</th></tr>';
+                            
+                            otherPairsList.forEach(pair => {
+                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                                
+                                let overUnderDirection = '';
+                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
+                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
+                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
+                                    else overUnderDirection = ' (Dead On!)';
+                                }
+                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
+                                
+                                htmlMarkup += `
+                                    <tr>
+                                        <td style="font-weight: 700; color: var(--text-muted);">${pair.rank}</td>
+                                        <td style="text-align: left; font-weight: 600; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
+                                        <td style="font-weight: 600;">${formattedLength}</td>
+                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.82rem;">${formattedOffBy}</td>
+                                    </tr>
+                                `;
+                            });
+
+                            htmlMarkup += '</table></div>';
+                        }
+
                     } else {
                         // 2] GRACEFUL FALLBACK TO LOCAL AGENT MATRIX CALCULATOR IF SYSTEM DETECTS FLAT JSON ONLY
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
@@ -1208,7 +1265,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.3 deployment active'))
+                    .then(reg => console.log('v1.4.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
