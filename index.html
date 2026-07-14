@@ -274,7 +274,7 @@
             white-space: nowrap;
         }
 
-        /* Rules Modal CSS Styles */
+        /* Upgraded Responsive Rules Modal Styles[cite: 1] */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
@@ -282,9 +282,11 @@
             background: rgba(0, 0, 0, 0.6); 
             display: none;
             justify-content: center; 
-            align-items: center; 
+            align-items: flex-start; /* Corrects centering clipping cutoff[cite: 1] */
             z-index: 3000;
-            padding: 20px;
+            padding: 30px 15px; /* Protected buffer margins for short displays[cite: 1] */
+            overflow-y: auto; /* Active scrollbar engine[cite: 1] */
+            -webkit-overflow-scrolling: touch; /* Momentum scroll iOS compatibility[cite: 1] */
         }
         .modal-card {
             background: var(--surface-color); 
@@ -295,6 +297,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             position: relative;
             text-align: left;
+            margin: auto 0; /* Vertically centers if room exists, scrolls normally if tall[cite: 1] */
         }
         .modal-close-btn {
             background: var(--text-main); 
@@ -640,7 +643,7 @@
         <div class="table-scroll-box" id="table-output"></div>
     </div>
 
-    <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules -->
+    <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules[cite: 1] -->
     <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
@@ -650,7 +653,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.7</div>
+        <div>Official Results Portal | v1.4.8</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -678,7 +681,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.7";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.8";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -733,7 +736,7 @@
             });
         }
 
-        // POPUP MODAL ACTIONS
+        // POPUP MODAL ACTIONS[cite: 1]
         function openRulesModal(title, contentHtml) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-body').innerHTML = contentHtml;
@@ -864,7 +867,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.7 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.8 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1142,7 +1145,7 @@
             }
         }
 
-        // LEADERBOARD VIEW CONTROLLER (WITH MODAL RULES SUPPORT)
+        // LEADERBOARD VIEW CONTROLLER
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -1305,7 +1308,7 @@
                     if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
-                        // Clean Standings Header Row with Interactive Rules & Info popup button on the right
+                        // Header subtitle & popup toggle[cite: 1]
                         htmlMarkup += `
                             <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0 10px 0; width: 100%;">
                                 <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
@@ -1313,7 +1316,7 @@
                             </div>
                         `;
 
-                        // Center-Stage Large Target Indicator Card remains fully visible
+                        // Center Target Card[cite: 1]
                         htmlMarkup += `
                             <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 10px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                                 <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
@@ -1371,7 +1374,7 @@
                             htmlMarkup += '</div>';
                         }
 
-                        // Compact informational lower list (Ranks 4+)
+                        // Compact lower listings (Ranks 4+)
                         if (otherPairsList.length > 0) {
                             htmlMarkup += `
                                 <h3 style="margin: 35px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
@@ -1454,7 +1457,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.7 deployment active'))
+                    .then(reg => console.log('v1.4.8 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
