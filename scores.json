@@ -470,8 +470,9 @@
     }
   ],
   "secretPairs": {
-    "description": "Randomly drawn pairs competing on combined zone points and cumulative length.",
+    "description": "The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.\n\nIf you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field. Tie breaker if its a draw the tie breaker reverts to longest combined length.",
     "targetLength": "15cm",
-    "winners": []
+    "winners": [],
+    "otherPairs": []
   }
 }
