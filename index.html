@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
@@ -32,100 +31,503 @@
             --yellow-zone: #d4a000;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent; 
+        }
 
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
             padding-bottom: 20px;
         }
 
         /* Minimalist Sports-Tech Typographic Header */
         #app-header {
-            margin-top: 35px; margin-bottom: 25px; text-align: center;
-            width: 100%; max-width: 450px; padding: 0 15px;
+            margin-top: 35px;
+            margin-bottom: 25px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            padding: 0 15px;
         }
         #app-header h1 {
-            font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 3px; line-height: 1.1; color: var(--text-main);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1.1;
+            color: var(--text-main);
         }
-        .header-divider { width: 85%; height: 1px; background-color: var(--border-color); margin: 10px auto 8px auto; }
+        .header-divider {
+            width: 85%;
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 10px auto 8px auto;
+        }
         #app-header .subtitle-line {
-            font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;
-            line-height: 1.4; display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            display: block;
         }
 
         /* Monochromatic Premium Grid Menu */
         .button-stack { 
-            width: 100%; max-width: 450px; padding: 0 15px; 
-            display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between;
-            gap: 10px; margin-bottom: 30px;
+            width: 100%; 
+            max-width: 450px; 
+            padding: 0 15px; 
+            display: flex; 
+            flex-direction: row; 
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px; 
+            margin-bottom: 30px;
         }
         .slide-btn {
-            background: var(--surface-color); border: 1px solid var(--border-color);
-            padding: 16px 12px; border-radius: 6px; color: var(--text-main);
-            cursor: pointer; font-family: 'Oswald', sans-serif; font-size: 0.9rem;
-            text-transform: uppercase; letter-spacing: 1px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            flex: 0 0 calc(50% - 5px); gap: 2px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 16px 12px;
+            border-radius: 6px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            text-align: center;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 0 0 calc(50% - 5px);
+            gap: 2px;
         }
         .slide-btn span:last-child {
-            font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700;
-            color: var(--accent-cyan); letter-spacing: 0.5px; margin-top: 2px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+            margin-top: 2px;
         }
-        .slide-btn:active { transform: scale(0.97); background: var(--text-main); color: var(--surface-color); }
-        .slide-btn:active span:last-child { color: var(--surface-color); }
+        .slide-btn:active { 
+            transform: scale(0.97); 
+            background: var(--text-main);
+            color: var(--surface-color);
+            border-color: var(--text-main);
+        }
+        .slide-btn:active span:last-child {
+            color: var(--surface-color);
+        }
 
         /* Full Screen Native Overlay */
         #viewer-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg-main); display: none; flex-direction: column; z-index: 2000;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--bg-main);
+            display: none; 
+            flex-direction: column; 
+            z-index: 2000;
         }
         .viewer-nav {
-            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
-            background: var(--surface-color); border-bottom: 1px solid var(--border-color); 
-            flex-shrink: 0; z-index: 20; 
+            padding: 12px 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: var(--surface-color); 
+            border-bottom: 1px solid var(--border-color); 
+            flex-shrink: 0; 
+            z-index: 20; 
         }
         .back-btn {
-            background: var(--text-main); color: var(--surface-color); border: none; 
-            padding: 8px 14px; border-radius: 4px; font-family: 'Oswald', sans-serif; 
-            font-weight: 500; cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
+            background: var(--text-main); 
+            color: var(--surface-color); 
+            border: none; 
+            padding: 8px 14px; 
+            border-radius: 4px;
+            font-family: 'Oswald', sans-serif; 
+            font-weight: 500; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
         }
         #current-title {
-            color: var(--text-main); font-family: 'Oswald'; font-size: 0.95rem; 
-            text-transform: uppercase; letter-spacing: 1px; flex-grow: 1; text-align: center;
+            color: var(--text-main); 
+            font-family: 'Oswald'; 
+            font-size: 0.95rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            flex-grow: 1; 
+            text-align: center; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            margin: 0 10px;
         }
         .search-box {
-            background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); 
-            padding: 8px 12px; border-radius: 4px; font-family: 'Inter', sans-serif; font-size: 0.8rem;
-            width: 110px;
+            background: var(--bg-main); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-main); 
+            padding: 8px 12px; 
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.8rem; 
+            outline: none; 
+            width: 110px; 
+            transition: width 0.2s ease;
         }
+        .search-box:focus { 
+            width: 140px; 
+            border-color: var(--text-main);
+        }
+
+        .scroll-hint {
+            background: #e9ecef;
+            color: var(--text-muted);
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 6px;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+        .hint-icon {
+            display: inline-block;
+            font-size: 0.9rem;
+            animation: swipeHint 1.5s infinite ease-in-out;
+        }
+        @keyframes swipeHint {
+            0% { transform: translateX(-3px); opacity: 0.5; }
+            50% { transform: translateX(5px); opacity: 1; }
+            100% { transform: translateX(-3px); opacity: 0.5; }
+        }
+
         .table-scroll-box {
-            flex: 1; overflow-x: auto; overflow-y: auto; padding: 15px; background: var(--bg-main);
+            flex: 1; 
+            overflow-x: auto; 
+            overflow-y: auto; 
+            padding: 0 15px 15px 15px; 
+            background: var(--bg-main);
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Matrix Card Styles */
-        .matrix-container { display: flex; gap: 6px; flex-wrap: wrap; }
+        /* Horizontal Matrix Custom CSS */
+        .matrix-container {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 6px 0;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
         .matrix-card {
-            background: #2b3035; color: #fff; padding: 8px; border-radius: 4px;
-            font-family: 'Inter', sans-serif; font-size: 0.7rem; flex: 0 0 110px;
+            background-color: #f1f3f5;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 10px;
+            min-width: 135px;
+            flex-shrink: 0;
+            text-align: left;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-        .matrix-card div:first-child { font-weight: 700; color: #fff; }
-        .matrix-card div:last-child { color: #aaa; margin-top: 2px; }
+        .matrix-name {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .matrix-stats {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
 
-        /* General UI */
-        table { border-collapse: separate; border-spacing: 0; width: 100%; font-family: 'Inter', sans-serif; font-size: 0.8rem; }
-        th { background: #e4e7eb; padding: 8px; text-transform: uppercase; font-weight: 700; }
-        td { padding: 10px 8px; border-bottom: 1px solid var(--border-color); }
+        /* Info Ribbon Banners */
+        .info-banner {
+            background: #e9ecef; 
+            border: 1px solid var(--border-color); 
+            border-radius: 4px;
+            padding: 8px 12px; 
+            margin: 15px auto 10px auto; 
+            max-width: 100%; 
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.7rem; 
+            line-height: 1.4; 
+            text-align: center;
+        }
+
+        /* Skeleton Shimmer */
+        .skeleton-wrapper { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            margin-top: 20px; 
+        }
+        .skeleton-row { 
+            height: 42px; 
+            background: #e4e7eb; 
+            border-radius: 4px; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .skeleton-row::after {
+            content: ""; 
+            position: absolute; 
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        /* Structural Analytical Tables */
+        table { 
+            border-collapse: separate; 
+            border-spacing: 0; 
+            width: 100%; 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.85rem; 
+            margin-bottom: 30px; 
+            white-space: nowrap; 
+        }
+        table:first-child { margin-top: 15px; }
+        
+        table th:nth-child(1), table td:nth-child(1) { width: 1%; white-space: nowrap; } 
+        table th:nth-child(2), table td:nth-child(2) { width: 1%; white-space: nowrap; } 
+
+        th {
+            background: #e4e7eb; 
+            color: var(--text-main); 
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase;
+            font-weight: 700; 
+            letter-spacing: 1px; 
+            padding: 8px 10px; 
+            border-bottom: 1px solid var(--text-main);
+            position: sticky; 
+            top: 0; 
+            z-index: 10;
+            text-align: center; 
+        }
+        td { 
+            padding: 8px 10px; 
+            text-align: center; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        tr:nth-child(even) td { background: rgba(0, 0, 0, 0.02); }
+        tr:nth-child(odd) td { background: var(--surface-color); }
+
+        table.zone-red th { border-bottom-color: var(--red-zone); }
+        table.zone-yellow th { border-bottom-color: var(--yellow-zone); }
+        table.zone-green th { border-bottom-color: var(--green-zone); }
+        table.zone-blue th { border-bottom-color: var(--blue-zone); }
+
+        .status-msg { 
+            font-family: 'Oswald', sans-serif; 
+            color: var(--text-muted); 
+            text-align: center; 
+            padding: 50px 20px; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
+            letter-spacing: 1px;
+        }
+        
+        /* High-Contrast Analytics Dashboard Grid */
+        .stat-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+        .stat-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); 
+            text-align: center;
+            position: relative;
+            transition: transform 0.15s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .profile-card-red { border-left: 4px solid var(--red-zone); }
+        .profile-card-blue { border-left: 4px solid var(--blue-zone); }
+        .profile-card-green { border-left: 4px solid var(--green-zone); }
+        .profile-card-yellow { border-left: 4px solid var(--yellow-zone); }
+
+        .stat-title {
+            color: var(--text-main);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+        .stat-value {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+        .stat-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .stat-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Refined Data Bar Elements */
+        .bar-chart-container {
+            width: 100%;
+            background: #f1f3f5;
+            border-radius: 4px;
+            margin: 6px 0;
+            height: 24px;
+            position: relative;
+            overflow: visible;
+        }
+        .bar-chart-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            transition: width 0.8s ease-out;
+            position: relative;
+            z-index: 2;
+            border-radius: 4px;
+        }
+        .bar-chart-label-right {
+            position: absolute;
+            right: 8px;
+            top: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            z-index: 3;
+        }
+        
+        .zone-text-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f3f5;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        /* SVG Chart Vector Wrappers */
+        .svg-chart-box {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        /* Highly Styled Bottom Footer Container */
         .footer {
-            margin-top: auto; padding: 25px 15px; text-align: center;
-            width: 100%; max-width: 450px; font-size: 0.75rem; color: var(--text-muted);
+            margin-top: auto;
+            padding: 25px 15px 15px 15px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer .live-status-badge {
+            margin-bottom: 0;
+        }
+
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        
+        /* Live Connection Pulse Animation Styles */
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: flash 1.5s infinite;
+        }
+        .live-status-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -134,18 +536,40 @@
     <header id="app-header">
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
-        <div id="meta-venue-inject" class="subtitle-line"></div>
-        <div id="meta-dates-inject" class="subtitle-line"></div>
+        <div id="meta-venue-inject" class="subtitle-line">Loading Venue...</div>
+        <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
 
     <nav class="button-stack">
-        <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')"><span>Individual Winner</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')"><span>Team Winners</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')"><span>Zone Day 1</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')"><span>Zone Day 2</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')"><span>Secret Pairs</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')"><span>Biggest Fish</span><span>VIEW ❯</span></div>
-        <div class="slide-btn" onclick="loadMatchStats('Match Stats')" style="flex: 0 0 100%;"><span>Match Stats Dashboard</span><span>VIEW ANALYTICS ❯</span></div>
+        <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
+            <span>Individual Winner</span>
+            <span>VIEW ❯</span>
+        </div>
+        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
+            <span>Team Winners</span>
+            <span>VIEW ❯</span>
+        </div>
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
+            <span>Zone Day 1</span>
+            <span>VIEW ❯</span>
+        </div>
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
+            <span>Zone Day 2</span>
+            <span>VIEW ❯</span>
+        </div>
+        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
+            <span>Secret Pairs</span>
+            <span>VIEW ❯</span>
+        </div>
+        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
+            <span>Biggest Fish</span>
+            <span>VIEW ❯</span>
+        </div>
+        
+        <div class="slide-btn" onclick="loadMatchStats('Match Stats')" style="flex: 0 0 100%;">
+            <span>Match Stats Dashboard</span>
+            <span>VIEW ANALYTICS ❯</span>
+        </div>
     </nav>
 
     <div id="viewer-overlay">
@@ -154,60 +578,782 @@
             <span id="current-title"></span>
             <input type="text" id="search-box" class="search-box" placeholder="Search..." onkeyup="filterTable()">
         </div>
+        <div class="scroll-hint">Swipe Table to View Columns <span class="hint-icon">➔</span></div>
         <div class="table-scroll-box" id="table-output"></div>
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.5</div>
-        <div id="sync-time-text">Loading...</div>
+        <div>Official Results Portal | v1.4.6</div>
+        <div class="live-status-badge">
+            <div class="pulse-dot"></div>
+            <span id="sync-time-text">Checking Portal Sync...</span>
+        </div>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        const TAB_CONFIG = {
+            'INDIVIDUAL RESULT': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Total Fish Count ➔ Biggest Fish"]
+            }, 
+            'ZONE 1': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
+            },                 
+            'ZONE 2': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
+            }                  
+        };
+
+        let cachedScores = null;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initMatchMetadata();
+            updateSyncTime();
+        });
+
+        function initMatchMetadata() {
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
-        });
+        }
+
+        async function updateSyncTime() {
+            try {
+                const timestampForFetch = new Date().getTime();
+                const response = await fetch('scores.json?v=' + timestampForFetch, { method: 'HEAD' });
+                if (response.ok === true) {
+                    const lastMod = response.headers.get('Last-Modified');
+                    if (lastMod !== null) {
+                        const dateObj = new Date(lastMod);
+                        document.getElementById('sync-time-text').innerText = 'Data Synced: ' + dateObj.toLocaleDateString() + ', ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        return;
+                    }
+                }
+                document.getElementById('sync-time-text').innerText = 'Data Synced: Live Connected';
+            } catch (error) { 
+                document.getElementById('sync-time-text').innerText = 'Data Synced: Cached / Standalone Mode'; 
+            }
+        }
 
         async function fetchScores() {
-            const resp = await fetch('scores.json?v=' + new Date().getTime());
-            return await resp.json();
-        }
-
-        async function loadExcelTab(tab, title) {
-            document.getElementById('current-title').innerText = title;
-            document.getElementById('viewer-overlay').style.display = 'flex';
-            const output = document.getElementById('table-output');
-            output.innerHTML = 'Loading...';
-
-            const data = await fetchScores();
-            const anglers = data.anglers;
-
-            if (tab === 'TEAM RESULT') {
-                let teams = {};
-                anglers.forEach(a => {
-                    if (!a.teamName || a.teamName.toUpperCase() === "SOLO") return;
-                    if (!teams[a.teamName]) teams[a.teamName] = { name: a.teamName, pts: 0, len: 0, fish: 0, members: [] };
-                    teams[a.teamName].pts += a.totals.cumulativePoints;
-                    teams[a.teamName].len += a.totals.cumulativeLengthCm;
-                    teams[a.teamName].fish += a.totals.cumulativeFish;
-                    teams[a.teamName].members.push(a);
-                });
-
-                let html = '<table><tr><th>RANK / TEAM NAME</th><th>PTS</th><th>CM</th><th>FISH CT</th><th>TEAM SCORES MATRIX</th></tr>';
-                Object.values(teams).sort((a,b) => a.pts - b.pts).forEach((t, i) => {
-                    html += `<tr><td><strong>${i+1} ${t.name}</strong></td><td>${t.pts}</td><td>${t.len}</td><td>${t.fish}</td><td><div class="matrix-container">`;
-                    t.members.forEach(m => {
-                        html += `<div class="matrix-card"><div>${m.anglerName}</div><div>${m.totals.cumulativePoints}PTS / ${m.totals.cumulativeLengthCm}CM / ${m.totals.cumulativeFish}F</div></div>`;
-                    });
-                    html += '</div></td></tr>';
-                });
-                output.innerHTML = html + '</table>';
+            if (cachedScores !== null) return cachedScores;
+            const timestampForFetch = new Date().getTime();
+            const response = await fetch('scores.json?v=' + timestampForFetch);
+            if (response.ok === false) throw new Error("JSON payload unavailable.");
+            const data = await response.json();
+            
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                cachedScores = data;
+            } else if (Array.isArray(data)) {
+                cachedScores = { anglers: data, secretPairs: null };
+            } else {
+                throw new Error("Invalid JSON structure.");
             }
-            // Add zone color logic here for ZONE 1 / ZONE 2
+            return cachedScores;
         }
 
-        function closeViewer() { document.getElementById('viewer-overlay').style.display = 'none'; }
+        function filterTable() {
+            const inputField = document.getElementById('search-box');
+            const filterValue = inputField.value.toUpperCase();
+            const tables = document.querySelectorAll('#table-output table');
+            
+            tables.forEach(table => {
+                const tableRows = table.getElementsByTagName('tr');
+                for (let i = 1; i < tableRows.length; i++) {
+                    const rowText = tableRows[i].innerText.toUpperCase();
+                    tableRows[i].style.display = rowText.includes(filterValue) ? "" : "none";
+                }
+            });
+        }
+
+        // ANALYTICAL DASHBOARD GENERATION ENGINE
+        async function loadMatchStats(displayTitle) {
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            document.getElementById('search-box').style.display = 'none';
+            document.querySelector('.scroll-hint').style.display = 'none';
+            titleDisplay.innerText = displayTitle;
+            
+            output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(resolve => setTimeout(resolve, 350));
+
+            try {
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
+                
+                let totalAnglers = anglers.length;
+                let totalFish = 0, day1Fish = 0, day2Fish = 0;
+                let totalLengthCm = 0, day1LengthTotal = 0, day2LengthTotal = 0;
+                let blankers = 0, soloCount = 0;
+                let teamsSet = new Set();
+
+                let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+                let d1ZoneTotals = {}, d2ZoneTotals = {};
+                zoneKeys.forEach(k => {
+                    d1ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
+                    d2ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
+                });
+
+                anglers.forEach(item => {
+                    let cFish = item.totals.cumulativeFish || 0;
+                    let cLen = item.totals.cumulativeLengthCm || 0;
+                    let teamRaw = String(item.teamName || "").trim();
+                    
+                    totalFish += cFish;
+                    totalLengthCm += cLen;
+                    if (cFish === 0) blankers++;
+                    if (teamRaw === "" || teamRaw.toUpperCase() === "SOLO") soloCount++; else teamsSet.add(teamRaw);
+
+                    if (item.day1 && item.day1.zone) {
+                        let z = item.day1.zone;
+                        day1Fish += item.day1.fishCount || 0;
+                        day1LengthTotal += item.day1.totalLengthCm || 0;
+                        if (d1ZoneTotals[z]) {
+                            d1ZoneTotals[z].totalCompetitors++;
+                            if (item.day1.fishCount > 0) {
+                                d1ZoneTotals[z].fish += item.day1.fishCount;
+                                d1ZoneTotals[z].length += item.day1.totalLengthCm;
+                                d1ZoneTotals[z].anglers++;
+                                if (item.day1.fishCount > d1ZoneTotals[z].maxFish) d1ZoneTotals[z].maxFish = item.day1.fishCount;
+                            }
+                            if (item.day1.biggestFishCm > d1ZoneTotals[z].biggestFish) d1ZoneTotals[z].biggestFish = item.day1.biggestFishCm;
+                        }
+                    }
+
+                    if (item.day2 && item.day2.zone) {
+                        let z = item.day2.zone;
+                        day2Fish += item.day2.fishCount || 0;
+                        day2LengthTotal += item.day2.totalLengthCm || 0;
+                        if (d2ZoneTotals[z]) {
+                            d2ZoneTotals[z].totalCompetitors++;
+                            if (item.day2.fishCount > 0) {
+                                d2ZoneTotals[z].fish += item.day2.fishCount;
+                                d2ZoneTotals[z].length += item.day2.totalLengthCm;
+                                d2ZoneTotals[z].anglers++;
+                                if (item.day2.fishCount > d2ZoneTotals[z].maxFish) d2ZoneTotals[z].maxFish = item.day2.fishCount;
+                            }
+                            if (item.day2.biggestFishCm > d2ZoneTotals[z].biggestFish) d2ZoneTotals[z].biggestFish = item.day2.biggestFishCm;
+                        }
+                    }
+                });
+
+                let scoringAnglersCount = totalAnglers - blankers;
+                let successRate = totalAnglers > 0 ? ((scoringAnglersCount / totalAnglers) * 100).toFixed(0) : 0;
+                let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
+                let totalMeters = (totalLengthCm / 100).toFixed(2);
+                let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
+
+                let maxZoneCombinedFish = 0;
+                let maxZoneCombinedAvgSize = 0;
+
+                zoneKeys.forEach(zName => {
+                    let combinedFish = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
+                    let combinedLen = d1ZoneTotals[zName].length + d2ZoneTotals[zName].length;
+                    let combinedAvg = combinedFish > 0 ? (combinedLen / combinedFish) : 0;
+                    
+                    if (combinedFish > maxZoneCombinedFish) maxZoneCombinedFish = combinedFish;
+                    if (combinedAvg > maxZoneCombinedAvgSize) maxZoneCombinedAvgSize = combinedAvg;
+                });
+
+                let htmlMarkup = '<div class="stat-grid">';
+                
+                // 1] CONSOLIDATED MATCH OVERVIEW CARD
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
+                        <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.6 Standard</span>
+                        </div>
+                        <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
+                            <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
+                                <div style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">${totalAnglers}</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Total Entries</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">${successRate}%</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Active Catch Rate</div>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-color); padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: rgba(0,0,0,0.01);">
+                            <div>
+                                <div style="font-size: 1.3rem; font-weight: 700;">${totalFish}</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Total Fish</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.3rem; font-weight: 700;">${totalMeters}m</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Total Length</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.3rem; font-weight: 700;">${avgFishLength}cm</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Avg Fish Size</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.3rem; font-weight: 700;">${competitorAverage.toFixed(1)}</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Avg Ind. Catch</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // 2] DUAL DAY 1 & DAY 2 DONUT GRAPHS
+                let radius = 35;
+                let circumference = 2 * Math.PI * radius;
+                const donutColors = { 'Red Zone': '#ff5252', 'Blue Zone': '#2979ff', 'Green Zone': '#00b35c', 'Yellow Zone': '#d4a000' };
+                
+                htmlMarkup += `
+                    <div class="stat-card">
+                        <div class="stat-title">Daily Zone Distribution</div>
+                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 15px; margin: 15px 0;">
+                            <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Saturday (Day 1)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+                                    <svg width="90" height="90" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#f1f3f5" stroke-width="12"/>
+                `;
+                
+                let d1CurrentOffset = 0;
+                zoneKeys.forEach(zName => {
+                    let zTotal = d1ZoneTotals[zName].fish;
+                    let share = day1Fish > 0 ? zTotal / day1Fish : 0;
+                    let strokeLength = circumference * share;
+                    if (strokeLength > 0) {
+                        htmlMarkup += `<circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="${donutColors[zName]}" stroke-width="12" stroke-dasharray="${strokeLength} ${circumference}" stroke-dashoffset="-${d1CurrentOffset}" />`;
+                        d1CurrentOffset += strokeLength;
+                    }
+                });
+                
+                htmlMarkup += `
+                                    </svg>
+                                </div>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${day1Fish} Fish</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Day 1 Total Catch</div>
+                            </div>
+                            
+                            <div style="text-align: center; flex: 1; min-width: 140px;">
+                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Sunday (Day 2)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+                                    <svg width="90" height="90" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#f1f3f5" stroke-width="12"/>
+                `;
+                
+                let d2CurrentOffset = 0;
+                zoneKeys.forEach(zName => {
+                    let zTotal = d2ZoneTotals[zName].fish;
+                    let share = day2Fish > 0 ? zTotal / day2Fish : 0;
+                    let strokeLength = circumference * share;
+                    if (strokeLength > 0) {
+                        htmlMarkup += `<circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="${donutColors[zName]}" stroke-width="12" stroke-dasharray="${strokeLength} ${circumference}" stroke-dashoffset="-${d2CurrentOffset}" />`;
+                        d2CurrentOffset += strokeLength;
+                    }
+                });
+                
+                htmlMarkup += `
+                                    </svg>
+                                </div>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${day2Fish} Fish</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Day 2 Total Catch</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                `;
+                zoneKeys.forEach(zName => {
+                    htmlMarkup += `<div class="legend-item"><span class="legend-dot" style="background:${donutColors[zName]}"></span>${zName.replace(' Zone', '')}</div>`;
+                });
+                htmlMarkup += `
+                        </div>
+                    </div>
+                `;
+
+                // 4] HIGH-CONTRAST COLOR-CODED ZONE BREAKDOWN CARDS
+                zoneKeys.forEach(zName => {
+                    let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
+                    let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
+                    
+                    let totalZFish = d1F + d2F;
+                    let totalZLen = d1L + d2L;
+                    let totalZMeters = (totalZLen / 100).toFixed(2);
+                    
+                    let d1ZAvg = d1F > 0 ? (d1L / d1F).toFixed(1) : "0.0";
+                    let d2ZAvg = d2F > 0 ? (d2L / d2F).toFixed(1) : "0.0";
+                    let overallZAvg = totalZFish > 0 ? (totalZLen / totalZFish).toFixed(1) : "0.0";
+                    
+                    let totalZoneMatchesD1 = d1ZoneTotals[zName].totalCompetitors || 1;
+                    let totalZoneMatchesD2 = d2ZoneTotals[zName].totalCompetitors || 1;
+                    let zoneAvgPerCapita = (totalZoneMatchesD1 + totalZoneMatchesD2) > 0 ? (totalZFish / (totalZoneMatchesD1 + totalZoneMatchesD2)) : 0;
+
+                    let d1BlankRate = d1ZoneTotals[zName].totalCompetitors > 0 ? (((d1ZoneTotals[zName].totalCompetitors - d1ZoneTotals[zName].anglers) / d1ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
+                    let d2BlankRate = d2ZoneTotals[zName].totalCompetitors > 0 ? (((d2ZoneTotals[zName].totalCompetitors - d2ZoneTotals[zName].anglers) / d2ZoneTotals[zName].totalCompetitors) * 100).toFixed(0) : 0;
+
+                    let d1AvgBag = d1ZoneTotals[zName].totalCompetitors > 0 ? (d1F / d1ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
+                    let d2AvgBag = d2ZoneTotals[zName].totalCompetitors > 0 ? (d2F / d2ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
+
+                    let volumeWidthPercent = maxZoneCombinedFish > 0 ? (totalZFish / maxZoneCombinedFish) * 100 : 0;
+                    let sizeWidthPercent = maxZoneCombinedAvgSize > 0 ? (parseFloat(overallZAvg) / maxZoneCombinedAvgSize) * 100 : 0;
+                    let overallTournamentShare = totalFish > 0 ? ((totalZFish / totalFish) * 100).toFixed(0) : 0;
+
+                    let fishSwing = d2F - d1F;
+                    let sizeSwing = (parseFloat(d2ZAvg) - parseFloat(d1ZAvg)).toFixed(1);
+                    let blankSwing = d2BlankRate - d1BlankRate;
+
+                    let cardProfileClass = 'profile-card-' + zName.split(' ')[0].toLowerCase();
+                    let textAccentColor = donutColors[zName];
+
+                    htmlMarkup += `
+                        <div class="stat-card ${cardProfileClass}" style="text-align: left;">
+                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.2rem; margin-bottom: 6px; font-weight: 700;">${zName.toUpperCase()}</div>
+                            
+                            <div style="margin: 10px 0 14px 0;">
+                                <div class="bar-chart-container">
+                                    <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #fff;">Volume: ${totalZFish} f</div>
+                                    <div class="bar-chart-label-right">${overallTournamentShare}% tournament share</div>
+                                </div>
+                                <div class="bar-chart-container">
+                                    <div class="bar-chart-fill" style="width: ${sizeWidthPercent}%; background: #555555; color: #fff;">Avg Size: ${overallZAvg} cm</div>
+                                    <div class="bar-chart-label-right">Quality Index</div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+                                <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Saturday (Day 1)</div>
+                                    <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
+                                        <strong>Fish Caught:</strong> ${d1F}<br>
+                                        <strong>Avg Size:</strong> ${d1ZAvg}cm<br>
+                                        <strong style="color: var(--accent-cyan);">Avg Bag:</strong> ${d1AvgBag} fish<br>
+                                        <strong>Blanks:</strong> ${d1BlankRate}%<br>
+                                        <strong>Best Bag:</strong> ${d1Max} fish<br>
+                                        <strong>Session Best:</strong> ${d1ZoneTotals[zName].biggestFish || '0'}cm
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Sunday (Day 2)</div>
+                                    <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
+                                        <strong>Fish Caught:</strong> ${d2F}<br>
+                                        <strong>Avg Size:</strong> ${d2ZAvg}cm<br>
+                                        <strong style="color: var(--accent-cyan);">Avg Bag:</strong> ${d2AvgBag} fish<br>
+                                        <strong>Blanks:</strong> ${d2BlankRate}%<br>
+                                        <strong>Best Bag:</strong> ${d2Max} fish<br>
+                                        <strong>Session Best:</strong> ${d2ZoneTotals[zName].biggestFish || '0'}cm
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(0,0,0,0.03); border-radius: 4px; padding: 6px; font-size: 0.72rem; font-weight: 700; color: var(--text-main); text-align: center; letter-spacing: 0.2px;">
+                    `;
+                    
+                    let fsText = fishSwing > 0 ? `▲ +${fishSwing} Fish` : (fishSwing < 0 ? `▼ ${fishSwing} Fish` : `► Consistent Volume`);
+                    let ssText = sizeSwing > 0 ? `▲ +${sizeSwing}cm Size` : (sizeSwing < 0 ? `▼ ${sizeSwing}cm Size` : `► Stable Size`);
+                    let bsText = blankSwing > 0 ? `▲ +${blankSwing}% Blanks` : (blankSwing < 0 ? `▼ ${Math.abs(blankSwing)}% Blanks` : `► Stable Blanks`);
+
+                    htmlMarkup += `
+                                The Swing (Day 1 to Day 2): &nbsp; ${fsText} &nbsp;|&nbsp; ${ssText} &nbsp;|&nbsp; ${bsText}
+                            </div>
+
+                            <div style="border-top: 1px solid #f1f3f5; margin-top: 10px; padding-top: 6px; display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">
+                                <span>Beach Performance Per Capita:</span><span>${zoneAvgPerCapita.toFixed(1)} Fish / Angler</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // 5] THE "WHAT IF" SCENARIO TIMELINE CARD
+                let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
+                    if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
+                    return b.day1.totalLengthCm - a.day1.totalLengthCm;
+                });
+                let finalIndStandings = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
+
+                htmlMarkup += `
+                    <div class="stat-card" style="text-align: left; background: #ffffff; border-color: var(--border-color);">
+                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">⏳ The "What If?" Timeline Simulation</div>
+                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.3;">Compare leaderboard metrics tracked at the Saturday close vs. final verified Sunday standings.</div>
+
+                        <div style="background: #f8f9fa; border-radius: 6px; padding: 10px; overflow-x: auto;">
+                            <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
+                                <tr><th style="padding: 5px;">RNK</th><th style="text-align: left; padding: 5px;">SATURDAY CLOSE (D1)</th><th style="text-align: left; padding: 5px;">FINAL STANDING (D2)</th></tr>
+                `;
+                
+                for (let i = 0; i < 10; i++) {
+                    let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
+                    let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
+                    htmlMarkup += `<tr><td style="font-weight: bold; padding: 5px;">${i+1}</td><td style="text-align: left; padding: 5px;">${d1Str}</td><td style="text-align: left; font-weight: 600; padding: 5px;">${fStr}</td></tr>`;
+                }
+                
+                htmlMarkup += `
+                            </table>
+                        </div>
+                    </div>
+                `;
+
+                // 6] THE PARENT CLUB CHAMPIONSHIP COLLECTIVE VIEW CARD
+                let parentUmbrellas = {};
+                anglers.forEach(item => {
+                    let tName = String(item.teamName || "").trim();
+                    if (tName === "" || tName.toUpperCase() === "SOLO" || tName.toUpperCase() === "INDEPENDENT") return;
+                    
+                    let pName = tName;
+                    let match = tName.match(/^(.*?)\s+[A-Z]$/i);
+                    if (match) pName = match[1].trim();
+
+                    if (!parentUmbrellas[pName]) parentUmbrellas[pName] = { len: 0, fish: 0, members: 0 };
+                    parentUmbrellas[pName].len += item.totals.cumulativeLengthCm || 0;
+                    parentUmbrellas[pName].fish += item.totals.cumulativeFish || 0;
+                    parentUmbrellas[pName].members += 1;
+                });
+                
+                let parentArray = Object.keys(parentUmbrellas).map(p => ({
+                    name: p,
+                    avgLen: parentUmbrellas[p].len / parentUmbrellas[p].members,
+                    avgFish: parentUmbrellas[p].fish / parentUmbrellas[p].members
+                })).sort((a, b) => b.avgLen - a.avgLen);
+
+                htmlMarkup += `
+                    <div style="border-top: 1px solid var(--border-color); margin-top: 20px; padding-top: 15px;">
+                        <div style="color: var(--text-main); font-family: 'Oswald'; margin-bottom: 4px; font-size: 0.95rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-bottom: 12px; line-height: 1.35; padding: 0 10px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
+                        <div style="background: #f8f9fa; border-radius: 6px; padding: 10px; overflow-x: auto;">
+                            <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
+                                <tr><th>RNK</th><th style="text-align: left;">CLUB DELEGATION</th><th>AVG LEN</th><th>AVG FISH</th></tr>
+                `;
+                
+                parentArray.forEach((p, i) => {
+                    htmlMarkup += `<tr><td style="font-weight: bold;">${i+1}</td><td style="text-align: left; font-weight: 600;">${p.name}</td><td>${(p.avgLen / 100).toFixed(2)}m</td><td>${p.avgFish.toFixed(1)}</td></tr>`;
+                });
+                
+                htmlMarkup += '</table></div></div></div></div>'; 
+                
+                output.innerHTML = htmlMarkup;
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = '<div class="status-msg">Database Connectivity Offline</div>';
+            }
+        }
+
+        // LEADERBOARD VIEW CONTROLLER (FULLY RESTORED & UPGRADED)
+        async function loadExcelTab(targetTabName, displayTitle) {
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            document.getElementById('search-box').style.display = 'block';
+            document.querySelector('.scroll-hint').style.display = 'flex';
+            document.getElementById('search-box').value = '';
+            titleDisplay.innerText = displayTitle;
+            
+            output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(resolve => setTimeout(resolve, 350));
+
+            try {
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
+                let htmlMarkup = '';
+
+                if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
+                    htmlMarkup += '<div class="info-banner">';
+                    TAB_CONFIG[targetTabName].staticRules.forEach(r => {
+                        htmlMarkup += '<span class="rule-segment">' + r + '</span>';
+                    });
+                    htmlMarkup += '</div>';
+                }
+
+                if (targetTabName === 'INDIVIDUAL RESULT') {
+                    let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>PTS</th><th>ANGLER NAME</th><th>TEAM</th><th>TIE BREAKERS</th></tr>';
+                    sorted.forEach(item => {
+                        let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                        let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
+                        let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
+                        htmlMarkup += `<tr><td style="font-weight: 700;">${item.totals.overallRank}</td><td style="font-weight: 600; color: var(--accent-cyan);">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: bold;">${item.anglerName}</td><td>${teamDisp}</td><td style="color: #666; font-size: 0.78rem;">${ties}</td></tr>`;
+                    });
+                    htmlMarkup += '</table></div>';
+                } 
+                else if (targetTabName === 'TEAM RESULT') {
+                    let teams = {};
+                    anglers.forEach(item => {
+                        let t = item.teamName ? item.teamName.trim() : "";
+                        if (t === "" || t.toUpperCase() === "SOLO" || t.toUpperCase() === "INDEPENDENT") return;
+                        if (!teams[t]) teams[t] = { name: t, pts: 0, len: 0, fish: 0, members: [] };
+                        teams[t].pts += item.totals.cumulativePoints || 0;
+                        teams[t].len += item.totals.cumulativeLengthCm || 0;
+                        teams[t].fish += item.totals.cumulativeFish || 0;
+                        teams[t].members.push(item);
+                    });
+                    
+                    // Sorting by lowest zone points, highest length, and highest fish counts
+                    let teamArray = Object.values(teams).sort((a, b) => {
+                        if (a.pts !== b.pts) return a.pts - b.pts;
+                        if (a.len !== b.len) return b.len - a.len;
+                        return b.fish - a.fish;
+                    });
+                    
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>TEAM NAME</th><th>PTS</th><th>CM</th><th>FISH CT</th><th>TEAM SCORES MATRIX</th></tr>';
+                    teamArray.forEach((team, idx) => {
+                        htmlMarkup += `<tr>
+                            <td style="font-weight: 700; text-align: center;">${idx + 1}</td>
+                            <td style="text-align: left; font-weight: bold; white-space: nowrap;">${team.name}</td>
+                            <td style="font-weight: 700; color: var(--accent-cyan);">${team.pts}</td>
+                            <td style="font-weight: 600;">${team.len}</td>
+                            <td style="font-weight: 600;">${team.fish}</td>
+                            <td>
+                                <div class="matrix-container">`;
+                        
+                        team.members.forEach(m => {
+                            htmlMarkup += `
+                                <div class="matrix-card">
+                                    <div class="matrix-name">${m.anglerName}</div>
+                                    <div class="matrix-stats">${m.totals.cumulativePoints}PTS / ${m.totals.cumulativeLengthCm}CM / ${m.totals.cumulativeFish}F</div>
+                                </div>
+                            `;
+                        });
+                        
+                        htmlMarkup += `
+                                </div>
+                            </td>
+                        </tr>`;
+                    });
+                    htmlMarkup += '</table></div>';
+                }
+                else if (targetTabName === 'ZONE 1' || targetTabName === 'ZONE 2') {
+                    const isDay1 = targetTabName === 'ZONE 1';
+                    const zoneBlocks = [
+                        { name: 'Red Zone', colorClass: 'zone-red' },       
+                        { name: 'Yellow Zone', colorClass: 'zone-yellow' }, 
+                        { name: 'Green Zone', colorClass: 'zone-green' }, 
+                        { name: 'Blue Zone', colorClass: 'zone-blue' }    
+                    ];
+                    
+                    zoneBlocks.forEach(block => {
+                        let zoneAnglers = anglers.filter(item => {
+                            let dayData = isDay1 ? item.day1 : item.day2;
+                            return dayData && dayData.zone === block.name;
+                        }).sort((a, b) => {
+                            let dayA = isDay1 ? a.day1 : a.day2;
+                            let dayB = isDay1 ? b.day1 : b.day2;
+                            if (dayA.zonePoints !== dayB.zonePoints) return dayA.zonePoints - dayB.zonePoints;
+                            return dayB.totalLengthCm - dayA.totalLengthCm;
+                        });
+                        
+                        if (zoneAnglers.length > 0) {
+                            htmlMarkup += `<h3 class="${block.colorClass}" style="margin: 25px 0 8px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px;">${block.name}</h3>`;
+                            htmlMarkup += `<table class="${block.colorClass}">`;
+                            htmlMarkup += '<tr><th>PTS</th><th>PEG</th><th>ANGLER NAME</th><th>TEAM</th><th>TIE BREAKERS</th></tr>';
+                            
+                            let rowBg = '';
+                            if (block.colorClass === 'zone-red') rowBg = 'rgba(255, 82, 82, 0.06)';
+                            else if (block.colorClass === 'zone-blue') rowBg = 'rgba(41, 121, 255, 0.06)';
+                            else if (block.colorClass === 'zone-green') rowBg = 'rgba(0, 179, 92, 0.06)';
+                            else if (block.colorClass === 'zone-yellow') rowBg = 'rgba(212, 160, 0, 0.06)';
+
+                            let tdStyle = `background-color: ${rowBg}; border-bottom: 1px solid var(--border-color);`;
+
+                            zoneAnglers.forEach(item => {
+                                let dayData = isDay1 ? item.day1 : item.day2;
+                                let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                                let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
+                                htmlMarkup += `<tr>
+                                    <td style="font-weight: 700; color: var(--accent-cyan); ${tdStyle}">${dayData.zonePoints}</td>
+                                    <td style="font-weight: 600; ${tdStyle}">${dayData.peg || '-'}</td>
+                                    <td style="text-align: left; font-weight: bold; ${tdStyle}">${item.anglerName}</td>
+                                    <td style="${tdStyle}">${teamDisp}</td>
+                                    <td style="color: #444; font-size: 0.78rem; ${tdStyle}">${ties}</td>
+                                </tr>`;
+                            });
+                            htmlMarkup += '</table>';
+                        }
+                    });
+                }
+                else if (targetTabName === 'BIGGEST FISH') {
+                    let flatFish = [];
+                    anglers.forEach(item => {
+                        if (item.day1 && item.day1.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day1.biggestFishCm, details: `${item.day1.zone} (Day 1)` });
+                        }
+                        if (item.day2 && item.day2.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day2.biggestFishCm, details: `${item.day2.zone} (Day 2)` });
+                        }
+                    });
+                    flatFish.sort((a, b) => b.size - a.size);
+                    
+                    htmlMarkup += '<div class="table-layout-standard"><table>';
+                    htmlMarkup += '<tr><th>RANK</th><th>ANGLER NAME</th><th>TEAM</th><th>ZONE / SESSION</th><th>SIZE (cm)</th></tr>';
+                    flatFish.forEach((fish, idx) => {
+                        let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
+                        htmlMarkup += `<tr><td style="font-weight: 700;">${idx + 1}</td><td style="text-align: left; font-weight: bold;">${fish.name}</td><td>${teamDisp}</td><td>${fish.details}</td><td style="color: var(--accent-cyan); font-weight: bold;">${fish.size} cm</td></tr>`;
+                    });
+                    htmlMarkup += '</table></div>';
+                }
+                else if (targetTabName === 'SECRET PAIRS') {
+                    const secretPairsData = scoresData.secretPairs;
+
+                    if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
+                        let targetNum = parseInt(secretPairsData.targetLength) || 0;
+
+                        // Description Parameter Box
+                        htmlMarkup += `
+                            <div class="info-banner" style="background: var(--surface-color); border: 1px solid var(--border-color); text-align: left; padding: 16px; margin-bottom: 15px;">
+                                <div style="font-family: 'Oswald'; font-size: 1rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">Secret Pairs Tournament Parameters</div>
+                                <div style="font-size: 0.9rem; line-height: 1.5; color: var(--text-main); font-weight: 400;">${secretPairsData.description || 'Rules criteria active.'}</div>
+                            </div>
+                        `;
+
+                        // Center-Stage Large Target Indicator (Clean, No Emojis)
+                        htmlMarkup += `
+                            <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 15px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                                <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
+                                <div style="font-family: 'Inter'; font-size: 2.3rem; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">${secretPairsData.targetLength || 'N/A'}</div>
+                            </div>
+                        `;
+
+                        const winnersList = secretPairsData.winners || [];
+                        const otherPairsList = secretPairsData.otherPairs || [];
+
+                        // Champions Podium Stack (Ranks 1-3)
+                        if (winnersList.length > 0) {
+                            htmlMarkup += '<div style="margin-bottom: 30px; display: flex; flex-direction: column; gap: 12px; width: 100%;">';
+                            
+                            winnersList.forEach(pair => {
+                                let rankNum = parseInt(pair.rank) || 1;
+                                let borderAccent = 'var(--accent-cyan)';
+                                let medalLabel = 'THIRD PLACE';
+                                
+                                if (rankNum === 1) {
+                                    borderAccent = '#d4a000';
+                                    medalLabel = '🥇 TOURNAMENT CHAMPIONS';
+                                } else if (rankNum === 2) {
+                                    borderAccent = '#9aa0a6';
+                                    medalLabel = '🥈 SECOND PLACE';
+                                } else if (rankNum === 3) {
+                                    borderAccent = '#b07247';
+                                    medalLabel = '🥉 THIRD PLACE';
+                                }
+
+                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                                
+                                let overUnderDirection = '';
+                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
+                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
+                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
+                                    else overUnderDirection = ' (Dead On!)';
+                                }
+                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
+
+                                htmlMarkup += `
+                                    <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-left: 6px solid ${borderAccent}; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); width: 100%;">
+                                        <div>
+                                            <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: ${borderAccent}; font-weight: 700; letter-spacing: 1px;">${medalLabel}</div>
+                                            <div style="font-size: 1.1rem; font-weight: 700; margin-top: 4px; color: var(--text-main); letter-spacing: -0.3px;">${pair.angler1} & ${pair.angler2}</div>
+                                        </div>
+                                        <div style="text-align: right; white-space: nowrap;">
+                                            <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${formattedLength}</div>
+                                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-cyan); margin-top: 1px;">Missed by: ${formattedOffBy}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            
+                            htmlMarkup += '</div>';
+                        }
+
+                        // Compact informational list (Ranks 4+)
+                        if (otherPairsList.length > 0) {
+                            htmlMarkup += `
+                                <h3 style="margin: 35px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
+                                    📊 Field Standings (Informational Only)
+                                </h3>
+                            `;
+                            htmlMarkup += '<div class="table-layout-standard"><table>';
+                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>TOTAL LENGTH</th><th>VARIANCE</th></tr>';
+                            
+                            otherPairsList.forEach(pair => {
+                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
+                                
+                                let overUnderDirection = '';
+                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
+                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
+                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
+                                    else overUnderDirection = ' (Dead On!)';
+                                }
+                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
+                                
+                                htmlMarkup += `
+                                    <tr>
+                                        <td style="font-weight: 700; color: var(--text-muted);">${pair.rank}</td>
+                                        <td style="text-align: left; font-weight: 600; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
+                                        <td style="font-weight: 600;">${formattedLength}</td>
+                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.82rem;">${formattedOffBy}</td>
+                                    </tr>
+                                `;
+                            });
+
+                            htmlMarkup += '</table></div>';
+                        }
+
+                    } else {
+                        // Standing calculation fallback
+                        let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
+                        if (!hasPairsData) {
+                            htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
+                            htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
+                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
+                        } else {
+                            let pairs = {};
+                            anglers.forEach(item => {
+                                let pId = item.pairId || item.secretPairPartner || "Unassigned";
+                                if (!pairs[pId]) pairs[pId] = { id: pId, anglers: [], totalPts: 0, totalLen: 0 };
+                                pairs[pId].anglers.push(item);
+                                pairs[pId].totalPts += item.totals.cumulativePoints || 0;
+                                pairs[pId].totalLen += item.totals.cumulativeLengthCm || 0;
+                            });
+                            let pairsArray = Object.values(pairs).sort((a,b) => {
+                                if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
+                                return b.totalLen - a.totalLen;
+                            });
+                            htmlMarkup += '<div class="table-layout-standard"><table>';
+                            htmlMarkup += '<tr><th>RANK</th><th>PAIR MEMBERS</th><th>COMBINED PTS</th><th>COMBINED LENGTH</th></tr>';
+                            pairsArray.forEach((p, idx) => {
+                                let names = p.anglers.map(a => a.anglerName).join(' & ');
+                                htmlMarkup += `<tr><td style="font-weight: 700;">${idx + 1}</td><td style="text-align: left; font-weight: bold;">${names}</td><td style="font-weight: 600; color: var(--accent-cyan);">${p.totalPts}</td><td>${(p.totalLen/100).toFixed(2)}m</td></tr>`;
+                            });
+                            htmlMarkup += '</table></div>';
+                        }
+                    }
+                }
+
+                output.innerHTML = htmlMarkup;
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = '<div class="status-msg">Database Connectivity Offline</div>';
+            }
+        }
+
+        function closeViewer() {
+            document.getElementById('viewer-overlay').style.display = 'none';
+            document.getElementById('table-output').innerHTML = '';
+            document.getElementById('search-box').value = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('v1.4.6 deployment active'))
+                    .catch(err => console.error('SW Error:', err));
+            });
+        }
     </script>
 </body>
 </html>
