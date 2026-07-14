@@ -26,10 +26,10 @@
             --text-main: #111111;
             --text-muted: #555555;
             --border-color: #e4e7eb;
-            --red-zone: #ff5252;
-            --blue-zone: #2979ff;
-            --green-zone: #00b35c;
-            --yellow-zone: #d4a000;
+            --red-zone: #ff3b30;
+            --blue-zone: #0055ff;
+            --green-zone: #00c853;
+            --yellow-zone: #e5a900;
         }
 
         * { 
@@ -50,7 +50,7 @@
             padding-bottom: 20px;
         }
 
-        /* 🏆 Championship Hero Header Card Upgrade */
+        /* 🏆 Championship Hero Header Card */
         #app-header {
             margin-top: 35px;
             margin-bottom: 25px;
@@ -309,7 +309,7 @@
             white-space: nowrap;
         }
 
-        /* Upgraded Responsive Rules Modal Styles */
+        /* Responsive Rules Modal Styles */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
@@ -408,7 +408,7 @@
         }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* Structural Analytical Tables */
+        /* Structural Table Styles */
         table { 
             border-collapse: separate; 
             border-spacing: 0; 
@@ -691,7 +691,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.9</div>
+        <div>Official Results Portal | v1.5.0</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -719,7 +719,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.9";
+            document.title = MATCH_CONFIG.competitionName + " | v1.5.0";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -905,7 +905,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.9 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.5.0 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -938,10 +938,10 @@
                     </div>
                 `;
 
-                // 2] DUAL DAY 1 & DAY 2 DONUT GRAPHS
+                // 2] DUAL DAY 1 & DAY 2 DONUT GRAPHS (Saturated Colors Upgrade)
                 let radius = 35;
                 let circumference = 2 * Math.PI * radius;
-                const donutColors = { 'Red Zone': '#ff5252', 'Blue Zone': '#2979ff', 'Green Zone': '#00b35c', 'Yellow Zone': '#d4a000' };
+                const donutColors = { 'Red Zone': '#ff3b30', 'Blue Zone': '#0055ff', 'Green Zone': '#00c853', 'Yellow Zone': '#e5a900' };
                 
                 htmlMarkup += `
                     <div class="stat-card">
@@ -1296,11 +1296,12 @@
                             htmlMarkup += `<table class="${block.colorClass}">`;
                             htmlMarkup += '<tr><th>PTS</th><th>PEG</th><th>ANGLER NAME</th><th>TEAM</th><th>TIE BREAKERS</th></tr>';
                             
+                            // High Vibrancy Row Backgrounds at 10% Opacity Upgrade
                             let rowBg = '';
-                            if (block.colorClass === 'zone-red') rowBg = 'rgba(255, 82, 82, 0.06)';
-                            else if (block.colorClass === 'zone-blue') rowBg = 'rgba(41, 121, 255, 0.06)';
-                            else if (block.colorClass === 'zone-green') rowBg = 'rgba(0, 179, 92, 0.06)';
-                            else if (block.colorClass === 'zone-yellow') rowBg = 'rgba(212, 160, 0, 0.06)';
+                            if (block.colorClass === 'zone-red') rowBg = 'rgba(255, 59, 48, 0.10)';
+                            else if (block.colorClass === 'zone-blue') rowBg = 'rgba(0, 85, 255, 0.10)';
+                            else if (block.colorClass === 'zone-green') rowBg = 'rgba(0, 200, 83, 0.10)';
+                            else if (block.colorClass === 'zone-yellow') rowBg = 'rgba(229, 169, 0, 0.10)';
 
                             let tdStyle = `background-color: ${rowBg}; border-bottom: 1px solid var(--border-color);`;
 
@@ -1313,7 +1314,7 @@
                                     <td style="font-weight: 600; ${tdStyle}">${dayData.peg || '-'}</td>
                                     <td style="text-align: left; font-weight: bold; ${tdStyle}">${item.anglerName}</td>
                                     <td style="${tdStyle}">${teamDisp}</td>
-                                    <td style="color: #444; font-size: 0.78rem; ${tdStyle}">${ties}</td>
+                                    <td style="color: #111; font-size: 0.78rem; ${tdStyle}">${ties}</td>
                                 </tr>`;
                             });
                             htmlMarkup += '</table>';
@@ -1346,7 +1347,7 @@
                     if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
-                        // Header subtitle & popup toggle
+                        // Header subtitle & popup rules toggle
                         htmlMarkup += `
                             <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0 10px 0; width: 100%;">
                                 <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
@@ -1354,7 +1355,7 @@
                             </div>
                         `;
 
-                        // Center Target Card
+                        // Center Stage Target Box Card
                         htmlMarkup += `
                             <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 10px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                                 <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
@@ -1375,7 +1376,7 @@
                                 let medalLabel = 'THIRD PLACE';
                                 
                                 if (rankNum === 1) {
-                                    borderAccent = '#d4a000';
+                                    borderAccent = 'var(--yellow-zone)';
                                     medalLabel = '🥇 TOURNAMENT CHAMPIONS';
                                 } else if (rankNum === 2) {
                                     borderAccent = '#9aa0a6';
@@ -1412,7 +1413,7 @@
                             htmlMarkup += '</div>';
                         }
 
-                        // Compact lower listings (Ranks 4+)
+                        // Compact informational list (Ranks 4+)
                         if (otherPairsList.length > 0) {
                             htmlMarkup += `
                                 <h3 style="margin: 35px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
@@ -1447,12 +1448,12 @@
                         }
 
                     } else {
-                        // Standard fallback
+                        // Standard fallback structure
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
                         if (!hasPairsData) {
                             htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
                             htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
-                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input application arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
+                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
                         } else {
                             let pairs = {};
                             anglers.forEach(item => {
@@ -1495,7 +1496,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.9 deployment active'))
+                    .then(reg => console.log('v1.5.0 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
