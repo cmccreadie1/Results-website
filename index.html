@@ -50,14 +50,18 @@
             padding-bottom: 20px;
         }
 
-        /* Minimalist Sports-Tech Typographic Header */
+        /* 🏆 Championship Hero Header Card Upgrade */
         #app-header {
             margin-top: 35px;
             margin-bottom: 25px;
             text-align: center;
             width: 100%;
             max-width: 450px;
-            padding: 0 15px;
+            padding: 20px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         #app-header h1 {
             font-family: 'Oswald', sans-serif;
@@ -85,7 +89,7 @@
             display: block;
         }
 
-        /* Monochromatic Premium Grid Menu */
+        /* Premium Interactive Category Menu Stack */
         .button-stack { 
             width: 100%; 
             max-width: 450px; 
@@ -113,7 +117,7 @@
             justify-content: center; 
             align-items: center;
             text-align: center;
-            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s ease;
             flex: 0 0 calc(50% - 5px);
             gap: 2px;
         }
@@ -125,14 +129,45 @@
             letter-spacing: 0.5px;
             margin-top: 2px;
         }
-        .slide-btn:active { 
-            transform: scale(0.97); 
-            background: var(--text-main);
-            color: var(--surface-color);
-            border-color: var(--text-main);
+
+        /* Color-Coded Thematic Category Borders */
+        .slide-btn.btn-ind { border-left: 5px solid var(--accent-cyan); }
+        .slide-btn.btn-team { border-left: 5px solid #343a40; }
+        .slide-btn.btn-z1 { border-left: 5px solid var(--red-zone); }
+        .slide-btn.btn-z2 { border-left: 5px solid var(--blue-zone); }
+        .slide-btn.btn-pairs { border-left: 5px solid var(--yellow-zone); }
+        .slide-btn.btn-fish { border-left: 5px solid var(--green-zone); }
+
+        /* High-Impact "Stats Dashboard" Dark Hero Card */
+        .slide-btn.btn-stats {
+            background: #111111 !important;
+            border: 1px solid #222222 !important;
+            border-left: 5px solid var(--accent-cyan) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .slide-btn:active span:last-child {
-            color: var(--surface-color);
+        .slide-btn.btn-stats span:first-child {
+            color: #ffffff !important;
+        }
+        .slide-btn.btn-stats span:last-child {
+            color: #00ddff !important;
+        }
+
+        /* Micro-Interactive Hover & Tap Physics */
+        .slide-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+            background-color: var(--surface-color);
+        }
+        .slide-btn:active { 
+            transform: scale(0.96) translateY(0); 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        .slide-btn.btn-stats:hover {
+            background-color: #1a1a1a !important;
+        }
+        .slide-btn.btn-stats:active {
+            transform: scale(0.96) translateY(0);
         }
 
         /* Full Screen Native Overlay */
@@ -274,7 +309,7 @@
             white-space: nowrap;
         }
 
-        /* Upgraded Responsive Rules Modal Styles[cite: 1] */
+        /* Upgraded Responsive Rules Modal Styles */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
@@ -282,11 +317,11 @@
             background: rgba(0, 0, 0, 0.6); 
             display: none;
             justify-content: center; 
-            align-items: flex-start; /* Corrects centering clipping cutoff[cite: 1] */
+            align-items: flex-start; 
             z-index: 3000;
-            padding: 30px 15px; /* Protected buffer margins for short displays[cite: 1] */
-            overflow-y: auto; /* Active scrollbar engine[cite: 1] */
-            -webkit-overflow-scrolling: touch; /* Momentum scroll iOS compatibility[cite: 1] */
+            padding: 30px 15px; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
         }
         .modal-card {
             background: var(--surface-color); 
@@ -297,7 +332,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             position: relative;
             text-align: left;
-            margin: auto 0; /* Vertically centers if room exists, scrolls normally if tall[cite: 1] */
+            margin: auto 0; 
         }
         .modal-close-btn {
             background: var(--text-main); 
@@ -594,6 +629,7 @@
 </head>
 <body>
 
+    <!-- 🏆 Premium Championship Hero Header Card -->
     <header id="app-header">
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -601,33 +637,35 @@
         <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
 
+    <!-- Color-Coded Category Menu Stack with Physics Animations -->
     <nav class="button-stack">
-        <div class="slide-btn" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
+        <div class="slide-btn btn-ind" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span>Individual Winner</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
+        <div class="slide-btn btn-team" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
             <span>Team Winners</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
+        <div class="slide-btn btn-z1" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span>Zone Day 1</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
+        <div class="slide-btn btn-z2" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
             <span>Zone Day 2</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
+        <div class="slide-btn btn-pairs" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
             <span>Secret Pairs</span>
             <span>VIEW ❯</span>
         </div>
-        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
+        <div class="slide-btn btn-fish" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
             <span>Biggest Fish</span>
             <span>VIEW ❯</span>
         </div>
         
-        <div class="slide-btn" onclick="loadMatchStats('Match Stats')" style="flex: 0 0 100%;">
+        <!-- High-Impact Dark Hero Analytics Button -->
+        <div class="slide-btn btn-stats" onclick="loadMatchStats('Match Stats')" style="flex: 0 0 100%;">
             <span>Match Stats Dashboard</span>
             <span>VIEW ANALYTICS ❯</span>
         </div>
@@ -643,7 +681,7 @@
         <div class="table-scroll-box" id="table-output"></div>
     </div>
 
-    <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules[cite: 1] -->
+    <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules -->
     <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
@@ -653,7 +691,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.4.8</div>
+        <div>Official Results Portal | v1.4.9</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -681,7 +719,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.8";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.9";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -736,7 +774,7 @@
             });
         }
 
-        // POPUP MODAL ACTIONS[cite: 1]
+        // POPUP MODAL ACTIONS
         function openRulesModal(title, contentHtml) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-body').innerHTML = contentHtml;
@@ -867,7 +905,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.8 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.9 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1308,7 +1346,7 @@
                     if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
-                        // Header subtitle & popup toggle[cite: 1]
+                        // Header subtitle & popup toggle
                         htmlMarkup += `
                             <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0 10px 0; width: 100%;">
                                 <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
@@ -1316,7 +1354,7 @@
                             </div>
                         `;
 
-                        // Center Target Card[cite: 1]
+                        // Center Target Card
                         htmlMarkup += `
                             <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 10px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                                 <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
@@ -1409,7 +1447,7 @@
                         }
 
                     } else {
-                        // Standard unassigned fallback
+                        // Standard fallback
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
                         if (!hasPairsData) {
                             htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
@@ -1457,7 +1495,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.8 deployment active'))
+                    .then(reg => console.log('v1.4.9 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
