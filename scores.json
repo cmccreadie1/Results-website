@@ -475,25 +475,25 @@
     "winners": [
       {
         "rank": 1,
-        "angler1": "GERMANY GERMANY 2",
-        "angler2": "JIM",
-        "combinedPoints": 12,
+        "angler1": "FLORIDA",
+        "angler2": "PUG",
+        "combinedPoints": 17,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
         "rank": 2,
-        "angler1": "FORT",
-        "angler2": "PUG",
-        "combinedPoints": 16,
+        "angler1": "COLLIE",
+        "angler2": "GERMANY GERMANY 2",
+        "combinedPoints": 15,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
         "rank": 3,
-        "angler1": "SWEDEN",
-        "angler2": "FLORIDA",
-        "combinedPoints": 16,
+        "angler1": "FORT",
+        "angler2": "ROSIE",
+        "combinedPoints": 15,
         "combinedLengthCm": 0,
         "offBy": 0
       }
@@ -501,49 +501,49 @@
     "otherPairs": [
       {
         "rank": 4,
-        "angler1": "SPAIN",
-        "angler2": "THAMES",
-        "combinedPoints": 16,
+        "angler1": "LABRADOR",
+        "angler2": "SWEDEN",
+        "combinedPoints": 14,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
         "rank": 5,
         "angler1": "PORTUGAL",
-        "angler2": "ROSIE",
-        "combinedPoints": 12,
+        "angler2": "JIM",
+        "combinedPoints": 13,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
         "rank": 6,
-        "angler1": "JOE AVERAGE (GHOST)",
+        "angler1": "CAIRN",
         "angler2": "TEXAS",
-        "combinedPoints": 8,
-        "combinedLengthCm": 0,
-        "offBy": 0
-      },
-      {
-        "rank": 7,
-        "angler1": "CLYDE",
-        "angler2": "CAIRN",
         "combinedPoints": 17,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
+        "rank": 7,
+        "angler1": "TAY",
+        "angler2": "JOE AVERAGE (GHOST)",
+        "combinedPoints": 9,
+        "combinedLengthCm": 0,
+        "offBy": 0
+      },
+      {
         "rank": 8,
-        "angler1": "COLLIE",
-        "angler2": "LABRADOR",
-        "combinedPoints": 18,
+        "angler1": "THAMES",
+        "angler2": "NEW MEXICO",
+        "combinedPoints": 19,
         "combinedLengthCm": 0,
         "offBy": 0
       },
       {
         "rank": 9,
-        "angler1": "NEW MEXICO",
-        "angler2": "TAY",
-        "combinedPoints": 18,
+        "angler1": "SPAIN",
+        "angler2": "CLYDE",
+        "combinedPoints": 14,
         "combinedLengthCm": 0,
         "offBy": 0
       }
