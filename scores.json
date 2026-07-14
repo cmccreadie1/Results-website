@@ -471,72 +471,81 @@
   ],
   "secretPairs": {
     "description": "The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.\n\nIf you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field. Tie breaker if its a draw the tie breaker reverts to longest combined length.",
-    "targetLength": "15cm",
+    "targetLength": "Pending Draw...",
     "winners": [
       {
         "rank": 1,
-        "angler1": "NEW MEXICO",
-        "angler2": "CLYDE",
-        "combinedPoints": 17,
-        "combinedLengthCm": 0
+        "angler1": "GERMANY GERMANY 2",
+        "angler2": "JIM",
+        "combinedPoints": 12,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 2,
         "angler1": "FORT",
-        "angler2": "TEXAS",
-        "combinedPoints": 17,
-        "combinedLengthCm": 0
+        "angler2": "PUG",
+        "combinedPoints": 16,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 3,
-        "angler1": "THAMES",
-        "angler2": "TAY",
-        "combinedPoints": 19,
-        "combinedLengthCm": 0
+        "angler1": "SWEDEN",
+        "angler2": "FLORIDA",
+        "combinedPoints": 16,
+        "combinedLengthCm": 0,
+        "offBy": 0
       }
     ],
     "otherPairs": [
       {
         "rank": 4,
-        "angler1": "LABRADOR",
-        "angler2": "JOE AVERAGE (GHOST)",
-        "combinedPoints": 8,
-        "combinedLengthCm": 0
+        "angler1": "SPAIN",
+        "angler2": "THAMES",
+        "combinedPoints": 16,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 5,
-        "angler1": "SWEDEN",
-        "angler2": "FLORIDA",
-        "combinedPoints": 16,
-        "combinedLengthCm": 109
+        "angler1": "PORTUGAL",
+        "angler2": "ROSIE",
+        "combinedPoints": 12,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 6,
-        "angler1": "PUG",
-        "angler2": "COLLIE",
-        "combinedPoints": 17,
-        "combinedLengthCm": 213
+        "angler1": "JOE AVERAGE (GHOST)",
+        "angler2": "TEXAS",
+        "combinedPoints": 8,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 7,
-        "angler1": "CAIRN",
-        "angler2": "ROSIE",
-        "combinedPoints": 15,
-        "combinedLengthCm": 287
+        "angler1": "CLYDE",
+        "angler2": "CAIRN",
+        "combinedPoints": 17,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 8,
-        "angler1": "PORTUGAL",
-        "angler2": "GERMANY GERMANY 2",
-        "combinedPoints": 11,
-        "combinedLengthCm": 411
+        "angler1": "COLLIE",
+        "angler2": "LABRADOR",
+        "combinedPoints": 18,
+        "combinedLengthCm": 0,
+        "offBy": 0
       },
       {
         "rank": 9,
-        "angler1": "SPAIN",
-        "angler2": "JIM",
-        "combinedPoints": 13,
-        "combinedLengthCm": 545
+        "angler1": "NEW MEXICO",
+        "angler2": "TAY",
+        "combinedPoints": 18,
+        "combinedLengthCm": 0,
+        "offBy": 0
       }
     ]
   }
