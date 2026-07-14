@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
@@ -236,7 +237,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Horizontal Matrix Custom CSS */
+        /* Horizontal Matrix Custom Styles */
         .matrix-container {
             display: flex;
             flex-direction: row;
@@ -271,6 +272,63 @@
             font-weight: 600;
             color: var(--text-muted);
             white-space: nowrap;
+        }
+
+        /* Rules Modal CSS Styles */
+        .modal-overlay {
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); 
+            display: none;
+            justify-content: center; 
+            align-items: center; 
+            z-index: 3000;
+            padding: 20px;
+        }
+        .modal-card {
+            background: var(--surface-color); 
+            border-radius: 8px;
+            width: 100%; 
+            max-width: 420px; 
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            text-align: left;
+        }
+        .modal-close-btn {
+            background: var(--text-main); 
+            color: var(--surface-color);
+            border: none; 
+            padding: 10px 16px; 
+            border-radius: 4px;
+            font-family: 'Oswald', sans-serif; 
+            text-transform: uppercase;
+            font-size: 0.85rem; 
+            width: 100%; 
+            margin-top: 20px; 
+            cursor: pointer;
+        }
+        .modal-close-btn:active {
+            background: var(--accent-cyan);
+        }
+        .rules-btn {
+            background: var(--accent-cyan);
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .rules-btn:active {
+            opacity: 0.8;
         }
 
         /* Info Ribbon Banners */
@@ -582,8 +640,17 @@
         <div class="table-scroll-box" id="table-output"></div>
     </div>
 
+    <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules -->
+    <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
+            <div id="modal-body" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-main); font-family: 'Inter', sans-serif;"></div>
+            <button class="modal-close-btn" onclick="closeModal(event)">Close</button>
+        </div>
+    </div>
+
     <footer class="footer">
-        <div>Official Results Portal | v1.4.6</div>
+        <div>Official Results Portal | v1.4.7</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -611,7 +678,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.4.6";
+            document.title = MATCH_CONFIG.competitionName + " | v1.4.7";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -664,6 +731,36 @@
                     tableRows[i].style.display = rowText.includes(filterValue) ? "" : "none";
                 }
             });
+        }
+
+        // POPUP MODAL ACTIONS
+        function openRulesModal(title, contentHtml) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerHTML = contentHtml;
+            document.getElementById('rules-modal').style.display = 'flex';
+        }
+        function closeModal(event) {
+            if (event) event.preventDefault();
+            document.getElementById('rules-modal').style.display = 'none';
+        }
+
+        function openSecretPairsRules(description) {
+            const desc = description || 'The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.';
+            const rulesHtml = `
+                <div style="margin-bottom: 15px;">
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">🎯 Format Structure</strong>
+                    <span style="font-size: 0.82rem; color: var(--text-main);">${desc}</span>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">👻 Ghost Partner Rule</strong>
+                    <span style="font-size: 0.82rem; color: var(--text-main);">If you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field.</span>
+                </div>
+                <div>
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">⚖️ Tie-Breaker Sequence</strong>
+                    <span style="font-size: 0.82rem; color: var(--text-main);">If there is a draw on variance (off-by distance), the tie-breaker reverts to the longest combined length.</span>
+                </div>
+            `;
+            openRulesModal('Secret Pairs Rules', rulesHtml);
         }
 
         // ANALYTICAL DASHBOARD GENERATION ENGINE
@@ -767,7 +864,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.6 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.4.7 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -809,6 +906,7 @@
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
                         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 15px; margin: 15px 0;">
+                            <!-- Day 1 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Saturday (Day 1)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -834,6 +932,7 @@
                                 <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Day 1 Total Catch</div>
                             </div>
                             
+                            <!-- Day 2 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Sunday (Day 2)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -860,6 +959,7 @@
                             </div>
                         </div>
                         
+                        <!-- Consolidated Color Legend -->
                         <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                 `;
                 zoneKeys.forEach(zName => {
@@ -908,6 +1008,7 @@
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
                             <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.2rem; margin-bottom: 6px; font-weight: 700;">${zName.toUpperCase()}</div>
                             
+                            <!-- Two Day Combined Metrics Bar Row -->
                             <div style="margin: 10px 0 14px 0;">
                                 <div class="bar-chart-container">
                                     <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #fff;">Volume: ${totalZFish} f</div>
@@ -919,7 +1020,9 @@
                                 </div>
                             </div>
 
+                            <!-- Prominent Side-by-Side Day grids -->
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
+                                <!-- Saturday Panel -->
                                 <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Saturday (Day 1)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -932,6 +1035,7 @@
                                     </div>
                                 </div>
                                 
+                                <!-- Sunday Panel -->
                                 <div style="background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Sunday (Day 2)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -945,6 +1049,7 @@
                                 </div>
                             </div>
 
+                            <!-- Standardized Sunday Swing Banner -->
                             <div style="background: rgba(0,0,0,0.03); border-radius: 4px; padding: 6px; font-size: 0.72rem; font-weight: 700; color: var(--text-main); text-align: center; letter-spacing: 0.2px;">
                     `;
                     
@@ -1037,7 +1142,7 @@
             }
         }
 
-        // LEADERBOARD VIEW CONTROLLER (FULLY RESTORED & UPGRADED)
+        // LEADERBOARD VIEW CONTROLLER (WITH MODAL RULES SUPPORT)
         async function loadExcelTab(targetTabName, displayTitle) {
             const overlay = document.getElementById('viewer-overlay');
             const output = document.getElementById('table-output');
@@ -1091,7 +1196,6 @@
                         teams[t].members.push(item);
                     });
                     
-                    // Sorting by lowest zone points, highest length, and highest fish counts
                     let teamArray = Object.values(teams).sort((a, b) => {
                         if (a.pts !== b.pts) return a.pts - b.pts;
                         if (a.len !== b.len) return b.len - a.len;
@@ -1201,17 +1305,17 @@
                     if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
-                        // Description Parameter Box
+                        // Clean Standings Header Row with Interactive Rules & Info popup button on the right
                         htmlMarkup += `
-                            <div class="info-banner" style="background: var(--surface-color); border: 1px solid var(--border-color); text-align: left; padding: 16px; margin-bottom: 15px;">
-                                <div style="font-family: 'Oswald'; font-size: 1rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">Secret Pairs Tournament Parameters</div>
-                                <div style="font-size: 0.9rem; line-height: 1.5; color: var(--text-main); font-weight: 400;">${secretPairsData.description || 'Rules criteria active.'}</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0 10px 0; width: 100%;">
+                                <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
+                                <button class="rules-btn" onclick="openSecretPairsRules(decodeURIComponent('${encodeURIComponent(secretPairsData.description || '')}'))">Rules & Info ⓘ</button>
                             </div>
                         `;
 
-                        // Center-Stage Large Target Indicator (Clean, No Emojis)
+                        // Center-Stage Large Target Indicator Card remains fully visible
                         htmlMarkup += `
-                            <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 15px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <div style="background: var(--text-main); color: var(--surface-color); border-radius: 6px; padding: 16px; text-align: center; margin: 10px auto 25px auto; width: 100%; max-width: 420px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                                 <div style="font-family: 'Oswald'; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #aaaaaa; margin-bottom: 2px;">Official Target Length</div>
                                 <div style="font-family: 'Inter'; font-size: 2.3rem; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">${secretPairsData.targetLength || 'N/A'}</div>
                             </div>
@@ -1267,7 +1371,7 @@
                             htmlMarkup += '</div>';
                         }
 
-                        // Compact informational list (Ranks 4+)
+                        // Compact informational lower list (Ranks 4+)
                         if (otherPairsList.length > 0) {
                             htmlMarkup += `
                                 <h3 style="margin: 35px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
@@ -1302,7 +1406,7 @@
                         }
 
                     } else {
-                        // Standing calculation fallback
+                        // Standard unassigned fallback
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
                         if (!hasPairsData) {
                             htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
@@ -1350,7 +1454,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.4.6 deployment active'))
+                    .then(reg => console.log('v1.4.7 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
