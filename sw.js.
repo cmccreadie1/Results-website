@@ -1,4 +1,4 @@
-const CACHE_NAME = 'spra-shore-v1-4-6';
+const CACHE_NAME = 'spra-shore-v1-5-3';
 const ASSETS = [
     '/',
     '/index.html',
