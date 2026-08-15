@@ -8,8 +8,8 @@
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
-            venue:           "Elliot Beach / Lunan Bay",
-            dates:           "18th & 19th September2026"
+            venue:           "Elliot Beach Lunan Bay",
+            dates:           "18th & 19th September"
         };
     </script>
     
@@ -685,7 +685,7 @@
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow-zone); margin-bottom: 6px;">My Match Report Card</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.35;">Select your name to generate your private performance report card, percentile scores, and rivalry comparison.</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.35;">Select your name to generate your private performance report card across 9 percentile metrics and head-to-head rivalry analysis.</div>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: var(--text-main); margin-bottom: 6px;">Select Competitor Name:</label>
@@ -700,7 +700,7 @@
     </div>
 
     <footer class="footer">
-        <div>Official Results Portal | v1.5.5</div>
+        <div>Official Results Portal | v1.5.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -728,7 +728,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.5.5";
+            document.title = MATCH_CONFIG.competitionName + " | v1.5.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -836,7 +836,22 @@
             openRulesModal('Secret Pairs Rules', rulesHtml);
         }
 
-        // PERSONAL REPORT CARD GENERATOR ENGINE
+        // Helper Percentile Rank Calculator (0 to 100)
+        function calcPercentile(targetVal, array, isLowerBetter = false) {
+            if (!array || array.length <= 1) return 50;
+            let countBetterThan = 0;
+            array.forEach(v => {
+                if (isLowerBetter) {
+                    if (v > targetVal) countBetterThan++;
+                } else {
+                    if (v < targetVal) countBetterThan++;
+                }
+            });
+            let pct = Math.round((countBetterThan / (array.length - 1)) * 100);
+            return Math.min(Math.max(pct, 5), 99); // Clamped between 5% and 99% for display cleanliness
+        }
+
+        // PERSONAL REPORT CARD GENERATOR ENGINE (9 METRICS)
         async function generatePersonalReport() {
             const selectedName = document.getElementById('report-angler-select').value;
             if (!selectedName) return;
@@ -860,61 +875,99 @@
             try {
                 const scoresData = await fetchScores();
                 const anglers = scoresData.anglers || [];
-                const targetAngler = anglers.find(a => a.anglerName === selectedName);
+                const user = anglers.find(a => a.anglerName === selectedName);
 
-                if (!targetAngler) {
+                if (!user) {
                     output.innerHTML = '<div class="status-msg">Angler Record Not Found</div>';
                     return;
                 }
 
-                // Field calculations for Percentiles
-                let totalField = anglers.length;
-                let cFish = targetAngler.totals.cumulativeFish || 0;
-                let cLen = targetAngler.totals.cumulativeLengthCm || 0;
-                let cPts = targetAngler.totals.cumulativePoints || 0;
-                let avgSize = cFish > 0 ? (cLen / cFish) : 0;
-                let maxFish = Math.max(targetAngler.day1?.biggestFishCm || 0, targetAngler.day2?.biggestFishCm || 0);
+                // Field Benchmark Extractors
+                let uFish = user.totals.cumulativeFish || 0;
+                let uLen = user.totals.cumulativeLengthCm || 0;
+                let uPts = user.totals.cumulativePoints || 0;
+                let uAvgSize = uFish > 0 ? (uLen / uFish) : 0;
+                let uMaxFish = Math.max(user.day1?.biggestFishCm || 0, user.day2?.biggestFishCm || 0);
+                
+                let uD1Fish = user.day1?.fishCount || 0;
+                let uD2Fish = user.day2?.fishCount || 0;
+                let uPeakSession = Math.max(uD1Fish, uD2Fish);
+                let uVariance = Math.abs(uD1Fish - uD2Fish); // Lower variance = higher consistency
+                let uShift = (user.day1?.zonePoints || 0) - (user.day2?.zonePoints || 0); // Day 2 improvement
 
-                // 1] Quality Index Percentile
-                let lowerQualityCount = anglers.filter(a => {
-                    let aFish = a.totals.cumulativeFish || 0;
-                    let aLen = a.totals.cumulativeLengthCm || 0;
-                    let aAvg = aFish > 0 ? (aLen / aFish) : 0;
-                    return avgSize > aAvg;
-                }).length;
-                let qualityPercentile = totalField > 1 ? Math.round((lowerQualityCount / (totalField - 1)) * 100) : 100;
+                // Zone Averages for Efficiency Ratio
+                let zoneTotals = {};
+                anglers.forEach(a => {
+                    ['day1', 'day2'].forEach(d => {
+                        if (a[d] && a[d].zone) {
+                            let z = a[d].zone;
+                            if (!zoneTotals[z]) zoneTotals[z] = { fish: 0, count: 0 };
+                            zoneTotals[z].fish += (a[d].fishCount || 0);
+                            zoneTotals[z].count += 1;
+                        }
+                    });
+                });
+                
+                let uZoneAvgFish = 0, uZoneCount = 0;
+                ['day1', 'day2'].forEach(d => {
+                    if (user[d] && user[d].zone && zoneTotals[user[d].zone]) {
+                        uZoneAvgFish += (zoneTotals[user[d].zone].fish / zoneTotals[user[d].zone].count);
+                        uZoneCount++;
+                    }
+                });
+                let uExpectedZoneFish = uZoneCount > 0 ? (uZoneAvgFish / uZoneCount) * 2 : 1;
+                let uZoneRatio = uExpectedZoneFish > 0 ? (uFish / uExpectedZoneFish) : 1;
 
-                // 2] Specimen Percentile
-                let lowerSpecimenCount = anglers.filter(a => {
-                    let aMax = Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0);
-                    return maxFish > aMax;
-                }).length;
-                let specimenPercentile = totalField > 1 ? Math.round((lowerSpecimenCount / (totalField - 1)) * 100) : 100;
+                // Pod Finish Avg
+                let uAvgZonePts = ((user.day1?.zonePoints || 0) + (user.day2?.zonePoints || 0)) / 2;
 
-                // 3] Volume Percentile
-                let lowerVolumeCount = anglers.filter(a => (a.totals.cumulativeFish || 0) < cFish).length;
-                let volumePercentile = totalField > 1 ? Math.round((lowerVolumeCount / (totalField - 1)) * 100) : 100;
+                // 9 Field Array Extracts
+                let fishArr = anglers.map(a => a.totals.cumulativeFish || 0);
+                let lenArr = anglers.map(a => a.totals.cumulativeLengthCm || 0);
+                let specArr = anglers.map(a => Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0));
+                let avgSizeArr = anglers.map(a => (a.totals.cumulativeFish || 0) > 0 ? ((a.totals.cumulativeLengthCm || 0) / a.totals.cumulativeFish) : 0);
+                let peakArr = anglers.map(a => Math.max(a.day1?.fishCount || 0, a.day2?.fishCount || 0));
+                let shiftArr = anglers.map(a => (a.day1?.zonePoints || 0) - (a.day2?.zonePoints || 0));
+                let varArr = anglers.map(a => Math.abs((a.day1?.fishCount || 0) - (a.day2?.fishCount || 0)));
+                let ratioArr = anglers.map(a => {
+                    let f = a.totals.cumulativeFish || 0;
+                    let zAvg = 0, zC = 0;
+                    ['day1', 'day2'].forEach(d => {
+                        if (a[d] && a[d].zone && zoneTotals[a[d].zone]) {
+                            zAvg += (zoneTotals[a[d].zone].fish / zoneTotals[a[d].zone].count);
+                            zC++;
+                        }
+                    });
+                    let exp = zC > 0 ? (zAvg / zC) * 2 : 1;
+                    return exp > 0 ? (f / exp) : 1;
+                });
+                let podArr = anglers.map(a => ((a.day1?.zonePoints || 0) + (a.day2?.zonePoints || 0)) / 2);
 
-                // 4] Sunday Shift / Adaptability
-                let d1p = targetAngler.day1?.zonePoints || 0;
-                let d2p = targetAngler.day2?.zonePoints || 0;
-                let shift = d1p - d2p; 
-                let lowerShiftCount = anglers.filter(a => {
-                    let ad1 = a.day1?.zonePoints || 0;
-                    let ad2 = a.day2?.zonePoints || 0;
-                    return shift > (ad1 - ad2);
-                }).length;
-                let shiftPercentile = totalField > 1 ? Math.round((lowerShiftCount / (totalField - 1)) * 100) : 100;
+                // Calculate Percentiles
+                let pFish = calcPercentile(uFish, fishArr);
+                let pLen = calcPercentile(uLen, lenArr);
+                let pSpec = calcPercentile(uMaxFish, specArr);
+                let pAvgSize = calcPercentile(uAvgSize, avgSizeArr);
+                let pPeak = calcPercentile(uPeakSession, peakArr);
+                let pShift = calcPercentile(uShift, shiftArr);
+                let pVar = calcPercentile(uVariance, varArr, true); // Lower variance is better
+                let pRatio = calcPercentile(uZoneRatio, ratioArr);
+                let pPod = calcPercentile(uAvgZonePts, podArr, true); // Lower zone pts is better
 
-                // Determine Gold Crown Standout Highlight
-                const metricsObj = [
-                    { label: 'Specimen Length', pct: specimenPercentile, text: `Top ${100 - specimenPercentile}% Specimen (${maxFish}cm)` },
-                    { label: 'Fish Quality Index', pct: qualityPercentile, text: `Top ${100 - qualityPercentile}% Quality Index (${avgSize.toFixed(1)}cm Avg)` },
-                    { label: 'Catch Volume', pct: volumePercentile, text: `Outperformed ${volumePercentile}% of the field in Catch Volume (${cFish} Fish)` },
-                    { label: 'Sunday Adaptability', pct: shiftPercentile, text: `Top ${100 - shiftPercentile}% Sunday Adaptability Shift` }
+                // Gold Highlight Crown Selection
+                const metricsList = [
+                    { label: 'Total Catch Volume', pct: pFish, text: `Outperformed ${pFish}% of field in Catch Volume (${uFish} Fish)` },
+                    { label: 'Total Meterage', pct: pLen, text: `Outperformed ${pLen}% of field in Total Length (${(uLen/100).toFixed(2)}m)` },
+                    { label: 'Specimen Length', pct: pSpec, text: `Top ${100 - pSpec}% Specimen Length (${uMaxFish}cm)` },
+                    { label: 'Quality Index', pct: pAvgSize, text: `Top ${100 - pAvgSize}% Fish Quality Index (${uAvgSize.toFixed(1)}cm Avg)` },
+                    { label: 'Peak Session Burst', pct: pPeak, text: `Top ${100 - pPeak}% Peak Single-Session Burst (${uPeakSession} Fish)` },
+                    { label: 'Sunday Adaptability', pct: pShift, text: `Top ${100 - pShift}% Sunday Adaptability Shift` },
+                    { label: 'Day-to-Day Consistency', pct: pVar, text: `Top ${100 - pVar}% Day-to-Day Catch Consistency` },
+                    { label: 'Zone Efficiency', pct: pRatio, text: `Top ${100 - pRatio}% Zone Efficiency Ratio (${uZoneRatio.toFixed(2)}x Beach Avg)` },
+                    { label: 'Zone Pod Finish', pct: pPod, text: `Top ${100 - pPod}% Relative Beach Position` }
                 ];
-                metricsObj.sort((a,b) => b.pct - a.pct);
-                let crownHighlight = metricsObj[0];
+                metricsList.sort((a,b) => b.pct - a.pct);
+                let crownHighlight = metricsList[0];
 
                 let htmlMarkup = '<div class="stat-grid">';
 
@@ -922,75 +975,127 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--yellow-zone); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <span style="font-family: 'Oswald'; font-size: 1.2rem; text-transform: uppercase; font-weight: 700;">${targetAngler.anglerName}</span>
+                            <span style="font-family: 'Oswald'; font-size: 1.2rem; text-transform: uppercase; font-weight: 700;">${user.anglerName}</span>
                             <button onclick="openReportModal()" style="background: #e4e7eb; border: none; padding: 4px 10px; border-radius: 4px; font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; cursor: pointer;">Switch Angler ↺</button>
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 12px;">Team: ${targetAngler.teamName || 'Solo'}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 12px;">Team: ${user.teamName || 'Solo'}</div>
                         
                         <!-- Standout Gold Highlight Badge -->
                         <div style="background: rgba(229, 169, 0, 0.12); border: 1px solid var(--yellow-zone); border-radius: 6px; padding: 12px; text-align: center; margin-bottom: 15px;">
                             <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: var(--yellow-zone); font-weight: 700; letter-spacing: 1px;">🥇 Tournament Highlight Badge</div>
-                            <div style="font-family: 'Inter'; font-weight: 700; font-size: 1rem; color: var(--text-main); margin-top: 2px;">${crownHighlight.text}</div>
-                        </div>
-
-                        <!-- Peg & Zone Journey Pills -->
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
-                            <div style="background: #f1f3f5; border-left: 3px solid var(--red-zone); padding: 6px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">DAY 1: ${targetAngler.day1?.zone || 'Zone'} - PEG ${targetAngler.day1?.peg || '-'}</div>
-                            <div style="background: #f1f3f5; border-left: 3px solid var(--blue-zone); padding: 6px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">DAY 2: ${targetAngler.day2?.zone || 'Zone'} - PEG ${targetAngler.day2?.peg || '-'}</div>
+                            <div style="font-family: 'Inter'; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-top: 2px;">${crownHighlight.text}</div>
                         </div>
 
                         <!-- Raw Totals Row -->
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; text-align: center; background: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);">
-                            <div><div style="font-weight:700; font-size:1.1rem; color:var(--accent-cyan);">${cPts}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">POINTS</div></div>
-                            <div><div style="font-weight:700; font-size:1.1rem;">${(cLen/100).toFixed(2)}m</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">LENGTH</div></div>
-                            <div><div style="font-weight:700; font-size:1.1rem;">${cFish}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">FISH</div></div>
-                            <div><div style="font-weight:700; font-size:1.1rem;">${maxFish}cm</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">BEST</div></div>
+                            <div><div style="font-weight:700; font-size:1.1rem; color:var(--accent-cyan);">${uPts}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">POINTS</div></div>
+                            <div><div style="font-weight:700; font-size:1.1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">LENGTH</div></div>
+                            <div><div style="font-weight:700; font-size:1.1rem;">${uFish}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">FISH</div></div>
+                            <div><div style="font-weight:700; font-size:1.1rem;">${uMaxFish}cm</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:700;">BEST</div></div>
                         </div>
                     </div>
                 `;
 
-                // Percentile Bar Breakdown Card
+                // 9 Percentile Sliders Breakdown Card
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Percentile Performance Sliders</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px;">Calculated relative to all ${totalField} competitors.</div>
+                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 9-Metric Performance Sliders</div>
+                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px;">Calculated relative to all ${anglers.length} competitors.</div>
 
+                        <!-- 1. Volume -->
                         <div style="margin-bottom: 10px;">
-                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Fish Quality Index (Avg ${avgSize.toFixed(1)}cm)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Total Catch Volume (${uFish} Fish)</div>
                             <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${qualityPercentile}%; background: var(--accent-cyan); color: #fff;">${qualityPercentile}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${qualityPercentile}% of field</div>
+                                <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--accent-cyan); color: #fff;">${pFish}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pFish}% of field</div>
                             </div>
                         </div>
 
+                        <!-- 2. Length -->
                         <div style="margin-bottom: 10px;">
-                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Specimen Size Rank (Best ${maxFish}cm)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Total Meterage (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${specimenPercentile}%; background: var(--green-zone); color: #fff;">${specimenPercentile}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${specimenPercentile}% of field</div>
+                                <div class="bar-chart-fill" style="width: ${pLen}%; background: #343a40; color: #fff;">${pLen}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pLen}% of field</div>
                             </div>
                         </div>
 
+                        <!-- 3. Specimen -->
                         <div style="margin-bottom: 10px;">
-                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Total Catch Volume (${cFish} Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Specimen Size Rank (Best ${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${volumePercentile}%; background: #555555; color: #fff;">${volumePercentile}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${volumePercentile}% of field</div>
+                                <div class="bar-chart-fill" style="width: ${pSpec}%; background: var(--green-zone); color: #fff;">${pSpec}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pSpec}% of field</div>
                             </div>
                         </div>
+
+                        <!-- 4. Quality -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Quality Index (Avg ${uAvgSize.toFixed(1)}cm / Fish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pAvgSize}%; background: var(--yellow-zone); color: #fff;">${pAvgSize}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pAvgSize}% of field</div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Peak Session -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Peak Session Burst (${uPeakSession} Fish / Session)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pPeak}%; background: var(--red-zone); color: #fff;">${pPeak}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pPeak}% of field</div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Sunday Shift -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Sunday Adaptability Shift</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pShift}%; background: var(--blue-zone); color: #fff;">${pShift}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pShift}% of field</div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Consistency -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Day-to-Day Catch Consistency</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pVar}%; background: #6c757d; color: #fff;">${pVar}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pVar}% of field</div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Zone Ratio -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Zone Efficiency Ratio (${uZoneRatio.toFixed(2)}x Beach Avg)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pRatio}%; background: var(--accent-cyan); color: #fff;">${pRatio}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pRatio}% of field</div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Pod Finish -->
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; margin-bottom: 2px;">Relative Beach Position (Zone Pod Finish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pPod}%; background: #111111; color: #fff;">${pPod}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pPod}% of field</div>
+                            </div>
+                        </div>
+
                     </div>
                 `;
 
-                // Head to Head Rivalry Tool
+                // 9-Metric Head to Head Rivalry Tool
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🥊 Head-to-Head Rivalry Matchup</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">Select any rival competitor for a direct side-by-side comparison.</div>
+                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🥊 9-Metric Head-to-Head Rivalry</div>
+                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">Select any rival competitor for a direct 9-metric matchup.</div>
 
-                        <select id="rival-select" onchange="renderRivalryComparison('${targetAngler.anglerName}')" style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; font-family: 'Inter'; font-size: 0.85rem; margin-bottom: 12px;">
+                        <select id="rival-select" onchange="renderRivalryComparison('${user.anglerName}')" style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; font-family: 'Inter'; font-size: 0.85rem; margin-bottom: 12px;">
                             <option value="">-- Select Rival Competitor --</option>
                 `;
-                anglers.filter(a => a.anglerName !== targetAngler.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName)).forEach(a => {
+                anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName)).forEach(a => {
                     htmlMarkup += `<option value="${a.anglerName}">${a.anglerName}</option>`;
                 });
                 htmlMarkup += `
@@ -1023,39 +1128,102 @@
 
             if (!user || !rival) return;
 
-            let uPts = user.totals.cumulativePoints || 0, rPts = rival.totals.cumulativePoints || 0;
-            let uLen = user.totals.cumulativeLengthCm || 0, rLen = rival.totals.cumulativeLengthCm || 0;
-            let uFish = user.totals.cumulativeFish || 0, rFish = rival.totals.cumulativeFish || 0;
-            let uMax = Math.max(user.day1?.biggestFishCm || 0, user.day2?.biggestFishCm || 0);
-            let rMax = Math.max(rival.day1?.biggestFishCm || 0, rival.day2?.biggestFishCm || 0);
+            // Zone Averages for Ratio
+            let zoneTotals = {};
+            anglers.forEach(a => {
+                ['day1', 'day2'].forEach(d => {
+                    if (a[d] && a[d].zone) {
+                        let z = a[d].zone;
+                        if (!zoneTotals[z]) zoneTotals[z] = { fish: 0, count: 0 };
+                        zoneTotals[z].fish += (a[d].fishCount || 0);
+                        zoneTotals[z].count += 1;
+                    }
+                });
+            });
+
+            function getStats(a) {
+                let f = a.totals.cumulativeFish || 0;
+                let l = a.totals.cumulativeLengthCm || 0;
+                let p = a.totals.cumulativePoints || 0;
+                let avgS = f > 0 ? (l / f) : 0;
+                let maxF = Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0);
+                let d1f = a.day1?.fishCount || 0;
+                let d2f = a.day2?.fishCount || 0;
+                let peak = Math.max(d1f, d2f);
+                let variance = Math.abs(d1f - d2f);
+                let shift = (a.day1?.zonePoints || 0) - (a.day2?.zonePoints || 0);
+                
+                let zAvgFish = 0, zCount = 0;
+                ['day1', 'day2'].forEach(d => {
+                    if (a[d] && a[d].zone && zoneTotals[a[d].zone]) {
+                        zAvgFish += (zoneTotals[a[d].zone].fish / zoneTotals[a[d].zone].count);
+                        zCount++;
+                    }
+                });
+                let exp = zCount > 0 ? (zAvgFish / zCount) * 2 : 1;
+                let ratio = exp > 0 ? (f / exp) : 1;
+                let avgZonePts = ((a.day1?.zonePoints || 0) + (a.day2?.zonePoints || 0)) / 2;
+
+                return { f, l, p, avgS, maxF, peak, variance, shift, ratio, avgZonePts };
+            }
+
+            let u = getStats(user);
+            let r = getStats(rival);
+
+            let winBadge = `<span style="background:var(--green-zone); color:#fff; font-size:0.6rem; font-weight:700; padding:1px 4px; border-radius:3px; margin-left:4px;">WIN</span>`;
 
             let html = `
                 <div class="card-table-wrapper">
-                    <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
+                    <table style="width:100%; font-size: 0.75rem; margin-bottom:0;">
                         <tr>
                             <th style="text-align:left; width:35%;">${user.anglerName.split(' ')[0]}</th>
                             <th style="text-align:center; width:30%;">METRIC</th>
                             <th style="text-align:right; width:35%;">${rival.anglerName.split(' ')[0]}</th>
                         </tr>
                         <tr>
-                            <td style="text-align:left; font-weight:700; ${uPts <= rPts ? 'color:var(--green-zone);' : ''}">${uPts} pts</td>
-                            <td style="text-align:center; font-weight:600; color:var(--text-muted);">Points (Lower Wins)</td>
-                            <td style="text-align:right; font-weight:700; ${rPts <= uPts ? 'color:var(--green-zone);' : ''}">${rPts} pts</td>
+                            <td style="text-align:left; font-weight:700;">${u.p} pts ${u.p <= r.p ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Match Points</td>
+                            <td style="text-align:right; font-weight:700;">${r.p <= u.p ? winBadge : ''} ${r.p} pts</td>
                         </tr>
                         <tr>
-                            <td style="text-align:left; font-weight:700; ${uLen >= rLen ? 'color:var(--accent-cyan);' : ''}">${(uLen/100).toFixed(2)}m</td>
-                            <td style="text-align:center; font-weight:600; color:var(--text-muted);">Total Length</td>
-                            <td style="text-align:right; font-weight:700; ${rLen >= uLen ? 'color:var(--accent-cyan);' : ''}">${(rLen/100).toFixed(2)}m</td>
+                            <td style="text-align:left; font-weight:700;">${u.f} fish ${u.f >= r.f ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Total Fish Volume</td>
+                            <td style="text-align:right; font-weight:700;">${r.f >= u.f ? winBadge : ''} ${r.f} fish</td>
                         </tr>
                         <tr>
-                            <td style="text-align:left; font-weight:700; ${uFish >= rFish ? 'color:var(--accent-cyan);' : ''}">${uFish}</td>
-                            <td style="text-align:center; font-weight:600; color:var(--text-muted);">Fish Count</td>
-                            <td style="text-align:right; font-weight:700; ${rFish >= uFish ? 'color:var(--accent-cyan);' : ''}">${rFish}</td>
+                            <td style="text-align:left; font-weight:700;">${(u.l/100).toFixed(2)}m ${u.l >= r.l ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Total Meterage</td>
+                            <td style="text-align:right; font-weight:700;">${r.l >= u.l ? winBadge : ''} ${(r.l/100).toFixed(2)}m</td>
                         </tr>
                         <tr>
-                            <td style="text-align:left; font-weight:700; ${uMax >= rMax ? 'color:var(--accent-cyan);' : ''}">${uMax}cm</td>
-                            <td style="text-align:center; font-weight:600; color:var(--text-muted);">Biggest Fish</td>
-                            <td style="text-align:right; font-weight:700; ${rMax >= uMax ? 'color:var(--accent-cyan);' : ''}">${rMax}cm</td>
+                            <td style="text-align:left; font-weight:700;">${u.maxF}cm ${u.maxF >= r.maxF ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Specimen Size</td>
+                            <td style="text-align:right; font-weight:700;">${r.maxF >= u.maxF ? winBadge : ''} ${r.maxF}cm</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; font-weight:700;">${u.avgS.toFixed(1)}cm ${u.avgS >= r.avgS ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Quality Index</td>
+                            <td style="text-align:right; font-weight:700;">${r.avgS >= u.avgS ? winBadge : ''} ${r.avgS.toFixed(1)}cm</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; font-weight:700;">${u.peak} f ${u.peak >= r.peak ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Peak Session</td>
+                            <td style="text-align:right; font-weight:700;">${r.peak >= u.peak ? winBadge : ''} ${r.peak} f</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; font-weight:700;">${u.shift >= 0 ? '+' : ''}${u.shift} pts ${u.shift >= r.shift ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Sunday Adaptability</td>
+                            <td style="text-align:right; font-weight:700;">${r.shift >= u.shift ? winBadge : ''} ${r.shift >= 0 ? '+' : ''}${r.shift} pts</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; font-weight:700;">±${u.variance} f ${u.variance <= r.variance ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Consistency Variance</td>
+                            <td style="text-align:right; font-weight:700;">${r.variance <= u.variance ? winBadge : ''} ±${r.variance} f</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; font-weight:700;">${u.ratio.toFixed(2)}x ${u.ratio >= r.ratio ? winBadge : ''}</td>
+                            <td style="text-align:center; color:var(--text-muted); font-weight:600;">Zone Efficiency</td>
+                            <td style="text-align:right; font-weight:700;">${r.ratio >= u.ratio ? winBadge : ''} ${r.ratio.toFixed(2)}x</td>
                         </tr>
                     </table>
                 </div>
@@ -1169,7 +1337,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #e4e7eb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-family: 'Oswald'; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">Tournament Match Overview</span>
-                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.5.5 Standard</span>
+                            <span style="font-size: 0.72rem; font-weight: 700; background: var(--accent-cyan); color: #fff; padding: 2px 10px; border-radius: 12px; text-transform:uppercase;">v1.5.6 Standard</span>
                         </div>
                         <div style="padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1915,7 +2083,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.5.5 deployment active'))
+                    .then(reg => console.log('v1.5.6 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
