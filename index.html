@@ -94,25 +94,18 @@
             border-radius: 6px;
         }
 
-        .exit-chip-btn {
+        .header-gesture-hint {
             font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             color: var(--text-muted);
             background: #f1f5f9;
             border: 1px solid var(--border-color);
             padding: 4px 10px;
             border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-        }
-        .exit-chip-btn:hover {
-            background: #fee2e2;
-            color: var(--red-zone);
-            border-color: #fca5a5;
         }
 
         #app-header h1 {
@@ -271,6 +264,7 @@
             display: none; 
             flex-direction: column; 
             z-index: 2000;
+            touch-action: pan-x pan-y;
         }
         .viewer-nav {
             padding: 12px 15px; 
@@ -388,6 +382,65 @@
             align-items: center;
             margin-bottom: 8px;
             width: 100%;
+        }
+
+        /* 📱 Embedded App-Constrained Custom Selection Box */
+        .custom-picker-container {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+        .custom-picker-search {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            background: #f8fafc;
+        }
+        .custom-picker-search:focus {
+            background: #ffffff;
+        }
+        .custom-picker-list {
+            max-height: 200px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+        }
+        .custom-picker-item {
+            padding: 10px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background 0.12s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-picker-item:last-child {
+            border-bottom: none;
+        }
+        .custom-picker-item:active, .custom-picker-item.selected {
+            background: var(--accent-gold-light);
+            color: var(--accent-slate);
+        }
+        .custom-picker-item .check-icon {
+            opacity: 0;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+        .custom-picker-item.selected .check-icon {
+            opacity: 1;
         }
 
         /* 📱 Touch Gesture Pan Isolation */
@@ -763,8 +816,8 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.4</span>
-            <button class="exit-chip-btn" onclick="triggerPortalExit()">Exit ✕</button>
+            <span class="header-badge">AUDIT PORTAL v1.8.5</span>
+            <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -849,31 +902,35 @@
         </div>
     </div>
 
-    <!-- 👤 Personal Report Card Select Modal -->
+    <!-- 👤 Personal Report Card Embedded Picker Modal -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent-gold); margin-bottom: 6px;">My Match Report Card</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.35;">Select your name to generate your private performance prospectus card across 10 percentile metrics and head-to-head rivalry analysis.</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.35;">Select your name to generate your private performance prospectus card across 10 percentile metrics and head-to-head rivalry analysis.</div>
             
-            <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 15px;">
                 <label style="display: block; font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: var(--text-main); margin-bottom: 6px;">Select Competitor Name:</label>
-                <select id="report-angler-select" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter'; font-weight: 600; font-size: 0.9rem; background: #ffffff; color: var(--text-main);">
-                    <option value="">-- Loading Anglers --</option>
-                </select>
+                
+                <!-- Embedded App-Constrained Custom Selection Box -->
+                <div class="custom-picker-container">
+                    <input type="text" id="picker-search-input" class="custom-picker-search" placeholder="Type to filter names..." onkeyup="filterPickerNames()">
+                    <div id="custom-angler-picker" class="custom-picker-list">
+                        <div class="custom-picker-item" style="color: var(--text-muted);">Loading Anglers...</div>
+                    </div>
+                </div>
             </div>
 
             <button class="modal-close-btn" style="background: var(--accent-gold); color: #ffffff; font-weight:700; margin-top: 0; border:none;" onclick="generatePersonalReport()">Generate Report ❯</button>
-            <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 8px; border:none;" onclick="closeReportModal(event)">Cancel</button>
+            <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 6px; border:none;" onclick="closeReportModal(event)">Cancel</button>
         </div>
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.4</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.5</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
         </div>
-        <div style="margin-top: 4px;"><a href="javascript:void(0)" onclick="triggerPortalExit()" style="color: var(--text-muted); text-decoration: underline;">Exit Session</a></div>
     </footer>
 
     <script>
@@ -890,8 +947,15 @@
         };
 
         let cachedScores = null;
+        let selectedAnglerName = "";
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         window.addEventListener('popstate', function(event) {
+            dismissActiveOverlays();
+        });
+
+        function dismissActiveOverlays() {
             const overlay = document.getElementById('viewer-overlay');
             const rulesModal = document.getElementById('rules-modal');
             const reportModal = document.getElementById('report-modal');
@@ -903,24 +967,29 @@
             } else if (overlay && overlay.style.display === 'flex') {
                 closeViewer(false);
             }
-        });
+        }
+
+        // 📱 Touch Edge-Swipe Right Gesture to Dismiss Open Overlays
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            let touchEndX = e.changedTouches[0].screenX;
+            let touchEndY = e.changedTouches[0].screenY;
+            let swipeDistanceX = touchEndX - touchStartX;
+            let swipeDistanceY = Math.abs(touchEndY - touchStartY);
+
+            // Trigger swipe right if starting within 50px of left screen edge
+            if (touchStartX < 60 && swipeDistanceX > 80 && swipeDistanceY < 100) {
+                dismissActiveOverlays();
+            }
+        }, { passive: true });
 
         function pushOverlayState() {
             if (!history.state || !history.state.overlayOpen) {
                 history.pushState({ overlayOpen: true }, '');
-            }
-        }
-
-        function triggerPortalExit() {
-            document.getElementById('rules-modal').style.display = 'none';
-            document.getElementById('report-modal').style.display = 'none';
-            const overlay = document.getElementById('viewer-overlay');
-            if (overlay && overlay.style.display === 'flex') {
-                closeViewer(true);
-            } else if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
@@ -965,7 +1034,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.4";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.5";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1031,23 +1100,54 @@
             document.getElementById('rules-modal').style.display = 'none';
         }
 
+        /* 📱 Embedded Custom Searchable Picker Methods */
         async function openReportModal() {
             pushOverlayState();
+            selectedAnglerName = "";
+            document.getElementById('picker-search-input').value = "";
+            
             try {
                 const data = await fetchScores();
                 const anglers = data.anglers || [];
                 const sortedNames = [...anglers].sort((a,b) => a.anglerName.localeCompare(b.anglerName));
                 
-                const selectElem = document.getElementById('report-angler-select');
-                selectElem.innerHTML = '<option value="">-- Select Your Name --</option>';
-                sortedNames.forEach(a => {
-                    selectElem.innerHTML += `<option value="${a.anglerName}">${a.anglerName}</option>`;
+                const listElem = document.getElementById('custom-angler-picker');
+                listElem.innerHTML = '';
+                
+                sortedNames.forEach((a, idx) => {
+                    let itemDiv = document.createElement('div');
+                    itemDiv.className = 'custom-picker-item';
+                    itemDiv.setAttribute('data-name', a.anglerName);
+                    itemDiv.onclick = function() { selectPickerAngler(a.anglerName, itemDiv); };
+                    itemDiv.innerHTML = `<span>${a.anglerName}</span><span class="check-icon">✓</span>`;
+                    listElem.appendChild(itemDiv);
+
+                    // Auto-select first by default
+                    if (idx === 0) {
+                        selectPickerAngler(a.anglerName, itemDiv);
+                    }
                 });
                 
                 document.getElementById('report-modal').style.display = 'flex';
             } catch(e) {
                 console.error(e);
             }
+        }
+
+        function selectPickerAngler(name, targetElem) {
+            selectedAnglerName = name;
+            const items = document.querySelectorAll('#custom-angler-picker .custom-picker-item');
+            items.forEach(el => el.classList.remove('selected'));
+            if (targetElem) targetElem.classList.add('selected');
+        }
+
+        function filterPickerNames() {
+            const query = document.getElementById('picker-search-input').value.toLowerCase();
+            const items = document.querySelectorAll('#custom-angler-picker .custom-picker-item');
+            items.forEach(el => {
+                const txt = el.getAttribute('data-name').toLowerCase();
+                el.style.display = txt.includes(query) ? 'flex' : 'none';
+            });
         }
 
         function closeReportModal(event) {
@@ -1089,8 +1189,7 @@
         }
 
         async function generatePersonalReport() {
-            const selectedName = document.getElementById('report-angler-select').value;
-            if (!selectedName) return;
+            if (!selectedAnglerName) return;
 
             closeReportModal();
             pushOverlayState();
@@ -1100,7 +1199,7 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'none';
-            titleDisplay.innerText = "Prospectus: " + selectedName;
+            titleDisplay.innerText = "Prospectus: " + selectedAnglerName;
             
             output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
             overlay.style.display = 'flex';
@@ -1111,7 +1210,7 @@
             try {
                 const scoresData = await fetchScores();
                 const anglers = scoresData.anglers || [];
-                const user = anglers.find(a => a.anglerName === selectedName);
+                const user = anglers.find(a => a.anglerName === selectedAnglerName);
 
                 if (!user) {
                     output.innerHTML = '<div class="status-msg">Angler Record Not Found</div>';
@@ -1625,7 +1724,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.4 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.5 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2408,7 +2507,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.4 deployment active'))
+                    .then(reg => console.log('v1.8.5 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
