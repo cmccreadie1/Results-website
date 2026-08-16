@@ -321,41 +321,51 @@
             font-family: 'Inter', sans-serif; 
             font-size: 0.8rem; 
             outline: none; 
-            width: 100px; 
+            width: 110px; 
             transition: width 0.2s ease;
         }
         .search-box:focus { 
-            width: 130px; 
+            width: 140px; 
             border-color: var(--accent-gold);
         }
 
-        /* 🎯 Compact Unobtrusive Floating Pill Scroll Widget */
-        .scroll-arrow-pill {
+        /* 🎯 Embedded Compact Circular "MORE DATA" Badge Motif */
+        .card-scroll-circle {
             background: var(--accent-gold);
             color: #ffffff;
-            height: 28px;
-            padding: 0 10px;
-            border-radius: 14px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: inline-flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             cursor: pointer;
             border: none;
             transition: transform 0.15s ease, background 0.15s ease;
-            white-space: nowrap;
             flex-shrink: 0;
+            user-select: none;
         }
-        .scroll-arrow-pill:active {
-            transform: scale(0.92);
+        .card-scroll-circle .circle-arrow {
+            font-size: 0.75rem;
+            line-height: 1;
+            margin-bottom: 1px;
+        }
+        .card-scroll-circle .circle-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.38rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .card-scroll-circle:active {
+            transform: scale(0.9);
             background: var(--text-main);
         }
 
-        /* Header Row for Tables / Cards that feature the Pill */
+        /* Header Row for Tables / Cards that feature the Circle Badge */
         .table-header-bar {
             display: flex;
             justify-content: space-between;
@@ -742,7 +752,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.2</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.3</span>
             <button class="exit-chip-btn" onclick="triggerPortalExit()">Exit ✕</button>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -815,7 +825,6 @@
             <button class="back-btn" onclick="closeViewer()">❮ MENU</button>
             <span id="current-title"></span>
             <input type="text" id="search-box" class="search-box" placeholder="Search..." onkeyup="filterTable()">
-            <button id="global-scroll-pill" class="scroll-arrow-pill" onclick="scrollTableRight()" title="Scroll Table Right">MORE DATA ➔</button>
         </div>
         <div class="table-scroll-box" id="table-output"></div>
     </div>
@@ -848,7 +857,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.2</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.3</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -892,25 +901,53 @@
             }
         }
 
-        // 🚪 Fixed Exit Portal Action
+        // 🚪 App Exit Handler: Clears Modals & Resets to Landing Menu State
         function triggerPortalExit() {
-            if (window.history.length > 1) {
+            document.getElementById('rules-modal').style.display = 'none';
+            document.getElementById('report-modal').style.display = 'none';
+            const overlay = document.getElementById('viewer-overlay');
+            if (overlay && overlay.style.display === 'flex') {
+                closeViewer(true);
+            } else if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = window.location.origin || window.location.pathname;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
-        // 🎯 Compact Unobtrusive Scroll Assistant Pill Helper
-        function scrollTableRight(containerId = 'table-output') {
-            const tableBox = document.getElementById(containerId);
-            if (!tableBox) return;
-            const innerWrappers = tableBox.querySelectorAll('.card-table-wrapper');
-            if (innerWrappers.length > 0) {
-                innerWrappers.forEach(w => w.scrollBy({ left: 180, behavior: 'smooth' }));
-            } else {
-                tableBox.scrollBy({ left: 180, behavior: 'smooth' });
+        // 🎯 Compact Circular "MORE DATA" Badge Click Handler
+        function scrollCardWrapperRight(wrapperId) {
+            let container = document.getElementById(wrapperId);
+            if (!container) return;
+            let scrollable = container.classList.contains('card-table-wrapper') ? container : container.querySelector('.card-table-wrapper');
+            if (scrollable) {
+                scrollable.scrollBy({ left: 180, behavior: 'smooth' });
             }
+        }
+
+        // 🌊 Table "Peek & Nudge" Visual Cue Helper
+        function triggerTableNudgeCue() {
+            setTimeout(() => {
+                const wrappers = document.querySelectorAll('#table-output .card-table-wrapper');
+                wrappers.forEach(w => {
+                    if (w.scrollWidth > w.clientWidth) {
+                        w.scrollTo({ left: 60, behavior: 'smooth' });
+                        setTimeout(() => {
+                            w.scrollTo({ left: 0, behavior: 'smooth' });
+                        }, 500);
+                    }
+                });
+            }, 300);
+        }
+
+        // Helper: Generate Compact Embedded Circle HTML
+        function getCircleBadgeHtml(wrapperId) {
+            return `
+                <button class="card-scroll-circle" onclick="scrollCardWrapperRight('${wrapperId}')" title="Scroll Table Right">
+                    <span class="circle-arrow">➔</span>
+                    <span class="circle-text">MORE<br>DATA</span>
+                </button>
+            `;
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -919,7 +956,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.2";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.3";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1057,7 +1094,6 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'none';
-            document.getElementById('global-scroll-pill').style.display = 'none';
             titleDisplay.innerText = "Prospectus: " + selectedName;
             
             output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
@@ -1191,7 +1227,7 @@
                     </div>
                 `;
 
-                // 10-Slider Prospectus Card with Isolated Metric Items
+                // 10-Slider Prospectus Card
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Portfolio Performance Sliders</div>
@@ -1200,7 +1236,6 @@
                             <strong>How to read this:</strong> Each percentage slider displays the proportion of the total active field you outperformed in that metric (e.g. <strong>80%</strong> means you finished ahead of 80% of all competitors).
                         </div>
 
-                        <!-- 1. Total Zone Points -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
@@ -1210,7 +1245,6 @@
                             <span class="metric-subtext">Finished ahead of ${pOverallMatch}% of all competitors in cumulative Total Zone Points.</span>
                         </div>
 
-                        <!-- 2. Total Fish Count -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Fish Count (${uFish} Fish)</div>
                             <div class="bar-chart-container">
@@ -1220,7 +1254,6 @@
                             <span class="metric-subtext">Landed a higher total number of fish across both sessions than ${pFish}% of the field.</span>
                         </div>
 
-                        <!-- 3. Total Catch Length -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
@@ -1230,7 +1263,6 @@
                             <span class="metric-subtext">Accumulated more total meters of fish landed than ${pLen}% of the field.</span>
                         </div>
 
-                        <!-- 4. Biggest Single Fish -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Biggest Single Fish (${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
@@ -1240,7 +1272,6 @@
                             <span class="metric-subtext">Landed a longer individual specimen catch than ${pSpec}% of the field.</span>
                         </div>
 
-                        <!-- 5. Average Fish Length -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Average Fish Length (${uAvgSize.toFixed(1)}cm / Fish)</div>
                             <div class="bar-chart-container">
@@ -1250,7 +1281,6 @@
                             <span class="metric-subtext">Maintained a larger average length per fish than ${pAvgSize}% of the field.</span>
                         </div>
 
-                        <!-- 6. Day 1 Best Session -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 1 Best Session - Evening/Night (${uD1Fish} Fish)</div>
                             <div class="bar-chart-container">
@@ -1260,7 +1290,6 @@
                             <span class="metric-subtext">Out-fished ${pD1Best}% of the field in Day 1 Evening/Night session catch volume.</span>
                         </div>
 
-                        <!-- 7. Day 2 Best Session -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 2 Best Session - Daytime (${uD2Fish} Fish)</div>
                             <div class="bar-chart-container">
@@ -1270,7 +1299,6 @@
                             <span class="metric-subtext">Out-fished ${pD2Best}% of the field in Day 2 Daytime session catch volume.</span>
                         </div>
 
-                        <!-- 8. Day-to-Day Consistency -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day-to-Day Consistency (±${uVariance} Fish Shift)</div>
                             <div class="bar-chart-container">
@@ -1280,7 +1308,6 @@
                             <span class="metric-subtext">Had a smaller variation in fish count between the night and day sessions than ${pVar}% of the field.</span>
                         </div>
 
-                        <!-- 9. Day 1 Zone Performance Comparison -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 1 Zone Performance Comparison (${uD1Ratio.toFixed(2)}x Peg Avg)</div>
                             <div class="bar-chart-container">
@@ -1290,7 +1317,6 @@
                             <span class="metric-subtext">Out-fished the average catch rate of your Day 1 zone pegs by a higher margin than ${pD1Ratio}% of the field.</span>
                         </div>
 
-                        <!-- 10. Day 2 Zone Performance Comparison -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 2 Zone Performance Comparison (${uD2Ratio.toFixed(2)}x Peg Avg)</div>
                             <div class="bar-chart-container">
@@ -1300,7 +1326,6 @@
                             <span class="metric-subtext">Out-fished the average catch rate of your Day 2 zone pegs by a higher margin than ${pD2Ratio}% of the field.</span>
                         </div>
 
-                        <!-- 11. Average Zone Placing -->
                         <div class="metric-card-item" style="margin-bottom:0;">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Average Zone Placing (${uAvgZonePts.toFixed(1)} Avg Rank)</div>
                             <div class="bar-chart-container">
@@ -1427,9 +1452,9 @@
             let html = `
                 <div class="table-header-bar">
                     <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Rivalry Matrix</span>
-                    <button class="scroll-arrow-pill" onclick="scrollTableRight('rivalry-output-box')">MORE DATA ➔</button>
+                    ${getCircleBadgeHtml('rivalry-card-wrapper')}
                 </div>
-                <div class="table-card-container" style="margin-bottom:0;">
+                <div id="rivalry-card-wrapper" class="table-card-container" style="margin-bottom:0;">
                     <div class="card-table-wrapper">
                         <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
                             <tr>
@@ -1497,6 +1522,7 @@
                 </div>
             `;
             outputBox.innerHTML = html;
+            triggerTableNudgeCue();
         }
 
         // ANALYTICAL DASHBOARD GENERATION ENGINE
@@ -1507,7 +1533,6 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'none';
-            document.getElementById('global-scroll-pill').style.display = 'none';
             titleDisplay.innerText = displayTitle;
             
             output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
@@ -1606,7 +1631,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.2 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.3 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1685,7 +1710,7 @@
                             
                             <div class="table-header-bar">
                                 <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Rankings</span>
-                                <button class="scroll-arrow-pill" onclick="scrollTableRight('team-dynamics-wrapper')">MORE DATA ➔</button>
+                                ${getCircleBadgeHtml('team-dynamics-wrapper')}
                             </div>
                             <div id="team-dynamics-wrapper" class="table-card-container">
                                 <div class="card-table-wrapper">
@@ -1973,7 +1998,7 @@
                     `;
                 });
 
-                // TIMELINE SIMULATION CARD WITH SCROLL MOTIF
+                // TIMELINE SIMULATION CARD WITH CIRCLE BADGE
                 let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
                     if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
                     return b.day1.totalLengthCm - a.day1.totalLengthCm;
@@ -1987,7 +2012,7 @@
 
                         <div class="table-header-bar">
                             <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Timeline Matrix</span>
-                            <button class="scroll-arrow-pill" onclick="scrollTableRight('timeline-sim-wrapper')">MORE DATA ➔</button>
+                            ${getCircleBadgeHtml('timeline-sim-wrapper')}
                         </div>
 
                         <div id="timeline-sim-wrapper" class="table-card-container">
@@ -2013,7 +2038,7 @@
                     </div>
                 `;
 
-                // PARENT CLUB CHAMPIONSHIP CARD WITH SCROLL MOTIF
+                // PARENT CLUB CHAMPIONSHIP CARD WITH CIRCLE BADGE
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -2042,7 +2067,7 @@
                         
                         <div class="table-header-bar">
                             <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Club Rankings</span>
-                            <button class="scroll-arrow-pill" onclick="scrollTableRight('parent-club-wrapper')">MORE DATA ➔</button>
+                            ${getCircleBadgeHtml('parent-club-wrapper')}
                         </div>
 
                         <div id="parent-club-wrapper" class="table-card-container" style="margin-bottom:0;">
@@ -2063,6 +2088,7 @@
                 htmlMarkup += '</table></div></div></div></div>'; 
                 
                 output.innerHTML = htmlMarkup;
+                triggerTableNudgeCue();
 
             } catch (error) {
                 console.error(error);
@@ -2078,7 +2104,6 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'block';
-            document.getElementById('global-scroll-pill').style.display = 'inline-flex';
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
             
@@ -2103,7 +2128,13 @@
 
                 if (targetTabName === 'INDIVIDUAL RESULT') {
                     let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
-                    htmlMarkup += '<div class="table-card-container"><div class="card-table-wrapper"><table>';
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Overall Leaderboard</span>
+                            ${getCircleBadgeHtml('ind-table-wrapper')}
+                        </div>
+                        <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: right;">PTS</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: right;">TIE BREAKERS</th></tr>';
                     sorted.forEach(item => {
                         let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
@@ -2131,7 +2162,13 @@
                         return b.fish - a.fish;
                     });
                     
-                    htmlMarkup += '<div class="table-card-container"><div class="card-table-wrapper"><table>';
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Leaderboard</span>
+                            ${getCircleBadgeHtml('team-table-wrapper')}
+                        </div>
+                        <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: right;">PTS</th><th style="text-align: right;">CM</th><th style="text-align: right;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
                     teamArray.forEach((team, idx) => {
                         htmlMarkup += `<tr>
@@ -2162,10 +2199,10 @@
                 else if (targetTabName === 'ZONE 1' || targetTabName === 'ZONE 2') {
                     const isDay1 = targetTabName === 'ZONE 1';
                     const zoneBlocks = [
-                        { name: 'Red Zone', colorClass: 'zone-red' },       
-                        { name: 'Yellow Zone', colorClass: 'zone-yellow' }, 
-                        { name: 'Green Zone', colorClass: 'zone-green' }, 
-                        { name: 'Blue Zone', colorClass: 'zone-blue' }    
+                        { name: 'Red Zone', colorClass: 'zone-red', wrapperId: 'z-red-wrapper' },       
+                        { name: 'Yellow Zone', colorClass: 'zone-yellow', wrapperId: 'z-yellow-wrapper' }, 
+                        { name: 'Green Zone', colorClass: 'zone-green', wrapperId: 'z-green-wrapper' }, 
+                        { name: 'Blue Zone', colorClass: 'zone-blue', wrapperId: 'z-blue-wrapper' }    
                     ];
                     
                     zoneBlocks.forEach(block => {
@@ -2180,8 +2217,13 @@
                         });
                         
                         if (zoneAnglers.length > 0) {
-                            htmlMarkup += `<h3 class="${block.colorClass}" style="margin: 20px 0 8px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1.2px;">${block.name}</h3>`;
-                            htmlMarkup += `<div class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">`;
+                            htmlMarkup += `
+                                <div class="table-header-bar" style="margin-top:20px;">
+                                    <h3 class="${block.colorClass}" style="font-family: 'Oswald'; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1.2px;">${block.name}</h3>
+                                    ${getCircleBadgeHtml(block.wrapperId)}
+                                </div>
+                                <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
+                            `;
                             htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: center;">PEG</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: right;">TIE BREAKERS</th></tr>';
                             
                             zoneAnglers.forEach(item => {
@@ -2212,7 +2254,13 @@
                     });
                     flatFish.sort((a, b) => b.size - a.size);
                     
-                    htmlMarkup += '<div class="table-card-container"><div class="card-table-wrapper"><table>';
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Specimen Catch Log</span>
+                            ${getCircleBadgeHtml('fish-table-wrapper')}
+                        </div>
+                        <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: right;">SIZE (cm)</th></tr>';
                     flatFish.forEach((fish, idx) => {
                         let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
@@ -2291,11 +2339,12 @@
 
                         if (otherPairsList.length > 0) {
                             htmlMarkup += `
-                                <h3 style="margin: 30px 0 10px; font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">
-                                    📊 Field Standings (Informational Only)
-                                </h3>
+                                <div class="table-header-bar" style="margin-top:20px;">
+                                    <h3 style="font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px;">📊 Field Standings (Informational Only)</h3>
+                                    ${getCircleBadgeHtml('pairs-other-wrapper')}
+                                </div>
+                                <div id="pairs-other-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                             `;
-                            htmlMarkup += '<div class="table-card-container"><div class="card-table-wrapper"><table>';
                             htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: right;">TOTAL LENGTH</th><th style="text-align: right;">VARIANCE</th></tr>';
                             
                             otherPairsList.forEach(pair => {
@@ -2341,7 +2390,13 @@
                                 if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
                                 return b.totalLen - a.totalLen;
                             });
-                            htmlMarkup += '<div class="table-card-container"><div class="card-table-wrapper"><table>';
+                            htmlMarkup += `
+                                <div class="table-header-bar">
+                                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Secret Pairs Leaderboard</span>
+                                    ${getCircleBadgeHtml('pairs-unformatted-wrapper')}
+                                </div>
+                                <div id="pairs-unformatted-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                            `;
                             htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: right;">COMBINED PTS</th><th style="text-align: right;">COMBINED LENGTH</th></tr>';
                             pairsArray.forEach((p, idx) => {
                                 let names = p.anglers.map(a => a.anglerName).join(' & ');
@@ -2353,6 +2408,7 @@
                 }
 
                 output.innerHTML = htmlMarkup;
+                triggerTableNudgeCue();
 
             } catch (error) {
                 console.error(error);
@@ -2374,7 +2430,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.2 deployment active'))
+                    .then(reg => console.log('v1.8.3 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
