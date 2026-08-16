@@ -7,7 +7,7 @@
     <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
-            competitionName: "TEST EVENT",
+            competitionName: "SPRA Scottish Shore Championship",
             venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
@@ -780,9 +780,11 @@
             z-index: 3;
         }
 
+        /* 📱 Enhanced Readability for Scorecard Explanation Subtext */
         .metric-subtext {
-            font-size: 0.68rem;
-            color: var(--text-muted);
+            font-size: 0.74rem;
+            color: var(--text-dark-contrast);
+            font-weight: 500;
             line-height: 1.35;
             display: block;
         }
@@ -842,7 +844,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.6</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.7</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -952,7 +954,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.6</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.7</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1060,7 +1062,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.6";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.7";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1739,7 +1741,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.6 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.7 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2522,7 +2524,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.6 deployment active'))
+                    .then(reg => console.log('v1.8.7 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
