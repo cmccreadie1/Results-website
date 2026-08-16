@@ -7,7 +7,7 @@
     <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
-            competitionName: "SPRA Scottish Shore Championship",
+            competitionName: "TEST EVENT",
             venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
@@ -601,7 +601,7 @@
         .table-card-container {
             background: var(--surface-color);
             border-radius: 16px;
-            padding: 8px;
+            padding: 6px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-card);
             margin-bottom: 20px;
@@ -623,7 +623,7 @@
             width: 100%; 
             color: var(--text-main); 
             font-family: 'Inter', sans-serif; 
-            font-size: 0.85rem; 
+            font-size: 0.82rem; 
             white-space: nowrap; 
         }
 
@@ -633,8 +633,8 @@
             font-family: 'Oswald', sans-serif; 
             text-transform: uppercase;
             font-weight: 600; 
-            letter-spacing: 1.2px; 
-            padding: 12px 14px; 
+            letter-spacing: 1px; 
+            padding: 8px 8px; 
             border-bottom: 2px solid var(--border-color);
             position: sticky; 
             top: 0; 
@@ -642,7 +642,7 @@
             text-align: center; 
         }
         td { 
-            padding: 12px 14px; 
+            padding: 8px 8px; 
             text-align: center; 
             border-bottom: 1px solid #f1f5f9;
             transition: background 0.15s ease;
@@ -652,9 +652,9 @@
 
         .tie-breaker-td {
             color: var(--text-dark-contrast) !important;
-            font-size: 0.85rem !important;
+            font-size: 0.8rem !important;
             font-weight: 600 !important;
-            text-align: right;
+            text-align: center;
         }
         
         tr:last-child td { border-bottom: none; }
@@ -665,6 +665,32 @@
         table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
         table.zone-green th { border-bottom-color: var(--green-zone); color: var(--green-zone); }
         table.zone-blue th { border-bottom-color: var(--blue-zone); color: var(--blue-zone); }
+
+        /* Compact Vertical Rivalry Cell Badge Layout */
+        .rivalry-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            padding: 4px 2px;
+        }
+        .rivalry-val {
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: var(--text-main);
+        }
+        .rivalry-badge {
+            font-size: 0.58rem;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 4px;
+            margin-top: 3px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .rivalry-badge.win { background: var(--accent-emerald); color: #ffffff; }
+        .rivalry-badge.draw { background: #64748b; color: #ffffff; }
 
         .status-msg { 
             font-family: 'Oswald', sans-serif; 
@@ -816,7 +842,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.5</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.6</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -926,7 +952,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.5</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -981,7 +1007,7 @@
             let swipeDistanceX = touchEndX - touchStartX;
             let swipeDistanceY = Math.abs(touchEndY - touchStartY);
 
-            // Trigger swipe right if starting within 50px of left screen edge
+            // Trigger swipe right if starting within 60px of left screen edge
             if (touchStartX < 60 && swipeDistanceX > 80 && swipeDistanceY < 100) {
                 dismissActiveOverlays();
             }
@@ -1034,7 +1060,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.5";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1517,107 +1543,96 @@
             let u = getStats(user);
             let r = getStats(rival);
 
-            function getBadges(valU, valR, isLowerBetter = false) {
-                const winTag = `<span style="background:var(--accent-emerald); color:#fff; font-size:0.6rem; font-weight:700; padding:1px 4px; border-radius:3px; margin-left:4px;">WIN</span>`;
-                const drawTag = `<span style="background:#64748b; color:#fff; font-size:0.6rem; font-weight:700; padding:1px 4px; border-radius:3px; margin-left:4px;">DRAW</span>`;
-                
+            /* Stacked Badge Generator for Compact Layout */
+            function renderCellHtml(valStr, valU, valR, isLowerBetter = false, isUser = true) {
                 if (valU === valR) {
-                    return { uBadge: drawTag, rBadge: drawTag };
+                    return `
+                        <div class="rivalry-cell">
+                            <span class="rivalry-val">${valStr}</span>
+                            <span class="rivalry-badge draw">DRAW</span>
+                        </div>
+                    `;
                 }
-                
                 let uWins = isLowerBetter ? (valU < valR) : (valU > valR);
-                return {
-                    uBadge: uWins ? winTag : '',
-                    rBadge: uWins ? '' : winTag
-                };
+                let thisWins = isUser ? uWins : !uWins;
+
+                return `
+                    <div class="rivalry-cell">
+                        <span class="rivalry-val">${valStr}</span>
+                        ${thisWins ? '<span class="rivalry-badge win">WIN</span>' : ''}
+                    </div>
+                `;
             }
 
-            let bPts = getBadges(u.p, r.p, true);
-            let bFish = getBadges(u.f, r.f, false);
-            let bLen = getBadges(u.l, r.l, false);
-            let bMaxF = getBadges(u.maxF, r.maxF, false);
-            let bAvgS = getBadges(u.avgS, r.avgS, false);
-            let bD1f = getBadges(u.d1f, r.d1f, false);
-            let bD2f = getBadges(u.d2f, r.d2f, false);
-            let bVar = getBadges(u.variance, r.variance, true);
-            let bRatio1 = getBadges(u.ratio1, r.ratio1, false);
-            let bRatio2 = getBadges(u.ratio2, r.ratio2, false);
-            let bAvgZone = getBadges(u.avgZonePts, r.avgZonePts, true);
-
             let html = `
-                <div class="table-header-bar">
-                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Rivalry Matrix</span>
-                    ${getCircleBadgeHtml('rivalry-card-wrapper')}
-                </div>
-                <div id="rivalry-card-wrapper" class="table-card-container" style="margin-bottom:0;">
+                <div class="table-card-container" style="margin-bottom:0; padding:4px;">
                     <div class="card-table-wrapper">
                         <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
                             <tr>
-                                <th style="text-align:left; width:35%;">${user.anglerName.split(' ')[0]}</th>
-                                <th style="text-align:center; width:30%;">METRIC</th>
-                                <th style="text-align:right; width:35%;">${rival.anglerName.split(' ')[0]}</th>
+                                <th style="text-align:center; width:33%; padding: 6px 4px;">${user.anglerName.split(' ')[0]}</th>
+                                <th style="text-align:center; width:34%; padding: 6px 4px;">METRIC</th>
+                                <th style="text-align:center; width:33%; padding: 6px 4px;">${rival.anglerName.split(' ')[0]}</th>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.p} pts ${bPts.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Total Zone Points</td>
-                                <td style="text-align:right; font-weight:700;">${bPts.rBadge} ${r.p} pts</td>
+                                <td>${renderCellHtml(`${u.p} pts`, u.p, r.p, true, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Points</td>
+                                <td>${renderCellHtml(`${r.p} pts`, u.p, r.p, true, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.f} fish ${bFish.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Total Fish Count</td>
-                                <td style="text-align:right; font-weight:700;">${bFish.rBadge} ${r.f} fish</td>
+                                <td>${renderCellHtml(`${u.f} fish`, u.f, r.f, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Fish</td>
+                                <td>${renderCellHtml(`${r.f} fish`, u.f, r.f, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${(u.l/100).toFixed(2)}m ${bLen.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Total Catch Length</td>
-                                <td style="text-align:right; font-weight:700;">${bLen.rBadge} ${(r.l/100).toFixed(2)}m</td>
+                                <td>${renderCellHtml(`${(u.l/100).toFixed(2)}m`, u.l, r.l, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Length</td>
+                                <td>${renderCellHtml(`${(r.l/100).toFixed(2)}m`, u.l, r.l, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.maxF}cm ${bMaxF.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Biggest Single Fish</td>
-                                <td style="text-align:right; font-weight:700;">${bMaxF.rBadge} ${r.maxF}cm</td>
+                                <td>${renderCellHtml(`${u.maxF} cm`, u.maxF, r.maxF, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Biggest Fish</td>
+                                <td>${renderCellHtml(`${r.maxF} cm`, u.maxF, r.maxF, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.avgS.toFixed(1)}cm ${bAvgS.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Average Fish Length</td>
-                                <td style="text-align:right; font-weight:700;">${bAvgS.rBadge} ${r.avgS.toFixed(1)}cm</td>
+                                <td>${renderCellHtml(`${u.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Avg Fish Size</td>
+                                <td>${renderCellHtml(`${r.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.d1f} f ${bD1f.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Day 1 Night Catch</td>
-                                <td style="text-align:right; font-weight:700;">${bD1f.rBadge} ${r.d1f} f</td>
+                                <td>${renderCellHtml(`${u.d1f} fish`, u.d1f, r.d1f, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 1 Catch</td>
+                                <td>${renderCellHtml(`${r.d1f} fish`, u.d1f, r.d1f, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.d2f} f ${bD2f.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Day 2 Daytime Catch</td>
-                                <td style="text-align:right; font-weight:700;">${bD2f.rBadge} ${r.d2f} f</td>
+                                <td>${renderCellHtml(`${u.d2f} fish`, u.d2f, r.d2f, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Catch</td>
+                                <td>${renderCellHtml(`${r.d2f} fish`, u.d1f, r.d1f, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">±${u.variance} f ${bVar.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Day-to-Day Consistency</td>
-                                <td style="text-align:right; font-weight:700;">${bVar.rBadge} ±${r.variance} f</td>
+                                <td>${renderCellHtml(`±${u.variance} f`, u.variance, r.variance, true, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Consistency</td>
+                                <td>${renderCellHtml(`±${r.variance} f`, u.variance, r.variance, true, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.ratio1.toFixed(2)}x ${bRatio1.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Day 1 Zone Performance</td>
-                                <td style="text-align:right; font-weight:700;">${bRatio1.rBadge} ${r.ratio1.toFixed(2)}x</td>
+                                <td>${renderCellHtml(`${u.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 1 Zone Ratio</td>
+                                <td>${renderCellHtml(`${r.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.ratio2.toFixed(2)}x ${bRatio2.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Day 2 Zone Performance</td>
-                                <td style="text-align:right; font-weight:700;">${bRatio2.rBadge} ${r.ratio2.toFixed(2)}x</td>
+                                <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Zone Ratio</td>
+                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, false)}</td>
                             </tr>
                             <tr>
-                                <td style="text-align:left; font-weight:700;">${u.avgZonePts.toFixed(1)} pts ${bAvgZone.uBadge}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600;">Average Zone Placing</td>
-                                <td style="text-align:right; font-weight:700;">${bAvgZone.rBadge} ${r.avgZonePts.toFixed(1)} pts</td>
+                                <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Avg Zone Rank</td>
+                                <td>${renderCellHtml(`${r.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, false)}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
             `;
             outputBox.innerHTML = html;
-            triggerTableNudgeCue();
         }
 
         async function loadMatchStats(displayTitle) {
@@ -1724,7 +1739,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.5 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.6 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1808,11 +1823,11 @@
                                 <div class="card-table-wrapper">
                                     <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                         <tr>
-                                            <th style="text-align: left; padding: 8px 10px;">TEAM NAME</th>
-                                            <th style="text-align: center; padding: 8px 10px;">SPREAD</th>
-                                            <th style="text-align: center; padding: 8px 10px;">DAY 2 SHIFT</th>
-                                            <th style="text-align: right; padding: 8px 10px;">AVG SIZE</th>
-                                            <th style="text-align: center; padding: 8px 10px;">BLANKS</th>
+                                            <th style="text-align: left; padding: 6px 8px;">TEAM NAME</th>
+                                            <th style="text-align: center; padding: 6px 8px;">SPREAD</th>
+                                            <th style="text-align: center; padding: 6px 8px;">DAY 2 SHIFT</th>
+                                            <th style="text-align: center; padding: 6px 8px;">AVG SIZE</th>
+                                            <th style="text-align: center; padding: 6px 8px;">BLANKS</th>
                                         </tr>
                     `;
                     teamDynamicsArray.forEach(t => {
@@ -1820,11 +1835,11 @@
                         let blankDisplay = t.blanksCount === 0 ? `<span style="color: var(--accent-emerald); font-weight:700;">0 Solid</span>` : `${t.blanksCount} Blanks`;
                         htmlMarkup += `
                             <tr>
-                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 8px 10px;">${t.name}</td>
-                                <td style="text-align: center; font-weight: 600; padding: 8px 10px;">${t.spread} pts</td>
-                                <td style="text-align: center; padding: 8px 10px;">${shiftDisplay}</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-cyan); padding: 8px 10px;">${t.avgFishSize.toFixed(1)} cm</td>
-                                <td style="text-align: center; padding: 8px 10px;">${blankDisplay}</td>
+                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 6px 8px;">${t.name}</td>
+                                <td style="text-align: center; font-weight: 600; padding: 6px 8px;">${t.spread} pts</td>
+                                <td style="text-align: center; padding: 6px 8px;">${shiftDisplay}</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-cyan); padding: 6px 8px;">${t.avgFishSize.toFixed(1)} cm</td>
+                                <td style="text-align: center; padding: 6px 8px;">${blankDisplay}</td>
                             </tr>
                         `;
                     });
@@ -1847,24 +1862,24 @@
                             <div class="card-table-wrapper">
                                 <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="text-align: left; padding: 8px 12px;">METRIC</th>
-                                        <th style="text-align: right; padding: 8px 12px;">DAY 1 (NIGHT)</th>
-                                        <th style="text-align: right; padding: 8px 12px;">DAY 2 (DAYTIME)</th>
+                                        <th style="text-align: left; padding: 6px 8px;">METRIC</th>
+                                        <th style="text-align: center; padding: 6px 8px;">DAY 1 (NIGHT)</th>
+                                        <th style="text-align: center; padding: 6px 8px;">DAY 2 (DAYTIME)</th>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left; font-weight: 700; color:var(--text-main);">Total Catch (Fish)</td>
-                                        <td style="text-align: right; font-weight: 600;">${day1Fish}</td>
-                                        <td style="text-align: right; font-weight: 600;">${day2Fish}</td>
+                                        <td style="text-align: center; font-weight: 600;">${day1Fish}</td>
+                                        <td style="text-align: center; font-weight: 600;">${day2Fish}</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left; font-weight: 700; color:var(--text-main);">Total Meters Landed</td>
-                                        <td style="text-align: right; font-weight: 600;">${(day1LengthTotal / 100).toFixed(2)}m</td>
-                                        <td style="text-align: right; font-weight: 600;">${(day2LengthTotal / 100).toFixed(2)}m</td>
+                                        <td style="text-align: center; font-weight: 600;">${(day1LengthTotal / 100).toFixed(2)}m</td>
+                                        <td style="text-align: center; font-weight: 600;">${(day2LengthTotal / 100).toFixed(2)}m</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left; font-weight: 700; color:var(--text-main);">Session Blank Rate</td>
-                                        <td style="text-align: right; font-weight: 600;">${d1BlankPct}%</td>
-                                        <td style="text-align: right; font-weight: 600;">${d2BlankPct}%</td>
+                                        <td style="text-align: center; font-weight: 600;">${d1BlankPct}%</td>
+                                        <td style="text-align: center; font-weight: 600;">${d2BlankPct}%</td>
                                     </tr>
                                 </table>
                             </div>
@@ -1893,20 +1908,20 @@
                                 <div class="card-table-wrapper">
                                     <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
                                         <tr>
-                                            <th style="text-align: center; padding: 8px 10px;">RNK</th>
-                                            <th style="text-align: left; padding: 8px 10px;">ANGLER NAME</th>
-                                            <th style="text-align: left; padding: 8px 10px;">ZONE / DAY</th>
-                                            <th style="text-align: right; padding: 8px 10px;">LENGTH</th>
+                                            <th style="text-align: center; padding: 6px 8px;">RNK</th>
+                                            <th style="text-align: left; padding: 6px 8px;">ANGLER NAME</th>
+                                            <th style="text-align: left; padding: 6px 8px;">ZONE / DAY</th>
+                                            <th style="text-align: center; padding: 6px 8px;">LENGTH</th>
                                         </tr>
                     `;
                     top5Specimens.forEach((spec, idx) => {
                         let rankDisplay = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : (idx + 1)));
                         htmlMarkup += `
                             <tr>
-                                <td style="text-align: center; font-weight: 700; padding: 8px 10px;">${rankDisplay}</td>
-                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 8px 10px;">${spec.name}</td>
-                                <td style="text-align: left; color: var(--text-muted); padding: 8px 10px;">${spec.zone} (${spec.day})</td>
-                                <td style="text-align: right; font-weight: 700; color: var(--accent-gold); padding: 8px 10px;">${spec.lengthCm} cm</td>
+                                <td style="text-align: center; font-weight: 700; padding: 6px 8px;">${rankDisplay}</td>
+                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 6px 8px;">${spec.name}</td>
+                                <td style="text-align: left; color: var(--text-muted); padding: 6px 8px;">${spec.zone} (${spec.day})</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 6px 8px;">${spec.lengthCm} cm</td>
                             </tr>
                         `;
                     });
@@ -2098,16 +2113,16 @@
                             <div class="card-table-wrapper">
                                 <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="padding: 8px 10px; text-align: center;">RNK</th>
-                                        <th style="text-align: left; padding: 8px 10px;">DAY 1 CLOSE (NIGHT)</th>
-                                        <th style="text-align: left; padding: 8px 10px;">DAY 2 FINAL</th>
+                                        <th style="padding: 6px 8px; text-align: center;">RNK</th>
+                                        <th style="text-align: left; padding: 6px 8px;">DAY 1 CLOSE (NIGHT)</th>
+                                        <th style="text-align: left; padding: 6px 8px;">DAY 2 FINAL</th>
                                     </tr>
                 `;
                 
                 for (let i = 0; i < 10; i++) {
                     let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
                     let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
-                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 8px 10px;">${i+1}</td><td style="text-align: left; padding: 8px 10px;">${d1Str}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 8px 10px;">${fStr}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 6px 8px;">${i+1}</td><td style="text-align: left; padding: 6px 8px;">${d1Str}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 6px 8px;">${fStr}</td></tr>`;
                 }
                 
                 htmlMarkup += `
@@ -2152,15 +2167,15 @@
                             <div class="card-table-wrapper">
                                 <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="text-align: center;">RNK</th>
-                                        <th style="text-align: left;">CLUB DELEGATION</th>
-                                        <th style="text-align: right;">AVG LEN</th>
-                                        <th style="text-align: right;">AVG FISH</th>
+                                        <th style="text-align: center; padding: 6px 8px;">RNK</th>
+                                        <th style="text-align: left; padding: 6px 8px;">CLUB DELEGATION</th>
+                                        <th style="text-align: center; padding: 6px 8px;">AVG LEN</th>
+                                        <th style="text-align: center; padding: 6px 8px;">AVG FISH</th>
                                     </tr>
                 `;
                 
                 parentArray.forEach((p, i) => {
-                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center;">${i+1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${p.name}</td><td style="text-align: right; font-weight: 600;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: right; font-weight: 600;">${p.avgFish.toFixed(1)}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 6px 8px;">${i+1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 6px 8px;">${p.name}</td><td style="text-align: center; font-weight: 600; padding: 6px 8px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 600; padding: 6px 8px;">${p.avgFish.toFixed(1)}</td></tr>`;
                 });
                 
                 htmlMarkup += '</table></div></div></div></div>'; 
@@ -2212,12 +2227,12 @@
                         </div>
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: right;">PTS</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: right;">TIE BREAKERS</th></tr>';
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: center;">PTS</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
                     sorted.forEach(item => {
                         let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
                         let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
                         let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
-                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: right;">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td><td style="text-align: left;">${teamDisp}</td><td class="tie-breaker-td">${ties}</td></tr>`;
+                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td><td style="text-align: left;">${teamDisp}</td><td class="tie-breaker-td">${ties}</td></tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
                 } 
@@ -2246,14 +2261,14 @@
                         </div>
                         <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: right;">PTS</th><th style="text-align: right;">CM</th><th style="text-align: right;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: center;">PTS</th><th style="text-align: center;">CM</th><th style="text-align: center;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
                     teamArray.forEach((team, idx) => {
                         htmlMarkup += `<tr>
                             <td style="font-weight: 700; text-align: center;">${idx + 1}</td>
                             <td style="text-align: left; font-weight: 700; color:var(--text-main); white-space: nowrap;">${team.name}</td>
-                            <td style="font-weight: 700; color: var(--accent-gold); text-align: right;">${team.pts}</td>
-                            <td style="font-weight: 600; text-align: right;">${team.len}</td>
-                            <td style="font-weight: 600; text-align: right;">${team.fish}</td>
+                            <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${team.pts}</td>
+                            <td style="font-weight: 600; text-align: center;">${team.len}</td>
+                            <td style="font-weight: 600; text-align: center;">${team.fish}</td>
                             <td style="text-align: left;">
                                 <div class="matrix-container">`;
                         
@@ -2301,7 +2316,7 @@
                                 </div>
                                 <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
                             `;
-                            htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: center;">PEG</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: right;">TIE BREAKERS</th></tr>';
+                            htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: center;">PEG</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
                             
                             zoneAnglers.forEach(item => {
                                 let dayData = isDay1 ? item.day1 : item.day2;
@@ -2338,10 +2353,10 @@
                         </div>
                         <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: right;">SIZE (cm)</th></tr>';
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
                     flatFish.forEach((fish, idx) => {
                         let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
-                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${fish.name}</td><td style="text-align: left;">${teamDisp}</td><td style="text-align: center;">${fish.details}</td><td style="color: var(--accent-gold); font-weight: 700; text-align: right;">${fish.size} cm</td></tr>`;
+                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${fish.name}</td><td style="text-align: left;">${teamDisp}</td><td style="text-align: center;">${fish.details}</td><td style="color: var(--accent-gold); font-weight: 700; text-align: center;">${fish.size} cm</td></tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
                 }
@@ -2422,7 +2437,7 @@
                                 </div>
                                 <div id="pairs-other-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                             `;
-                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: right;">TOTAL LENGTH</th><th style="text-align: right;">VARIANCE</th></tr>';
+                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: center;">TOTAL LENGTH</th><th style="text-align: center;">VARIANCE</th></tr>';
                             
                             otherPairsList.forEach(pair => {
                                 const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
@@ -2439,8 +2454,8 @@
                                     <tr>
                                         <td style="font-weight: 700; color: var(--text-muted); text-align: center;">${pair.rank}</td>
                                         <td style="text-align: left; font-weight: 700; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
-                                        <td style="font-weight: 600; text-align: right;">${formattedLength}</td>
-                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.82rem; text-align: right;">${formattedOffBy}</td>
+                                        <td style="font-weight: 600; text-align: center;">${formattedLength}</td>
+                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.82rem; text-align: center;">${formattedOffBy}</td>
                                     </tr>
                                 `;
                             });
@@ -2474,10 +2489,10 @@
                                 </div>
                                 <div id="pairs-unformatted-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                             `;
-                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: right;">COMBINED PTS</th><th style="text-align: right;">COMBINED LENGTH</th></tr>';
+                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: center;">COMBINED PTS</th><th style="text-align: center;">COMBINED LENGTH</th></tr>';
                             pairsArray.forEach((p, idx) => {
                                 let names = p.anglers.map(a => a.anglerName).join(' & ');
-                                htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${names}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: right;">${p.totalPts}</td><td style="text-align: right; font-weight: 600;">${(p.totalLen/100).toFixed(2)}m</td></tr>`;
+                                htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${names}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${p.totalPts}</td><td style="text-align: center; font-weight: 600;">${(p.totalLen/100).toFixed(2)}m</td></tr>`;
                             });
                             htmlMarkup += '</table></div></div>';
                         }
@@ -2507,7 +2522,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.5 deployment active'))
+                    .then(reg => console.log('v1.8.6 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
