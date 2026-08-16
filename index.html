@@ -20,19 +20,22 @@
     
     <style>
         :root {
-            --bg-main: #f0f2f5;
+            --bg-main: #f8fafc;
             --surface-color: #ffffff;
             --surface-card: #ffffff;
             --accent-gold: #c5a059;
             --accent-gold-light: rgba(197, 160, 89, 0.12);
-            --accent-cyan: #0077cc;
+            --accent-cyan: #0284c7;
             --accent-emerald: #10b981;
-            --text-main: #1e293b;
+            --accent-slate: #0f172a;
+            --pill-bg: #e2e8f0;
+            --pill-text: #0f172a;
+            --text-main: #0f172a;
             --text-muted: #64748b;
             --text-dark-contrast: #334155;
             --border-color: #e2e8f0;
-            --border-card: rgba(0, 0, 0, 0.05);
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            --border-card: rgba(15, 23, 42, 0.08);
+            --card-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
             --red-zone: #ef4444;
             --blue-zone: #2563eb;
             --green-zone: #10b981;
@@ -59,12 +62,12 @@
 
         /* 🏆 Floating Executive Header Card */
         #app-header {
-            margin-top: 25px;
-            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-bottom: 16px;
             text-align: center;
             width: calc(100% - 20px);
             max-width: 600px;
-            padding: 24px 20px 20px 20px;
+            padding: 20px 18px 16px 18px;
             background: var(--surface-color);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
@@ -76,17 +79,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .header-badge {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.62rem;
-            color: var(--accent-gold);
+            color: var(--accent-cyan);
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            background: var(--accent-gold-light);
+            background: #e0f2fe;
             padding: 4px 8px;
             border-radius: 6px;
         }
@@ -96,7 +99,7 @@
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-muted);
-            background: #f8fafc;
+            background: #f1f5f9;
             border: 1px solid var(--border-color);
             padding: 4px 10px;
             border-radius: 20px;
@@ -114,10 +117,10 @@
 
         #app-header h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             line-height: 1.15;
             color: var(--text-main);
         }
@@ -125,33 +128,33 @@
             width: 100%;
             height: 1px;
             background: var(--border-color);
-            margin: 14px 0 12px 0;
+            margin: 12px 0 10px 0;
         }
         #app-header .subtitle-line {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             line-height: 1.4;
             display: block;
         }
 
-        /* 📊 Modern Non-Blocky Executive Navigation Layout */
+        /* 📊 Sleek Modern Executive Landing Menu Cards */
         .button-stack { 
             width: 100%; 
             max-width: 600px; 
             padding: 0 10px; 
             display: flex; 
             flex-direction: column;
-            gap: 12px; 
-            margin-bottom: 25px;
+            gap: 10px; 
+            margin-bottom: 20px;
         }
 
         .nav-group-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
         }
 
@@ -159,14 +162,14 @@
             background: var(--surface-color);
             border: 1px solid var(--border-card);
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px 16px;
             color: var(--text-main);
             cursor: pointer;
             display: flex; 
             flex-direction: column;
             justify-content: space-between; 
             text-align: left;
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
             box-shadow: var(--card-shadow);
             position: relative;
             overflow: hidden;
@@ -176,39 +179,39 @@
         .slide-btn::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
+            top: 0; left: 0; width: 3px; height: 100%;
             background: var(--text-muted);
         }
 
         .btn-tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
         }
         .btn-label {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             color: var(--text-main);
             line-height: 1.2;
         }
         .btn-action {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 700;
             color: var(--accent-cyan);
             letter-spacing: 0.5px;
-            margin-top: 10px;
+            margin-top: 8px;
             align-self: flex-end;
         }
 
-        /* Color Accents */
+        /* Sleek Left-Edge Color Accent Indicators */
         .slide-btn.btn-ind::before { background: var(--accent-gold); }
         .slide-btn.btn-team::before { background: #475569; }
         .slide-btn.btn-z1::before { background: var(--red-zone); }
@@ -219,41 +222,42 @@
         /* Full-Width Individual Standings Hero Card */
         .slide-btn.btn-ind-hero {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border: 1px solid var(--accent-gold);
-            padding: 20px 18px;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 16px 18px;
         }
-        .slide-btn.btn-ind-hero .btn-label { font-size: 1.25rem; }
+        .slide-btn.btn-ind-hero .btn-label { font-size: 1.15rem; }
         .slide-btn.btn-ind-hero .btn-action { color: var(--accent-gold); }
 
-        /* High-Impact Gold Personal Report Card Hero Tile */
+        /* Sleek Gold Personal Report Card Tile */
         .slide-btn.btn-report {
-            background: linear-gradient(135deg, rgba(197, 160, 89, 0.08) 0%, #ffffff 100%);
-            border: 1px solid var(--accent-gold);
-            padding: 20px 18px;
+            background: linear-gradient(135deg, rgba(197, 160, 89, 0.06) 0%, #ffffff 100%);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            padding: 16px 18px;
         }
         .slide-btn.btn-report::before { background: var(--accent-gold); }
         .slide-btn.btn-report .btn-tag { color: var(--accent-gold); }
-        .slide-btn.btn-report .btn-label { font-size: 1.2rem; }
+        .slide-btn.btn-report .btn-label { font-size: 1.1rem; }
         .slide-btn.btn-report .btn-action { color: var(--accent-gold); }
 
-        /* Dark Slate Overview Tile */
+        /* Slate Overview Tile */
         .slide-btn.btn-stats {
             background: #0f172a;
             border: 1px solid #1e293b;
-            padding: 20px 18px;
+            padding: 16px 18px;
         }
         .slide-btn.btn-stats::before { background: var(--accent-cyan); }
-        .slide-btn.btn-stats .btn-tag { color: var(--accent-cyan); }
-        .slide-btn.btn-stats .btn-label { font-size: 1.2rem; color: #ffffff; }
-        .slide-btn.btn-stats .btn-action { color: var(--accent-cyan); }
+        .slide-btn.btn-stats .btn-tag { color: #94a3b8; }
+        .slide-btn.btn-stats .btn-label { font-size: 1.1rem; color: #ffffff; }
+        .slide-btn.btn-stats .btn-action { color: #38bdf8; }
 
         /* Micro-Interactive Hover Physics */
         .slide-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+            border-color: #cbd5e1;
+            box-shadow: 0 6px 16px -3px rgba(15, 23, 42, 0.08);
         }
         .slide-btn:active { 
-            transform: scale(0.98); 
+            transform: scale(0.985); 
         }
 
         /* Full Screen Native Overlay */
@@ -296,7 +300,7 @@
             transition: all 0.15s ease;
         }
         .back-btn:active {
-            background: var(--accent-gold);
+            background: var(--accent-slate);
             color: #ffffff;
         }
         #current-title {
@@ -326,46 +330,58 @@
         }
         .search-box:focus { 
             width: 140px; 
-            border-color: var(--accent-gold);
+            border-color: var(--accent-cyan);
         }
 
-        /* 🎯 Embedded Compact Circular "MORE DATA" Badge Motif */
-        .card-scroll-circle {
-            background: var(--accent-gold);
-            color: #ffffff;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+        /* 🎯 Sleek Modern Blue/Slate "MORE DATA" Pill Button Motif */
+        .card-scroll-pill {
+            background: var(--pill-bg);
+            color: var(--pill-text);
+            padding: 6px 12px;
+            border-radius: 20px;
             display: inline-flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            gap: 6px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             cursor: pointer;
-            border: none;
-            transition: transform 0.15s ease, background 0.15s ease;
+            transition: all 0.15s ease;
             flex-shrink: 0;
             user-select: none;
         }
-        .card-scroll-circle .circle-arrow {
-            font-size: 0.75rem;
-            line-height: 1;
-            margin-bottom: 1px;
-        }
-        .card-scroll-circle .circle-text {
+        .card-scroll-pill .pill-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.38rem;
+            font-size: 0.62rem;
             font-weight: 700;
-            letter-spacing: -0.2px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             line-height: 1;
+            white-space: nowrap;
         }
-        .card-scroll-circle:active {
-            transform: scale(0.9);
-            background: var(--text-main);
+        .card-scroll-pill .pill-arrow {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            line-height: 1;
+            transition: transform 0.15s ease;
+        }
+        .card-scroll-pill:hover {
+            background: #cbd5e1;
+            border-color: #94a3b8;
+        }
+        .card-scroll-pill:hover .pill-arrow {
+            transform: translateX(2px);
+        }
+        .card-scroll-pill:active {
+            transform: scale(0.95);
+            background: var(--accent-slate);
+            color: #ffffff;
+            border-color: var(--accent-slate);
+        }
+        .card-scroll-pill:active .pill-arrow {
+            color: #38bdf8;
         }
 
-        /* Header Row for Tables / Cards that feature the Circle Badge */
+        /* Header Row for Tables / Cards that feature the Pill Badge */
         .table-header-bar {
             display: flex;
             justify-content: space-between;
@@ -418,7 +434,6 @@
             text-overflow: ellipsis;
         }
         
-        /* 👁 Enlarged Matrix Numbers for Visibility */
         .matrix-stats {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.78rem;
@@ -469,13 +484,13 @@
             transition: all 0.15s ease;
         }
         .modal-close-btn:active {
-            background: var(--accent-gold);
+            background: var(--accent-slate);
             color: #ffffff;
         }
         .rules-btn {
-            background: var(--accent-gold-light);
-            color: var(--accent-gold);
-            border: 1px solid var(--accent-gold);
+            background: #f1f5f9;
+            color: var(--accent-slate);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
             border-radius: 20px;
             font-family: 'Oswald', sans-serif;
@@ -582,7 +597,6 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* 👁 Enlarged & Darkened Tie-Breaker Text */
         .tie-breaker-td {
             color: var(--text-dark-contrast) !important;
             font-size: 0.85rem !important;
@@ -592,7 +606,7 @@
         
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) td { background: #f8fafc; }
-        tr:hover td, tr:active td { background: var(--accent-gold-light) !important; }
+        tr:hover td, tr:active td { background: rgba(2, 132, 199, 0.08) !important; }
 
         table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
         table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
@@ -609,7 +623,6 @@
             letter-spacing: 1px;
         }
         
-        /* 📱 Full Horizontal Screen Width Analytics Grid */
         .stat-grid {
             display: flex;
             flex-direction: column;
@@ -643,7 +656,6 @@
             margin-bottom: 12px;
         }
 
-        /* Isolated Percentile Metric Cards */
         .metric-card-item {
             background: #f8fafc;
             border: 1px solid var(--border-color);
@@ -709,7 +721,6 @@
         .legend-item { display: flex; align-items: center; gap: 4px; }
         .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-        /* Footer Container */
         .footer {
             margin-top: auto;
             padding: 25px 15px 15px 15px;
@@ -752,7 +763,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.3</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.4</span>
             <button class="exit-chip-btn" onclick="triggerPortalExit()">Exit ✕</button>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -761,7 +772,7 @@
         <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
 
-    <!-- 📊 Modern Non-Blocky Executive Navigation Layout -->
+    <!-- 📊 Sleek Modern Executive Landing Menu Cards -->
     <nav class="button-stack">
         <!-- Hero Primary Index Card -->
         <div class="slide-btn btn-ind btn-ind-hero" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
@@ -832,7 +843,7 @@
     <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules -->
     <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
+            <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-slate); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
             <div id="modal-body" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-main); font-family: 'Inter', sans-serif;"></div>
             <button class="modal-close-btn" onclick="closeModal(event)">Close Rules</button>
         </div>
@@ -857,7 +868,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.3</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -880,7 +891,6 @@
 
         let cachedScores = null;
 
-        // 📱 Robust Native Back Swipe & History Stack Management
         window.addEventListener('popstate', function(event) {
             const overlay = document.getElementById('viewer-overlay');
             const rulesModal = document.getElementById('rules-modal');
@@ -901,7 +911,6 @@
             }
         }
 
-        // 🚪 App Exit Handler: Clears Modals & Resets to Landing Menu State
         function triggerPortalExit() {
             document.getElementById('rules-modal').style.display = 'none';
             document.getElementById('report-modal').style.display = 'none';
@@ -915,7 +924,7 @@
             }
         }
 
-        // 🎯 Compact Circular "MORE DATA" Badge Click Handler
+        // 🎯 Modern Blue/Slate "MORE DATA" Pill Click Handler
         function scrollCardWrapperRight(wrapperId) {
             let container = document.getElementById(wrapperId);
             if (!container) return;
@@ -940,12 +949,12 @@
             }, 300);
         }
 
-        // Helper: Generate Compact Embedded Circle HTML
+        // Helper: Generate Sleek Blue/Slate Pill Badge HTML
         function getCircleBadgeHtml(wrapperId) {
             return `
-                <button class="card-scroll-circle" onclick="scrollCardWrapperRight('${wrapperId}')" title="Scroll Table Right">
-                    <span class="circle-arrow">➔</span>
-                    <span class="circle-text">MORE<br>DATA</span>
+                <button class="card-scroll-pill" onclick="scrollCardWrapperRight('${wrapperId}')" title="Scroll Table Right">
+                    <span class="pill-text">MORE DATA</span>
+                    <span class="pill-arrow">➔</span>
                 </button>
             `;
         }
@@ -956,7 +965,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.3";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1011,7 +1020,6 @@
             });
         }
 
-        // POPUP MODAL ACTIONS
         function openRulesModal(title, contentHtml) {
             pushOverlayState();
             document.getElementById('modal-title').innerText = title;
@@ -1051,22 +1059,21 @@
             const desc = description || 'The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.';
             const rulesHtml = `
                 <div style="margin-bottom: 15px;">
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 3px;">🎯 Format Structure</strong>
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-slate); margin-bottom: 3px;">🎯 Format Structure</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">${desc}</span>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 3px;">👻 Ghost Partner Rule</strong>
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-slate); margin-bottom: 3px;">👻 Ghost Partner Rule</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">If you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field.</span>
                 </div>
                 <div>
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 3px;">⚖️ Tie-Breaker Sequence</strong>
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-slate); margin-bottom: 3px;">⚖️ Tie-Breaker Sequence</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">If there is a draw on variance (off-by distance), the tie-breaker reverts to the longest combined length.</span>
                 </div>
             `;
             openRulesModal('Secret Pairs Rules', rulesHtml);
         }
 
-        // Helper Percentile Rank Calculator (0 to 100)
         function calcPercentile(targetVal, array, isLowerBetter = false) {
             if (!array || array.length <= 1) return 50;
             let countBetterThan = 0;
@@ -1081,7 +1088,6 @@
             return Math.min(Math.max(pct, 5), 99);
         }
 
-        // PERSONAL REPORT CARD GENERATOR ENGINE
         async function generatePersonalReport() {
             const selectedName = document.getElementById('report-angler-select').value;
             if (!selectedName) return;
@@ -1112,7 +1118,6 @@
                     return;
                 }
 
-                // Field Benchmark Extractors
                 let uFish = user.totals.cumulativeFish || 0;
                 let uLen = user.totals.cumulativeLengthCm || 0;
                 let uPts = user.totals.cumulativePoints || 0;
@@ -1123,7 +1128,6 @@
                 let uD2Fish = user.day2?.fishCount || 0;
                 let uVariance = Math.abs(uD1Fish - uD2Fish);
 
-                // Day 1 & Day 2 Specific Zone Par Computations
                 let d1ZoneTotals = {}, d2ZoneTotals = {};
                 anglers.forEach(a => {
                     if (a.day1 && a.day1.zone) {
@@ -1148,7 +1152,6 @@
 
                 let uAvgZonePts = ((user.day1?.zonePoints || 0) + (user.day2?.zonePoints || 0)) / 2;
 
-                // Field Array Extracts for Percentiles
                 let ptsArr = anglers.map(a => a.totals.cumulativePoints || 0);
                 let fishArr = anglers.map(a => a.totals.cumulativeFish || 0);
                 let lenArr = anglers.map(a => a.totals.cumulativeLengthCm || 0);
@@ -1171,7 +1174,6 @@
                 });
                 let podArr = anglers.map(a => ((a.day1?.zonePoints || 0) + (a.day2?.zonePoints || 0)) / 2);
 
-                // Calculate Percentiles
                 let pOverallMatch = calcPercentile(uPts, ptsArr, true);
                 let pFish = calcPercentile(uFish, fishArr);
                 let pLen = calcPercentile(uLen, lenArr);
@@ -1202,7 +1204,6 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
 
-                // Prospectus Executive Card
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -1211,13 +1212,11 @@
                         </div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 14px;">TEAM AFFILIATION: ${user.teamName || 'SOLO COMPETITOR'}</div>
                         
-                        <!-- Standout Gold Highlight Badge -->
                         <div style="background: var(--accent-gold-light); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 16px;">
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; letter-spacing: 1.5px;">🥇 TOURNAMENT HIGHLIGHT BADGE</div>
                             <div style="font-family: 'Inter'; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-top: 4px;">${crownHighlight.text}</div>
                         </div>
 
-                        <!-- Raw Totals Row -->
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; text-align: center; background: #f8fafc; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--border-color);">
                             <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem; color:var(--accent-gold);">${uPts}</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">ZONE PTS</div></div>
                             <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">LENGTH</div></div>
@@ -1227,7 +1226,6 @@
                     </div>
                 `;
 
-                // 10-Slider Prospectus Card
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Portfolio Performance Sliders</div>
@@ -1338,7 +1336,6 @@
                     </div>
                 `;
 
-                // 10-Metric Head to Head Rivalry Tool
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🥊 Head-to-Head Rivalry Matchup</div>
@@ -1380,7 +1377,6 @@
 
             if (!user || !rival) return;
 
-            // Day 1 & Day 2 Specific Zone Par Computations
             let d1ZoneTotals = {}, d2ZoneTotals = {};
             anglers.forEach(a => {
                 if (a.day1 && a.day1.zone) {
@@ -1525,7 +1521,6 @@
             triggerTableNudgeCue();
         }
 
-        // ANALYTICAL DASHBOARD GENERATION ENGINE
         async function loadMatchStats(displayTitle) {
             pushOverlayState();
             const overlay = document.getElementById('viewer-overlay');
@@ -1626,16 +1621,15 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                // CONSOLIDATED MATCH OVERVIEW CARD
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left; padding: 0; overflow: hidden;">
+                    <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.3 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.4 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.8rem; font-weight: 700; color: var(--accent-gold);">${totalAnglers}</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.8rem; font-weight: 700; color: var(--accent-slate);">${totalAnglers}</div>
                                 <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Total Entries</div>
                             </div>
                             <div>
@@ -1664,7 +1658,6 @@
                     </div>
                 `;
 
-                // TEAM DYNAMICS MATRIX
                 let teamsMap = {};
                 anglers.forEach(item => {
                     let t = item.teamName ? item.teamName.trim() : "";
@@ -1744,7 +1737,6 @@
                     `;
                 }
 
-                // NIGHT VS DAYTIME MACRO COMPARISON CARD
                 let d1BlankPct = totalAnglers > 0 ? ((day1Blankers / totalAnglers) * 100).toFixed(0) : 0;
                 let d2BlankPct = totalAnglers > 0 ? ((day2Blankers / totalAnglers) * 100).toFixed(0) : 0;
                 
@@ -1781,7 +1773,6 @@
                     </div>
                 `;
 
-                // TOP 5 SPECIMEN LENGTH LEADERBOARD
                 let specimenList = [];
                 anglers.forEach(item => {
                     if (item.day1 && item.day1.biggestFishCm > 0) {
@@ -1828,7 +1819,6 @@
                     `;
                 }
 
-                // DUAL DAY 1 & DAY 2 DONUT GRAPHS
                 let radius = 35;
                 let circumference = 2 * Math.PI * radius;
                 const donutColors = { 'Red Zone': '#ef4444', 'Blue Zone': '#2563eb', 'Green Zone': '#10b981', 'Yellow Zone': '#d97706' };
@@ -1837,7 +1827,6 @@
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
                         <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 15px; margin: 15px 0;">
-                            <!-- Day 1 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -1863,7 +1852,6 @@
                                 <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Total Catch</div>
                             </div>
                             
-                            <!-- Day 2 Segment -->
                             <div style="text-align: center; flex: 1; min-width: 140px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -1890,7 +1878,6 @@
                             </div>
                         </div>
                         
-                        <!-- Consolidated Color Legend -->
                         <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                 `;
                 zoneKeys.forEach(zName => {
@@ -1901,7 +1888,6 @@
                     </div>
                 `;
 
-                // HIGH-CONTRAST COLOR-CODED ZONE BREAKDOWN CARDS
                 zoneKeys.forEach(zName => {
                     let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
                     let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
@@ -1938,7 +1924,6 @@
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
                             <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.2rem; margin-bottom: 6px; font-weight: 700;">${zName.toUpperCase()}</div>
                             
-                            <!-- Two Day Combined Metrics Bar Row -->
                             <div style="margin: 10px 0 14px 0;">
                                 <div class="bar-chart-container">
                                     <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #fff;">Volume: ${totalZFish} f</div>
@@ -1950,9 +1935,7 @@
                                 </div>
                             </div>
 
-                            <!-- Prominent Side-by-Side Day grids -->
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
-                                <!-- Day 1 Panel -->
                                 <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Day 1 (Night)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -1965,7 +1948,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Day 2 Panel -->
                                 <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
                                     <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Day 2 (Daytime)</div>
                                     <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
@@ -1979,7 +1961,6 @@
                                 </div>
                             </div>
 
-                            <!-- Standardized Day 2 Swing Banner -->
                             <div style="background: #f1f5f9; border-radius: 6px; padding: 8px; font-size: 0.72rem; font-weight: 700; color: var(--text-main); text-align: center;">
                     `;
                     
@@ -1998,7 +1979,6 @@
                     `;
                 });
 
-                // TIMELINE SIMULATION CARD WITH CIRCLE BADGE
                 let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
                     if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
                     return b.day1.totalLengthCm - a.day1.totalLengthCm;
@@ -2038,7 +2018,6 @@
                     </div>
                 `;
 
-                // PARENT CLUB CHAMPIONSHIP CARD WITH CIRCLE BADGE
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -2062,7 +2041,7 @@
 
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
-                        <div style="color: var(--accent-gold); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.1rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
+                        <div style="color: var(--accent-slate); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.1rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
                         <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-bottom: 12px; line-height: 1.35; padding: 0 10px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
                         
                         <div class="table-header-bar">
@@ -2096,7 +2075,6 @@
             }
         }
 
-        // LEADERBOARD VIEW CONTROLLER
         async function loadExcelTab(targetTabName, displayTitle) {
             pushOverlayState();
             const overlay = document.getElementById('viewer-overlay');
@@ -2430,7 +2408,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.3 deployment active'))
+                    .then(reg => console.log('v1.8.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
