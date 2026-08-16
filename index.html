@@ -29,6 +29,7 @@
             --accent-emerald: #10b981;
             --text-main: #1e293b;
             --text-muted: #64748b;
+            --text-dark-contrast: #334155;
             --border-color: #e2e8f0;
             --border-card: rgba(0, 0, 0, 0.05);
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
@@ -61,8 +62,8 @@
             margin-top: 25px;
             margin-bottom: 20px;
             text-align: center;
-            width: calc(100% - 30px);
-            max-width: 450px;
+            width: calc(100% - 20px);
+            max-width: 600px;
             padding: 24px 20px 20px 20px;
             background: var(--surface-color);
             border-radius: 16px;
@@ -140,8 +141,8 @@
         /* 📊 Modern Non-Blocky Executive Navigation Layout */
         .button-stack { 
             width: 100%; 
-            max-width: 450px; 
-            padding: 0 15px; 
+            max-width: 600px; 
+            padding: 0 10px; 
             display: flex; 
             flex-direction: column;
             gap: 12px; 
@@ -277,6 +278,7 @@
             flex-shrink: 0; 
             z-index: 20; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            gap: 8px;
         }
         .back-btn {
             background: #f1f5f9; 
@@ -308,7 +310,7 @@
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis;
-            margin: 0 10px;
+            margin: 0 6px;
         }
         .search-box {
             background: #ffffff; 
@@ -319,49 +321,47 @@
             font-family: 'Inter', sans-serif; 
             font-size: 0.8rem; 
             outline: none; 
-            width: 110px; 
+            width: 100px; 
             transition: width 0.2s ease;
         }
         .search-box:focus { 
-            width: 140px; 
+            width: 130px; 
             border-color: var(--accent-gold);
         }
 
-        .scroll-hint {
-            background: #e2e8f0;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            text-align: center;
-            padding: 6px 15px;
-            border-bottom: 1px solid var(--border-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        /* 🎯 Interactive Circular Arrow Scroll Assistant */
-        .scroll-arrow-btn {
+        /* 🎯 Compact Unobtrusive Floating Pill Scroll Widget */
+        .scroll-arrow-pill {
             background: var(--accent-gold);
             color: #ffffff;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
+            height: 28px;
+            padding: 0 10px;
+            border-radius: 14px;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
+            gap: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
             font-weight: 700;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             cursor: pointer;
             border: none;
             transition: transform 0.15s ease, background 0.15s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-        .scroll-arrow-btn:active {
-            transform: scale(0.9);
+        .scroll-arrow-pill:active {
+            transform: scale(0.92);
             background: var(--text-main);
+        }
+
+        /* Header Row for Tables / Cards that feature the Pill */
+        .table-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            width: 100%;
         }
 
         /* 📱 Touch Gesture Pan Isolation */
@@ -369,11 +369,12 @@
             flex: 1; 
             overflow-x: auto; 
             overflow-y: auto; 
-            padding: 15px 15px 15px 22px; 
+            padding: 15px 10px 25px 15px; 
             background: var(--bg-main);
             -webkit-overflow-scrolling: touch;
             touch-action: pan-x pan-y;
             overscroll-behavior-x: contain;
+            width: 100%;
         }
 
         /* Matrix Cards inside Floating Tables */
@@ -392,7 +393,7 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 8px 10px;
-            min-width: 135px;
+            min-width: 145px;
             flex-shrink: 0;
             text-align: left;
         }
@@ -406,10 +407,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        
+        /* 👁 Enlarged Matrix Numbers for Visibility */
         .matrix-stats {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 600;
+            font-size: 0.78rem;
+            font-weight: 700;
             color: var(--accent-cyan);
             white-space: nowrap;
         }
@@ -425,7 +428,7 @@
             justify-content: center; 
             align-items: flex-start; 
             z-index: 3000;
-            padding: 30px 15px; 
+            padding: 20px 10px; 
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
         }
@@ -433,7 +436,7 @@
             background: var(--surface-color); 
             border-radius: 16px;
             width: 100%; 
-            max-width: 420px; 
+            max-width: 550px; 
             padding: 24px 20px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             position: relative;
@@ -482,10 +485,10 @@
             border-radius: 12px;
             padding: 12px 16px; 
             margin: 10px auto 15px auto; 
-            max-width: 100%; 
+            width: 100%; 
             color: var(--text-main);
             font-family: 'Inter', sans-serif; 
-            font-size: 0.75rem; 
+            font-size: 0.78rem; 
             line-height: 1.4; 
             text-align: center;
             box-shadow: var(--card-shadow);
@@ -525,6 +528,7 @@
             border: 1px solid var(--border-card);
             margin-bottom: 20px;
             overflow: hidden;
+            width: 100%;
         }
 
         .card-table-wrapper {
@@ -532,6 +536,7 @@
             -webkit-overflow-scrolling: touch;
             touch-action: pan-x pan-y;
             overscroll-behavior-x: contain;
+            width: 100%;
         }
 
         table { 
@@ -566,6 +571,14 @@
             font-feature-settings: "tnum";
             font-variant-numeric: tabular-nums;
         }
+
+        /* 👁 Enlarged & Darkened Tie-Breaker Text */
+        .tie-breaker-td {
+            color: var(--text-dark-contrast) !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            text-align: right;
+        }
         
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) td { background: #f8fafc; }
@@ -586,7 +599,7 @@
             letter-spacing: 1px;
         }
         
-        /* Raised Card Analytics Grid */
+        /* 📱 Full Horizontal Screen Width Analytics Grid */
         .stat-grid {
             display: flex;
             flex-direction: column;
@@ -603,6 +616,7 @@
             box-shadow: var(--card-shadow); 
             text-align: center;
             position: relative;
+            width: 100%;
         }
         
         .profile-card-red { border-left: 5px solid var(--red-zone); }
@@ -626,6 +640,7 @@
             border-radius: 12px;
             padding: 12px 14px;
             margin-bottom: 10px;
+            width: 100%;
         }
 
         .bar-chart-container {
@@ -690,7 +705,7 @@
             padding: 25px 15px 15px 15px;
             text-align: center;
             width: 100%;
-            max-width: 450px;
+            max-width: 600px;
             font-size: 0.72rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
@@ -727,7 +742,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.1</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.2</span>
             <button class="exit-chip-btn" onclick="triggerPortalExit()">Exit ✕</button>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -800,10 +815,7 @@
             <button class="back-btn" onclick="closeViewer()">❮ MENU</button>
             <span id="current-title"></span>
             <input type="text" id="search-box" class="search-box" placeholder="Search..." onkeyup="filterTable()">
-        </div>
-        <div class="scroll-hint">
-            <span>Swipe Table to View Columns</span>
-            <button class="scroll-arrow-btn" onclick="scrollTableRight()" title="Scroll Table Right">➔</button>
+            <button id="global-scroll-pill" class="scroll-arrow-pill" onclick="scrollTableRight()" title="Scroll Table Right">MORE DATA ➔</button>
         </div>
         <div class="table-scroll-box" id="table-output"></div>
     </div>
@@ -836,7 +848,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.1</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -880,17 +892,19 @@
             }
         }
 
+        // 🚪 Fixed Exit Portal Action
         function triggerPortalExit() {
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = "about:blank";
+                window.location.href = window.location.origin || window.location.pathname;
             }
         }
 
-        // 🎯 Smooth Horizontal Scroll Assistant for Circular Arrow Button
-        function scrollTableRight() {
-            const tableBox = document.getElementById('table-output');
+        // 🎯 Compact Unobtrusive Scroll Assistant Pill Helper
+        function scrollTableRight(containerId = 'table-output') {
+            const tableBox = document.getElementById(containerId);
+            if (!tableBox) return;
             const innerWrappers = tableBox.querySelectorAll('.card-table-wrapper');
             if (innerWrappers.length > 0) {
                 innerWrappers.forEach(w => w.scrollBy({ left: 180, behavior: 'smooth' }));
@@ -905,7 +919,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.1";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1030,7 +1044,7 @@
             return Math.min(Math.max(pct, 5), 99);
         }
 
-        // PERSONAL REPORT CARD GENERATOR ENGINE (ISOLATED METRIC CARDS)
+        // PERSONAL REPORT CARD GENERATOR ENGINE
         async function generatePersonalReport() {
             const selectedName = document.getElementById('report-angler-select').value;
             if (!selectedName) return;
@@ -1043,7 +1057,7 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'none';
-            document.querySelector('.scroll-hint').style.display = 'none';
+            document.getElementById('global-scroll-pill').style.display = 'none';
             titleDisplay.innerText = "Prospectus: " + selectedName;
             
             output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
@@ -1411,9 +1425,13 @@
             let bAvgZone = getBadges(u.avgZonePts, r.avgZonePts, true);
 
             let html = `
+                <div class="table-header-bar">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Rivalry Matrix</span>
+                    <button class="scroll-arrow-pill" onclick="scrollTableRight('rivalry-output-box')">MORE DATA ➔</button>
+                </div>
                 <div class="table-card-container" style="margin-bottom:0;">
                     <div class="card-table-wrapper">
-                        <table style="width:100%; font-size: 0.75rem; margin-bottom:0;">
+                        <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
                             <tr>
                                 <th style="text-align:left; width:35%;">${user.anglerName.split(' ')[0]}</th>
                                 <th style="text-align:center; width:30%;">METRIC</th>
@@ -1489,7 +1507,7 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'none';
-            document.querySelector('.scroll-hint').style.display = 'none';
+            document.getElementById('global-scroll-pill').style.display = 'none';
             titleDisplay.innerText = displayTitle;
             
             output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
@@ -1588,7 +1606,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.1 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-gold); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.2 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1664,7 +1682,12 @@
                         <div class="stat-card" style="text-align: left;">
                             <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🤝 Team Consistency & Carry Factor</div>
                             <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.35;">Evaluates squad balance (point spread between highest and lowest teammate), Day 2 adaptability, and average fish size strategy.</div>
-                            <div class="table-card-container">
+                            
+                            <div class="table-header-bar">
+                                <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Rankings</span>
+                                <button class="scroll-arrow-pill" onclick="scrollTableRight('team-dynamics-wrapper')">MORE DATA ➔</button>
+                            </div>
+                            <div id="team-dynamics-wrapper" class="table-card-container">
                                 <div class="card-table-wrapper">
                                     <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                         <tr>
@@ -1950,7 +1973,7 @@
                     `;
                 });
 
-                // TIMELINE SIMULATION CARD
+                // TIMELINE SIMULATION CARD WITH SCROLL MOTIF
                 let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
                     if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
                     return b.day1.totalLengthCm - a.day1.totalLengthCm;
@@ -1960,9 +1983,14 @@
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">⏳ The "What If?" Timeline Simulation</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.3;">Compare leaderboard metrics tracked at the Day 1 close vs. final verified Day 2 standings.</div>
+                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.3;">Compare leaderboard metrics tracked at the Day 1 close vs. final verified Day 2 standings.</div>
 
-                        <div class="table-card-container">
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Timeline Matrix</span>
+                            <button class="scroll-arrow-pill" onclick="scrollTableRight('timeline-sim-wrapper')">MORE DATA ➔</button>
+                        </div>
+
+                        <div id="timeline-sim-wrapper" class="table-card-container">
                             <div class="card-table-wrapper">
                                 <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                     <tr>
@@ -1985,7 +2013,7 @@
                     </div>
                 `;
 
-                // PARENT CLUB CHAMPIONSHIP CARD
+                // PARENT CLUB CHAMPIONSHIP CARD WITH SCROLL MOTIF
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -2011,7 +2039,13 @@
                     <div class="stat-card" style="text-align: left;">
                         <div style="color: var(--accent-gold); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.1rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
                         <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-bottom: 12px; line-height: 1.35; padding: 0 10px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
-                        <div class="table-card-container" style="margin-bottom:0;">
+                        
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Club Rankings</span>
+                            <button class="scroll-arrow-pill" onclick="scrollTableRight('parent-club-wrapper')">MORE DATA ➔</button>
+                        </div>
+
+                        <div id="parent-club-wrapper" class="table-card-container" style="margin-bottom:0;">
                             <div class="card-table-wrapper">
                                 <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                     <tr>
@@ -2044,7 +2078,7 @@
             const titleDisplay = document.getElementById('current-title');
             
             document.getElementById('search-box').style.display = 'block';
-            document.querySelector('.scroll-hint').style.display = 'flex';
+            document.getElementById('global-scroll-pill').style.display = 'inline-flex';
             document.getElementById('search-box').value = '';
             titleDisplay.innerText = displayTitle;
             
@@ -2075,7 +2109,7 @@
                         let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
                         let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
                         let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
-                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: right;">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td><td style="text-align: left;">${teamDisp}</td><td style="color: var(--text-muted); font-size: 0.78rem; text-align: right;">${ties}</td></tr>`;
+                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: right;">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td><td style="text-align: left;">${teamDisp}</td><td class="tie-breaker-td">${ties}</td></tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
                 } 
@@ -2159,7 +2193,7 @@
                                     <td style="font-weight: 600; text-align: center;">${dayData.peg || '-'}</td>
                                     <td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td>
                                     <td style="text-align: left;">${teamDisp}</td>
-                                    <td style="color: var(--text-muted); font-size: 0.78rem; text-align: right;">${ties}</td>
+                                    <td class="tie-breaker-td">${ties}</td>
                                 </tr>`;
                             });
                             htmlMarkup += '</table></div></div>';
@@ -2200,7 +2234,7 @@
                         `;
 
                         htmlMarkup += `
-                            <div style="background: var(--surface-color); border: 1px solid var(--border-card); border-radius: 16px; padding: 18px; text-align: center; margin: 10px auto 25px auto; width: 100%; max-width: 420px; box-shadow: var(--card-shadow);">
+                            <div style="background: var(--surface-color); border: 1px solid var(--border-card); border-radius: 16px; padding: 18px; text-align: center; margin: 10px auto 25px auto; width: 100%; box-shadow: var(--card-shadow);">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 2px;">OFFICIAL TARGET LENGTH</div>
                                 <div style="font-family: 'Inter'; font-size: 2.4rem; font-weight: 700; letter-spacing: 0.5px; color: var(--text-main);">${secretPairsData.targetLength || 'N/A'}</div>
                             </div>
@@ -2340,7 +2374,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.1 deployment active'))
+                    .then(reg => console.log('v1.8.2 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
