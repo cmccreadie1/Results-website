@@ -627,7 +627,7 @@
             white-space: nowrap; 
         }
 
-        /* 📌 Floating Sticky Table Header Row */
+        /* 📌 Floating Sticky Table Header Rows */
         th {
             background: #ffffff !important; 
             color: var(--text-muted); 
@@ -635,14 +635,42 @@
             text-transform: uppercase;
             font-weight: 600; 
             letter-spacing: 1px; 
-            padding: 10px 8px; 
-            border-bottom: 2px solid var(--border-color);
+            padding: 8px 8px; 
+            border-bottom: 1px solid var(--border-color);
             position: sticky; 
             top: 0; 
             z-index: 25;
             text-align: center; 
             box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
         }
+
+        /* Tier-1 Grouped Category Header Styling */
+        tr.group-header-row th {
+            top: 0;
+            z-index: 30;
+            font-size: 0.72rem;
+            letter-spacing: 1.2px;
+            padding: 6px 8px;
+            border-bottom: 1px solid #cbd5e1;
+            background: #f8fafc !important;
+        }
+
+        /* Tier-2 Sub-Metric Header Styling */
+        tr.sub-header-row th {
+            top: 29px;
+            z-index: 29;
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.8px;
+            padding: 6px 6px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* Column Division Vertical Borders for Multi-Header Layouts */
+        .col-divider-left {
+            border-left: 2px solid #e2e8f0;
+        }
+
         td { 
             padding: 8px 8px; 
             text-align: center; 
@@ -858,7 +886,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.9.4</span>
+            <span class="header-badge">AUDIT PORTAL v1.9.5</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -968,7 +996,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.9.4</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.9.5</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -978,7 +1006,7 @@
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Max Single Catch"]
+                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Max Single Catch ➔ Species Count"]
             }, 
             'ZONE 1': { 
                 staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
@@ -1076,7 +1104,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.9.4";
+            document.title = MATCH_CONFIG.competitionName + " | v1.9.5";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1125,7 +1153,7 @@
             tables.forEach(table => {
                 const tableRows = table.getElementsByTagName('tr');
                 for (let i = 1; i < tableRows.length; i++) {
-                    if (tableRows[i].classList.contains('tier-separator-row')) continue;
+                    if (tableRows[i].classList.contains('tier-separator-row') || tableRows[i].classList.contains('group-header-row') || tableRows[i].classList.contains('sub-header-row')) continue;
                     const rowText = tableRows[i].innerText.toUpperCase();
                     tableRows[i].style.display = rowText.includes(filterValue) ? "" : "none";
                 }
@@ -1756,7 +1784,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.4 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.5 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2239,41 +2267,107 @@
                     let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Overall Leaderboard</span>
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Individual Standings</span>
                             ${getCircleBadgeHtml('ind-table-wrapper')}
                         </div>
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">MATCH TOTAL PTS</th><th style="text-align: center;">CUMULATIVE TIE-BREAKERS</th></tr>';
+                    
+                    // 🎯 Two-Tier Grouped Header Layout
+                    htmlMarkup += `
+                        <tr class="group-header-row">
+                            <th style="text-align: left; min-width: 150px;">RANK / ANGLER DETAILS</th>
+                            <th colspan="5" class="col-divider-left" style="color: var(--red-zone);">DAY 1 PERFORMANCE</th>
+                            <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 PERFORMANCE</th>
+                            <th colspan="5" class="col-divider-left" style="color: var(--accent-gold);">COMBINED MATCH TOTALS</th>
+                        </tr>
+                        <tr class="sub-header-row">
+                            <th style="text-align: left;">POS & ANGLER (TEAM)</th>
+                            
+                            <th class="col-divider-left">PTS</th>
+                            <th>CM</th>
+                            <th>CT</th>
+                            <th>BIG</th>
+                            <th>SPC</th>
+                            
+                            <th class="col-divider-left">PTS</th>
+                            <th>CM</th>
+                            <th>CT</th>
+                            <th>BIG</th>
+                            <th>SPC</th>
+                            
+                            <th class="col-divider-left">PTS</th>
+                            <th>CM</th>
+                            <th>CT</th>
+                            <th>BIG</th>
+                            <th>SPC</th>
+                        </tr>
+                    `;
                     
                     let lastPointsTier = null;
 
                     sorted.forEach((item, idx) => {
-                        let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                        let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "SOLO" : item.teamName;
+                        
                         let d1Pts = item.day1 ? (item.day1.zonePoints || 0) : 0;
+                        let d1Cm  = item.day1 ? (item.day1.totalLengthCm || 0) : 0;
+                        let d1Ct  = item.day1 ? (item.day1.fishCount || 0) : 0;
+                        let d1Big = item.day1 ? (item.day1.biggestFishCm || 0) : 0;
+                        let d1Spc = item.day1 ? (item.day1.speciesCount || 0) : 0;
+
                         let d2Pts = item.day2 ? (item.day2.zonePoints || 0) : 0;
-                        let currentPointsTier = item.totals.cumulativePoints;
+                        let d2Cm  = item.day2 ? (item.day2.totalLengthCm || 0) : 0;
+                        let d2Ct  = item.day2 ? (item.day2.fishCount || 0) : 0;
+                        let d2Big = item.day2 ? (item.day2.biggestFishCm || 0) : 0;
+                        let d2Spc = item.day2 ? (item.day2.speciesCount || 0) : 0;
+
+                        let totPts = item.totals ? (item.totals.cumulativePoints || 0) : (d1Pts + d2Pts);
+                        let totCm  = item.totals ? (item.totals.cumulativeLengthCm || 0) : (d1Cm + d2Cm);
+                        let totCt  = item.totals ? (item.totals.cumulativeFish || 0) : (d1Ct + d2Ct);
+                        let totBig = Math.max(d1Big, d2Big);
+                        let totSpc = item.totals ? (item.totals.cumulativeSpecies || (d1Spc + d2Spc)) : (d1Spc + d2Spc);
+
+                        let currentPointsTier = totPts;
                         
                         // ➖ Insert a full-width textless separator row whenever the cumulative points tier changes
                         if (lastPointsTier !== null && currentPointsTier !== lastPointsTier) {
-                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
+                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="16">&nbsp;</td></tr>`;
                         }
                         lastPointsTier = currentPointsTier;
 
-                        let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
-                        let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
-                        
                         htmlMarkup += `<tr>
-                            <td style="text-align: left;">
-                                <div style="font-weight: 700; color:var(--text-main);">${item.anglerName}</div>
-                                <div style="color: #475569; font-size: 0.72rem; font-weight: 600; margin-top: 1px;">Rank #${item.totals.overallRank}</div>
+                            <td style="text-align: left; padding-left: 8px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-cyan); font-size: 0.82rem;">${item.totals.overallRank || (idx + 1)}</span>
+                                    <div>
+                                        <div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem;">${item.anglerName}</div>
+                                        <div style="color: #475569; font-size: 0.7rem; font-weight: 600; text-transform: uppercase;">${teamDisp}</div>
+                                    </div>
+                                </div>
                             </td>
-                            <td style="text-align: left;">${teamDisp}</td>
-                            <td style="text-align: center;">
-                                <div style="display: inline-block; background: rgba(197, 160, 89, 0.08); border: 1px solid rgba(197, 160, 89, 0.45); border-radius: 6px; padding: 3px 8px; font-weight: 700; color: var(--accent-gold); font-size: 0.92rem; font-family: 'JetBrains Mono', monospace;">${item.totals.cumulativePoints}</div>
-                                <div style="color: var(--text-muted); font-size: 0.7rem; font-weight: 600; margin-top: 3px;">D1: ${d1Pts}pts | D2: ${d2Pts}pts</div>
+                            
+                            <!-- Day 1 Columns -->
+                            <td class="col-divider-left" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d1Pts}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 600;">${d1Cm}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Ct}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Big}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
+
+                            <!-- Day 2 Columns -->
+                            <td class="col-divider-left" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d2Pts}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 600;">${d2Cm}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Ct}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Big}</td>
+                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Spc}</td>
+
+                            <!-- Combined Match Totals -->
+                            <td class="col-divider-left" style="text-align: center;">
+                                <div style="display: inline-block; background: rgba(197, 160, 89, 0.08); border: 1px solid rgba(197, 160, 89, 0.45); border-radius: 6px; padding: 2px 6px; font-weight: 700; color: var(--accent-gold); font-size: 0.88rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
                             </td>
-                            <td class="tie-breaker-td">${ties}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCm}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCt}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-emerald);">${totBig}</td>
+                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-cyan);">${totSpc}</td>
                         </tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
@@ -2587,7 +2681,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.9.4 deployment active'))
+                    .then(reg => console.log('v1.9.5 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
