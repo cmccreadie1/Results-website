@@ -650,6 +650,17 @@
             font-variant-numeric: tabular-nums;
         }
 
+        /* ➖ Textless Visual Point Tier Separator Row */
+        tr.tier-separator-row td {
+            height: 10px;
+            padding: 0;
+            background: #e2e8f0 !important;
+            border-top: 1px solid #cbd5e1;
+            border-bottom: 1px solid #cbd5e1;
+            line-height: 0;
+            font-size: 0;
+        }
+
         .tie-breaker-td {
             color: var(--text-dark-contrast) !important;
             font-size: 0.8rem !important;
@@ -660,6 +671,7 @@
         tr:last-child td { border-bottom: none; }
         tr:nth-child(even) td { background: #f8fafc; }
         tr:hover td, tr:active td { background: rgba(2, 132, 199, 0.08) !important; }
+        tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #e2e8f0 !important; }
 
         table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
         table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
@@ -844,7 +856,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.9.0</span>
+            <span class="header-badge">AUDIT PORTAL v1.9.1</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -954,7 +966,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.9.0</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.9.1</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1062,7 +1074,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.9.0";
+            document.title = MATCH_CONFIG.competitionName + " | v1.9.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1111,6 +1123,7 @@
             tables.forEach(table => {
                 const tableRows = table.getElementsByTagName('tr');
                 for (let i = 1; i < tableRows.length; i++) {
+                    if (tableRows[i].classList.contains('tier-separator-row')) continue;
                     const rowText = tableRows[i].innerText.toUpperCase();
                     tableRows[i].style.display = rowText.includes(filterValue) ? "" : "none";
                 }
@@ -1623,7 +1636,7 @@
                             <tr>
                                 <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
                                 <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Zone Ratio</td>
-                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, false)}</td>
+                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio1, r.ratio1, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
@@ -1741,7 +1754,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.0 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.1 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2239,15 +2252,16 @@
                         let d2Pts = item.day2 ? (item.day2.zonePoints || 0) : 0;
                         let currentPointsTier = item.totals.cumulativePoints;
                         
-                        let isTierShift = (lastPointsTier !== null && currentPointsTier !== lastPointsTier);
+                        // ➖ Insert a full-width textless separator row whenever the cumulative points tier changes
+                        if (lastPointsTier !== null && currentPointsTier !== lastPointsTier) {
+                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
+                        }
                         lastPointsTier = currentPointsTier;
-
-                        let rowStyle = isTierShift ? 'style="border-top: 2px solid #cbd5e1;"' : '';
 
                         let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
                         let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
                         
-                        htmlMarkup += `<tr ${rowStyle}>
+                        htmlMarkup += `<tr>
                             <td style="text-align: left;">
                                 <div style="font-weight: 700; color:var(--text-main);">${item.anglerName}</div>
                                 <div style="color: #475569; font-size: 0.72rem; font-weight: 600; margin-top: 1px;">Rank #${item.totals.overallRank}</div>
@@ -2548,7 +2562,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.9.0 deployment active'))
+                    .then(reg => console.log('v1.9.1 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
