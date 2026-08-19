@@ -858,7 +858,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.9.2</span>
+            <span class="header-badge">AUDIT PORTAL v1.9.4</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -968,7 +968,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.9.2</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.9.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1076,7 +1076,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.9.2";
+            document.title = MATCH_CONFIG.competitionName + " | v1.9.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1756,7 +1756,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.2 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.9.4 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2304,11 +2304,24 @@
                         <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: center;">PTS</th><th style="text-align: center;">CM</th><th style="text-align: center;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
+                    
+                    let lastTeamPts = null;
+
                     teamArray.forEach((team, idx) => {
+                        let currentTeamPts = team.pts;
+
+                        // ➖ Insert a full-width textless separator row whenever the team points tier changes
+                        if (lastTeamPts !== null && currentTeamPts !== lastTeamPts) {
+                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="6">&nbsp;</td></tr>`;
+                        }
+                        lastTeamPts = currentTeamPts;
+
                         htmlMarkup += `<tr>
                             <td style="font-weight: 700; text-align: center;">${idx + 1}</td>
                             <td style="text-align: left; font-weight: 700; color:var(--text-main); white-space: nowrap;">${team.name}</td>
-                            <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${team.pts}</td>
+                            <td style="text-align: center;">
+                                <div style="display: inline-block; background: rgba(197, 160, 89, 0.08); border: 1px solid rgba(197, 160, 89, 0.45); border-radius: 6px; padding: 3px 8px; font-weight: 700; color: var(--accent-gold); font-size: 0.92rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
+                            </td>
                             <td style="font-weight: 600; text-align: center;">${team.len}</td>
                             <td style="font-weight: 600; text-align: center;">${team.fish}</td>
                             <td style="text-align: left;">
@@ -2360,10 +2373,20 @@
                             `;
                             htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: center;">PEG</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
                             
+                            let lastZonePts = null;
+
                             zoneAnglers.forEach(item => {
                                 let dayData = isDay1 ? item.day1 : item.day2;
                                 let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
                                 let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
+                                let currentZonePts = dayData.zonePoints;
+
+                                // ➖ Insert a full-width textless separator row whenever the zone points tier changes
+                                if (lastZonePts !== null && currentZonePts !== lastZonePts) {
+                                    htmlMarkup += `<tr class="tier-separator-row"><td colspan="5">&nbsp;</td></tr>`;
+                                }
+                                lastZonePts = currentZonePts;
+
                                 htmlMarkup += `<tr>
                                     <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${dayData.zonePoints}</td>
                                     <td style="font-weight: 600; text-align: center;">${dayData.peg || '-'}</td>
@@ -2564,7 +2587,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.9.2 deployment active'))
+                    .then(reg => console.log('v1.9.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
