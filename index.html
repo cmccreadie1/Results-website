@@ -844,7 +844,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">AUDIT PORTAL v1.8.7</span>
+            <span class="header-badge">AUDIT PORTAL v1.8.8</span>
             <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
@@ -954,7 +954,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v1.8.7</div>
+        <div>OFFICIAL RESULTS PORTAL • v1.8.8</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -964,7 +964,7 @@
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                staticRules: ["<strong>RANKING:</strong> Lowest Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Total Fish Count ➔ Biggest Fish"]
+                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Max Single Catch"]
             }, 
             'ZONE 1': { 
                 staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
@@ -1062,7 +1062,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v1.8.7";
+            document.title = MATCH_CONFIG.competitionName + " | v1.8.8";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1741,7 +1741,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-slate); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #f8fafc; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.7 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-slate); color: #fff; padding: 2px 8px; border-radius: 4px;">v1.8.8 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2229,12 +2229,24 @@
                         </div>
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: center;">PTS</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">MATCH TOTAL PTS</th><th style="text-align: center;">CUMULATIVE TIE-BREAKERS</th></tr>';
                     sorted.forEach(item => {
                         let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                        let d1Pts = item.day1 ? (item.day1.zonePoints || 0) : 0;
+                        let d2Pts = item.day2 ? (item.day2.zonePoints || 0) : 0;
                         let maxBig = Math.max(item.day1?.biggestFishCm || 0, item.day2?.biggestFishCm || 0);
                         let ties = `${item.totals.cumulativeLengthCm}cm | ${item.totals.cumulativeFish} fish | Max: ${maxBig}cm`;
-                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${item.totals.cumulativePoints}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td><td style="text-align: left;">${teamDisp}</td><td class="tie-breaker-td">${ties}</td></tr>`;
+                        
+                        htmlMarkup += `<tr>
+                            <td style="font-weight: 700; text-align: center;">${item.totals.overallRank}</td>
+                            <td style="text-align: left;">
+                                <div style="font-weight: 700; color:var(--text-main);">${item.anglerName}</div>
+                                <div style="color: var(--text-muted); font-size: 0.72rem; font-weight: 600; margin-top: 1px;">D1: ${d1Pts}pts | D2: ${d2Pts}pts</div>
+                            </td>
+                            <td style="text-align: left;">${teamDisp}</td>
+                            <td style="font-weight: 700; color: var(--accent-gold); text-align: center; font-size: 0.95rem;">${item.totals.cumulativePoints}</td>
+                            <td class="tie-breaker-td">${ties}</td>
+                        </tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
                 } 
@@ -2524,7 +2536,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v1.8.7 deployment active'))
+                    .then(reg => console.log('v1.8.8 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
