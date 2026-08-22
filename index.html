@@ -7,7 +7,7 @@
     <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
-            competitionName: "TEST Shore Championship",
+            competitionName: "SPRA Scottish Shore Championship",
             venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.6) */
+            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.7) */
             --bg-main: #334155;
             --surface-color: #1e293b;
             --surface-card: #1e293b;
@@ -308,7 +308,7 @@
             z-index: 2000;
         }
         
-        /* 📌 Pinned Sticky Viewer Navigation Header (v2.0.6) */
+        /* 📌 Pinned Sticky Viewer Navigation Header */
         .viewer-nav {
             padding: 12px 16px; 
             display: flex; 
@@ -415,7 +415,7 @@
             width: 100%;
         }
 
-        /* 📱 On-Demand Pop-Down Picker Trigger Button & Wrapper (v2.0.6) */
+        /* 📱 On-Demand Pop-Down Picker Trigger Button & Wrapper */
         .picker-trigger-btn {
             width: 100%;
             padding: 12px 14px;
@@ -448,28 +448,72 @@
             transform: rotate(180deg);
         }
 
+        /* 🌊 Keyframe Drop-Down Animation for Name Picker (v2.0.7) */
+        @keyframes pickerPopIn {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .custom-picker-container {
             border: 1px solid var(--border-color);
             border-radius: 10px;
             background: #0f172a;
             overflow: hidden;
-            display: none; /* Hidden by default v2.0.6 */
+            display: none;
             flex-direction: column;
             margin-top: 8px;
             margin-bottom: 16px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            position: relative;
         }
         .custom-picker-container.visible {
             display: flex;
+            animation: pickerPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        /* 🎨 Bottom Gradient Overlay Scroll Cue (v2.0.7) */
+        .picker-gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.9) 100%);
+            pointer-events: none;
+            z-index: 10;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        /* 📱 Custom Scrollbar & High-Visibility Scroll Handle (v2.0.7) */
         .custom-picker-list {
             max-height: 240px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
+            padding-bottom: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) #0f172a;
         }
+
+        .custom-picker-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-picker-list::-webkit-scrollbar-track {
+            background: #0f172a;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .custom-picker-list::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 6px;
+            border: 2px solid #0f172a;
+        }
+        .custom-picker-list::-webkit-scrollbar-thumb:hover {
+            background: #dfb76c;
+        }
+
         .custom-picker-item {
             padding: 12px 14px;
             font-family: 'Inter', sans-serif;
@@ -608,7 +652,7 @@
             gap: 4px;
         }
 
-        /* ⚡ Low-Profile Concise Info Banner (v2.0.6) */
+        /* ⚡ Low-Profile Concise Info Banner */
         .info-banner {
             background: #1e293b; 
             border: 1px solid var(--border-color); 
@@ -784,6 +828,36 @@
         .rivalry-badge.win { background: var(--accent-emerald); color: #ffffff; }
         .rivalry-badge.draw { background: #64748b; color: #ffffff; }
 
+        /* 🥊 Head-to-Head Beat Rate Summary Badge (v2.0.7) */
+        .beat-rate-summary-bar {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .beat-rate-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .beat-rate-title.dominant { color: var(--accent-gold); }
+        .beat-rate-title.tied { color: var(--accent-cyan); }
+        .beat-rate-title.behind { color: var(--red-zone); }
+
+        .beat-rate-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
         .status-msg { 
             font-family: 'Oswald', sans-serif; 
             color: var(--text-muted); 
@@ -936,7 +1010,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.0.6</span>
+            <span class="header-badge">COMMAND PORTAL v2.0.7</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1036,7 +1110,7 @@
     </nav>
 
     <div id="viewer-overlay">
-        <!-- 📌 Pinned Sticky Top Navigation Header (v2.0.6) -->
+        <!-- 📌 Pinned Sticky Top Navigation Header -->
         <div class="viewer-nav">
             <span id="current-title"></span>
             <button class="back-btn" onclick="closeViewer()">❮ BACK</button>
@@ -1053,7 +1127,7 @@
         </div>
     </div>
 
-    <!-- 👤 Personal Report Card Embedded Picker Modal (Clean Scrollable On-Demand List v2.0.6) -->
+    <!-- 👤 Personal Report Card Embedded Picker Modal (Scroll Cues v2.0.7) -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent-gold); margin-bottom: 6px;">My Match Report Card</h3>
@@ -1068,11 +1142,12 @@
                     <span class="trigger-arrow">▾</span>
                 </button>
 
-                <!-- Embedded Pop-down Selection Box (Keyboard Free v2.0.6) -->
+                <!-- Embedded Pop-down Selection Box (Scroll Cues & Animation v2.0.7) -->
                 <div id="angler-picker-container" class="custom-picker-container">
                     <div id="custom-angler-picker" class="custom-picker-list">
                         <div class="custom-picker-item" style="color: var(--text-muted);">Loading Anglers...</div>
                     </div>
+                    <div class="picker-gradient-overlay"></div>
                 </div>
             </div>
 
@@ -1082,7 +1157,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.0.6</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.0.7</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1172,7 +1247,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.0.6";
+            document.title = MATCH_CONFIG.competitionName + " | v2.0.7";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1281,7 +1356,7 @@
             document.getElementById('rules-modal').style.display = 'none';
         }
 
-        /* 📱 On-Demand Keyboard-Free Trigger Toggle Logic (v2.0.6) */
+        /* 📱 On-Demand Keyboard-Free Trigger Toggle Logic */
         function toggleAnglerPicker() {
             const container = document.getElementById('angler-picker-container');
             const btn = document.getElementById('angler-picker-btn');
@@ -1311,7 +1386,7 @@
             }
         }
 
-        /* 📱 Embedded Clean Scrollable Picker Methods (v2.0.6) */
+        /* 📱 Embedded Clean Scrollable Picker Methods */
         async function openReportModal() {
             pushOverlayState();
             selectedAnglerName = "";
@@ -1361,7 +1436,7 @@
             document.getElementById('report-modal').style.display = 'none';
         }
 
-        /* 📱 Custom App Picker JS for Rivalry Selection (v2.0.6) */
+        /* 📱 Custom App Picker JS for Rivalry Selection */
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const btnText = document.getElementById('rival-picker-btn-text');
@@ -1646,7 +1721,7 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Rival Picker Integration (Keyboard Free v2.0.6)
+                // 🥊 App-Native Rival Picker Integration (Scroll Cues v2.0.7)
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1674,6 +1749,7 @@
 
                 htmlMarkup += `
                                 </div>
+                                <div class="picker-gradient-overlay"></div>
                             </div>
                         </div>
 
@@ -1742,6 +1818,45 @@
             let u = getStats(user);
             let r = getStats(rival);
 
+            // 🧮 Calculate Real-Time "Beat Rate" Metrics (v2.0.7)
+            let metricsList = [
+                { uVal: u.p, rVal: r.p, isLowerBetter: true },
+                { uVal: u.f, rVal: r.f, isLowerBetter: false },
+                { uVal: u.l, rVal: r.l, isLowerBetter: false },
+                { uVal: u.maxF, rVal: r.maxF, isLowerBetter: false },
+                { uVal: u.avgS, rVal: r.avgS, isLowerBetter: false },
+                { uVal: u.d1f, rVal: r.d1f, isLowerBetter: false },
+                { uVal: u.d2f, rVal: r.d2f, isLowerBetter: false },
+                { uVal: u.variance, rVal: r.variance, isLowerBetter: true },
+                { uVal: u.ratio1, rVal: r.ratio1, isLowerBetter: false },
+                { uVal: u.ratio2, rVal: r.ratio2, isLowerBetter: false },
+                { uVal: u.avgZonePts, rVal: r.avgZonePts, isLowerBetter: true }
+            ];
+
+            let wins = 0, draws = 0, losses = 0;
+            metricsList.forEach(m => {
+                if (m.uVal === m.rVal) {
+                    draws++;
+                } else {
+                    let uWins = m.isLowerBetter ? (m.uVal < m.rVal) : (m.uVal > m.rVal);
+                    if (uWins) wins++; else losses++;
+                }
+            });
+
+            let totalMetrics = metricsList.length; // 11
+            let dominancePct = Math.round((wins / totalMetrics) * 100);
+
+            let summaryTitleClass = "dominant";
+            let summaryTitleText = `YOU WON ${wins} OF ${totalMetrics} METRICS (${dominancePct}% DOMINANCE)`;
+
+            if (wins < losses) {
+                summaryTitleClass = "behind";
+                summaryTitleText = `${rival.anglerName.split(' ')[0].toUpperCase()} WON ${losses} OF ${totalMetrics} METRICS (${100 - dominancePct}% ADVANTAGE)`;
+            } else if (wins === losses) {
+                summaryTitleClass = "tied";
+                summaryTitleText = `DEAD HEAT: TIED AT ${wins} METRICS EACH`;
+            }
+
             /* Stacked Badge Generator for Compact Layout */
             function renderCellHtml(valStr, valU, valR, isLowerBetter = false, isUser = true) {
                 if (valU === valR) {
@@ -1764,6 +1879,12 @@
             }
 
             let html = `
+                <!-- 🥊 Beat Rate Summary Header Bar (v2.0.7) -->
+                <div class="beat-rate-summary-bar">
+                    <div class="beat-rate-title ${summaryTitleClass}">${summaryTitleText}</div>
+                    <div class="beat-rate-sub">MATCH RECORD: ${wins} WINS &nbsp;|&nbsp; ${draws} DRAWS &nbsp;|&nbsp; ${losses} LOSSES</div>
+                </div>
+
                 <div class="table-card-container" style="margin-bottom:0; padding:4px;">
                     <div class="card-table-wrapper">
                         <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
@@ -1780,7 +1901,7 @@
                             <tr>
                                 <td>${renderCellHtml(`${u.f} fish`, u.f, r.f, false, true)}</td>
                                 <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Fish</td>
-                                <td>${renderCellHtml(`${r.f} fish`, u.p, r.p, false, false)}</td>
+                                <td>${renderCellHtml(`${r.f} fish`, u.f, r.f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${(u.l/100).toFixed(2)}m`, u.l, r.l, false, true)}</td>
@@ -1805,7 +1926,7 @@
                             <tr>
                                 <td>${renderCellHtml(`${u.d2f} fish`, u.d2f, r.d2f, false, true)}</td>
                                 <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Catch</td>
-                                <td>${renderCellHtml(`${r.d2f} fish`, u.d1f, r.d1f, false, false)}</td>
+                                <td>${renderCellHtml(`${r.d2f} fish`, u.d2f, r.d2f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`±${u.variance} f`, u.variance, r.variance, true, true)}</td>
@@ -1820,7 +1941,7 @@
                             <tr>
                                 <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
                                 <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Zone Ratio</td>
-                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio1, r.ratio1, false, false)}</td>
+                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
@@ -1937,7 +2058,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #0f172a; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.6 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.7 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2327,7 +2448,7 @@
                 const anglers = scoresData.anglers || [];
                 let htmlMarkup = '';
 
-                // ⚡ Concise Tie-Breaker Info Ribbon Banner (v2.0.6)
+                // ⚡ Concise Tie-Breaker Info Ribbon Banner
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
                     htmlMarkup += '<div class="info-banner">';
                     TAB_CONFIG[targetTabName].staticRules.forEach(r => {
@@ -2753,7 +2874,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.0.6 deployment active'))
+                    .then(reg => console.log('v2.0.7 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
