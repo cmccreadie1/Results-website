@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.1) */
+            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.2) */
             --bg-main: #334155;
             --surface-color: #1e293b;
             --surface-card: #1e293b;
@@ -94,20 +94,6 @@
             padding: 4px 8px;
             border-radius: 6px;
             border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .header-gesture-hint {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid var(--border-color);
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
         }
 
         #app-header h1 {
@@ -320,10 +306,9 @@
             display: none; 
             flex-direction: column; 
             z-index: 2000;
-            touch-action: pan-x pan-y;
         }
         .viewer-nav {
-            padding: 12px 15px; 
+            padding: 12px 12px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
@@ -332,54 +317,78 @@
             flex-shrink: 0; 
             z-index: 100; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            gap: 8px;
+            gap: 6px;
         }
         .back-btn {
             background: #334155; 
             color: var(--text-main); 
             border: 1px solid var(--border-color); 
-            padding: 8px 14px; 
+            padding: 8px 12px; 
             border-radius: 6px;
             font-family: 'Oswald', sans-serif; 
             font-weight: 500; 
             cursor: pointer; 
             text-transform: uppercase; 
             font-size: 0.8rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             white-space: nowrap;
             transition: all 0.15s ease;
+            flex-shrink: 0;
         }
         .back-btn:active {
             background: var(--accent-slate);
             color: #ffffff;
         }
+
+        .close-btn-top {
+            background: #f87171; 
+            color: #0f172a; 
+            border: none;
+            padding: 8px 12px; 
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif; 
+            font-weight: 700; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 0.8rem;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+        .close-btn-top:active {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
         #current-title {
             color: var(--text-main); 
             font-family: 'Oswald', sans-serif; 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             text-transform: uppercase;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             flex-grow: 1; 
             text-align: center; 
             white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis;
-            margin: 0 6px;
+            margin: 0 4px;
         }
         .search-box {
             background: #0f172a; 
             border: 1px solid var(--border-color); 
             color: var(--text-main); 
-            padding: 8px 12px; 
+            padding: 8px 10px; 
             border-radius: 6px;
             font-family: 'Inter', sans-serif; 
-            font-size: 0.8rem; 
+            font-size: 0.78rem; 
             outline: none; 
-            width: 110px; 
+            width: 90px; 
             transition: width 0.2s ease;
+            flex-shrink: 0;
         }
         .search-box:focus { 
-            width: 140px; 
+            width: 120px; 
             border-color: var(--accent-cyan);
         }
 
@@ -500,7 +509,6 @@
             opacity: 1;
         }
 
-        /* 📱 Touch Gesture Pan Isolation */
         .table-scroll-box {
             flex: 1; 
             overflow-x: hidden; 
@@ -508,8 +516,6 @@
             padding: 15px 10px 25px 15px; 
             background: var(--bg-main);
             -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pan-y;
-            overscroll-behavior-x: contain;
             width: 100%;
         }
 
@@ -521,7 +527,6 @@
             overflow-x: auto;
             padding: 4px 0;
             -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pan-y;
             width: 100%;
         }
         .matrix-card {
@@ -669,8 +674,6 @@
             overflow-x: auto;
             overflow-y: visible;
             -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pan-y;
-            overscroll-behavior-x: contain;
             width: 100%;
         }
 
@@ -943,8 +946,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.0.1</span>
-            <span class="header-gesture-hint">➔ SWIPE RIGHT TO DISMISS</span>
+            <span class="header-badge">COMMAND PORTAL v2.0.2</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1045,9 +1047,10 @@
 
     <div id="viewer-overlay">
         <div class="viewer-nav">
-            <button class="back-btn" onclick="closeViewer()">❮ MENU</button>
+            <button class="back-btn" onclick="closeViewer()">❮ BACK</button>
             <span id="current-title"></span>
             <input type="text" id="search-box" class="search-box" placeholder="Search..." onkeyup="filterTable()">
+            <button class="close-btn-top" onclick="closeViewer()">✕ CLOSE</button>
         </div>
         <div class="table-scroll-box" id="table-output"></div>
     </div>
@@ -1085,7 +1088,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.0.1</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.0.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1108,8 +1111,6 @@
         let cachedScores = null;
         let selectedAnglerName = "";
         let selectedRivalName = "";
-        let touchStartX = 0;
-        let touchStartY = 0;
 
         window.addEventListener('popstate', function(event) {
             dismissActiveOverlays();
@@ -1128,24 +1129,6 @@
                 closeViewer(false);
             }
         }
-
-        // 📱 Touch Edge-Swipe Right Gesture to Dismiss Open Overlays
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        }, { passive: true });
-
-        document.addEventListener('touchend', function(e) {
-            let touchEndX = e.changedTouches[0].screenX;
-            let touchEndY = e.changedTouches[0].screenY;
-            let swipeDistanceX = touchEndX - touchStartX;
-            let swipeDistanceY = Math.abs(touchEndY - touchStartY);
-
-            // Trigger swipe right if starting within 60px of left screen edge
-            if (touchStartX < 60 && swipeDistanceX > 80 && swipeDistanceY < 100) {
-                dismissActiveOverlays();
-            }
-        }, { passive: true });
 
         function pushOverlayState() {
             if (!history.state || !history.state.overlayOpen) {
@@ -1195,7 +1178,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.0.1";
+            document.title = MATCH_CONFIG.competitionName + " | v2.0.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1374,7 +1357,7 @@
             document.getElementById('report-modal').style.display = 'none';
         }
 
-        /* 📱 Custom App Picker JS for Rivalry Selection (v2.0.1) */
+        /* 📱 Custom App Picker JS for Rivalry Selection */
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const items = document.querySelectorAll('#custom-rival-picker .custom-picker-item');
@@ -1672,7 +1655,7 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Searchable Rival Picker Integration (v2.0.1)
+                // 🥊 App-Native Searchable Rival Picker Integration
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1964,7 +1947,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #0f172a; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.1 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.2 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2861,7 +2844,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.0.1 deployment active'))
+                    .then(reg => console.log('v2.0.2 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
