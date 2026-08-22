@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.5) */
+            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.6) */
             --bg-main: #334155;
             --surface-color: #1e293b;
             --surface-card: #1e293b;
@@ -308,7 +308,7 @@
             z-index: 2000;
         }
         
-        /* 📌 Pinned Sticky Viewer Navigation Header (v2.0.5) */
+        /* 📌 Pinned Sticky Viewer Navigation Header (v2.0.6) */
         .viewer-nav {
             padding: 12px 16px; 
             display: flex; 
@@ -415,7 +415,7 @@
             width: 100%;
         }
 
-        /* 📱 On-Demand Pop-Down Picker Trigger Button & Wrapper (v2.0.5) */
+        /* 📱 On-Demand Pop-Down Picker Trigger Button & Wrapper (v2.0.6) */
         .picker-trigger-btn {
             width: 100%;
             padding: 12px 14px;
@@ -453,7 +453,7 @@
             border-radius: 10px;
             background: #0f172a;
             overflow: hidden;
-            display: none; /* Hidden by default v2.0.5 */
+            display: none; /* Hidden by default v2.0.6 */
             flex-direction: column;
             margin-top: 8px;
             margin-bottom: 16px;
@@ -463,31 +463,17 @@
             display: flex;
         }
 
-        .custom-picker-search {
-            width: 100%;
-            padding: 10px 12px;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            outline: none;
-            background: #1e293b;
-            color: var(--text-main);
-        }
-        .custom-picker-search:focus {
-            background: #0f172a;
-        }
         .custom-picker-list {
-            max-height: 200px;
+            max-height: 240px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
         }
         .custom-picker-item {
-            padding: 10px 14px;
+            padding: 12px 14px;
             font-family: 'Inter', sans-serif;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
             border-bottom: 1px solid #334155;
@@ -622,7 +608,7 @@
             gap: 4px;
         }
 
-        /* ⚡ Low-Profile Concise Info Banner (v2.0.5) */
+        /* ⚡ Low-Profile Concise Info Banner (v2.0.6) */
         .info-banner {
             background: #1e293b; 
             border: 1px solid var(--border-color); 
@@ -950,7 +936,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.0.5</span>
+            <span class="header-badge">COMMAND PORTAL v2.0.6</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1050,7 +1036,7 @@
     </nav>
 
     <div id="viewer-overlay">
-        <!-- 📌 Pinned Sticky Top Navigation Header (v2.0.5) -->
+        <!-- 📌 Pinned Sticky Top Navigation Header (v2.0.6) -->
         <div class="viewer-nav">
             <span id="current-title"></span>
             <button class="back-btn" onclick="closeViewer()">❮ BACK</button>
@@ -1067,7 +1053,7 @@
         </div>
     </div>
 
-    <!-- 👤 Personal Report Card Embedded Picker Modal (On-Demand Pop-down v2.0.5) -->
+    <!-- 👤 Personal Report Card Embedded Picker Modal (Clean Scrollable On-Demand List v2.0.6) -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent-gold); margin-bottom: 6px;">My Match Report Card</h3>
@@ -1082,9 +1068,8 @@
                     <span class="trigger-arrow">▾</span>
                 </button>
 
-                <!-- Embedded Pop-down Selection Box (Hidden until tapped) -->
+                <!-- Embedded Pop-down Selection Box (Keyboard Free v2.0.6) -->
                 <div id="angler-picker-container" class="custom-picker-container">
-                    <input type="text" id="picker-search-input" class="custom-picker-search" placeholder="Type to filter names..." onkeyup="filterPickerNames()">
                     <div id="custom-angler-picker" class="custom-picker-list">
                         <div class="custom-picker-item" style="color: var(--text-muted);">Loading Anglers...</div>
                     </div>
@@ -1097,7 +1082,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.0.5</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.0.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1187,7 +1172,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.0.5";
+            document.title = MATCH_CONFIG.competitionName + " | v2.0.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1296,7 +1281,7 @@
             document.getElementById('rules-modal').style.display = 'none';
         }
 
-        /* 📱 On-Demand Pop-Down Trigger Toggle Logic (v2.0.5) */
+        /* 📱 On-Demand Keyboard-Free Trigger Toggle Logic (v2.0.6) */
         function toggleAnglerPicker() {
             const container = document.getElementById('angler-picker-container');
             const btn = document.getElementById('angler-picker-btn');
@@ -1308,7 +1293,6 @@
             } else {
                 container.classList.add('visible');
                 btn.classList.add('open');
-                setTimeout(() => { document.getElementById('picker-search-input').focus(); }, 100);
             }
         }
 
@@ -1324,16 +1308,14 @@
             } else {
                 container.classList.add('visible');
                 btn.classList.add('open');
-                setTimeout(() => { document.getElementById('rival-search-input').focus(); }, 100);
             }
         }
 
-        /* 📱 Embedded Custom Searchable Picker Methods (v2.0.5 Clean On-Demand) */
+        /* 📱 Embedded Clean Scrollable Picker Methods (v2.0.6) */
         async function openReportModal() {
             pushOverlayState();
             selectedAnglerName = "";
             document.getElementById('angler-picker-btn-text').innerText = "Tap to Select Angler...";
-            document.getElementById('picker-search-input').value = "";
             
             const container = document.getElementById('angler-picker-container');
             const btn = document.getElementById('angler-picker-btn');
@@ -1351,7 +1333,6 @@
                 sortedNames.forEach((a) => {
                     let itemDiv = document.createElement('div');
                     itemDiv.className = 'custom-picker-item';
-                    itemDiv.setAttribute('data-name', a.anglerName);
                     itemDiv.onclick = function() { selectPickerAngler(a.anglerName, itemDiv); };
                     itemDiv.innerHTML = `<span>${a.anglerName}</span><span class="check-icon">✓</span>`;
                     listElem.appendChild(itemDiv);
@@ -1375,21 +1356,12 @@
             toggleAnglerPicker();
         }
 
-        function filterPickerNames() {
-            const query = document.getElementById('picker-search-input').value.toLowerCase();
-            const items = document.querySelectorAll('#custom-angler-picker .custom-picker-item');
-            items.forEach(el => {
-                const txt = el.getAttribute('data-name').toLowerCase();
-                el.style.display = txt.includes(query) ? 'flex' : 'none';
-            });
-        }
-
         function closeReportModal(event) {
             if (event) event.preventDefault();
             document.getElementById('report-modal').style.display = 'none';
         }
 
-        /* 📱 Custom App Picker JS for Rivalry Selection (v2.0.5 Clean On-Demand) */
+        /* 📱 Custom App Picker JS for Rivalry Selection (v2.0.6) */
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const btnText = document.getElementById('rival-picker-btn-text');
@@ -1401,15 +1373,6 @@
             
             toggleRivalPicker();
             renderRivalryComparison(primaryAnglerName, rivalName);
-        }
-
-        function filterRivalNames() {
-            const query = document.getElementById('rival-search-input').value.toLowerCase();
-            const items = document.querySelectorAll('#custom-rival-picker .custom-picker-item');
-            items.forEach(el => {
-                const txt = el.getAttribute('data-name').toLowerCase();
-                el.style.display = txt.includes(query) ? 'flex' : 'none';
-            });
         }
 
         function openSecretPairsRules(description) {
@@ -1683,7 +1646,7 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Searchable Rival Picker Integration (On-Demand Pop-down v2.0.5)
+                // 🥊 App-Native Rival Picker Integration (Keyboard Free v2.0.6)
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1698,13 +1661,12 @@
                             </button>
 
                             <div id="rival-picker-container" class="custom-picker-container">
-                                <input type="text" id="rival-search-input" class="custom-picker-search" placeholder="Type to filter rival names..." onkeyup="filterRivalNames()">
                                 <div id="custom-rival-picker" class="custom-picker-list">
                 `;
 
                 rivals.forEach((r) => {
                     htmlMarkup += `
-                        <div class="custom-picker-item" data-name="${r.anglerName}" onclick="selectRivalAngler('${r.anglerName.replace(/'/g, "\\'")}', this, '${user.anglerName.replace(/'/g, "\\'")}')">
+                        <div class="custom-picker-item" onclick="selectRivalAngler('${r.anglerName.replace(/'/g, "\\'")}', this, '${user.anglerName.replace(/'/g, "\\'")}')">
                             <span>${r.anglerName}</span><span class="check-icon">✓</span>
                         </div>
                     `;
@@ -1975,7 +1937,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #0f172a; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.5 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.6 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -2097,7 +2059,7 @@
                 htmlMarkup += `
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
-                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 15px; margin: 15px 0;">
+                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-space-around; gap: 15px; margin: 15px 0;">
                             <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
                                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
                                 <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
@@ -2365,7 +2327,7 @@
                 const anglers = scoresData.anglers || [];
                 let htmlMarkup = '';
 
-                // ⚡ Concise Tie-Breaker Info Ribbon Banner (v2.0.5)
+                // ⚡ Concise Tie-Breaker Info Ribbon Banner (v2.0.6)
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
                     htmlMarkup += '<div class="info-banner">';
                     TAB_CONFIG[targetTabName].staticRules.forEach(r => {
@@ -2791,7 +2753,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.0.5 deployment active'))
+                    .then(reg => console.log('v2.0.6 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
