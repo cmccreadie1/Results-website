@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.3) */
+            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.4) */
             --bg-main: #334155;
             --surface-color: #1e293b;
             --surface-card: #1e293b;
@@ -308,7 +308,7 @@
             z-index: 2000;
         }
         
-        /* 📌 Pinned Sticky Viewer Navigation Header (v2.0.3) */
+        /* 📌 Pinned Sticky Viewer Navigation Header (v2.0.4) */
         .viewer-nav {
             padding: 12px 16px; 
             display: flex; 
@@ -584,7 +584,7 @@
             gap: 4px;
         }
 
-        /* ⚡ Low-Profile Concise Info Banner (v2.0.3) */
+        /* ⚡ Low-Profile Concise Info Banner (v2.0.4) */
         .info-banner {
             background: #1e293b; 
             border: 1px solid var(--border-color); 
@@ -912,7 +912,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.0.3</span>
+            <span class="header-badge">COMMAND PORTAL v2.0.4</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1012,7 +1012,7 @@
     </nav>
 
     <div id="viewer-overlay">
-        <!-- 📌 Pinned Sticky Top Navigation Header (v2.0.3) -->
+        <!-- 📌 Pinned Sticky Top Navigation Header (v2.0.4) -->
         <div class="viewer-nav">
             <span id="current-title"></span>
             <button class="back-btn" onclick="closeViewer()">❮ BACK</button>
@@ -1053,7 +1053,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.0.3</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.0.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1143,7 +1143,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.0.3";
+            document.title = MATCH_CONFIG.competitionName + " | v2.0.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1252,7 +1252,7 @@
             document.getElementById('rules-modal').style.display = 'none';
         }
 
-        /* 📱 Embedded Custom Searchable Picker Methods */
+        /* 📱 Embedded Custom Searchable Picker Methods (v2.0.4 Clean Unselected Load) */
         async function openReportModal() {
             pushOverlayState();
             selectedAnglerName = "";
@@ -1266,18 +1266,13 @@
                 const listElem = document.getElementById('custom-angler-picker');
                 listElem.innerHTML = '';
                 
-                sortedNames.forEach((a, idx) => {
+                sortedNames.forEach((a) => {
                     let itemDiv = document.createElement('div');
                     itemDiv.className = 'custom-picker-item';
                     itemDiv.setAttribute('data-name', a.anglerName);
                     itemDiv.onclick = function() { selectPickerAngler(a.anglerName, itemDiv); };
                     itemDiv.innerHTML = `<span>${a.anglerName}</span><span class="check-icon">✓</span>`;
                     listElem.appendChild(itemDiv);
-
-                    // Auto-select first by default
-                    if (idx === 0) {
-                        selectPickerAngler(a.anglerName, itemDiv);
-                    }
                 });
                 
                 document.getElementById('report-modal').style.display = 'flex';
@@ -1307,7 +1302,7 @@
             document.getElementById('report-modal').style.display = 'none';
         }
 
-        /* 📱 Custom App Picker JS for Rivalry Selection */
+        /* 📱 Custom App Picker JS for Rivalry Selection (v2.0.4 Clean Unselected Load) */
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const items = document.querySelectorAll('#custom-rival-picker .custom-picker-item');
@@ -1344,8 +1339,14 @@
             openRulesModal('Secret Pairs Rules', rulesHtml);
         }
 
+        /* 🧮 Percentile Logic Fix (v2.0.4): Zero / Unentered / Equal Array Check */
         function calcPercentile(targetVal, array, isLowerBetter = false) {
-            if (!array || array.length <= 1) return 50;
+            if (!array || array.length <= 1) return 0;
+            
+            // Check if all values in the array are zero or identical (e.g. unentered session)
+            let allEqualOrZero = array.every(v => v === array[0]);
+            if (allEqualOrZero || targetVal === 0) return 0;
+
             let countBetterThan = 0;
             array.forEach(v => {
                 if (isLowerBetter) {
@@ -1354,12 +1355,18 @@
                     if (v < targetVal) countBetterThan++;
                 }
             });
+
+            if (countBetterThan === 0) return 0;
+
             let pct = Math.round((countBetterThan / (array.length - 1)) * 100);
-            return Math.min(Math.max(pct, 5), 99);
+            return Math.min(Math.max(pct, 0), 99);
         }
 
         async function generatePersonalReport() {
-            if (!selectedAnglerName) return;
+            if (!selectedAnglerName) {
+                alert("Please select your name from the list first.");
+                return;
+            }
 
             closeReportModal();
             pushOverlayState();
@@ -1454,36 +1461,16 @@
                 let pD2Ratio = calcPercentile(uD2Ratio, d2RatioArr);
                 let pPod = calcPercentile(uAvgZonePts, podArr, true);
 
-                const metricsList = [
-                    { label: 'Total Zone Points', pct: pOverallMatch, text: `Top ${100 - pOverallMatch}% Total Zone Points (${uPts} Pts)` },
-                    { label: 'Total Fish Count', pct: pFish, text: `Outperformed ${pFish}% of field in Total Fish Count (${uFish} Fish)` },
-                    { label: 'Total Catch Length', pct: pLen, text: `Outperformed ${pLen}% of field in Total Length (${(uLen/100).toFixed(2)}m)` },
-                    { label: 'Biggest Single Fish', pct: pSpec, text: `Top ${100 - pSpec}% Longest Individual Catch (${uMaxFish}cm)` },
-                    { label: 'Average Fish Length', pct: pAvgSize, text: `Top ${100 - pAvgSize}% Average Length per Fish (${uAvgSize.toFixed(1)}cm Avg)` },
-                    { label: 'Day 1 Best Session', pct: pD1Best, text: `Top ${100 - pD1Best}% Day 1 Night Catch (${uD1Fish} Fish)` },
-                    { label: 'Day 2 Best Session', pct: pD2Best, text: `Top ${100 - pD2Best}% Day 2 Daytime Catch (${uD2Fish} Fish)` },
-                    { label: 'Day-to-Day Consistency', pct: pVar, text: `Top ${100 - pVar}% Day-to-Day Catch Consistency` },
-                    { label: 'Day 1 Zone Performance', pct: pD1Ratio, text: `Top ${100 - pD1Ratio}% Day 1 Zone Par Rating (${uD1Ratio.toFixed(2)}x Peg Avg)` },
-                    { label: 'Day 2 Zone Performance', pct: pD2Ratio, text: `Top ${100 - pD2Ratio}% Day 2 Zone Par Rating (${uD2Ratio.toFixed(2)}x Peg Avg)` },
-                    { label: 'Average Zone Placing', pct: pPod, text: `Top ${100 - pPod}% Average Zone Placing` }
-                ];
-                metricsList.sort((a,b) => b.pct - a.pct);
-                let crownHighlight = metricsList[0];
-
                 let htmlMarkup = '<div class="stat-grid">';
 
+                // 👤 Top Personal Summary Block (Tournament Highlight Badge Banner Removed v2.0.4)
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                             <span style="font-family: 'Oswald'; font-size: 1.3rem; text-transform: uppercase; font-weight: 700; color: var(--text-main);">${user.anglerName}</span>
                             <button onclick="openReportModal()" style="background: #334155; border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 12px; border-radius: 6px; font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; cursor: pointer;">Switch Angler ↺</button>
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 14px;">TEAM AFFILIATION: ${user.teamName || 'SOLO COMPETITOR'}</div>
-                        
-                        <div style="background: var(--accent-gold-light); border: 1px solid var(--accent-gold); border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 16px;">
-                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; letter-spacing: 1.5px;">🥇 TOURNAMENT HIGHLIGHT BADGE</div>
-                            <div style="font-family: 'Inter'; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-top: 4px;">${crownHighlight.text}</div>
-                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px;">TEAM AFFILIATION: ${user.teamName || 'SOLO COMPETITOR'}</div>
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; text-align: center; background: #0f172a; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--border-color);">
                             <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem; color:var(--accent-gold);">${uPts}</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">ZONE PTS</div></div>
@@ -1604,7 +1591,7 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Searchable Rival Picker Integration
+                // 🥊 App-Native Searchable Rival Picker Integration (v2.0.4 Clean Unselected Load)
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1617,11 +1604,9 @@
                             <div id="custom-rival-picker" class="custom-picker-list">
                 `;
 
-                rivals.forEach((r, idx) => {
-                    let isSel = (idx === 0) ? 'selected' : '';
-                    if (idx === 0) selectedRivalName = r.anglerName;
+                rivals.forEach((r) => {
                     htmlMarkup += `
-                        <div class="custom-picker-item ${isSel}" data-name="${r.anglerName}" onclick="selectRivalAngler('${r.anglerName.replace(/'/g, "\\'")}', this, '${user.anglerName.replace(/'/g, "\\'")}')">
+                        <div class="custom-picker-item" data-name="${r.anglerName}" onclick="selectRivalAngler('${r.anglerName.replace(/'/g, "\\'")}', this, '${user.anglerName.replace(/'/g, "\\'")}')">
                             <span>${r.anglerName}</span><span class="check-icon">✓</span>
                         </div>
                     `;
@@ -1630,17 +1615,12 @@
                 htmlMarkup += `
                             </div>
                         </div>
-                        <div id="rivalry-output-box"></div>
+                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 15px;">Tap a rival name above to trigger head-to-head metrics.</div></div>
                     </div>
                 `;
 
                 htmlMarkup += '</div>';
                 output.innerHTML = htmlMarkup;
-
-                // Render initial rival matchup automatically
-                if (rivals.length > 0) {
-                    renderRivalryComparison(user.anglerName, selectedRivalName || rivals[0].anglerName);
-                }
 
             } catch(e) {
                 console.error(e);
@@ -1895,7 +1875,7 @@
                     <div class="stat-card" style="border-top: 5px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #0f172a; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.3 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.4 PROSPECTUS</span>
                         </div>
                         <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
@@ -1928,84 +1908,7 @@
                     </div>
                 `;
 
-                let teamsMap = {};
-                anglers.forEach(item => {
-                    let t = item.teamName ? item.teamName.trim() : "";
-                    if (t === "" || t.toUpperCase() === "SOLO" || t.toUpperCase() === "INDEPENDENT") return;
-                    if (!teamsMap[t]) teamsMap[t] = { name: t, members: [], d1Pts: 0, d2Pts: 0, totalPts: 0, totalFish: 0, totalLen: 0, blanksCount: 0 };
-                    
-                    teamsMap[t].members.push(item);
-                    teamsMap[t].totalPts += item.totals.cumulativePoints || 0;
-                    teamsMap[t].totalFish += item.totals.cumulativeFish || 0;
-                    teamsMap[t].totalLen += item.totals.cumulativeLengthCm || 0;
-                    
-                    let d1p = item.day1 ? (item.day1.zonePoints || 0) : 0;
-                    let d2p = item.day2 ? (item.day2.zonePoints || 0) : 0;
-                    teamsMap[t].d1Pts += d1p;
-                    teamsMap[t].d2Pts += d2p;
-                    
-                    if ((item.day1?.fishCount || 0) === 0) teamsMap[t].blanksCount++;
-                    if ((item.day2?.fishCount || 0) === 0) teamsMap[t].blanksCount++;
-                });
-
-                let teamDynamicsArray = Object.values(teamsMap).map(team => {
-                    let memberPts = team.members.map(m => m.totals.cumulativePoints || 0);
-                    let bestMemberPts = Math.min(...memberPts);
-                    let worstMemberPts = Math.max(...memberPts);
-                    let spread = worstMemberPts - bestMemberPts;
-                    let avgFishSize = team.totalFish > 0 ? (team.totalLen / team.totalFish).toFixed(1) : "0.0";
-                    let d2Shift = team.d1Pts - team.d2Pts;
-                    return {
-                        ...team,
-                        bestMemberPts,
-                        worstMemberPts,
-                        spread,
-                        avgFishSize: parseFloat(avgFishSize),
-                        d2Shift
-                    };
-                }).sort((a, b) => a.totalPts - b.totalPts);
-
-                if (teamDynamicsArray.length > 0) {
-                    htmlMarkup += `
-                        <div class="stat-card" style="text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🤝 Team Consistency & Carry Factor</div>
-                            <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.35;">Evaluates squad balance (point spread between highest and lowest teammate), Day 2 adaptability, and average fish size strategy.</div>
-                            
-                            <div class="table-header-bar">
-                                <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Rankings</span>
-                                ${getCircleBadgeHtml('team-dynamics-wrapper')}
-                            </div>
-                            <div id="team-dynamics-wrapper" class="table-card-container">
-                                <div class="card-table-wrapper">
-                                    <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
-                                        <tr>
-                                            <th style="text-align: left; padding: 6px 8px;">TEAM NAME</th>
-                                            <th style="text-align: center; padding: 6px 8px;">SPREAD</th>
-                                            <th style="text-align: center; padding: 6px 8px;">DAY 2 SHIFT</th>
-                                            <th style="text-align: center; padding: 6px 8px;">AVG SIZE</th>
-                                            <th style="text-align: center; padding: 6px 8px;">BLANKS</th>
-                                        </tr>
-                    `;
-                    teamDynamicsArray.forEach(t => {
-                        let shiftDisplay = t.d2Shift > 0 ? `<span style="color: var(--accent-emerald); font-weight:700;">▲ +${t.d2Shift} pts</span>` : (t.d2Shift < 0 ? `<span style="color: var(--red-zone); font-weight:700;">▼ ${t.d2Shift} pts</span>` : `► Stable`);
-                        let blankDisplay = t.blanksCount === 0 ? `<span style="color: var(--accent-emerald); font-weight:700;">0 Solid</span>` : `${t.blanksCount} Blanks`;
-                        htmlMarkup += `
-                            <tr>
-                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 6px 8px;">${t.name}</td>
-                                <td style="text-align: center; font-weight: 600; padding: 6px 8px;">${t.spread} pts</td>
-                                <td style="text-align: center; padding: 6px 8px;">${shiftDisplay}</td>
-                                <td style="text-align: center; font-weight: 700; color: var(--accent-cyan); padding: 6px 8px;">${t.avgFishSize.toFixed(1)} cm</td>
-                                <td style="text-align: center; padding: 6px 8px;">${blankDisplay}</td>
-                            </tr>
-                        `;
-                    });
-                    htmlMarkup += `
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
+                // (Team Consistency & Carry Factor element removed v2.0.4)
 
                 let d1BlankPct = totalAnglers > 0 ? ((day1Blankers / totalAnglers) * 100).toFixed(0) : 0;
                 let d2BlankPct = totalAnglers > 0 ? ((day2Blankers / totalAnglers) * 100).toFixed(0) : 0;
@@ -2364,7 +2267,7 @@
                 const anglers = scoresData.anglers || [];
                 let htmlMarkup = '';
 
-                // ⚡ Concise Tie-Breaker Info Ribbon Banner (v2.0.3)
+                // ⚡ Concise Tie-Breaker Info Ribbon Banner (v2.0.4)
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
                     htmlMarkup += '<div class="info-banner">';
                     TAB_CONFIG[targetTabName].staticRules.forEach(r => {
@@ -2790,7 +2693,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.0.3 deployment active'))
+                    .then(reg => console.log('v2.0.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
