@@ -1,54 +1,54 @@
 {
   "anglers": [
     {
-      "anglerName": "CAIRN",
-      "teamName": "DOGS",
+      "anglerName": "SQUARE",
+      "teamName": "SHAPES",
       "day1": {
-        "zone": "Green Zone",
-        "peg": 15,
-        "fishCount": 20,
-        "totalLengthCm": 743,
+        "zone": "Yellow Zone",
+        "peg": 12,
+        "fishCount": 18,
+        "totalLengthCm": 567,
         "biggestFishCm": 67,
         "zonePoints": 1
       },
       "day2": {
-        "zone": "Blue Zone",
-        "peg": 18,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "zone": "Green Zone",
+        "peg": 16,
+        "fishCount": 13,
+        "totalLengthCm": 447,
+        "biggestFishCm": 45,
+        "zonePoints": 1
       },
       "totals": {
-        "cumulativePoints": 5,
-        "cumulativeFish": 20,
-        "cumulativeLengthCm": 743,
+        "cumulativePoints": 2,
+        "cumulativeFish": 31,
+        "cumulativeLengthCm": 1014,
         "overallRank": 1
       }
     },
     {
-      "anglerName": "GERMANY GERMANY 2",
-      "teamName": "COUNTRIES",
+      "anglerName": "CIRCLE",
+      "teamName": "SHAPES",
       "day1": {
-        "zone": "Yellow Zone",
-        "peg": 6,
-        "fishCount": 4,
-        "totalLengthCm": 172,
-        "biggestFishCm": 59,
-        "zonePoints": 1
+        "zone": "Red Zone",
+        "peg": 5,
+        "fishCount": 7,
+        "totalLengthCm": 261,
+        "biggestFishCm": 56,
+        "zonePoints": 2
       },
       "day2": {
         "zone": "Blue Zone",
-        "peg": 16,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "peg": 27,
+        "fishCount": 18,
+        "totalLengthCm": 561,
+        "biggestFishCm": 56,
+        "zonePoints": 2
       },
       "totals": {
-        "cumulativePoints": 5,
-        "cumulativeFish": 4,
-        "cumulativeLengthCm": 172,
+        "cumulativePoints": 4,
+        "cumulativeFish": 25,
+        "cumulativeLengthCm": 822,
         "overallRank": 2
       }
     },
@@ -56,156 +56,26 @@
       "anglerName": "SPAIN",
       "teamName": "COUNTRIES",
       "day1": {
-        "zone": "Red Zone",
-        "peg": 2,
-        "fishCount": 15,
-        "totalLengthCm": 456,
-        "biggestFishCm": 67,
-        "zonePoints": 1
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 13,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 15,
-        "cumulativeLengthCm": 456,
-        "overallRank": 3
-      }
-    },
-    {
-      "anglerName": "SWEDEN",
-      "teamName": "COUNTRIES",
-      "day1": {
         "zone": "Blue Zone",
-        "peg": 18,
-        "fishCount": 3,
-        "totalLengthCm": 109,
-        "biggestFishCm": 41,
-        "zonePoints": 1
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 3,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 3,
-        "cumulativeLengthCm": 109,
-        "overallRank": 4
-      }
-    },
-    {
-      "anglerName": "ROSIE",
-      "teamName": "Solo",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 12,
-        "fishCount": 6,
-        "totalLengthCm": 287,
-        "biggestFishCm": 71,
-        "zonePoints": 2
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 5,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 6,
-        "cumulativeLengthCm": 287,
-        "overallRank": 5
-      }
-    },
-    {
-      "anglerName": "PORTUGAL",
-      "teamName": "COUNTRIES",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 11,
+        "peg": 25,
         "fishCount": 5,
-        "totalLengthCm": 239,
-        "biggestFishCm": 78,
+        "totalLengthCm": 289,
+        "biggestFishCm": 56,
         "zonePoints": 3
       },
       "day2": {
-        "zone": "Yellow Zone",
-        "peg": 8,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
-      },
-      "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 5,
-        "cumulativeLengthCm": 239,
-        "overallRank": 6
-      }
-    },
-    {
-      "anglerName": "PUG",
-      "teamName": "DOGS",
-      "day1": {
         "zone": "Red Zone",
-        "peg": 4,
-        "fishCount": 5,
-        "totalLengthCm": 213,
-        "biggestFishCm": 47,
-        "zonePoints": 2
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 14,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
+        "peg": 2,
+        "fishCount": 14,
+        "totalLengthCm": 489,
+        "biggestFishCm": 60,
+        "zonePoints": 1
       },
       "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 5,
-        "cumulativeLengthCm": 213,
-        "overallRank": 7
-      }
-    },
-    {
-      "anglerName": "JIM",
-      "teamName": "Solo",
-      "day1": {
-        "zone": "Yellow Zone",
-        "peg": 9,
-        "fishCount": 2,
-        "totalLengthCm": 89,
-        "biggestFishCm": 61,
-        "zonePoints": 2
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 12,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 2,
-        "cumulativeLengthCm": 89,
-        "overallRank": 8
+        "cumulativePoints": 4,
+        "cumulativeFish": 19,
+        "cumulativeLengthCm": 778,
+        "overallRank": 3
       }
     },
     {
@@ -213,77 +83,363 @@
       "teamName": "RIVERS",
       "day1": {
         "zone": "Red Zone",
-        "peg": 3,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
+        "peg": 4,
+        "fishCount": 4,
+        "totalLengthCm": 189,
+        "biggestFishCm": 50,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 23,
+        "fishCount": 14,
+        "totalLengthCm": 612,
+        "biggestFishCm": 72,
+        "zonePoints": 1
+      },
+      "totals": {
+        "cumulativePoints": 5,
+        "cumulativeFish": 18,
+        "cumulativeLengthCm": 801,
+        "overallRank": 4
+      }
+    },
+    {
+      "anglerName": "FLORIDA",
+      "teamName": "US STATES",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 21,
+        "fishCount": 7,
+        "totalLengthCm": 411,
+        "biggestFishCm": 89,
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 1,
+        "fishCount": 9,
+        "totalLengthCm": 338,
+        "biggestFishCm": 58,
+        "zonePoints": 3
+      },
+      "totals": {
+        "cumulativePoints": 5,
+        "cumulativeFish": 16,
+        "cumulativeLengthCm": 749,
+        "overallRank": 5
+      }
+    },
+    {
+      "anglerName": "KELVIN",
+      "teamName": "RIVERS",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 18,
+        "fishCount": 6,
+        "totalLengthCm": 189,
+        "biggestFishCm": 56,
         "zonePoints": 4
       },
       "day2": {
         "zone": "Yellow Zone",
-        "peg": 7,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
+        "peg": 9,
+        "fishCount": 7,
+        "totalLengthCm": 444,
+        "biggestFishCm": 55,
+        "zonePoints": 1
+      },
+      "totals": {
+        "cumulativePoints": 5,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 633,
+        "overallRank": 6
+      }
+    },
+    {
+      "anglerName": "WESTIE",
+      "teamName": "DOGS",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 24,
+        "fishCount": 9,
+        "totalLengthCm": 378,
+        "biggestFishCm": 42,
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 6,
+        "fishCount": 8,
+        "totalLengthCm": 334,
+        "biggestFishCm": 61,
         "zonePoints": 4
       },
       "totals": {
-        "cumulativePoints": 8,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 9
+        "cumulativePoints": 6,
+        "cumulativeFish": 17,
+        "cumulativeLengthCm": 712,
+        "overallRank": 7
+      }
+    },
+    {
+      "anglerName": "SOUTH CAROLINA",
+      "teamName": "US STATES",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 28,
+        "fishCount": 7,
+        "totalLengthCm": 238,
+        "biggestFishCm": 38,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 20,
+        "fishCount": 17,
+        "totalLengthCm": 398,
+        "biggestFishCm": 34,
+        "zonePoints": 2
+      },
+      "totals": {
+        "cumulativePoints": 6,
+        "cumulativeFish": 24,
+        "cumulativeLengthCm": 636,
+        "overallRank": 8
       }
     },
     {
       "anglerName": "LABRADOR",
       "teamName": "DOGS",
       "day1": {
-        "zone": "Blue Zone",
-        "peg": 17,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "zone": "Green Zone",
+        "peg": 19,
+        "fishCount": 14,
+        "totalLengthCm": 512,
+        "biggestFishCm": 71,
+        "zonePoints": 1
       },
       "day2": {
         "zone": "Yellow Zone",
-        "peg": 6,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "peg": 10,
+        "fishCount": 1,
+        "totalLengthCm": 78,
+        "biggestFishCm": 78,
+        "zonePoints": 5
       },
       "totals": {
-        "cumulativePoints": 8,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
+        "cumulativePoints": 6,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 590,
+        "overallRank": 9
+      }
+    },
+    {
+      "anglerName": "PARIS",
+      "teamName": "CITIES",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 11,
+        "fishCount": 9,
+        "totalLengthCm": 356,
+        "biggestFishCm": 56,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 21,
+        "fishCount": 8,
+        "totalLengthCm": 378,
+        "biggestFishCm": 59,
+        "zonePoints": 3
+      },
+      "totals": {
+        "cumulativePoints": 7,
+        "cumulativeFish": 17,
+        "cumulativeLengthCm": 734,
         "overallRank": 10
       }
     },
     {
-      "anglerName": "TEXAS",
-      "teamName": "US STATES",
+      "anglerName": "EARTH",
+      "teamName": "PLANETS",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 27,
+        "fishCount": 15,
+        "totalLengthCm": 612,
+        "biggestFishCm": 51,
+        "zonePoints": 1
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 14,
+        "fishCount": 1,
+        "totalLengthCm": 56,
+        "biggestFishCm": 56,
+        "zonePoints": 6
+      },
+      "totals": {
+        "cumulativePoints": 7,
+        "cumulativeFish": 16,
+        "cumulativeLengthCm": 668,
+        "overallRank": 11
+      }
+    },
+    {
+      "anglerName": "JUPITER",
+      "teamName": "PLANETS",
       "day1": {
         "zone": "Red Zone",
-        "peg": 5,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "peg": 1,
+        "fishCount": 12,
+        "totalLengthCm": 299,
+        "biggestFishCm": 35,
+        "zonePoints": 1
       },
       "day2": {
         "zone": "Blue Zone",
-        "peg": 20,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
+        "peg": 26,
+        "fishCount": 5,
+        "totalLengthCm": 162,
+        "biggestFishCm": 46,
+        "zonePoints": 6
+      },
+      "totals": {
+        "cumulativePoints": 7,
+        "cumulativeFish": 17,
+        "cumulativeLengthCm": 461,
+        "overallRank": 12
+      }
+    },
+    {
+      "anglerName": "MADRID",
+      "teamName": "CITIES",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 16,
+        "fishCount": 4,
+        "totalLengthCm": 105,
+        "biggestFishCm": 39,
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 12,
+        "fishCount": 6,
+        "totalLengthCm": 281,
+        "biggestFishCm": 67,
+        "zonePoints": 2
+      },
+      "totals": {
+        "cumulativePoints": 7,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 386,
+        "overallRank": 13
+      }
+    },
+    {
+      "anglerName": "GERMANY",
+      "teamName": "COUNTRIES",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 10,
+        "fishCount": 12,
+        "totalLengthCm": 412,
+        "biggestFishCm": 43,
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 18,
+        "fishCount": 8,
+        "totalLengthCm": 276,
+        "biggestFishCm": 39,
+        "zonePoints": 5
       },
       "totals": {
         "cumulativePoints": 8,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 11
+        "cumulativeFish": 20,
+        "cumulativeLengthCm": 688,
+        "overallRank": 14
+      }
+    },
+    {
+      "anglerName": "PORTUGAL",
+      "teamName": "COUNTRIES",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 20,
+        "fishCount": 7,
+        "totalLengthCm": 371,
+        "biggestFishCm": 61,
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 25,
+        "fishCount": 9,
+        "totalLengthCm": 311,
+        "biggestFishCm": 52,
+        "zonePoints": 5
+      },
+      "totals": {
+        "cumulativePoints": 8,
+        "cumulativeFish": 16,
+        "cumulativeLengthCm": 682,
+        "overallRank": 15
+      }
+    },
+    {
+      "anglerName": "MARS",
+      "teamName": "PLANETS",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 14,
+        "fishCount": 6,
+        "totalLengthCm": 423,
+        "biggestFishCm": 81,
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 17,
+        "fishCount": 6,
+        "totalLengthCm": 229,
+        "biggestFishCm": 48,
+        "zonePoints": 6
+      },
+      "totals": {
+        "cumulativePoints": 8,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 652,
+        "overallRank": 16
+      }
+    },
+    {
+      "anglerName": "ALABAMA",
+      "teamName": "US STATES",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 7,
+        "fishCount": 4,
+        "totalLengthCm": 106,
+        "biggestFishCm": 31,
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 11,
+        "fishCount": 3,
+        "totalLengthCm": 104,
+        "biggestFishCm": 48,
+        "zonePoints": 3
+      },
+      "totals": {
+        "cumulativePoints": 8,
+        "cumulativeFish": 7,
+        "cumulativeLengthCm": 210,
+        "overallRank": 17
       }
     },
     {
@@ -291,252 +447,403 @@
       "teamName": "RIVERS",
       "day1": {
         "zone": "Yellow Zone",
-        "peg": 7,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
+        "peg": 13,
+        "fishCount": 16,
+        "totalLengthCm": 321,
+        "biggestFishCm": 32,
         "zonePoints": 5
-      },
-      "day2": {
-        "zone": "Blue Zone",
-        "peg": 17,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 12
-      }
-    },
-    {
-      "anglerName": "FORT",
-      "teamName": "RIVERS",
-      "day1": {
-        "zone": "Blue Zone",
-        "peg": 16,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
       },
       "day2": {
         "zone": "Green Zone",
         "peg": 15,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 13
-      }
-    },
-    {
-      "anglerName": "NEW MEXICO",
-      "teamName": "US STATES",
-      "day1": {
-        "zone": "Blue Zone",
-        "peg": 20,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 4
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 11,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 14
-      }
-    },
-    {
-      "anglerName": "ARIZONA",
-      "teamName": "US STATES",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 13,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
-      },
-      "day2": {
-        "zone": "Yellow Zone",
-        "peg": 10,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
+        "fishCount": 11,
+        "totalLengthCm": 317,
+        "biggestFishCm": 44,
         "zonePoints": 4
       },
       "totals": {
         "cumulativePoints": 9,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 15
+        "cumulativeFish": 27,
+        "cumulativeLengthCm": 638,
+        "overallRank": 18
       }
     },
     {
-      "anglerName": "THAMES",
-      "teamName": "RIVERS",
+      "anglerName": "PLUTO",
+      "teamName": "PLANETS",
       "day1": {
         "zone": "Green Zone",
-        "peg": 14,
+        "peg": 17,
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
-        "zonePoints": 5
+        "zonePoints": 7
       },
       "day2": {
         "zone": "Red Zone",
-        "peg": 2,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
+        "peg": 3,
+        "fishCount": 9,
+        "totalLengthCm": 471,
+        "biggestFishCm": 68,
+        "zonePoints": 2
       },
       "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 16
+        "cumulativePoints": 9,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 471,
+        "overallRank": 19
       }
     },
     {
-      "anglerName": "COLLIE",
-      "teamName": "DOGS",
+      "anglerName": "LISBON",
+      "teamName": "CITIES",
       "day1": {
-        "zone": "Yellow Zone",
-        "peg": 10,
+        "zone": "Red Zone",
+        "peg": 6,
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 22,
+        "fishCount": 9,
+        "totalLengthCm": 517,
+        "biggestFishCm": 71,
+        "zonePoints": 3
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 517,
+        "overallRank": 20
+      }
+    },
+    {
+      "anglerName": "BOXER",
+      "teamName": "DOGS",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 3,
+        "fishCount": 5,
+        "totalLengthCm": 213,
+        "biggestFishCm": 56,
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 19,
+        "fishCount": 4,
+        "totalLengthCm": 115,
+        "biggestFishCm": 30,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 328,
+        "overallRank": 21
+      }
+    },
+    {
+      "anglerName": "FRANCE",
+      "teamName": "COUNTRIES",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 2,
+        "fishCount": 1,
+        "totalLengthCm": 36,
+        "biggestFishCm": 36,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 8,
+        "fishCount": 3,
+        "totalLengthCm": 94,
+        "biggestFishCm": 38,
+        "zonePoints": 4
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 4,
+        "cumulativeLengthCm": 130,
+        "overallRank": 22
+      }
+    },
+    {
+      "anglerName": "CAIRN",
+      "teamName": "DOGS",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 8,
+        "fishCount": 4,
+        "totalLengthCm": 109,
+        "biggestFishCm": 34,
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 24,
+        "fishCount": 7,
+        "totalLengthCm": 377,
+        "biggestFishCm": 48,
+        "zonePoints": 4
+      },
+      "totals": {
+        "cumulativePoints": 11,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 486,
+        "overallRank": 23
+      }
+    },
+    {
+      "anglerName": "LONDON",
+      "teamName": "CITIES",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 26,
+        "fishCount": 7,
+        "totalLengthCm": 231,
+        "biggestFishCm": 43,
         "zonePoints": 5
       },
       "day2": {
         "zone": "Red Zone",
         "peg": 4,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
+        "fishCount": 3,
+        "totalLengthCm": 93,
+        "biggestFishCm": 48,
+        "zonePoints": 6
       },
       "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 17
+        "cumulativePoints": 11,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 324,
+        "overallRank": 24
       }
     },
     {
-      "anglerName": "FLORIDA",
-      "teamName": "US STATES",
+      "anglerName": "TRIANGLE",
+      "teamName": "SHAPES",
       "day1": {
-        "zone": "Yellow Zone",
-        "peg": 8,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 5
+        "zone": "Blue Zone",
+        "peg": 23,
+        "fishCount": 4,
+        "totalLengthCm": 139,
+        "biggestFishCm": 41,
+        "zonePoints": 7
       },
       "day2": {
         "zone": "Red Zone",
-        "peg": 1,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
+        "peg": 5,
+        "fishCount": 4,
+        "totalLengthCm": 167,
+        "biggestFishCm": 71,
         "zonePoints": 5
       },
       "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 0,
-        "cumulativeLengthCm": 0,
-        "overallRank": 18
+        "cumulativePoints": 12,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 306,
+        "overallRank": 25
+      }
+    },
+    {
+      "anglerName": "FORTH",
+      "teamName": "RIVERS",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 22,
+        "fishCount": 4,
+        "totalLengthCm": 222,
+        "biggestFishCm": 61,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 7,
+        "fishCount": 2,
+        "totalLengthCm": 79,
+        "biggestFishCm": 65,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 13,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 301,
+        "overallRank": 26
+      }
+    },
+    {
+      "anglerName": "MAINE",
+      "teamName": "US STATES",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 9,
+        "fishCount": 4,
+        "totalLengthCm": 201,
+        "biggestFishCm": 58,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 28,
+        "fishCount": 2,
+        "totalLengthCm": 89,
+        "biggestFishCm": 52,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 13,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 290,
+        "overallRank": 27
+      }
+    },
+    {
+      "anglerName": "RECTANGLE",
+      "teamName": "SHAPES",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 15,
+        "fishCount": 2,
+        "totalLengthCm": 78,
+        "biggestFishCm": 43,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 13,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 13,
+        "cumulativeFish": 2,
+        "cumulativeLengthCm": 78,
+        "overallRank": 28
       }
     }
   ],
+  "biggestFishSpecies": {
+    "day1": [
+      "cod",
+      "",
+      ""
+    ],
+    "day2": [
+      "",
+      "",
+      ""
+    ]
+  },
   "secretPairs": {
     "description": "The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.\n\nIf you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field. Tie breaker if its a draw the tie breaker reverts to longest combined length.",
-    "targetLength": "167cm",
+    "targetLength": "467cm",
     "winners": [
       {
         "rank": 1,
-        "angler1": "JOE AVERAGE (GHOST)",
-        "angler2": "GERMANY GERMANY 2",
-        "combinedLengthCm": 172,
-        "offBy": 5
+        "angler1": "GERRY MCNEIL",
+        "angler2": "ALAN GILL",
+        "combinedLengthCm": 245,
+        "offBy": 222
       },
       {
         "rank": 2,
-        "angler1": "SWEDEN",
-        "angler2": "CLYDE",
-        "combinedLengthCm": 109,
-        "offBy": 58
+        "angler1": "KENNY SPIERS",
+        "angler2": "JOE AVERAGE (GHOST)",
+        "combinedLengthCm": 762,
+        "offBy": 295
       },
       {
         "rank": 3,
-        "angler1": "PORTUGAL",
-        "angler2": "FLORIDA",
-        "combinedLengthCm": 239,
-        "offBy": 72
+        "angler1": "WILLIE BRANDON",
+        "angler2": "IAN ELLIOT",
+        "combinedLengthCm": 0,
+        "offBy": 467
       }
     ],
     "otherPairs": [
       {
         "rank": 4,
-        "angler1": "FORT",
-        "angler2": "NEW MEXICO",
+        "angler1": "GEORGE BURNS",
+        "angler2": "DAVID WOOD",
         "combinedLengthCm": 0,
-        "offBy": 167
+        "offBy": 467
       },
       {
         "rank": 5,
-        "angler1": "LABRADOR",
-        "angler2": "COLLIE",
+        "angler1": "LINDSAY BELL",
+        "angler2": "HENRY SHEMPER",
         "combinedLengthCm": 0,
-        "offBy": 167
+        "offBy": 467
       },
       {
         "rank": 6,
-        "angler1": "TAY",
-        "angler2": "TEXAS",
+        "angler1": "STEVIE FRASER",
+        "angler2": "ALEX MCCREADIE",
         "combinedLengthCm": 0,
-        "offBy": 167
+        "offBy": 467
       },
       {
         "rank": 7,
-        "angler1": "ROSIE",
-        "angler2": "PUG",
-        "combinedLengthCm": 500,
-        "offBy": 333
+        "angler1": "STEWART CRILLY",
+        "angler2": "ANDY HASWELL",
+        "combinedLengthCm": 0,
+        "offBy": 467
       },
       {
         "rank": 8,
-        "angler1": "JIM",
-        "angler2": "SPAIN",
-        "combinedLengthCm": 545,
-        "offBy": 378
+        "angler1": "TOM LESSELS",
+        "angler2": "COLIN HAMILTON",
+        "combinedLengthCm": 0,
+        "offBy": 467
       },
       {
         "rank": 9,
-        "angler1": "CAIRN",
-        "angler2": "THAMES",
-        "combinedLengthCm": 743,
-        "offBy": 576
+        "angler1": "WILLIE SHAW",
+        "angler2": "STEVIE BALDWIN",
+        "combinedLengthCm": 0,
+        "offBy": 467
+      },
+      {
+        "rank": 10,
+        "angler1": "KYLE LAWSON",
+        "angler2": "CHRIS MCCREADIE",
+        "combinedLengthCm": 0,
+        "offBy": 467
+      },
+      {
+        "rank": 11,
+        "angler1": "GEORGE BELL",
+        "angler2": "DAVE HEARSAY",
+        "combinedLengthCm": 0,
+        "offBy": 467
+      },
+      {
+        "rank": 12,
+        "angler1": "CAMMIE FORBES",
+        "angler2": "PHIL STEVENSON",
+        "combinedLengthCm": 0,
+        "offBy": 467
+      },
+      {
+        "rank": 13,
+        "angler1": "JANETTE MCINTOSH",
+        "angler2": "INNES COULL",
+        "combinedLengthCm": 0,
+        "offBy": 467
+      },
+      {
+        "rank": 14,
+        "angler1": "SHAUN MCPHERSON",
+        "angler2": "KIETH WILKINSON",
+        "combinedLengthCm": 0,
+        "offBy": 467
       }
     ]
   }
