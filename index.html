@@ -20,23 +20,25 @@
     
     <style>
         :root {
-            /* 🎨 Mid-Slate Charcoal Executive Palette (v2.0.7) */
-            --bg-main: #334155;
-            --surface-color: #1e293b;
-            --surface-card: #1e293b;
-            --accent-gold: #c5a059;
-            --accent-gold-light: rgba(197, 160, 89, 0.18);
+            /* 🎨 Muted High-Contrast Palette (v2.1.0) */
+            --bg-main: #1e293b;
+            --surface-color: #334155;
+            --surface-card: #334155;
+            --pill-btn-bg: #334155;
+            --pill-btn-border: #475569;
+            --accent-gold: #eab308;
+            --accent-gold-light: rgba(234, 179, 8, 0.15);
             --accent-cyan: #38bdf8;
             --accent-emerald: #10b981;
             --accent-slate: #0f172a;
-            --pill-bg: #334155;
+            --pill-bg: #475569;
             --pill-text: #f8fafc;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-dark-contrast: #cbd5e1;
+            --text-muted: #cbd5e1;
+            --text-dark-contrast: #94a3b8;
             --border-color: #475569;
-            --border-card: rgba(255, 255, 255, 0.12);
-            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.3), 0 8px 10px -6px rgba(15, 23, 42, 0.2);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             --red-zone: #f87171;
             --blue-zone: #60a5fa;
             --green-zone: #34d399;
@@ -63,16 +65,17 @@
 
         /* 🏆 Floating Executive Header Card */
         #app-header {
-            margin-top: 20px;
+            margin-top: 16px;
             margin-bottom: 16px;
             text-align: center;
-            width: calc(100% - 20px);
-            max-width: 600px;
-            padding: 20px 18px 16px 18px;
+            width: calc(100% - 24px);
+            max-width: 500px;
+            padding: 16px 16px 14px 16px;
             background: var(--surface-color);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-card);
+            border: 1px solid var(--border-color);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
             position: relative;
         }
         
@@ -80,25 +83,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .header-badge {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             color: var(--accent-cyan);
             font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
             background: rgba(56, 189, 248, 0.15);
-            padding: 4px 8px;
+            padding: 3px 8px;
             border-radius: 6px;
             border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         #app-header h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -109,11 +112,11 @@
             width: 100%;
             height: 1px;
             background: var(--border-color);
-            margin: 12px 0 10px 0;
+            margin: 10px 0 8px 0;
         }
         #app-header .subtitle-line {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
@@ -122,174 +125,85 @@
             display: block;
         }
 
-        /* 📊 Sleek Modern Executive Landing Menu Cards */
+        /* 📱 Sleek Minimalist Vertical Pill Stack (v2.1.0) */
         .button-stack { 
             width: 100%; 
-            max-width: 600px; 
-            padding: 0 10px; 
+            max-width: 500px; 
+            padding: 0 12px; 
             display: flex; 
             flex-direction: column;
-            gap: 12px; 
+            gap: 10px; 
             margin-bottom: 20px;
         }
 
-        .nav-group-row {
-            display: flex;
-            gap: 12px;
-            width: 100%;
-        }
-
         .slide-btn {
-            background: var(--surface-color);
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 16px 18px;
+            background: var(--pill-btn-bg);
+            border: 1px solid var(--pill-btn-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 12px 18px;
             color: var(--text-main);
             cursor: pointer;
             display: flex; 
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
             justify-content: space-between; 
             text-align: left;
-            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
-            box-shadow: var(--card-shadow);
+            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             position: relative;
-            overflow: hidden;
             width: 100%;
-        }
-
-        .slide-btn::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--text-muted);
-        }
-
-        .btn-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .btn-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.58rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .btn-icon-badge {
-            font-size: 1.1rem;
-            line-height: 1;
+            user-select: none;
         }
 
         .btn-label {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.08rem;
+            font-size: 0.95rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.8px;
             color: var(--text-main);
-            line-height: 1.2;
-            margin-bottom: 8px;
-        }
-
-        /* Dynamic Live Status Counter Line */
-        .btn-live-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            background: rgba(15, 23, 42, 0.4);
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 12px;
-            display: inline-block;
+            line-height: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
         }
 
-        /* Tactile Solid Pill Action Button Motif */
-        .btn-pill-action {
-            align-self: flex-end;
-            background: var(--accent-cyan);
-            color: #0f172a;
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.72rem;
+        .btn-action-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 20px;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 4px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            transition: all 0.15s ease;
+            flex-shrink: 0;
         }
 
-        /* Sleek Left-Edge Color Accent Indicators */
-        .slide-btn.btn-ind::before { background: var(--accent-gold); }
-        .slide-btn.btn-team::before { background: #94a3b8; }
-        .slide-btn.btn-z1::before { background: var(--red-zone); }
-        .slide-btn.btn-z2::before { background: var(--blue-zone); }
-        .slide-btn.btn-pairs::before { background: var(--yellow-zone); }
-        .slide-btn.btn-fish::before { background: var(--accent-emerald); }
-
-        /* Full-Width Individual Standings Hero Card */
+        /* Gold Highlight Pill for Champion & Personal Report */
         .slide-btn.btn-ind-hero {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1px solid rgba(197, 160, 89, 0.5);
-            padding: 18px 20px;
+            border-color: rgba(234, 179, 8, 0.6);
+            background: linear-gradient(135deg, #3b4b5e 0%, #334155 100%);
         }
-        .slide-btn.btn-ind-hero .btn-label { font-size: 1.25rem; }
-        .slide-btn.btn-ind-hero .btn-pill-action { 
-            background: var(--accent-gold); 
-            color: #0f172a; 
-        }
-        .slide-btn.btn-ind-hero .btn-live-counter {
+        .slide-btn.btn-ind-hero .btn-action-tag {
             color: var(--accent-gold);
-            border-color: rgba(197, 160, 89, 0.4);
         }
 
-        /* Sleek Gold Personal Report Card Tile */
         .slide-btn.btn-report {
-            background: linear-gradient(135deg, rgba(197, 160, 89, 0.12) 0%, #1e293b 100%);
-            border: 1px solid rgba(197, 160, 89, 0.5);
-            padding: 18px 20px;
+            border-color: rgba(234, 179, 8, 0.6);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #334155 100%);
         }
-        .slide-btn.btn-report::before { background: var(--accent-gold); }
-        .slide-btn.btn-report .btn-tag { color: var(--accent-gold); }
-        .slide-btn.btn-report .btn-label { font-size: 1.15rem; }
-        .slide-btn.btn-report .btn-pill-action { 
-            background: var(--accent-gold); 
-            color: #0f172a; 
-        }
-
-        /* Dark Slate Overview Tile */
-        .slide-btn.btn-stats {
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 18px 20px;
-        }
-        .slide-btn.btn-stats::before { background: var(--accent-cyan); }
-        .slide-btn.btn-stats .btn-tag { color: #94a3b8; }
-        .slide-btn.btn-stats .btn-label { font-size: 1.15rem; color: #ffffff; }
-        .slide-btn.btn-stats .btn-pill-action { 
-            background: #38bdf8; 
-            color: #0f172a; 
+        .slide-btn.btn-report .btn-action-tag {
+            color: var(--accent-gold);
         }
 
         /* Micro-Interactive Hover Physics */
         .slide-btn:hover {
-            transform: translateY(-2px);
-            border-color: #64748b;
-            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.4);
+            transform: translateY(-1px);
+            background: #3e4f67;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .slide-btn:active { 
             transform: scale(0.985); 
@@ -324,7 +238,7 @@
             width: 100%;
         }
         .back-btn {
-            background: #334155; 
+            background: #1e293b; 
             color: var(--text-main); 
             border: 1px solid var(--border-color); 
             padding: 8px 14px; 
@@ -362,11 +276,11 @@
         .card-scroll-pill {
             background: var(--pill-bg);
             color: var(--pill-text);
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 16px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             border: 1px solid var(--border-color);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             cursor: pointer;
@@ -376,7 +290,7 @@
         }
         .card-scroll-pill .pill-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -384,14 +298,13 @@
             white-space: nowrap;
         }
         .card-scroll-pill .pill-arrow {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--accent-cyan);
             line-height: 1;
             transition: transform 0.15s ease;
         }
         .card-scroll-pill:hover {
-            background: #475569;
-            border-color: #64748b;
+            background: #64748b;
         }
         .card-scroll-pill:hover .pill-arrow {
             transform: translateX(2px);
@@ -401,9 +314,6 @@
             background: var(--accent-slate);
             color: #ffffff;
             border-color: var(--accent-slate);
-        }
-        .card-scroll-pill:active .pill-arrow {
-            color: #38bdf8;
         }
 
         /* Header Row for Tables / Cards that feature the Pill Badge */
@@ -415,109 +325,138 @@
             width: 100%;
         }
 
-        /* 📱 On-Demand Pop-Down Picker Trigger Button & Wrapper */
+        /* 📱 Modern Sleek Input Pill Trigger (v2.1.0) */
         .picker-trigger-btn {
             width: 100%;
-            padding: 12px 14px;
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            padding: 8px 14px;
+            background: #1e293b;
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 20px;
             color: var(--text-main);
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.95rem;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            text-align: left;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.15s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.12s ease;
+            user-select: none;
+        }
+        .picker-trigger-btn.rival-btn {
+            border-color: var(--accent-cyan);
+        }
+
+        .picker-trigger-btn:hover {
+            background: #2a384c;
         }
         .picker-trigger-btn:active {
-            border-color: var(--accent-gold);
-            background: #1e293b;
+            transform: translateY(1px);
         }
+
+        .picker-trigger-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 8px;
+        }
+
+        .picker-trigger-action {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: var(--accent-gold);
+            color: #0f172a;
+            padding: 3px 8px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+        .picker-trigger-btn.rival-btn .picker-trigger-action {
+            background: var(--accent-cyan);
+        }
+
         .picker-trigger-btn .trigger-arrow {
-            color: var(--accent-cyan);
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             transition: transform 0.2s ease;
         }
         .picker-trigger-btn.open .trigger-arrow {
             transform: rotate(180deg);
         }
 
-        /* 🌊 Keyframe Drop-Down Animation for Name Picker (v2.0.7) */
+        /* Keyframe Drop-Down Animation for Name Picker */
         @keyframes pickerPopIn {
-            0% { opacity: 0; transform: translateY(-8px); }
+            0% { opacity: 0; transform: translateY(-6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         .custom-picker-container {
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: #0f172a;
+            border-radius: 12px;
+            background: #1e293b;
             overflow: hidden;
             display: none;
             flex-direction: column;
-            margin-top: 8px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            margin-top: 6px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
             position: relative;
         }
         .custom-picker-container.visible {
             display: flex;
-            animation: pickerPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: pickerPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* 🎨 Bottom Gradient Overlay Scroll Cue (v2.0.7) */
+        /* Bottom Gradient Overlay Scroll Cue */
         .picker-gradient-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 28px;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.9) 100%);
+            height: 24px;
+            background: linear-gradient(to bottom, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0.95) 100%);
             pointer-events: none;
             z-index: 10;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
-        /* 📱 Custom Scrollbar & High-Visibility Scroll Handle (v2.0.7) */
+        /* Custom Scrollbar & High-Visibility Scroll Handle */
         .custom-picker-list {
-            max-height: 240px;
+            max-height: 220px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             display: flex;
             flex-direction: column;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             scrollbar-width: thin;
-            scrollbar-color: var(--accent-gold) #0f172a;
+            scrollbar-color: var(--accent-gold) #1e293b;
         }
 
         .custom-picker-list::-webkit-scrollbar {
-            width: 8px;
+            width: 7px;
         }
         .custom-picker-list::-webkit-scrollbar-track {
-            background: #0f172a;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
+            background: #1e293b;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
         .custom-picker-list::-webkit-scrollbar-thumb {
             background: var(--accent-gold);
-            border-radius: 6px;
-            border: 2px solid #0f172a;
-        }
-        .custom-picker-list::-webkit-scrollbar-thumb:hover {
-            background: #dfb76c;
+            border-radius: 5px;
+            border: 1.5px solid #1e293b;
         }
 
         .custom-picker-item {
-            padding: 12px 14px;
+            padding: 10px 14px;
             font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-main);
             border-bottom: 1px solid #334155;
@@ -564,7 +503,7 @@
             width: 100%;
         }
         .matrix-card {
-            background-color: #0f172a;
+            background-color: #1e293b;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 8px 10px;
@@ -610,25 +549,25 @@
             background: var(--surface-color); 
             border-radius: 16px;
             width: 100%; 
-            max-width: 550px; 
-            padding: 24px 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            max-width: 480px; 
+            padding: 20px 18px;
+            box-shadow: 0 16px 24px -5px rgba(0, 0, 0, 0.4);
             position: relative;
             text-align: left;
             margin: auto 0; 
-            border: 1px solid var(--border-card);
+            border: 1px solid var(--border-color);
         }
         .modal-close-btn {
-            background: #334155; 
+            background: #1e293b; 
             color: var(--text-main);
             border: 1px solid var(--border-color); 
-            padding: 12px 16px; 
+            padding: 10px 14px; 
             border-radius: 8px;
             font-family: 'Oswald', sans-serif; 
             text-transform: uppercase;
-            font-size: 0.85rem; 
+            font-size: 0.82rem; 
             width: 100%; 
-            margin-top: 15px; 
+            margin-top: 12px; 
             cursor: pointer;
             transition: all 0.15s ease;
         }
@@ -637,13 +576,13 @@
             color: #ffffff;
         }
         .rules-btn {
-            background: #334155;
+            background: #1e293b;
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 5px 10px;
+            border-radius: 16px;
             font-family: 'Oswald', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
@@ -652,7 +591,7 @@
             gap: 4px;
         }
 
-        /* ⚡ Low-Profile Concise Info Banner */
+        /* Low-Profile Concise Info Banner */
         .info-banner {
             background: #1e293b; 
             border: 1px solid var(--border-color); 
@@ -662,7 +601,7 @@
             width: 100%; 
             color: var(--text-dark-contrast);
             font-family: 'Inter', sans-serif; 
-            font-size: 0.7rem; 
+            font-size: 0.68rem; 
             line-height: 1.35; 
             text-align: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -673,13 +612,13 @@
             width: 100%; 
             display: flex; 
             flex-direction: column; 
-            gap: 12px; 
+            gap: 10px; 
             margin-top: 10px; 
         }
         .skeleton-row { 
-            height: 48px; 
+            height: 44px; 
             background: var(--surface-color); 
-            border-radius: 12px; 
+            border-radius: 10px; 
             position: relative; 
             overflow: hidden; 
             box-shadow: var(--card-shadow);
@@ -696,11 +635,11 @@
         /* Floating Elevated Card Table Styling */
         .table-card-container {
             background: var(--surface-color);
-            border-radius: 16px;
-            padding: 6px;
+            border-radius: 14px;
+            padding: 5px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-card);
-            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
             width: 100%;
         }
 
@@ -717,7 +656,7 @@
             width: 100%; 
             color: var(--text-main); 
             font-family: 'Inter', sans-serif; 
-            font-size: 0.82rem; 
+            font-size: 0.8rem; 
             white-space: nowrap; 
         }
 
@@ -729,7 +668,7 @@
             text-transform: uppercase;
             font-weight: 600; 
             letter-spacing: 1px; 
-            padding: 8px 8px; 
+            padding: 7px 7px; 
             border-bottom: 1px solid var(--border-color);
             position: sticky; 
             top: 0; 
@@ -742,33 +681,33 @@
         tr.group-header-row th {
             top: 0;
             z-index: 30;
-            font-size: 0.72rem;
-            letter-spacing: 1.2px;
-            padding: 6px 8px;
+            font-size: 0.7rem;
+            letter-spacing: 1.1px;
+            padding: 5px 7px;
             border-bottom: 1px solid #475569;
             background: #0f172a !important;
         }
 
         /* Tier-2 Sub-Metric Header Styling */
         tr.sub-header-row th {
-            top: 29px;
+            top: 27px;
             z-index: 29;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.8px;
-            padding: 6px 6px;
+            letter-spacing: 0.7px;
+            padding: 5px 5px;
             border-bottom: 2px solid var(--border-color);
         }
 
         /* Column Division Vertical Borders for Multi-Header Layouts */
         .col-divider-left {
-            border-left: 2px solid #334155;
+            border-left: 2px solid #1e293b;
         }
 
         td { 
-            padding: 8px 8px; 
+            padding: 7px 7px; 
             text-align: center; 
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid #1e293b;
             transition: background 0.15s ease;
             font-feature-settings: "tnum";
             font-variant-numeric: tabular-nums;
@@ -776,9 +715,9 @@
 
         /* ➖ Textless Visual Point Tier Separator Row */
         tr.tier-separator-row td {
-            height: 10px;
+            height: 8px;
             padding: 0;
-            background: #334155 !important;
+            background: #1e293b !important;
             border-top: 1px solid #475569;
             border-bottom: 1px solid #475569;
             line-height: 0;
@@ -787,15 +726,15 @@
 
         .tie-breaker-td {
             color: var(--text-dark-contrast) !important;
-            font-size: 0.8rem !important;
+            font-size: 0.78rem !important;
             font-weight: 600 !important;
             text-align: center;
         }
         
         tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) td { background: rgba(15, 23, 42, 0.4); }
+        tr:nth-child(even) td { background: rgba(15, 23, 42, 0.35); }
         tr:hover td, tr:active td { background: rgba(56, 189, 248, 0.12) !important; }
-        tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #334155 !important; }
+        tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #1e293b !important; }
 
         table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
         table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
@@ -809,31 +748,31 @@
             align-items: center;
             justify-content: center;
             line-height: 1.2;
-            padding: 4px 2px;
+            padding: 3px 2px;
         }
         .rivalry-val {
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-main);
         }
         .rivalry-badge {
-            font-size: 0.58rem;
+            font-size: 0.55rem;
             font-weight: 700;
-            padding: 1px 5px;
+            padding: 1px 4px;
             border-radius: 4px;
-            margin-top: 3px;
+            margin-top: 2px;
             text-transform: uppercase;
             display: inline-block;
         }
         .rivalry-badge.win { background: var(--accent-emerald); color: #ffffff; }
         .rivalry-badge.draw { background: #64748b; color: #ffffff; }
 
-        /* 🥊 Head-to-Head Beat Rate Summary Badge (v2.0.7) */
+        /* Head-to-Head Beat Rate Summary Badge */
         .beat-rate-summary-bar {
-            background: #0f172a;
+            background: #1e293b;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             margin-bottom: 10px;
             text-align: center;
             display: flex;
@@ -842,7 +781,7 @@
         }
         .beat-rate-title {
             font-family: 'Oswald', sans-serif;
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.8px;
             text-transform: uppercase;
@@ -853,7 +792,7 @@
 
         .beat-rate-sub {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 600;
             color: var(--text-muted);
         }
@@ -862,60 +801,60 @@
             font-family: 'Oswald', sans-serif; 
             color: var(--text-muted); 
             text-align: center; 
-            padding: 50px 20px; 
+            padding: 40px 20px; 
             text-transform: uppercase; 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             letter-spacing: 1px;
         }
         
         .stat-grid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-top: 10px;
-            margin-bottom: 40px;
+            gap: 14px;
+            margin-top: 8px;
+            margin-bottom: 30px;
             width: 100%;
         }
         .stat-card {
             background: var(--surface-color);
-            border: 1px solid var(--border-card);
-            border-radius: 16px;
-            padding: 20px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 16px 14px;
             box-shadow: var(--card-shadow); 
             text-align: center;
             position: relative;
             width: 100%;
         }
         
-        .profile-card-red { border-left: 5px solid var(--red-zone); }
-        .profile-card-blue { border-left: 5px solid var(--blue-zone); }
-        .profile-card-green { border-left: 5px solid var(--green-zone); }
-        .profile-card-yellow { border-left: 5px solid var(--yellow-zone); }
+        .profile-card-red { border-left: 4px solid var(--red-zone); }
+        .profile-card-blue { border-left: 4px solid var(--blue-zone); }
+        .profile-card-green { border-left: 4px solid var(--green-zone); }
+        .profile-card-yellow { border-left: 4px solid var(--yellow-zone); }
 
         .stat-title {
             color: var(--text-main);
             font-family: 'Oswald', sans-serif;
-            font-size: 1.15rem;
+            font-size: 1.08rem;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
         .metric-card-item {
-            background: #0f172a;
+            background: #1e293b;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
             width: 100%;
         }
 
         .bar-chart-container {
             width: 100%;
-            background: #334155;
-            border-radius: 6px;
-            margin: 6px 0 4px 0;
-            height: 24px;
+            background: #475569;
+            border-radius: 5px;
+            margin: 5px 0 3px 0;
+            height: 22px;
             position: relative;
             overflow: hidden;
         }
@@ -923,81 +862,80 @@
             height: 100%;
             display: flex;
             align-items: center;
-            padding-left: 8px;
+            padding-left: 6px;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             white-space: nowrap;
             transition: width 0.8s ease-out;
             position: relative;
             z-index: 2;
-            border-radius: 5px;
+            border-radius: 4px;
         }
         .bar-chart-label-right {
             position: absolute;
-            right: 8px;
+            right: 6px;
             top: 0; bottom: 0;
             display: flex;
             align-items: center;
             font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             font-weight: 600;
             z-index: 3;
         }
 
-        /* 📱 Enhanced Readability for Scorecard Explanation Subtext */
         .metric-subtext {
-            font-size: 0.74rem;
+            font-size: 0.7rem;
             color: var(--text-dark-contrast);
             font-weight: 500;
-            line-height: 1.35;
+            line-height: 1.3;
             display: block;
         }
 
         .chart-legend {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            font-size: 0.68rem;
+            gap: 10px;
+            font-size: 0.65rem;
             text-transform: uppercase;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
         .legend-item { display: flex; align-items: center; gap: 4px; }
-        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
 
         .footer {
             margin-top: auto;
-            padding: 25px 15px 15px 15px;
+            padding: 20px 15px 15px 15px;
             text-align: center;
             width: 100%;
-            max-width: 600px;
-            font-size: 0.72rem;
+            max-width: 500px;
+            font-size: 0.68rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-family: 'JetBrains Mono', monospace;
         }
 
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         
         .pulse-dot {
-            width: 8px; height: 8px;
+            width: 7px; height: 7px;
             background-color: var(--accent-emerald);
             border-radius: 50%;
             display: inline-block;
-            margin-right: 6px;
+            margin-right: 5px;
             animation: flash 1.5s infinite;
         }
         .live-status-badge {
             display: inline-flex;
             align-items: center;
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
@@ -1010,7 +948,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.0.7</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.0</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1018,94 +956,54 @@
         <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
 
-    <!-- 📊 Sleek Modern Executive Landing Menu Cards -->
+    <!-- 📱 Sleek Minimalist Vertical Pill Stack (v2.1.0) -->
     <nav class="button-stack">
-        <!-- Hero Primary Index Card -->
-        <div class="slide-btn btn-ind btn-ind-hero" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
-            <div class="btn-header-row">
-                <span class="btn-tag">01 • PRIMARY CHAMPIONSHIP</span>
-                <span class="btn-icon-badge">🏆</span>
-            </div>
+        <!-- Individual Champion -->
+        <div class="slide-btn btn-ind-hero" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span class="btn-label">Individual Champion</span>
-            <div class="btn-live-counter" id="cnt-hero-ind">Loading Standings...</div>
-            <div class="btn-pill-action">VIEW STANDINGS ❯</div>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Session Pair Row -->
-        <div class="nav-group-row">
-            <div class="slide-btn btn-z1" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
-                <div class="btn-header-row">
-                    <span class="btn-tag">02 • NIGHT</span>
-                    <span class="btn-icon-badge">🌙</span>
-                </div>
-                <span class="btn-label">Zone Day 1</span>
-                <div class="btn-live-counter" id="cnt-z1">Loading...</div>
-                <div class="btn-pill-action">VIEW ❯</div>
-            </div>
-            <div class="slide-btn btn-z2" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
-                <div class="btn-header-row">
-                    <span class="btn-tag">03 • DAYTIME</span>
-                    <span class="btn-icon-badge">☀️</span>
-                </div>
-                <span class="btn-label">Zone Day 2</span>
-                <div class="btn-live-counter" id="cnt-z2">Loading...</div>
-                <div class="btn-pill-action">VIEW ❯</div>
-            </div>
+        <!-- Zone Day 1 -->
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 1', 'Zone Day 1')">
+            <span class="btn-label">Zone Day 1</span>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Specialist Trio Row -->
-        <div class="nav-group-row">
-            <div class="slide-btn btn-team" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
-                <div class="btn-header-row">
-                    <span class="btn-tag">04 • SQUADS</span>
-                    <span class="btn-icon-badge">🛡️</span>
-                </div>
-                <span class="btn-label">Team Winners</span>
-                <div class="btn-live-counter" id="cnt-team">Loading...</div>
-                <div class="btn-pill-action">VIEW ❯</div>
-            </div>
-            <div class="slide-btn btn-pairs" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
-                <div class="btn-header-row">
-                    <span class="btn-tag">05 • PAIRS</span>
-                    <span class="btn-icon-badge">🎯</span>
-                </div>
-                <span class="btn-label">Secret Pairs</span>
-                <div class="btn-live-counter" id="cnt-pairs">Loading...</div>
-                <div class="btn-pill-action">VIEW ❯</div>
-            </div>
+        <!-- Zone Day 2 -->
+        <div class="slide-btn" onclick="loadExcelTab('ZONE 2', 'Zone Day 2')">
+            <span class="btn-label">Zone Day 2</span>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Max Specimen Full Row -->
-        <div class="slide-btn btn-fish" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
-            <div class="btn-header-row">
-                <span class="btn-tag">06 • SPECIMEN LEADERBOARD</span>
-                <span class="btn-icon-badge">🐋</span>
-            </div>
+        <!-- Team Winners -->
+        <div class="slide-btn" onclick="loadExcelTab('TEAM RESULT', 'Team Result')">
+            <span class="btn-label">Team Winners</span>
+            <span class="btn-action-tag">VIEW ❯</span>
+        </div>
+
+        <!-- Secret Pairs -->
+        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
+            <span class="btn-label">Secret Pairs</span>
+            <span class="btn-action-tag">VIEW ❯</span>
+        </div>
+
+        <!-- Biggest Fish -->
+        <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
             <span class="btn-label">Biggest Fish</span>
-            <div class="btn-live-counter" id="cnt-fish">Loading...</div>
-            <div class="btn-pill-action">VIEW CATCHES ❯</div>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- High-Impact Gold Personal Report Card Hero Tile -->
+        <!-- Gold Match Report Card Pill -->
         <div class="slide-btn btn-report" onclick="openReportModal()">
-            <div class="btn-header-row">
-                <span class="btn-tag">PROSPECTUS PERFORMANCE AUDIT</span>
-                <span class="btn-icon-badge">📊</span>
-            </div>
             <span class="btn-label">My Match Report Card</span>
-            <div class="btn-live-counter">Custom Percentiles & Head-To-Head Analysis</div>
-            <div class="btn-pill-action">GENERATE REPORT ❯</div>
+            <span class="btn-action-tag">REPORT ❯</span>
         </div>
         
-        <!-- Dark Slate Overview Tile -->
-        <div class="slide-btn btn-stats" onclick="loadMatchStats('Tournament Overview')">
-            <div class="btn-header-row">
-                <span class="btn-tag">DATA & METRICS TERMINAL</span>
-                <span class="btn-icon-badge">📈</span>
-            </div>
+        <!-- Tournament Overview Pill -->
+        <div class="slide-btn" onclick="loadMatchStats('Tournament Overview')">
             <span class="btn-label">Tournament Overview</span>
-            <div class="btn-live-counter">Zone Analytics & Timeline Simulation</div>
-            <div class="btn-pill-action">VIEW TERMINAL ❯</div>
+            <span class="btn-action-tag">TERMINAL ❯</span>
         </div>
     </nav>
 
@@ -1121,28 +1019,28 @@
     <!-- 🎯 Interactive Popup Modal Overlay for Secret Pairs Rules -->
     <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
-            <div id="modal-body" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-main); font-family: 'Inter', sans-serif;"></div>
+            <h3 id="modal-title" style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px;">Rules</h3>
+            <div id="modal-body" style="font-size: 0.85rem; line-height: 1.45; color: var(--text-main); font-family: 'Inter', sans-serif;"></div>
             <button class="modal-close-btn" onclick="closeModal(event)">Close Rules</button>
         </div>
     </div>
 
-    <!-- 👤 Personal Report Card Embedded Picker Modal (Scroll Cues v2.0.7) -->
+    <!-- 👤 Personal Report Card Embedded Picker Modal (v2.1.0) -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent-gold); margin-bottom: 6px;">My Match Report Card</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.35;">Select your name to generate your private performance prospectus card across 10 percentile metrics and head-to-head rivalry analysis.</div>
+            <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 4px;">My Match Report Card</h3>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Select your name to generate your private performance prospectus card across 10 percentile metrics and head-to-head rivalry analysis.</div>
             
-            <div style="margin-bottom: 18px;">
-                <label style="display: block; font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: var(--text-main); margin-bottom: 6px;">Select Competitor Name:</label>
+            <div style="margin-bottom: 16px;">
+                <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.8px;">STEP 1: SELECT YOUR NAME</span>
                 
-                <!-- On-Demand Trigger Button -->
+                <!-- Modern Input Pill Trigger -->
                 <button id="angler-picker-btn" class="picker-trigger-btn" onclick="toggleAnglerPicker()">
-                    <span id="angler-picker-btn-text">Tap to Select Angler...</span>
-                    <span class="trigger-arrow">▾</span>
+                    <span id="angler-picker-btn-text" class="picker-trigger-name">Choose Competitor...</span>
+                    <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
                 </button>
 
-                <!-- Embedded Pop-down Selection Box (Scroll Cues & Animation v2.0.7) -->
+                <!-- Embedded Pop-down Selection Box -->
                 <div id="angler-picker-container" class="custom-picker-container">
                     <div id="custom-angler-picker" class="custom-picker-list">
                         <div class="custom-picker-item" style="color: var(--text-muted);">Loading Anglers...</div>
@@ -1152,12 +1050,12 @@
             </div>
 
             <button class="modal-close-btn" style="background: var(--accent-gold); color: #0f172a; font-weight:700; margin-top: 0; border:none;" onclick="generatePersonalReport()">Generate Report ❯</button>
-            <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 6px; border:none;" onclick="closeReportModal(event)">Cancel</button>
+            <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 4px; border:none;" onclick="closeReportModal(event)">Cancel</button>
         </div>
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.0.7</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.0</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1243,11 +1141,10 @@
         document.addEventListener("DOMContentLoaded", function() {
             initMatchMetadata();
             updateSyncTime();
-            populateMenuLiveCounters();
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.0.7";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.0";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1286,63 +1183,6 @@
                 throw new Error("Invalid JSON structure.");
             }
             return cachedScores;
-        }
-
-        /* 📊 Dynamic Live Status Snippet Ingestion */
-        async function populateMenuLiveCounters() {
-            try {
-                const data = await fetchScores();
-                const anglers = data.anglers || [];
-
-                if (anglers.length === 0) return;
-
-                // 1. Leader Snippet
-                let sortedInd = [...anglers].sort((a,b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
-                let leader = sortedInd[0];
-                if (leader) {
-                    document.getElementById('cnt-hero-ind').innerText = `1st: ${leader.anglerName} (${leader.totals.cumulativePoints} pts)`;
-                }
-
-                // 2. Zone Counts
-                let d1Fish = 0, d2Fish = 0;
-                let maxFish = 0;
-                anglers.forEach(a => {
-                    d1Fish += a.day1?.fishCount || 0;
-                    d2Fish += a.day2?.fishCount || 0;
-                    let big1 = a.day1?.biggestFishCm || 0;
-                    let big2 = a.day2?.biggestFishCm || 0;
-                    if (big1 > maxFish) maxFish = big1;
-                    if (big2 > maxFish) maxFish = big2;
-                });
-                document.getElementById('cnt-z1').innerText = `${d1Fish} Total Fish Landed`;
-                document.getElementById('cnt-z2').innerText = `${d2Fish} Total Fish Landed`;
-                document.getElementById('cnt-fish').innerText = `Top Catch: ${maxFish}cm`;
-
-                // 3. Team Leader
-                let teams = {};
-                anglers.forEach(item => {
-                    let t = item.teamName ? item.teamName.trim() : "";
-                    if (t === "" || t.toUpperCase() === "SOLO" || t.toUpperCase() === "INDEPENDENT") return;
-                    if (!teams[t]) teams[t] = { name: t, pts: 0 };
-                    teams[t].pts += item.totals.cumulativePoints || 0;
-                });
-                let sortedTeams = Object.values(teams).sort((a,b) => a.pts - b.pts);
-                if (sortedTeams.length > 0) {
-                    document.getElementById('cnt-team').innerText = `1st: ${sortedTeams[0].name} (${sortedTeams[0].pts}pts)`;
-                } else {
-                    document.getElementById('cnt-team').innerText = `Squad Standings Active`;
-                }
-
-                // 4. Pairs
-                if (data.secretPairs && data.secretPairs.targetLength) {
-                    document.getElementById('cnt-pairs').innerText = `Target: ${data.secretPairs.targetLength}`;
-                } else {
-                    document.getElementById('cnt-pairs').innerText = `Pairs Scoring Active`;
-                }
-
-            } catch (e) {
-                console.warn('Live menu snippet skipped:', e);
-            }
         }
 
         function openRulesModal(title, contentHtml) {
@@ -1390,7 +1230,7 @@
         async function openReportModal() {
             pushOverlayState();
             selectedAnglerName = "";
-            document.getElementById('angler-picker-btn-text').innerText = "Tap to Select Angler...";
+            document.getElementById('angler-picker-btn-text').innerText = "Choose Competitor...";
             
             const container = document.getElementById('angler-picker-container');
             const btn = document.getElementById('angler-picker-btn');
@@ -1421,13 +1261,12 @@
 
         function selectPickerAngler(name, targetElem) {
             selectedAnglerName = name;
-            document.getElementById('angler-picker-btn-text').innerText = "Selected: " + name;
+            document.getElementById('angler-picker-btn-text').innerText = name;
             
             const items = document.querySelectorAll('#custom-angler-picker .custom-picker-item');
             items.forEach(el => el.classList.remove('selected'));
             if (targetElem) targetElem.classList.add('selected');
             
-            // Auto close list after selection
             toggleAnglerPicker();
         }
 
@@ -1440,7 +1279,7 @@
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const btnText = document.getElementById('rival-picker-btn-text');
-            if (btnText) btnText.innerText = "Rival: " + rivalName;
+            if (btnText) btnText.innerText = rivalName;
 
             const items = document.querySelectorAll('#custom-rival-picker .custom-picker-item');
             items.forEach(el => el.classList.remove('selected'));
@@ -1453,16 +1292,16 @@
         function openSecretPairsRules(description) {
             const desc = description || 'The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.';
             const rulesHtml = `
-                <div style="margin-bottom: 15px;">
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">🎯 Format Structure</strong>
+                <div style="margin-bottom: 12px;">
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 2px;">🎯 Format Structure</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">${desc}</span>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">👻 Ghost Partner Rule</strong>
+                <div style="margin-bottom: 12px;">
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 2px;">👻 Ghost Partner Rule</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">If you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field.</span>
                 </div>
                 <div>
-                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 3px;">⚖️ Tie-Breaker Sequence</strong>
+                    <strong style="display: block; font-family: 'Oswald', sans-serif; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 2px;">⚖️ Tie-Breaker Sequence</strong>
                     <span style="font-size: 0.82rem; color: var(--text-main);">If there is a draw on variance (off-by distance), the tie-breaker reverts to the longest combined length.</span>
                 </div>
             `;
@@ -1473,7 +1312,6 @@
         function calcPercentile(targetVal, array, isLowerBetter = false) {
             if (!array || array.length <= 1) return 0;
             
-            // Check if all values in the array are zero or identical (e.g. unentered session)
             let allEqualOrZero = array.every(v => v === array[0]);
             if (allEqualOrZero || targetVal === 0) return 0;
 
@@ -1494,7 +1332,7 @@
 
         async function generatePersonalReport() {
             if (!selectedAnglerName) {
-                alert("Please tap [ Tap to Select Angler... ] to choose your name first.");
+                alert("Please tap [ Choose Competitor... ] to select your name first.");
                 return;
             }
 
@@ -1595,18 +1433,18 @@
 
                 // 👤 Top Personal Summary Block
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 5px solid var(--accent-gold); text-align: left;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <span style="font-family: 'Oswald'; font-size: 1.3rem; text-transform: uppercase; font-weight: 700; color: var(--text-main);">${user.anglerName}</span>
-                            <button onclick="openReportModal()" style="background: #334155; border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 12px; border-radius: 6px; font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; cursor: pointer;">Switch Angler ↺</button>
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-family: 'Oswald'; font-size: 1.25rem; text-transform: uppercase; font-weight: 700; color: var(--text-main);">${user.anglerName}</span>
+                            <button onclick="openReportModal()" style="background: #1e293b; border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; cursor: pointer;">Switch Angler ↺</button>
                         </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px;">TEAM AFFILIATION: ${user.teamName || 'SOLO COMPETITOR'}</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; margin-bottom: 14px;">TEAM AFFILIATION: ${user.teamName || 'SOLO COMPETITOR'}</div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; text-align: center; background: #0f172a; padding: 12px 8px; border-radius: 12px; border: 1px solid var(--border-color);">
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem; color:var(--accent-gold);">${uPts}</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">ZONE PTS</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">LENGTH</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem;">${uFish}</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">FISH</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1.1rem;">${uMaxFish}cm</div><div style="font-size:0.62rem; color:var(--text-muted); font-weight:700;">BEST</div></div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; text-align: center; background: #1e293b; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--border-color);">
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1rem; color:var(--accent-gold);">${uPts}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:700;">ZONE PTS</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:700;">LENGTH</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1rem;">${uFish}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:700;">FISH</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:1rem;">${uMaxFish}cm</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:700;">BEST</div></div>
                         </div>
                     </div>
                 `;
@@ -1615,12 +1453,12 @@
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Portfolio Performance Sliders</div>
                         
-                        <div style="background: #0f172a; border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 14px; margin-bottom: 18px; text-align: center; font-size: 0.72rem; color: var(--text-muted); line-height: 1.35;">
+                        <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 12px; margin-bottom: 14px; text-align: center; font-size: 0.7rem; color: var(--text-muted); line-height: 1.3;">
                             <strong>How to read this:</strong> Each percentage slider displays the proportion of the total active field you outperformed in that metric (e.g. <strong>80%</strong> means you finished ahead of 80% of all competitors).
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Zone Points (${uPts} Points)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--accent-gold); color: #0f172a;">${pOverallMatch}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pOverallMatch}% of field</div>
@@ -1629,7 +1467,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Fish Count (${uFish} Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Fish Count (${uFish} Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--accent-cyan); color: #0f172a;">${pFish}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pFish}% of field</div>
@@ -1638,7 +1476,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pLen}%; background: #64748b; color: #fff;">${pLen}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pLen}% of field</div>
@@ -1647,7 +1485,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Biggest Single Fish (${uMaxFish}cm)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Biggest Single Fish (${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pSpec}%; background: var(--accent-emerald); color: #0f172a;">${pSpec}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pSpec}% of field</div>
@@ -1656,7 +1494,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Average Fish Length (${uAvgSize.toFixed(1)}cm / Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Average Fish Length (${uAvgSize.toFixed(1)}cm / Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pAvgSize}%; background: #0284c7; color: #fff;">${pAvgSize}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pAvgSize}% of field</div>
@@ -1665,7 +1503,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 1 Best Session - Evening/Night (${uD1Fish} Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 1 Best Session - Evening/Night (${uD1Fish} Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pD1Best}%; background: var(--red-zone); color: #fff;">${pD1Best}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pD1Best}% of field</div>
@@ -1674,7 +1512,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 2 Best Session - Daytime (${uD2Fish} Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 2 Best Session - Daytime (${uD2Fish} Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pD2Best}%; background: var(--blue-zone); color: #fff;">${pD2Best}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pD2Best}% of field</div>
@@ -1683,7 +1521,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day-to-Day Consistency (±${uVariance} Fish Shift)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day-to-Day Consistency (±${uVariance} Fish Shift)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pVar}%; background: #64748b; color: #fff;">${pVar}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pVar}% of field</div>
@@ -1692,7 +1530,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 1 Zone Performance Comparison (${uD1Ratio.toFixed(2)}x Peg Avg)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 1 Zone Performance Comparison (${uD1Ratio.toFixed(2)}x Peg Avg)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pD1Ratio}%; background: var(--accent-cyan); color: #0f172a;">${pD1Ratio}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pD1Ratio}% of field</div>
@@ -1701,7 +1539,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Day 2 Zone Performance Comparison (${uD2Ratio.toFixed(2)}x Peg Avg)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 2 Zone Performance Comparison (${uD2Ratio.toFixed(2)}x Peg Avg)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pD2Ratio}%; background: #0284c7; color: #fff;">${pD2Ratio}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pD2Ratio}% of field</div>
@@ -1710,7 +1548,7 @@
                         </div>
 
                         <div class="metric-card-item" style="margin-bottom:0;">
-                            <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main);">Average Zone Placing (${uAvgZonePts.toFixed(1)} Avg Rank)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Average Zone Placing (${uAvgZonePts.toFixed(1)} Avg Rank)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pPod}%; background: var(--accent-gold); color: #0f172a;">${pPod}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pPod}% of field</div>
@@ -1721,18 +1559,21 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Rival Picker Integration (Scroll Cues v2.0.7)
+                // 🥊 App-Native Rival Picker Integration (v2.1.0)
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🥊 Head-to-Head Rivalry Matchup</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">Select any rival competitor for a direct side-by-side comparison.</div>
+                        <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Select any rival competitor for a direct side-by-side comparison.</div>
 
                         <div style="margin-bottom: 12px;">
-                            <button id="rival-picker-btn" class="picker-trigger-btn" onclick="toggleRivalPicker()">
-                                <span id="rival-picker-btn-text">Tap to Choose Rival Competitor...</span>
-                                <span class="trigger-arrow">▾</span>
+                            <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.8px;">STEP 2: CHOOSE RIVAL</span>
+
+                            <!-- Modern Input Pill Trigger -->
+                            <button id="rival-picker-btn" class="picker-trigger-btn rival-btn" onclick="toggleRivalPicker()">
+                                <span id="rival-picker-btn-text" class="picker-trigger-name">Choose Rival Competitor...</span>
+                                <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
                             </button>
 
                             <div id="rival-picker-container" class="custom-picker-container">
@@ -1753,7 +1594,7 @@
                             </div>
                         </div>
 
-                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 15px;">Tap the button above to choose a rival competitor.</div></div>
+                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.78rem; padding: 12px;">Tap the button above to choose a rival competitor.</div></div>
                     </div>
                 `;
 
@@ -1818,7 +1659,6 @@
             let u = getStats(user);
             let r = getStats(rival);
 
-            // 🧮 Calculate Real-Time "Beat Rate" Metrics (v2.0.7)
             let metricsList = [
                 { uVal: u.p, rVal: r.p, isLowerBetter: true },
                 { uVal: u.f, rVal: r.f, isLowerBetter: false },
@@ -1843,7 +1683,7 @@
                 }
             });
 
-            let totalMetrics = metricsList.length; // 11
+            let totalMetrics = metricsList.length;
             let dominancePct = Math.round((wins / totalMetrics) * 100);
 
             let summaryTitleClass = "dominant";
@@ -1857,7 +1697,6 @@
                 summaryTitleText = `DEAD HEAT: TIED AT ${wins} METRICS EACH`;
             }
 
-            /* Stacked Badge Generator for Compact Layout */
             function renderCellHtml(valStr, valU, valR, isLowerBetter = false, isUser = true) {
                 if (valU === valR) {
                     return `
@@ -1879,73 +1718,72 @@
             }
 
             let html = `
-                <!-- 🥊 Beat Rate Summary Header Bar (v2.0.7) -->
                 <div class="beat-rate-summary-bar">
                     <div class="beat-rate-title ${summaryTitleClass}">${summaryTitleText}</div>
                     <div class="beat-rate-sub">MATCH RECORD: ${wins} WINS &nbsp;|&nbsp; ${draws} DRAWS &nbsp;|&nbsp; ${losses} LOSSES</div>
                 </div>
 
-                <div class="table-card-container" style="margin-bottom:0; padding:4px;">
+                <div class="table-card-container" style="margin-bottom:0; padding:3px;">
                     <div class="card-table-wrapper">
-                        <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
+                        <table style="width:100%; font-size: 0.75rem; margin-bottom:0;">
                             <tr>
-                                <th style="text-align:center; width:33%; padding: 6px 4px;">${user.anglerName.split(' ')[0]}</th>
-                                <th style="text-align:center; width:34%; padding: 6px 4px;">METRIC</th>
-                                <th style="text-align:center; width:33%; padding: 6px 4px;">${rival.anglerName.split(' ')[0]}</th>
+                                <th style="text-align:center; width:33%; padding: 5px 4px;">${user.anglerName.split(' ')[0]}</th>
+                                <th style="text-align:center; width:34%; padding: 5px 4px;">METRIC</th>
+                                <th style="text-align:center; width:33%; padding: 5px 4px;">${rival.anglerName.split(' ')[0]}</th>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.p} pts`, u.p, r.p, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Points</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Total Points</td>
                                 <td>${renderCellHtml(`${r.p} pts`, u.p, r.p, true, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.f} fish`, u.f, r.f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Fish</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Total Fish</td>
                                 <td>${renderCellHtml(`${r.f} fish`, u.f, r.f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${(u.l/100).toFixed(2)}m`, u.l, r.l, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Total Length</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Total Length</td>
                                 <td>${renderCellHtml(`${(r.l/100).toFixed(2)}m`, u.l, r.l, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.maxF} cm`, u.maxF, r.maxF, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Biggest Fish</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Biggest Fish</td>
                                 <td>${renderCellHtml(`${r.maxF} cm`, u.maxF, r.maxF, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Avg Fish Size</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Avg Fish Size</td>
                                 <td>${renderCellHtml(`${r.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.d1f} fish`, u.d1f, r.d1f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 1 Catch</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 1 Catch</td>
                                 <td>${renderCellHtml(`${r.d1f} fish`, u.d1f, r.d1f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.d2f} fish`, u.d2f, r.d2f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Catch</td>
-                                <td>${renderCellHtml(`${r.d2f} fish`, u.d2f, r.d2f, false, false)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 2 Catch</td>
+                                <td>${renderCellHtml(`${r.d2f} fish`, u.d1f, r.d2f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`±${u.variance} f`, u.variance, r.variance, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Consistency</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Consistency</td>
                                 <td>${renderCellHtml(`±${r.variance} f`, u.variance, r.variance, true, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 1 Zone Ratio</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 1 Zone Ratio</td>
                                 <td>${renderCellHtml(`${r.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Day 2 Zone Ratio</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 2 Zone Ratio</td>
                                 <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.72rem;">Avg Zone Rank</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Avg Zone Rank</td>
                                 <td>${renderCellHtml(`${r.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, false)}</td>
                             </tr>
                         </table>
@@ -2055,37 +1893,37 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 5px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
-                        <div style="background: #0f172a; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
-                            <span style="font-family: 'Oswald'; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.65rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 8px; border-radius: 4px;">v2.0.7 PROSPECTUS</span>
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
+                        <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
+                            <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.0 PROSPECTUS</span>
                         </div>
-                        <div style="padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--surface-color);">
-                            <div style="border-right: 1px solid var(--border-color); padding-right: 10px;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.8rem; font-weight: 700; color: var(--accent-cyan);">${totalAnglers}</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Total Entries</div>
+                        <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
+                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-cyan);">${totalAnglers}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Total Entries</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.8rem; font-weight: 700; color: var(--accent-emerald);">${successRate}%</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">Active Catch Rate</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${successRate}%</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Active Catch Rate</div>
                             </div>
                         </div>
-                        <div style="border-top: 1px solid var(--border-color); padding: 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #0f172a;">
+                        <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 700; color: var(--text-main);">${totalFish}</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Total Fish</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Fish</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 700; color: var(--text-main);">${totalMeters}m</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Total Length</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Length</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 700; color: var(--text-main);">${avgFishLength}cm</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Avg Fish Size</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${avgFishLength}cm</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Avg Fish Size</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 700; color: var(--text-main);">${competitorAverage.toFixed(1)}</div>
-                                <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Avg Ind. Catch</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${competitorAverage.toFixed(1)}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Avg Ind. Catch</div>
                             </div>
                         </div>
                     </div>
@@ -2097,14 +1935,14 @@
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Night vs. Daytime Session Comparison</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">Side-by-side performance metrics across Evening/Night and Daytime conditions.</div>
+                        <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">Side-by-side performance metrics across Evening/Night and Daytime conditions.</div>
                         <div class="table-card-container">
                             <div class="card-table-wrapper">
-                                <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
+                                <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="text-align: left; padding: 6px 8px;">METRIC</th>
-                                        <th style="text-align: center; padding: 6px 8px;">DAY 1 (NIGHT)</th>
-                                        <th style="text-align: center; padding: 6px 8px;">DAY 2 (DAYTIME)</th>
+                                        <th style="text-align: left; padding: 5px 7px;">METRIC</th>
+                                        <th style="text-align: center; padding: 5px 7px;">DAY 1 (NIGHT)</th>
+                                        <th style="text-align: center; padding: 5px 7px;">DAY 2 (DAYTIME)</th>
                                     </tr>
                                     <tr>
                                         <td style="text-align: left; font-weight: 700; color:var(--text-main);">Total Catch (Fish)</td>
@@ -2143,25 +1981,25 @@
                     htmlMarkup += `
                         <div class="stat-card" style="text-align: left;">
                             <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📏 Top 5 Specimen Length Leaderboard</div>
-                            <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">The five longest individual catches recorded across the tournament.</div>
+                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">The five longest individual catches recorded across the tournament.</div>
                             <div class="table-card-container">
                                 <div class="card-table-wrapper">
-                                    <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
+                                    <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
                                         <tr>
-                                            <th style="text-align: center; padding: 6px 8px;">RNK</th>
-                                            <th style="text-align: left; padding: 6px 8px;">ANGLER NAME</th>
-                                            <th style="text-align: left; padding: 6px 8px;">ZONE / DAY</th>
-                                            <th style="text-align: center; padding: 6px 8px;">LENGTH</th>
+                                            <th style="text-align: center; padding: 5px 7px;">RNK</th>
+                                            <th style="text-align: left; padding: 5px 7px;">ANGLER NAME</th>
+                                            <th style="text-align: left; padding: 5px 7px;">ZONE / DAY</th>
+                                            <th style="text-align: center; padding: 5px 7px;">LENGTH</th>
                                         </tr>
                     `;
                     top5Specimens.forEach((spec, idx) => {
                         let rankDisplay = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : (idx + 1)));
                         htmlMarkup += `
                             <tr>
-                                <td style="text-align: center; font-weight: 700; padding: 6px 8px;">${rankDisplay}</td>
-                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 6px 8px;">${spec.name}</td>
-                                <td style="text-align: left; color: var(--text-muted); padding: 6px 8px;">${spec.zone} (${spec.day})</td>
-                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 6px 8px;">${spec.lengthCm} cm</td>
+                                <td style="text-align: center; font-weight: 700; padding: 5px 7px;">${rankDisplay}</td>
+                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 5px 7px;">${spec.name}</td>
+                                <td style="text-align: left; color: var(--text-muted); padding: 5px 7px;">${spec.zone} (${spec.day})</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 5px 7px;">${spec.lengthCm} cm</td>
                             </tr>
                         `;
                     });
@@ -2173,19 +2011,19 @@
                     `;
                 }
 
-                let radius = 35;
+                let radius = 30;
                 let circumference = 2 * Math.PI * radius;
                 const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
                 
                 htmlMarkup += `
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
-                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-space-around; gap: 15px; margin: 15px 0;">
-                            <div style="text-align: center; flex: 1; min-width: 140px; border-right: 1px dashed var(--border-color); padding-right:10px;">
-                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
-                                    <svg width="90" height="90" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
-                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#334155" stroke-width="12"/>
+                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-space-around; gap: 12px; margin: 12px 0;">
+                            <div style="text-align: center; flex: 1; min-width: 130px; border-right: 1px dashed var(--border-color); padding-right:8px;">
+                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
+                                    <svg width="80" height="80" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="12"/>
                 `;
                 
                 let d1CurrentOffset = 0;
@@ -2202,15 +2040,15 @@
                 htmlMarkup += `
                                     </svg>
                                 </div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${day1Fish} Fish</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Total Catch</div>
+                                <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day1Fish} Fish</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Total Catch</div>
                             </div>
                             
-                            <div style="text-align: center; flex: 1; min-width: 140px;">
-                                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
-                                    <svg width="90" height="90" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
-                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#334155" stroke-width="12"/>
+                            <div style="text-align: center; flex: 1; min-width: 130px;">
+                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
+                                    <svg width="80" height="80" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="12"/>
                 `;
                 
                 let d2CurrentOffset = 0;
@@ -2227,12 +2065,12 @@
                 htmlMarkup += `
                                     </svg>
                                 </div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${day2Fish} Fish</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Daytime Total Catch</div>
+                                <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day2Fish} Fish</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Daytime Total Catch</div>
                             </div>
                         </div>
                         
-                        <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                        <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 10px;">
                 `;
                 zoneKeys.forEach(zName => {
                     htmlMarkup += `<div class="legend-item"><span class="legend-dot" style="background:${donutColors[zName]}"></span>${zName.replace(' Zone', '')}</div>`;
@@ -2276,9 +2114,9 @@
 
                     htmlMarkup += `
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
-                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.2rem; margin-bottom: 6px; font-weight: 700;">${zName.toUpperCase()}</div>
+                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.1rem; margin-bottom: 4px; font-weight: 700;">${zName.toUpperCase()}</div>
                             
-                            <div style="margin: 10px 0 14px 0;">
+                            <div style="margin: 8px 0 12px 0;">
                                 <div class="bar-chart-container">
                                     <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #0f172a;">Volume: ${totalZFish} f</div>
                                     <div class="bar-chart-label-right">${overallTournamentShare}% tournament share</div>
@@ -2289,10 +2127,10 @@
                                 </div>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;">
-                                <div style="background: #0f172a; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
-                                    <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Day 1 (Night)</div>
-                                    <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0;">
+                                <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 1 (Night)</div>
+                                    <div style="font-size: 0.78rem; line-height: 1.4; color: var(--text-main);">
                                         <strong>Fish Caught:</strong> ${d1F}<br>
                                         <strong>Avg Size:</strong> ${d1ZAvg}cm<br>
                                         <strong style="color: var(--accent-cyan);">Avg Bag:</strong> ${d1AvgBag} fish<br>
@@ -2302,9 +2140,9 @@
                                     </div>
                                 </div>
                                 
-                                <div style="background: #0f172a; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
-                                    <div style="font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; margin-bottom: 6px;">Day 2 (Daytime)</div>
-                                    <div style="font-size: 0.82rem; line-height: 1.45; color: var(--text-main);">
+                                <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 700; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 2 (Daytime)</div>
+                                    <div style="font-size: 0.78rem; line-height: 1.4; color: var(--text-main);">
                                         <strong>Fish Caught:</strong> ${d2F}<br>
                                         <strong>Avg Size:</strong> ${d2ZAvg}cm<br>
                                         <strong style="color: var(--accent-cyan);">Avg Bag:</strong> ${d2AvgBag} fish<br>
@@ -2315,7 +2153,7 @@
                                 </div>
                             </div>
 
-                            <div style="background: #0f172a; border-radius: 6px; padding: 8px; font-size: 0.72rem; font-weight: 700; color: var(--text-main); text-align: center; border: 1px solid var(--border-color);">
+                            <div style="background: #1e293b; border-radius: 6px; padding: 6px; font-size: 0.68rem; font-weight: 700; color: var(--text-main); text-align: center; border: 1px solid var(--border-color);">
                     `;
                     
                     let fsText = fishSwing > 0 ? `▲ +${fishSwing} Fish` : (fishSwing < 0 ? `▼ ${fishSwing} Fish` : `► Consistent Volume`);
@@ -2326,7 +2164,7 @@
                                 Night to Daytime Shift: &nbsp; ${fsText} &nbsp;|&nbsp; ${ssText} &nbsp;|&nbsp; ${bsText}
                             </div>
 
-                            <div style="border-top: 1px solid var(--border-color); margin-top: 10px; padding-top: 8px; display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 600; color: var(--text-muted);">
+                            <div style="border-top: 1px solid var(--border-color); margin-top: 8px; padding-top: 6px; display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 600; color: var(--text-muted);">
                                 <span>Beach Performance Per Capita:</span><span style="font-family:'JetBrains Mono'; color:var(--text-main);">${zoneAvgPerCapita.toFixed(1)} Fish / Angler</span>
                             </div>
                         </div>
@@ -2342,27 +2180,27 @@
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">⏳ The "What If?" Timeline Simulation</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.3;">Compare leaderboard metrics tracked at the Day 1 close vs. final verified Day 2 standings.</div>
+                        <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.3;">Compare leaderboard metrics tracked at the Day 1 close vs. final verified Day 2 standings.</div>
 
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Timeline Matrix</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Timeline Matrix</span>
                             ${getCircleBadgeHtml('timeline-sim-wrapper')}
                         </div>
 
                         <div id="timeline-sim-wrapper" class="table-card-container">
                             <div class="card-table-wrapper">
-                                <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
+                                <table style="width: 100%; font-size: 0.75rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="padding: 6px 8px; text-align: center;">RNK</th>
-                                        <th style="text-align: left; padding: 6px 8px;">DAY 1 CLOSE (NIGHT)</th>
-                                        <th style="text-align: left; padding: 6px 8px;">DAY 2 FINAL</th>
+                                        <th style="padding: 5px 7px; text-align: center;">RNK</th>
+                                        <th style="text-align: left; padding: 5px 7px;">DAY 1 CLOSE (NIGHT)</th>
+                                        <th style="text-align: left; padding: 5px 7px;">DAY 2 FINAL</th>
                                     </tr>
                 `;
                 
                 for (let i = 0; i < 10; i++) {
                     let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
                     let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
-                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 6px 8px;">${i+1}</td><td style="text-align: left; padding: 6px 8px;">${d1Str}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 6px 8px;">${fStr}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 5px 7px;">${i+1}</td><td style="text-align: left; padding: 5px 7px;">${d1Str}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 5px 7px;">${fStr}</td></tr>`;
                 }
                 
                 htmlMarkup += `
@@ -2395,27 +2233,27 @@
 
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
-                        <div style="color: var(--accent-cyan); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.1rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-bottom: 12px; line-height: 1.35; padding: 0 10px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
+                        <div style="color: var(--accent-cyan); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.05rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 10px; line-height: 1.3; padding: 0 8px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
                         
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Club Rankings</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Club Rankings</span>
                             ${getCircleBadgeHtml('parent-club-wrapper')}
                         </div>
 
                         <div id="parent-club-wrapper" class="table-card-container" style="margin-bottom:0;">
                             <div class="card-table-wrapper">
-                                <table style="width: 100%; font-size: 0.78rem; margin-bottom: 0;">
+                                <table style="width: 100%; font-size: 0.75rem; margin-bottom: 0;">
                                     <tr>
-                                        <th style="text-align: center; padding: 6px 8px;">RNK</th>
-                                        <th style="text-align: left; padding: 6px 8px;">CLUB DELEGATION</th>
-                                        <th style="text-align: center; padding: 6px 8px;">AVG LEN</th>
-                                        <th style="text-align: center; padding: 6px 8px;">AVG FISH</th>
+                                        <th style="text-align: center; padding: 5px 7px;">RNK</th>
+                                        <th style="text-align: left; padding: 5px 7px;">CLUB DELEGATION</th>
+                                        <th style="text-align: center; padding: 5px 7px;">AVG LEN</th>
+                                        <th style="text-align: center; padding: 5px 7px;">AVG FISH</th>
                                     </tr>
                 `;
                 
                 parentArray.forEach((p, i) => {
-                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 6px 8px;">${i+1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 6px 8px;">${p.name}</td><td style="text-align: center; font-weight: 600; padding: 6px 8px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 600; padding: 6px 8px;">${p.avgFish.toFixed(1)}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: bold; text-align: center; padding: 5px 7px;">${i+1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main); padding: 5px 7px;">${p.name}</td><td style="text-align: center; font-weight: 600; padding: 5px 7px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 600; padding: 5px 7px;">${p.avgFish.toFixed(1)}</td></tr>`;
                 });
                 
                 htmlMarkup += '</table></div></div></div></div>'; 
@@ -2448,7 +2286,6 @@
                 const anglers = scoresData.anglers || [];
                 let htmlMarkup = '';
 
-                // ⚡ Concise Tie-Breaker Info Ribbon Banner
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
                     htmlMarkup += '<div class="info-banner">';
                     TAB_CONFIG[targetTabName].staticRules.forEach(r => {
@@ -2461,16 +2298,15 @@
                     let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Individual Standings</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Individual Standings</span>
                             ${getCircleBadgeHtml('ind-table-wrapper')}
                         </div>
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
-                    // 🎯 Two-Tier Grouped Header Layout
                     htmlMarkup += `
                         <tr class="group-header-row">
-                            <th style="text-align: left; min-width: 150px;">RANK / ANGLER DETAILS</th>
+                            <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--red-zone);">DAY 1 PERFORMANCE</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 PERFORMANCE</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--accent-gold);">COMBINED MATCH TOTALS</th>
@@ -2523,7 +2359,6 @@
 
                         let currentPointsTier = totPts;
                         
-                        // ➖ Insert a full-width textless separator row whenever the cumulative points tier changes
                         if (lastPointsTier !== null && currentPointsTier !== lastPointsTier) {
                             htmlMarkup += `<tr class="tier-separator-row"><td colspan="16">&nbsp;</td></tr>`;
                         }
@@ -2532,10 +2367,10 @@
                         htmlMarkup += `<tr>
                             <td style="text-align: left; padding-left: 8px;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-cyan); font-size: 0.82rem;">${item.totals.overallRank || (idx + 1)}</span>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-cyan); font-size: 0.8rem;">${item.totals.overallRank || (idx + 1)}</span>
                                     <div>
-                                        <div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem;">${item.anglerName}</div>
-                                        <div style="color: #94a3b8; font-size: 0.7rem; font-weight: 600; text-transform: uppercase;">${teamDisp}</div>
+                                        <div style="font-weight: 700; color: var(--text-main); font-size: 0.82rem;">${item.anglerName}</div>
+                                        <div style="color: #cbd5e1; font-size: 0.68rem; font-weight: 600; text-transform: uppercase;">${teamDisp}</div>
                                     </div>
                                 </div>
                             </td>
@@ -2556,7 +2391,7 @@
 
                             <!-- Combined Match Totals -->
                             <td class="col-divider-left" style="text-align: center;">
-                                <div style="display: inline-block; background: rgba(197, 160, 89, 0.18); border: 1px solid rgba(197, 160, 89, 0.5); border-radius: 6px; padding: 2px 6px; font-weight: 700; color: var(--accent-gold); font-size: 0.88rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
+                                <div style="display: inline-block; background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); border-radius: 5px; padding: 2px 5px; font-weight: 700; color: var(--accent-gold); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
                             </td>
                             <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCm}</td>
                             <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCt}</td>
@@ -2586,7 +2421,7 @@
                     
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Leaderboard</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Squad Leaderboard</span>
                             ${getCircleBadgeHtml('team-table-wrapper')}
                         </div>
                         <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2598,7 +2433,6 @@
                     teamArray.forEach((team, idx) => {
                         let currentTeamPts = team.pts;
 
-                        // ➖ Insert a full-width textless separator row whenever the team points tier changes
                         if (lastTeamPts !== null && currentTeamPts !== lastTeamPts) {
                             htmlMarkup += `<tr class="tier-separator-row"><td colspan="6">&nbsp;</td></tr>`;
                         }
@@ -2608,7 +2442,7 @@
                             <td style="font-weight: 700; text-align: center;">${idx + 1}</td>
                             <td style="text-align: left; font-weight: 700; color:var(--text-main); white-space: nowrap;">${team.name}</td>
                             <td style="text-align: center;">
-                                <div style="display: inline-block; background: rgba(197, 160, 89, 0.18); border: 1px solid rgba(197, 160, 89, 0.5); border-radius: 6px; padding: 3px 8px; font-weight: 700; color: var(--accent-gold); font-size: 0.92rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
+                                <div style="display: inline-block; background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); border-radius: 5px; padding: 2px 6px; font-weight: 700; color: var(--accent-gold); font-size: 0.88rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
                             </td>
                             <td style="font-weight: 600; text-align: center;">${team.len}</td>
                             <td style="font-weight: 600; text-align: center;">${team.fish}</td>
@@ -2653,8 +2487,8 @@
                         
                         if (zoneAnglers.length > 0) {
                             htmlMarkup += `
-                                <div class="table-header-bar" style="margin-top:20px;">
-                                    <h3 class="${block.colorClass}" style="font-family: 'Oswald'; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1.2px;">${block.name}</h3>
+                                <div class="table-header-bar" style="margin-top:16px;">
+                                    <h3 class="${block.colorClass}" style="font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">${block.name}</h3>
                                     ${getCircleBadgeHtml(block.wrapperId)}
                                 </div>
                                 <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
@@ -2669,7 +2503,6 @@
                                 let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
                                 let currentZonePts = dayData.zonePoints;
 
-                                // ➖ Insert a full-width textless separator row whenever the zone points tier changes
                                 if (lastZonePts !== null && currentZonePts !== lastZonePts) {
                                     htmlMarkup += `<tr class="tier-separator-row"><td colspan="5">&nbsp;</td></tr>`;
                                 }
@@ -2701,7 +2534,7 @@
                     
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Specimen Catch Log</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Specimen Catch Log</span>
                             ${getCircleBadgeHtml('fish-table-wrapper')}
                         </div>
                         <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2720,16 +2553,16 @@
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
                         htmlMarkup += `
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0 10px 0; width: 100%;">
-                                <span style="font-family: 'Oswald', sans-serif; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 8px 0; width: 100%;">
+                                <span style="font-family: 'Oswald', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
                                 <button class="rules-btn" onclick="openSecretPairsRules(decodeURIComponent('${encodeURIComponent(secretPairsData.description || '')}'))">Rules & Info ⓘ</button>
                             </div>
                         `;
 
                         htmlMarkup += `
-                            <div style="background: var(--surface-color); border: 1px solid var(--border-card); border-radius: 16px; padding: 18px; text-align: center; margin: 10px auto 25px auto; width: 100%; box-shadow: var(--card-shadow);">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 2px;">OFFICIAL TARGET LENGTH</div>
-                                <div style="font-family: 'Inter'; font-size: 2.4rem; font-weight: 700; letter-spacing: 0.5px; color: var(--text-main);">${secretPairsData.targetLength || 'N/A'}</div>
+                            <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; text-align: center; margin: 8px auto 20px auto; width: 100%; box-shadow: var(--card-shadow);">
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); margin-bottom: 2px;">OFFICIAL TARGET LENGTH</div>
+                                <div style="font-family: 'Inter'; font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; color: var(--text-main);">${secretPairsData.targetLength || 'N/A'}</div>
                             </div>
                         `;
 
@@ -2737,7 +2570,7 @@
                         const otherPairsList = secretPairsData.otherPairs || [];
 
                         if (winnersList.length > 0) {
-                            htmlMarkup += '<div style="margin-bottom: 30px; display: flex; flex-direction: column; gap: 12px; width: 100%;">';
+                            htmlMarkup += '<div style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; width: 100%;">';
                             
                             winnersList.forEach(pair => {
                                 let rankNum = parseInt(pair.rank) || 1;
@@ -2748,7 +2581,7 @@
                                     borderAccent = 'var(--accent-gold)';
                                     medalLabel = '🥇 TOURNAMENT CHAMPIONS';
                                 } else if (rankNum === 2) {
-                                    borderAccent = '#94a3b8';
+                                    borderAccent = '#cbd5e1';
                                     medalLabel = '🥈 SECOND PLACE';
                                 } else if (rankNum === 3) {
                                     borderAccent = '#b07247';
@@ -2766,14 +2599,14 @@
                                 const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
 
                                 htmlMarkup += `
-                                    <div style="background: var(--surface-color); border: 1px solid var(--border-card); border-left: 6px solid ${borderAccent}; border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--card-shadow); width: 100%;">
+                                    <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-left: 5px solid ${borderAccent}; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--card-shadow); width: 100%;">
                                         <div>
-                                            <div style="font-family: 'Oswald'; font-size: 0.75rem; text-transform: uppercase; color: ${borderAccent}; font-weight: 700; letter-spacing: 1px;">${medalLabel}</div>
-                                            <div style="font-size: 1.1rem; font-weight: 700; margin-top: 4px; color: var(--text-main); letter-spacing: -0.3px;">${pair.angler1} & ${pair.angler2}</div>
+                                            <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: ${borderAccent}; font-weight: 700; letter-spacing: 0.8px;">${medalLabel}</div>
+                                            <div style="font-size: 1rem; font-weight: 700; margin-top: 3px; color: var(--text-main); letter-spacing: -0.3px;">${pair.angler1} & ${pair.angler2}</div>
                                         </div>
                                         <div style="text-align: right; white-space: nowrap;">
-                                            <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${formattedLength}</div>
-                                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); margin-top: 1px;">Missed by: ${formattedOffBy}</div>
+                                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">${formattedLength}</div>
+                                            <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent-gold); margin-top: 1px;">Missed by: ${formattedOffBy}</div>
                                         </div>
                                     </div>
                                 `;
@@ -2784,8 +2617,8 @@
 
                         if (otherPairsList.length > 0) {
                             htmlMarkup += `
-                                <div class="table-header-bar" style="margin-top:20px;">
-                                    <h3 style="font-family: 'Oswald'; text-transform: uppercase; font-size: 1rem; color: var(--text-muted); letter-spacing: 1px;">📊 Field Standings (Informational Only)</h3>
+                                <div class="table-header-bar" style="margin-top:16px;">
+                                    <h3 style="font-family: 'Oswald'; text-transform: uppercase; font-size: 0.92rem; color: var(--text-muted); letter-spacing: 0.8px;">📊 Field Standings (Informational Only)</h3>
                                     ${getCircleBadgeHtml('pairs-other-wrapper')}
                                 </div>
                                 <div id="pairs-other-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2808,7 +2641,7 @@
                                         <td style="font-weight: 700; color: var(--text-muted); text-align: center;">${pair.rank}</td>
                                         <td style="text-align: left; font-weight: 700; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
                                         <td style="font-weight: 600; text-align: center;">${formattedLength}</td>
-                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.82rem; text-align: center;">${formattedOffBy}</td>
+                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.78rem; text-align: center;">${formattedOffBy}</td>
                                     </tr>
                                 `;
                             });
@@ -2819,7 +2652,7 @@
                     } else {
                         let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
                         if (!hasPairsData) {
-                            htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.85rem; text-transform: none; padding: 40px; line-height: 1.6;">';
+                            htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.82rem; text-transform: none; padding: 30px; line-height: 1.5;">';
                             htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
                             htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
                         } else {
@@ -2837,7 +2670,7 @@
                             });
                             htmlMarkup += `
                                 <div class="table-header-bar">
-                                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Secret Pairs Leaderboard</span>
+                                    <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Secret Pairs Leaderboard</span>
                                     ${getCircleBadgeHtml('pairs-unformatted-wrapper')}
                                 </div>
                                 <div id="pairs-unformatted-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2874,7 +2707,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.0.7 deployment active'))
+                    .then(reg => console.log('v2.1.0 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
