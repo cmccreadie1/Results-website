@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.0) */
+            /* 🎨 Muted High-Contrast Palette (v2.1.2) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -125,7 +125,7 @@
             display: block;
         }
 
-        /* 📱 Sleek Minimalist Vertical Pill Stack (v2.1.0) */
+        /* 📱 Sleek Minimalist Vertical Pill Stack */
         .button-stack { 
             width: 100%; 
             max-width: 500px; 
@@ -325,7 +325,7 @@
             width: 100%;
         }
 
-        /* 📱 Modern Sleek Input Pill Trigger (v2.1.0) */
+        /* 📱 Modern Sleek Input Pill Trigger */
         .picker-trigger-btn {
             width: 100%;
             padding: 8px 14px;
@@ -699,7 +699,21 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        /* Column Division Vertical Borders for Multi-Header Layouts */
+        /* 🪨 Heavy Encapsulation Shading & Vertical Divider Pillar Classes (v2.1.2) */
+        .final-totals-cell {
+            background: rgba(15, 23, 42, 0.65) !important;
+        }
+        .final-totals-header {
+            background: #0b1120 !important;
+            color: var(--accent-gold) !important;
+        }
+        .pillar-divider-right {
+            border-right: 3px solid var(--accent-gold) !important;
+        }
+        .session-breakdown-cell {
+            background: rgba(30, 41, 59, 0.4);
+        }
+
         .col-divider-left {
             border-left: 2px solid #1e293b;
         }
@@ -948,7 +962,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.0</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.2</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -956,7 +970,7 @@
         <div id="meta-dates-inject" class="subtitle-line">Loading Dates...</div>
     </header>
 
-    <!-- 📱 Sleek Minimalist Vertical Pill Stack (v2.1.0) -->
+    <!-- 📱 Sleek Minimalist Vertical Pill Stack -->
     <nav class="button-stack">
         <!-- Individual Champion -->
         <div class="slide-btn btn-ind-hero" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
@@ -1025,7 +1039,7 @@
         </div>
     </div>
 
-    <!-- 👤 Personal Report Card Embedded Picker Modal (v2.1.0) -->
+    <!-- 👤 Personal Report Card Embedded Picker Modal -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 4px;">My Match Report Card</h3>
@@ -1055,7 +1069,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.0</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1144,7 +1158,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.0";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1559,7 +1573,7 @@
                     </div>
                 `;
 
-                // 🥊 App-Native Rival Picker Integration (v2.1.0)
+                // 🥊 App-Native Rival Picker Integration
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1896,7 +1910,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.0 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.2 PROSPECTUS</span>
                         </div>
                         <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
@@ -2304,28 +2318,32 @@
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
+                    /* 🪨 Encapsulated Final Totals Priority Layout (v2.1.2) */
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
+                            <th colspan="5" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--red-zone);">DAY 1 PERFORMANCE</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 PERFORMANCE</th>
-                            <th colspan="5" class="col-divider-left" style="color: var(--accent-gold);">COMBINED MATCH TOTALS</th>
                         </tr>
                         <tr class="sub-header-row">
                             <th style="text-align: left;">POS & ANGLER (TEAM)</th>
                             
+                            <!-- Final Totals First -->
+                            <th class="final-totals-header" style="color: var(--accent-gold);">PTS</th>
+                            <th class="final-totals-header">CM</th>
+                            <th class="final-totals-header">CT</th>
+                            <th class="final-totals-header">BIG</th>
+                            <th class="final-totals-header pillar-divider-right">SPC</th>
+
+                            <!-- Day 1 Session Breakdown -->
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
                             <th>BIG</th>
                             <th>SPC</th>
                             
-                            <th class="col-divider-left">PTS</th>
-                            <th>CM</th>
-                            <th>CT</th>
-                            <th>BIG</th>
-                            <th>SPC</th>
-                            
+                            <!-- Day 2 Session Breakdown -->
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
@@ -2375,28 +2393,28 @@
                                 </div>
                             </td>
                             
-                            <!-- Day 1 Columns -->
-                            <td class="col-divider-left" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d1Pts}</td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 600;">${d1Cm}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Ct}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Big}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
-
-                            <!-- Day 2 Columns -->
-                            <td class="col-divider-left" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d2Pts}</td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 600;">${d2Cm}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Ct}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Big}</td>
-                            <td style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Spc}</td>
-
-                            <!-- Combined Match Totals -->
-                            <td class="col-divider-left" style="text-align: center;">
-                                <div style="display: inline-block; background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); border-radius: 5px; padding: 2px 5px; font-weight: 700; color: var(--accent-gold); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
+                            <!-- 🏆 Combined Match Totals (Final Standings Card Block) -->
+                            <td class="final-totals-cell" style="text-align: center;">
+                                <div style="display: inline-block; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); border-radius: 5px; padding: 2px 5px; font-weight: 700; color: var(--accent-gold); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
                             </td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCm}</td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCt}</td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-emerald);">${totBig}</td>
-                            <td style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-cyan);">${totSpc}</td>
+                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCm}</td>
+                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${totCt}</td>
+                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-emerald);">${totBig}</td>
+                            <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-cyan);">${totSpc}</td>
+
+                            <!-- Day 1 Session Breakdown -->
+                            <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d1Pts}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d1Cm}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Ct}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Big}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
+
+                            <!-- Day 2 Session Breakdown -->
+                            <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d2Pts}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d2Cm}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Ct}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Big}</td>
+                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Spc}</td>
                         </tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
@@ -2707,7 +2725,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.0 deployment active'))
+                    .then(reg => console.log('v2.1.2 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
