@@ -731,14 +731,14 @@
   ],
   "biggestFishSpecies": {
     "day1": [
+      "ling",
       "cod",
-      "",
-      ""
+      "tope"
     ],
     "day2": [
-      "",
-      "",
-      ""
+      "cod",
+      "cod",
+      "ling"
     ]
   },
   "secretPairs": {
