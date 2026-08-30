@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.2) */
+            /* 🎨 Muted High-Contrast Palette (v2.1.3) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -699,7 +699,7 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        /* 🪨 Heavy Encapsulation Shading & Vertical Divider Pillar Classes (v2.1.2) */
+        /* 🪨 Heavy Encapsulation Shading & Vertical Divider Pillar Classes */
         .final-totals-cell {
             background: rgba(15, 23, 42, 0.65) !important;
         }
@@ -962,7 +962,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.2</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.3</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1069,7 +1069,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.2</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.3</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1158,7 +1158,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.2";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.3";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1793,7 +1793,7 @@
                             <tr>
                                 <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
                                 <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 2 Zone Ratio</td>
-                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, false)}</td>
+                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio1, r.ratio2, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
@@ -1829,6 +1829,7 @@
                 let totalFish = 0, day1Fish = 0, day2Fish = 0;
                 let totalLengthCm = 0, day1LengthTotal = 0, day2LengthTotal = 0;
                 let day1Blankers = 0, day2Blankers = 0;
+                let day1Entries = 0, day2Entries = 0;
                 let blankers = 0, soloCount = 0;
                 let teamsSet = new Set();
 
@@ -1850,6 +1851,7 @@
                     if (teamRaw === "" || teamRaw.toUpperCase() === "SOLO") soloCount++; else teamsSet.add(teamRaw);
 
                     if (item.day1 && item.day1.zone) {
+                        day1Entries++;
                         let z = item.day1.zone;
                         let d1f = item.day1.fishCount || 0;
                         day1Fish += d1f;
@@ -1868,6 +1870,7 @@
                     }
 
                     if (item.day2 && item.day2.zone) {
+                        day2Entries++;
                         let z = item.day2.zone;
                         let d2f = item.day2.fishCount || 0;
                         day2Fish += d2f;
@@ -1886,8 +1889,12 @@
                     }
                 });
 
+                let isTwoDayComp = day2Entries > 0;
+                let d1SuccessRate = day1Entries > 0 ? (((day1Entries - day1Blankers) / day1Entries) * 100).toFixed(0) : 0;
+                let d2SuccessRate = day2Entries > 0 ? (((day2Entries - day2Blankers) / day2Entries) * 100).toFixed(0) : 0;
+                let singleCompSuccessRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
+
                 let scoringAnglersCount = totalAnglers - blankers;
-                let successRate = totalAnglers > 0 ? ((scoringAnglersCount / totalAnglers) * 100).toFixed(0) : 0;
                 let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
@@ -1906,23 +1913,48 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                htmlMarkup += `
-                    <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
-                        <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
-                            <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.2 PROSPECTUS</span>
+                /* 🎯 Dynamic 1-Day vs 2-Day Catch Success % Block (v2.1.3) */
+                let successBlockHtml = '';
+                if (isTwoDayComp) {
+                    successBlockHtml = `
+                        <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
+                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${d1SuccessRate}%</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Day 1 Catch Success</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${d2SuccessRate}%</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Day 2 Catch Success</div>
+                            </div>
                         </div>
+                    `;
+                } else {
+                    successBlockHtml = `
                         <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-cyan);">${totalAnglers}</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Total Entries</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${successRate}%</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Active Catch Rate</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${singleCompSuccessRate}%</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Catch Success %</div>
                             </div>
                         </div>
+                    `;
+                }
+
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
+                        <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
+                            <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.3 PROSPECTUS</span>
+                        </div>
+                        ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Fleet Size</div>
+                            </div>
                             <div>
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalFish}</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Fish</div>
@@ -1934,10 +1966,6 @@
                             <div>
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${avgFishLength}cm</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Avg Fish Size</div>
-                            </div>
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${competitorAverage.toFixed(1)}</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Avg Ind. Catch</div>
                             </div>
                         </div>
                     </div>
@@ -2318,7 +2346,6 @@
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
-                    /* 🪨 Encapsulated Final Totals Priority Layout (v2.1.2) */
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
@@ -2393,7 +2420,7 @@
                                 </div>
                             </td>
                             
-                            <!-- 🏆 Combined Match Totals (Final Standings Card Block) -->
+                            <!-- 🏆 Combined Match Totals -->
                             <td class="final-totals-cell" style="text-align: center;">
                                 <div style="display: inline-block; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); border-radius: 5px; padding: 2px 5px; font-weight: 700; color: var(--accent-gold); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
                             </td>
@@ -2725,7 +2752,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.2 deployment active'))
+                    .then(reg => console.log('v2.1.3 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
