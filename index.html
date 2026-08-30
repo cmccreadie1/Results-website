@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.3) */
+            /* 🎨 Muted High-Contrast Palette (v2.1.4) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -962,7 +962,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.3</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.4</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1069,7 +1069,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.3</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1158,7 +1158,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.3";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1192,7 +1192,7 @@
             if (data && typeof data === 'object' && !Array.isArray(data)) {
                 cachedScores = data;
             } else if (Array.isArray(data)) {
-                cachedScores = { anglers: data, secretPairs: null };
+                cachedScores = { anglers: data, secretPairs: null, biggestFishSpecies: null };
             } else {
                 throw new Error("Invalid JSON structure.");
             }
@@ -1824,6 +1824,7 @@
             try {
                 const scoresData = await fetchScores();
                 const anglers = scoresData.anglers || [];
+                const biggestFishSpecies = scoresData.biggestFishSpecies || null;
                 
                 let totalAnglers = anglers.length;
                 let totalFish = 0, day1Fish = 0, day2Fish = 0;
@@ -1895,7 +1896,6 @@
                 let singleCompSuccessRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
 
                 let scoringAnglersCount = totalAnglers - blankers;
-                let competitorAverage = scoringAnglersCount > 0 ? (totalFish / scoringAnglersCount) : 0;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
 
@@ -1913,7 +1913,7 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                /* 🎯 Dynamic 1-Day vs 2-Day Catch Success % Block (v2.1.3) */
+                /* 🎯 Dynamic 1-Day vs 2-Day Catch Success % Block (v2.1.4) */
                 let successBlockHtml = '';
                 if (isTwoDayComp) {
                     successBlockHtml = `
@@ -1947,7 +1947,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.3 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.4 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2007,16 +2007,34 @@
                     </div>
                 `;
 
+                // 🐟 Specimen Leaderboard with Species Mapping (v2.1.4)
                 let specimenList = [];
                 anglers.forEach(item => {
                     if (item.day1 && item.day1.biggestFishCm > 0) {
-                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day1.biggestFishCm, zone: item.day1.zone, day: 'Day 1' });
+                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day1.biggestFishCm, zone: item.day1.zone, dayNum: 1, dayLabel: 'Day 1' });
                     }
                     if (item.day2 && item.day2.biggestFishCm > 0) {
-                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day2.biggestFishCm, zone: item.day2.zone, day: 'Day 2' });
+                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day2.biggestFishCm, zone: item.day2.zone, dayNum: 2, dayLabel: 'Day 2' });
                     }
                 });
                 specimenList.sort((a, b) => b.lengthCm - a.lengthCm);
+
+                // Group by day to match rank species indices from biggestFishSpecies object
+                let d1Rank = 1, d2Rank = 1;
+                specimenList.forEach(spec => {
+                    let speciesText = "";
+                    if (biggestFishSpecies) {
+                        if (spec.dayNum === 1 && biggestFishSpecies.day1 && biggestFishSpecies.day1[String(d1Rank)]) {
+                            speciesText = biggestFishSpecies.day1[String(d1Rank)];
+                            d1Rank++;
+                        } else if (spec.dayNum === 2 && biggestFishSpecies.day2 && biggestFishSpecies.day2[String(d2Rank)]) {
+                            speciesText = biggestFishSpecies.day2[String(d2Rank)];
+                            d2Rank++;
+                        }
+                    }
+                    spec.speciesName = speciesText;
+                });
+
                 let top5Specimens = specimenList.slice(0, 5);
 
                 if (top5Specimens.length > 0) {
@@ -2031,17 +2049,19 @@
                                             <th style="text-align: center; padding: 5px 7px;">RNK</th>
                                             <th style="text-align: left; padding: 5px 7px;">ANGLER NAME</th>
                                             <th style="text-align: left; padding: 5px 7px;">ZONE / DAY</th>
-                                            <th style="text-align: center; padding: 5px 7px;">LENGTH</th>
+                                            <th style="text-align: center; padding: 5px 7px;">CATCH SIZE</th>
                                         </tr>
                     `;
                     top5Specimens.forEach((spec, idx) => {
                         let rankDisplay = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : (idx + 1)));
+                        let sizeDisplay = spec.speciesName ? `${spec.lengthCm} cm <span style="font-size:0.68rem; color:var(--text-muted); font-weight:600;">(${spec.speciesName})</span>` : `${spec.lengthCm} cm`;
+                        
                         htmlMarkup += `
                             <tr>
                                 <td style="text-align: center; font-weight: 700; padding: 5px 7px;">${rankDisplay}</td>
                                 <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 5px 7px;">${spec.name}</td>
-                                <td style="text-align: left; color: var(--text-muted); padding: 5px 7px;">${spec.zone} (${spec.day})</td>
-                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 5px 7px;">${spec.lengthCm} cm</td>
+                                <td style="text-align: left; color: var(--text-muted); padding: 5px 7px;">${spec.zone} (${spec.dayLabel})</td>
+                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 5px 7px;">${sizeDisplay}</td>
                             </tr>
                         `;
                     });
@@ -2326,6 +2346,7 @@
             try {
                 const scoresData = await fetchScores();
                 const anglers = scoresData.anglers || [];
+                const biggestFishSpecies = scoresData.biggestFishSpecies || null;
                 let htmlMarkup = '';
 
                 if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
@@ -2569,13 +2590,28 @@
                     let flatFish = [];
                     anglers.forEach(item => {
                         if (item.day1 && item.day1.biggestFishCm > 0) {
-                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day1.biggestFishCm, details: `${item.day1.zone} (Day 1)` });
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day1.biggestFishCm, dayNum: 1, details: `${item.day1.zone} (Day 1)` });
                         }
                         if (item.day2 && item.day2.biggestFishCm > 0) {
-                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day2.biggestFishCm, details: `${item.day2.zone} (Day 2)` });
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day2.biggestFishCm, dayNum: 2, details: `${item.day2.zone} (Day 2)` });
                         }
                     });
                     flatFish.sort((a, b) => b.size - a.size);
+
+                    let d1Rank = 1, d2Rank = 1;
+                    flatFish.forEach(fish => {
+                        let speciesText = "";
+                        if (biggestFishSpecies) {
+                            if (fish.dayNum === 1 && biggestFishSpecies.day1 && biggestFishSpecies.day1[String(d1Rank)]) {
+                                speciesText = biggestFishSpecies.day1[String(d1Rank)];
+                                d1Rank++;
+                            } else if (fish.dayNum === 2 && biggestFishSpecies.day2 && biggestFishSpecies.day2[String(d2Rank)]) {
+                                speciesText = biggestFishSpecies.day2[String(d2Rank)];
+                                d2Rank++;
+                            }
+                        }
+                        fish.speciesName = speciesText;
+                    });
                     
                     htmlMarkup += `
                         <div class="table-header-bar">
@@ -2587,7 +2623,9 @@
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
                     flatFish.forEach((fish, idx) => {
                         let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
-                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${fish.name}</td><td style="text-align: left;">${teamDisp}</td><td style="text-align: center;">${fish.details}</td><td style="color: var(--accent-gold); font-weight: 700; text-align: center;">${fish.size} cm</td></tr>`;
+                        let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">(${fish.speciesName})</span>` : `${fish.size} cm`;
+
+                        htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${fish.name}</td><td style="text-align: left;">${teamDisp}</td><td style="text-align: center;">${fish.details}</td><td style="color: var(--accent-gold); font-weight: 700; text-align: center;">${sizeDisplay}</td></tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
                 }
@@ -2752,7 +2790,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.3 deployment active'))
+                    .then(reg => console.log('v2.1.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
