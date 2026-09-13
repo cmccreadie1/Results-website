@@ -8,8 +8,8 @@
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
-            venue:           "Elliot Beach Lunan Bay",
-            dates:           "18th & 19th September"
+            venue:           "Elliot Beach",
+            dates:           "18th & 19th September 2026"
         };
     </script>
     
@@ -878,13 +878,15 @@
             z-index: 3;
         }
 
-        .metric-subtext {
-            font-size: 0.7rem;
-            color: var(--text-dark-contrast);
-            font-weight: 500;
-            line-height: 1.3;
-            display: block;
-        }
+        /* AFTER */
+.metric-subtext {
+    font-size: 0.78rem;           /* Increased from 0.7rem for readability */
+    color: var(--text-muted);     /* Switched to a lighter, higher-contrast text color */
+    font-weight: 500;
+    line-height: 1.4;             /* Added a touch more breathing room between lines */
+    display: block;
+    margin-top: 4px;              /* Clean gap below the bar */
+}
 
         .chart-legend {
             display: flex;
