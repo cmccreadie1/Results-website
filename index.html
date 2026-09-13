@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.5) */
+            /* 🎨 Muted High-Contrast Palette (v2.1.8) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -943,7 +943,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.5</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.8</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1048,7 +1048,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.5</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.8</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1058,7 +1058,7 @@
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Max Single Catch ➔ Species Count"]
+                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Biggest Fish ➔ Species Count"]
             }, 
             'ZONE 1': { 
                 staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
@@ -1134,7 +1134,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.5";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.8";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1316,7 +1316,7 @@
             return Math.min(Math.max(pct, 0), 99);
         }
 
-        /* 👤 v2.1.5 Streamlined 6 Core Stats Personal Report Card */
+        /* 👤 v2.1.8 Streamlined 6 Core Stats Personal Report Card */
         async function generatePersonalReport() {
             if (!selectedAnglerName) {
                 alert("Please tap [ Choose Competitor... ] to select your name first.");
@@ -1784,7 +1784,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.5 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.8 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2215,7 +2215,7 @@
                             <th class="final-totals-header" style="color: var(--accent-gold);">PTS</th>
                             <th class="final-totals-header">CM</th>
                             <th class="final-totals-header">CT</th>
-                            <th class="final-totals-header">BIG</th>
+                            <th class="final-totals-header">BIGGEST</th>
                             <th class="final-totals-header pillar-divider-right">SPC</th>
 
                             <th class="col-divider-left">PTS</th>
@@ -2619,7 +2619,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.5 deployment active'))
+                    .then(reg => console.log('v2.1.8 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
