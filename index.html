@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.2.1) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.2.2) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -700,7 +700,6 @@
             border-left: 2px solid #1e293b;
         }
 
-        /* 💈 Session Separation Divider (v2.2.1) */
         .session-divider-right {
             border-right: 2.5px solid var(--accent-cyan) !important;
         }
@@ -947,7 +946,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.2.1</span>
+            <span class="header-badge">COMMAND PORTAL v2.2.2</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1052,7 +1051,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.2.1</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.2.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1138,7 +1137,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.2.1";
+            document.title = MATCH_CONFIG.competitionName + " | v2.2.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1776,7 +1775,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.1 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.2 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2194,7 +2193,6 @@
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
-                    /* 💈 Added session-divider-right to Day 1 Performance column block (v2.2.1) */
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
@@ -2457,9 +2455,15 @@
                         let targetNum = parseInt(secretPairsData.targetLength) || 0;
 
                         htmlMarkup += `
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 8px 0; width: 100%;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 6px 0; width: 100%;">
                                 <span style="font-family: 'Oswald', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
                                 <button class="rules-btn" onclick="openSecretPairsRules(decodeURIComponent('${encodeURIComponent(secretPairsData.description || '')}'))">Rules & Info ⓘ</button>
+                            </div>
+
+                            <!-- 🎯 Methodology & Draw Fairness Banner (v2.2.2) -->
+                            <div class="info-banner" style="text-align: left; margin: 0 0 12px 0; padding: 8px 12px; font-size: 0.72rem; line-height: 1.35;">
+                                <strong style="color: var(--accent-cyan); text-transform: uppercase;">Fairness & Methodology:</strong> 
+                                Completely random computer pairings. Victory goes to the pair closest to the secret target length (chosen randomly by computer between the lowest and highest possible scores)—ensuring a 100% level playing field for every angler in the pool.
                             </div>
                         `;
 
@@ -2611,7 +2615,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.2.1 deployment active'))
+                    .then(reg => console.log('v2.2.2 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
