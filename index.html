@@ -2388,7 +2388,7 @@
                                 </div>
                                 <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
                             `;
-                            htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: center;">PEG</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
+                            htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
                             
                             let lastZonePts = null;
 
@@ -2399,17 +2399,16 @@
                                 let currentZonePts = dayData.zonePoints;
 
                                 if (lastZonePts !== null && currentZonePts !== lastZonePts) {
-                                    htmlMarkup += `<tr class="tier-separator-row"><td colspan="5">&nbsp;</td></tr>`;
-                                }
-                                lastZonePts = currentZonePts;
+    htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
+}
+lastZonePts = currentZonePts;
 
-                                htmlMarkup += `<tr>
-                                    <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${dayData.zonePoints}</td>
-                                    <td style="font-weight: 600; text-align: center;">${dayData.peg || '-'}</td>
-                                    <td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td>
-                                    <td style="text-align: left;">${teamDisp}</td>
-                                    <td class="tie-breaker-td">${ties}</td>
-                                </tr>`;
+htmlMarkup += `<tr>
+    <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${dayData.zonePoints}</td>
+    <td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td>
+    <td style="text-align: left;">${teamDisp}</td>
+    <td class="tie-breaker-td">${ties}</td>
+</tr>`;
                             });
                             htmlMarkup += '</table></div></div>';
                         }
