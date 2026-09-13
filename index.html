@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.4) */
+            /* 🎨 Muted High-Contrast Palette (v2.1.5) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -182,7 +182,6 @@
             flex-shrink: 0;
         }
 
-        /* Gold Highlight Pill for Champion & Personal Report */
         .slide-btn.btn-ind-hero {
             border-color: rgba(234, 179, 8, 0.6);
             background: linear-gradient(135deg, #3b4b5e 0%, #334155 100%);
@@ -199,7 +198,6 @@
             color: var(--accent-gold);
         }
 
-        /* Micro-Interactive Hover Physics */
         .slide-btn:hover {
             transform: translateY(-1px);
             background: #3e4f67;
@@ -222,7 +220,6 @@
             z-index: 2000;
         }
         
-        /* 📌 Pinned Sticky Viewer Navigation Header */
         .viewer-nav {
             padding: 12px 16px; 
             display: flex; 
@@ -272,7 +269,6 @@
             padding-right: 10px;
         }
 
-        /* 🎯 Sleek Modern Blue/Slate "MORE DATA" Pill Button Motif */
         .card-scroll-pill {
             background: var(--pill-bg);
             color: var(--pill-text);
@@ -316,7 +312,6 @@
             border-color: var(--accent-slate);
         }
 
-        /* Header Row for Tables / Cards that feature the Pill Badge */
         .table-header-bar {
             display: flex;
             justify-content: space-between;
@@ -325,7 +320,6 @@
             width: 100%;
         }
 
-        /* 📱 Modern Sleek Input Pill Trigger */
         .picker-trigger-btn {
             width: 100%;
             padding: 8px 14px;
@@ -390,7 +384,6 @@
             transform: rotate(180deg);
         }
 
-        /* Keyframe Drop-Down Animation for Name Picker */
         @keyframes pickerPopIn {
             0% { opacity: 0; transform: translateY(-6px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -413,7 +406,6 @@
             animation: pickerPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Bottom Gradient Overlay Scroll Cue */
         .picker-gradient-overlay {
             position: absolute;
             bottom: 0;
@@ -427,7 +419,6 @@
             border-bottom-right-radius: 12px;
         }
 
-        /* Custom Scrollbar & High-Visibility Scroll Handle */
         .custom-picker-list {
             max-height: 220px;
             overflow-y: auto;
@@ -492,7 +483,6 @@
             width: 100%;
         }
 
-        /* Matrix Cards inside Floating Tables */
         .matrix-container {
             display: flex;
             flex-direction: row;
@@ -530,7 +520,6 @@
             white-space: nowrap;
         }
 
-        /* Overlay Modals */
         .modal-overlay {
             position: fixed; 
             top: 0; left: 0; 
@@ -591,7 +580,6 @@
             gap: 4px;
         }
 
-        /* Low-Profile Concise Info Banner */
         .info-banner {
             background: #1e293b; 
             border: 1px solid var(--border-color); 
@@ -607,7 +595,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
-        /* Skeleton Shimmer */
         .skeleton-wrapper { 
             width: 100%; 
             display: flex; 
@@ -632,7 +619,6 @@
         }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* Floating Elevated Card Table Styling */
         .table-card-container {
             background: var(--surface-color);
             border-radius: 14px;
@@ -660,7 +646,6 @@
             white-space: nowrap; 
         }
 
-        /* 📌 Floating Sticky Table Header Rows */
         th {
             background: #1e293b !important; 
             color: var(--text-muted); 
@@ -677,7 +662,6 @@
             box-shadow: 0 2px 4px rgba(15, 23, 42, 0.2);
         }
 
-        /* Tier-1 Grouped Category Header Styling */
         tr.group-header-row th {
             top: 0;
             z-index: 30;
@@ -688,7 +672,6 @@
             background: #0f172a !important;
         }
 
-        /* Tier-2 Sub-Metric Header Styling */
         tr.sub-header-row th {
             top: 27px;
             z-index: 29;
@@ -699,7 +682,6 @@
             border-bottom: 2px solid var(--border-color);
         }
 
-        /* 🪨 Heavy Encapsulation Shading & Vertical Divider Pillar Classes */
         .final-totals-cell {
             background: rgba(15, 23, 42, 0.65) !important;
         }
@@ -727,7 +709,6 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* ➖ Textless Visual Point Tier Separator Row */
         tr.tier-separator-row td {
             height: 8px;
             padding: 0;
@@ -755,7 +736,6 @@
         table.zone-green th { border-bottom-color: var(--green-zone); color: var(--green-zone); }
         table.zone-blue th { border-bottom-color: var(--blue-zone); color: var(--blue-zone); }
 
-        /* Compact Vertical Rivalry Cell Badge Layout */
         .rivalry-cell {
             display: flex;
             flex-direction: column;
@@ -781,7 +761,6 @@
         .rivalry-badge.win { background: var(--accent-emerald); color: #ffffff; }
         .rivalry-badge.draw { background: #64748b; color: #ffffff; }
 
-        /* Head-to-Head Beat Rate Summary Badge */
         .beat-rate-summary-bar {
             background: #1e293b;
             border: 1px solid var(--border-color);
@@ -962,7 +941,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.4</span>
+            <span class="header-badge">COMMAND PORTAL v2.1.5</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1043,18 +1022,16 @@
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
             <h3 style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 4px;">My Match Report Card</h3>
-            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Select your name to generate your private performance prospectus card across 10 percentile metrics and head-to-head rivalry analysis.</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Select your name to generate your personal 6-metric report card and head-to-head rivalry analysis.</div>
             
             <div style="margin-bottom: 16px;">
                 <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.8px;">STEP 1: SELECT YOUR NAME</span>
                 
-                <!-- Modern Input Pill Trigger -->
                 <button id="angler-picker-btn" class="picker-trigger-btn" onclick="toggleAnglerPicker()">
                     <span id="angler-picker-btn-text" class="picker-trigger-name">Choose Competitor...</span>
                     <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
                 </button>
 
-                <!-- Embedded Pop-down Selection Box -->
                 <div id="angler-picker-container" class="custom-picker-container">
                     <div id="custom-angler-picker" class="custom-picker-list">
                         <div class="custom-picker-item" style="color: var(--text-muted);">Loading Anglers...</div>
@@ -1069,7 +1046,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.4</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.1.5</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1117,7 +1094,6 @@
             }
         }
 
-        // 🎯 Modern Blue/Slate "MORE DATA" Pill Click Handler
         function scrollCardWrapperRight(wrapperId) {
             let container = document.getElementById(wrapperId);
             if (!container) return;
@@ -1127,7 +1103,6 @@
             }
         }
 
-        // 🌊 Table "Peek & Nudge" Visual Cue Helper
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const wrappers = document.querySelectorAll('#table-output .card-table-wrapper');
@@ -1142,7 +1117,6 @@
             }, 300);
         }
 
-        // Helper: Generate Sleek Blue/Slate Pill Badge HTML
         function getCircleBadgeHtml(wrapperId) {
             return `
                 <button class="card-scroll-pill" onclick="scrollCardWrapperRight('${wrapperId}')" title="Scroll Table Right">
@@ -1158,7 +1132,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.4";
+            document.title = MATCH_CONFIG.competitionName + " | v2.1.5";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1210,7 +1184,6 @@
             document.getElementById('rules-modal').style.display = 'none';
         }
 
-        /* 📱 On-Demand Keyboard-Free Trigger Toggle Logic */
         function toggleAnglerPicker() {
             const container = document.getElementById('angler-picker-container');
             const btn = document.getElementById('angler-picker-btn');
@@ -1240,7 +1213,6 @@
             }
         }
 
-        /* 📱 Embedded Clean Scrollable Picker Methods */
         async function openReportModal() {
             pushOverlayState();
             selectedAnglerName = "";
@@ -1289,7 +1261,6 @@
             document.getElementById('report-modal').style.display = 'none';
         }
 
-        /* 📱 Custom App Picker JS for Rivalry Selection */
         function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
             selectedRivalName = rivalName;
             const btnText = document.getElementById('rival-picker-btn-text');
@@ -1322,7 +1293,6 @@
             openRulesModal('Secret Pairs Rules', rulesHtml);
         }
 
-        /* 🧮 Percentile Logic Fix: Zero / Unentered / Equal Array Check */
         function calcPercentile(targetVal, array, isLowerBetter = false) {
             if (!array || array.length <= 1) return 0;
             
@@ -1344,6 +1314,7 @@
             return Math.min(Math.max(pct, 0), 99);
         }
 
+        /* 👤 v2.1.5 Streamlined 6 Core Stats Personal Report Card */
         async function generatePersonalReport() {
             if (!selectedAnglerName) {
                 alert("Please tap [ Choose Competitor... ] to select your name first.");
@@ -1383,65 +1354,23 @@
                 
                 let uD1Fish = user.day1?.fishCount || 0;
                 let uD2Fish = user.day2?.fishCount || 0;
-                let uVariance = Math.abs(uD1Fish - uD2Fish);
+                let uPeakSession = Math.max(uD1Fish, uD2Fish);
 
-                let d1ZoneTotals = {}, d2ZoneTotals = {};
-                anglers.forEach(a => {
-                    if (a.day1 && a.day1.zone) {
-                        let z = a.day1.zone;
-                        if (!d1ZoneTotals[z]) d1ZoneTotals[z] = { fish: 0, count: 0 };
-                        d1ZoneTotals[z].fish += (a.day1.fishCount || 0);
-                        d1ZoneTotals[z].count += 1;
-                    }
-                    if (a.day2 && a.day2.zone) {
-                        let z = a.day2.zone;
-                        if (!d2ZoneTotals[z]) d2ZoneTotals[z] = { fish: 0, count: 0 };
-                        d2ZoneTotals[z].fish += (a.day2.fishCount || 0);
-                        d2ZoneTotals[z].count += 1;
-                    }
-                });
-
-                let uD1ZoneAvg = (user.day1 && user.day1.zone && d1ZoneTotals[user.day1.zone]) ? (d1ZoneTotals[user.day1.zone].fish / d1ZoneTotals[user.day1.zone].count) : 1;
-                let uD2ZoneAvg = (user.day2 && user.day2.zone && d2ZoneTotals[user.day2.zone]) ? (d2ZoneTotals[user.day2.zone].fish / d2ZoneTotals[user.day2.zone].count) : 1;
-
-                let uD1Ratio = uD1ZoneAvg > 0 ? (uD1Fish / uD1ZoneAvg) : 1;
-                let uD2Ratio = uD2ZoneAvg > 0 ? (uD2Fish / uD2ZoneAvg) : 1;
-
-                let uAvgZonePts = ((user.day1?.zonePoints || 0) + (user.day2?.zonePoints || 0)) / 2;
-
+                // Field Array Distributions
                 let ptsArr = anglers.map(a => a.totals.cumulativePoints || 0);
                 let fishArr = anglers.map(a => a.totals.cumulativeFish || 0);
                 let lenArr = anglers.map(a => a.totals.cumulativeLengthCm || 0);
                 let specArr = anglers.map(a => Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0));
                 let avgSizeArr = anglers.map(a => (a.totals.cumulativeFish || 0) > 0 ? ((a.totals.cumulativeLengthCm || 0) / a.totals.cumulativeFish) : 0);
-                
-                let d1FishArr = anglers.map(a => a.day1?.fishCount || 0);
-                let d2FishArr = anglers.map(a => a.day2?.fishCount || 0);
-                let varArr = anglers.map(a => Math.abs((a.day1?.fishCount || 0) - (a.day2?.fishCount || 0)));
+                let peakSessionArr = anglers.map(a => Math.max(a.day1?.fishCount || 0, a.day2?.fishCount || 0));
 
-                let d1RatioArr = anglers.map(a => {
-                    let f = a.day1?.fishCount || 0;
-                    let zAvg = (a.day1 && a.day1.zone && d1ZoneTotals[a.day1.zone]) ? (d1ZoneTotals[a.day1.zone].fish / d1ZoneTotals[a.day1.zone].count) : 1;
-                    return zAvg > 0 ? (f / zAvg) : 1;
-                });
-                let d2RatioArr = anglers.map(a => {
-                    let f = a.day2?.fishCount || 0;
-                    let zAvg = (a.day2 && a.day2.zone && d2ZoneTotals[a.day2.zone]) ? (d2ZoneTotals[a.day2.zone].fish / d2ZoneTotals[a.day2.zone].count) : 1;
-                    return zAvg > 0 ? (f / zAvg) : 1;
-                });
-                let podArr = anglers.map(a => ((a.day1?.zonePoints || 0) + (a.day2?.zonePoints || 0)) / 2);
-
+                // Percentile Math for 6 Core Stats
                 let pOverallMatch = calcPercentile(uPts, ptsArr, true);
-                let pFish = calcPercentile(uFish, fishArr);
                 let pLen = calcPercentile(uLen, lenArr);
+                let pFish = calcPercentile(uFish, fishArr);
                 let pSpec = calcPercentile(uMaxFish, specArr);
                 let pAvgSize = calcPercentile(uAvgSize, avgSizeArr);
-                let pD1Best = calcPercentile(uD1Fish, d1FishArr);
-                let pD2Best = calcPercentile(uD2Fish, d2FishArr);
-                let pVar = calcPercentile(uVariance, varArr, true);
-                let pD1Ratio = calcPercentile(uD1Ratio, d1RatioArr);
-                let pD2Ratio = calcPercentile(uD2Ratio, d2RatioArr);
-                let pPod = calcPercentile(uAvgZonePts, podArr, true);
+                let pPeakSession = calcPercentile(uPeakSession, peakSessionArr);
 
                 let htmlMarkup = '<div class="stat-grid">';
 
@@ -1463,117 +1392,79 @@
                     </div>
                 `;
 
+                // 📊 6 Core Performance Sliders
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Portfolio Performance Sliders</div>
+                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Core Performance Metrics</div>
                         
                         <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 12px; margin-bottom: 14px; text-align: center; font-size: 0.7rem; color: var(--text-muted); line-height: 1.3;">
-                            <strong>How to read this:</strong> Each percentage slider displays the proportion of the total active field you outperformed in that metric (e.g. <strong>80%</strong> means you finished ahead of 80% of all competitors).
+                            Each slider displays the percentage of active competitors you outperformed in that metric.
                         </div>
 
+                        <!-- 1. Total Zone Points -->
                         <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Zone Points (${uPts} Points)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">1. Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--accent-gold); color: #0f172a;">${pOverallMatch}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pOverallMatch}% of field</div>
                             </div>
-                            <span class="metric-subtext">Finished ahead of ${pOverallMatch}% of all competitors in cumulative Total Zone Points.</span>
+                            <span class="metric-subtext">Overall match standing based on total zone points.</span>
                         </div>
 
+                        <!-- 2. Total Catch Length -->
                         <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Fish Count (${uFish} Fish)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--accent-cyan); color: #0f172a;">${pFish}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pFish}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Landed a higher total number of fish across both sessions than ${pFish}% of the field.</span>
-                        </div>
-
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">2. Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pLen}%; background: #64748b; color: #fff;">${pLen}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pLen}% of field</div>
                             </div>
-                            <span class="metric-subtext">Accumulated more total meters of fish landed than ${pLen}% of the field.</span>
+                            <span class="metric-subtext">Cumulative length of all measured fish.</span>
                         </div>
 
+                        <!-- 3. Total Fish Count -->
                         <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Biggest Single Fish (${uMaxFish}cm)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">3. Total Fish Count (${uFish} Fish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--accent-cyan); color: #0f172a;">${pFish}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pFish}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Total fish quantity landed across both days.</span>
+                        </div>
+
+                        <!-- 4. Biggest Single Fish -->
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">4. Biggest Single Fish (${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pSpec}%; background: var(--accent-emerald); color: #0f172a;">${pSpec}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pSpec}% of field</div>
                             </div>
-                            <span class="metric-subtext">Landed a longer individual specimen catch than ${pSpec}% of the field.</span>
+                            <span class="metric-subtext">Longest single specimen landed during the match.</span>
                         </div>
 
+                        <!-- 5. Average Fish Size -->
                         <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Average Fish Length (${uAvgSize.toFixed(1)}cm / Fish)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">5. Average Fish Size (${uAvgSize.toFixed(1)}cm / Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pAvgSize}%; background: #0284c7; color: #fff;">${pAvgSize}%</div>
                                 <div class="bar-chart-label-right">Outperformed ${pAvgSize}% of field</div>
                             </div>
-                            <span class="metric-subtext">Maintained a larger average length per fish than ${pAvgSize}% of the field.</span>
+                            <span class="metric-subtext">Average catch size per individual fish.</span>
                         </div>
 
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 1 Best Session - Evening/Night (${uD1Fish} Fish)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pD1Best}%; background: var(--red-zone); color: #fff;">${pD1Best}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pD1Best}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Out-fished ${pD1Best}% of the field in Day 1 Evening/Night session catch volume.</span>
-                        </div>
-
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 2 Best Session - Daytime (${uD2Fish} Fish)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pD2Best}%; background: var(--blue-zone); color: #fff;">${pD2Best}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pD2Best}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Out-fished ${pD2Best}% of the field in Day 2 Daytime session catch volume.</span>
-                        </div>
-
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day-to-Day Consistency (±${uVariance} Fish Shift)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pVar}%; background: #64748b; color: #fff;">${pVar}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pVar}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Had a smaller variation in fish count between the night and day sessions than ${pVar}% of the field.</span>
-                        </div>
-
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 1 Zone Performance Comparison (${uD1Ratio.toFixed(2)}x Peg Avg)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pD1Ratio}%; background: var(--accent-cyan); color: #0f172a;">${pD1Ratio}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pD1Ratio}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Out-fished the average catch rate of your Day 1 zone pegs by a higher margin than ${pD1Ratio}% of the field.</span>
-                        </div>
-
-                        <div class="metric-card-item">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Day 2 Zone Performance Comparison (${uD2Ratio.toFixed(2)}x Peg Avg)</div>
-                            <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pD2Ratio}%; background: #0284c7; color: #fff;">${pD2Ratio}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pD2Ratio}% of field</div>
-                            </div>
-                            <span class="metric-subtext">Out-fished the average catch rate of your Day 2 zone pegs by a higher margin than ${pD2Ratio}% of the field.</span>
-                        </div>
-
+                        <!-- 6. Peak Single-Session Catch -->
                         <div class="metric-card-item" style="margin-bottom:0;">
-                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">Average Zone Placing (${uAvgZonePts.toFixed(1)} Avg Rank)</div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">6. Peak Single-Session Catch (${uPeakSession} Fish)</div>
                             <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pPod}%; background: var(--accent-gold); color: #0f172a;">${pPod}%</div>
-                                <div class="bar-chart-label-right">Outperformed ${pPod}% of field</div>
+                                <div class="bar-chart-fill" style="width: ${pPeakSession}%; background: var(--red-zone); color: #fff;">${pPeakSession}%</div>
+                                <div class="bar-chart-label-right">Outperformed ${pPeakSession}% of field</div>
                             </div>
-                            <span class="metric-subtext">Averaged a higher finishing position within your assigned zone pegs across both sessions than ${pPod}% of the field.</span>
+                            <span class="metric-subtext">Highest fish count recorded in any single session.</span>
                         </div>
 
                     </div>
                 `;
 
-                // 🥊 App-Native Rival Picker Integration
+                // 🥊 Head-to-Head Rivalry Matchup
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1584,7 +1475,6 @@
                         <div style="margin-bottom: 12px;">
                             <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.8px;">STEP 2: CHOOSE RIVAL</span>
 
-                            <!-- Modern Input Pill Trigger -->
                             <button id="rival-picker-btn" class="picker-trigger-btn rival-btn" onclick="toggleRivalPicker()">
                                 <span id="rival-picker-btn-text" class="picker-trigger-name">Choose Rival Competitor...</span>
                                 <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
@@ -1632,22 +1522,6 @@
 
             if (!user || !rival) return;
 
-            let d1ZoneTotals = {}, d2ZoneTotals = {};
-            anglers.forEach(a => {
-                if (a.day1 && a.day1.zone) {
-                    let z = a.day1.zone;
-                    if (!d1ZoneTotals[z]) d1ZoneTotals[z] = { fish: 0, count: 0 };
-                    d1ZoneTotals[z].fish += (a.day1.fishCount || 0);
-                    d1ZoneTotals[z].count += 1;
-                }
-                if (a.day2 && a.day2.zone) {
-                    let z = a.day2.zone;
-                    if (!d2ZoneTotals[z]) d2ZoneTotals[z] = { fish: 0, count: 0 };
-                    d2ZoneTotals[z].fish += (a.day2.fishCount || 0);
-                    d2ZoneTotals[z].count += 1;
-                }
-            });
-
             function getStats(a) {
                 let f = a.totals.cumulativeFish || 0;
                 let l = a.totals.cumulativeLengthCm || 0;
@@ -1657,17 +1531,9 @@
                 
                 let d1f = a.day1?.fishCount || 0;
                 let d2f = a.day2?.fishCount || 0;
-                let variance = Math.abs(d1f - d2f);
+                let peakSession = Math.max(d1f, d2f);
 
-                let z1Avg = (a.day1 && a.day1.zone && d1ZoneTotals[a.day1.zone]) ? (d1ZoneTotals[a.day1.zone].fish / d1ZoneTotals[a.day1.zone].count) : 1;
-                let z2Avg = (a.day2 && a.day2.zone && d2ZoneTotals[a.day2.zone]) ? (d2ZoneTotals[a.day2.zone].fish / d2ZoneTotals[a.day2.zone].count) : 1;
-
-                let ratio1 = z1Avg > 0 ? (d1f / z1Avg) : 1;
-                let ratio2 = z2Avg > 0 ? (d2f / z2Avg) : 1;
-
-                let avgZonePts = ((a.day1?.zonePoints || 0) + (a.day2?.zonePoints || 0)) / 2;
-
-                return { f, l, p, avgS, maxF, d1f, d2f, variance, ratio1, ratio2, avgZonePts };
+                return { f, l, p, avgS, maxF, d1f, d2f, peakSession };
             }
 
             let u = getStats(user);
@@ -1679,12 +1545,7 @@
                 { uVal: u.l, rVal: r.l, isLowerBetter: false },
                 { uVal: u.maxF, rVal: r.maxF, isLowerBetter: false },
                 { uVal: u.avgS, rVal: r.avgS, isLowerBetter: false },
-                { uVal: u.d1f, rVal: r.d1f, isLowerBetter: false },
-                { uVal: u.d2f, rVal: r.d2f, isLowerBetter: false },
-                { uVal: u.variance, rVal: r.variance, isLowerBetter: true },
-                { uVal: u.ratio1, rVal: r.ratio1, isLowerBetter: false },
-                { uVal: u.ratio2, rVal: r.ratio2, isLowerBetter: false },
-                { uVal: u.avgZonePts, rVal: r.avgZonePts, isLowerBetter: true }
+                { uVal: u.peakSession, rVal: r.peakSession, isLowerBetter: false }
             ];
 
             let wins = 0, draws = 0, losses = 0;
@@ -1771,34 +1632,9 @@
                                 <td>${renderCellHtml(`${r.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, false)}</td>
                             </tr>
                             <tr>
-                                <td>${renderCellHtml(`${u.d1f} fish`, u.d1f, r.d1f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 1 Catch</td>
-                                <td>${renderCellHtml(`${r.d1f} fish`, u.d1f, r.d1f, false, false)}</td>
-                            </tr>
-                            <tr>
-                                <td>${renderCellHtml(`${u.d2f} fish`, u.d2f, r.d2f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 2 Catch</td>
-                                <td>${renderCellHtml(`${r.d2f} fish`, u.d1f, r.d2f, false, false)}</td>
-                            </tr>
-                            <tr>
-                                <td>${renderCellHtml(`±${u.variance} f`, u.variance, r.variance, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Consistency</td>
-                                <td>${renderCellHtml(`±${r.variance} f`, u.variance, r.variance, true, false)}</td>
-                            </tr>
-                            <tr>
-                                <td>${renderCellHtml(`${u.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 1 Zone Ratio</td>
-                                <td>${renderCellHtml(`${r.ratio1.toFixed(2)}x`, u.ratio1, r.ratio1, false, false)}</td>
-                            </tr>
-                            <tr>
-                                <td>${renderCellHtml(`${u.ratio2.toFixed(2)}x`, u.ratio2, r.ratio2, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Day 2 Zone Ratio</td>
-                                <td>${renderCellHtml(`${r.ratio2.toFixed(2)}x`, u.ratio1, r.ratio2, false, false)}</td>
-                            </tr>
-                            <tr>
-                                <td>${renderCellHtml(`${u.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Avg Zone Rank</td>
-                                <td>${renderCellHtml(`${r.avgZonePts.toFixed(1)} pts`, u.avgZonePts, r.avgZonePts, true, false)}</td>
+                                <td>${renderCellHtml(`${u.peakSession} fish`, u.peakSession, r.peakSession, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:600; font-size: 0.7rem;">Peak Session</td>
+                                <td>${renderCellHtml(`${r.peakSession} fish`, u.peakSession, r.peakSession, false, false)}</td>
                             </tr>
                         </table>
                     </div>
@@ -1913,7 +1749,6 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                /* 🎯 Dynamic 1-Day vs 2-Day Catch Success % Block (v2.1.4) */
                 let successBlockHtml = '';
                 if (isTwoDayComp) {
                     successBlockHtml = `
@@ -1947,7 +1782,7 @@
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.4 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.5 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2007,7 +1842,6 @@
                     </div>
                 `;
 
-                // 🐟 Specimen Leaderboard with Species Mapping (v2.1.4)
                 let specimenList = [];
                 anglers.forEach(item => {
                     if (item.day1 && item.day1.biggestFishCm > 0) {
@@ -2019,7 +1853,6 @@
                 });
                 specimenList.sort((a, b) => b.lengthCm - a.lengthCm);
 
-                // Group by day to match rank species indices from biggestFishSpecies object
                 let d1Rank = 1, d2Rank = 1;
                 specimenList.forEach(spec => {
                     let speciesText = "";
@@ -2377,21 +2210,18 @@
                         <tr class="sub-header-row">
                             <th style="text-align: left;">POS & ANGLER (TEAM)</th>
                             
-                            <!-- Final Totals First -->
                             <th class="final-totals-header" style="color: var(--accent-gold);">PTS</th>
                             <th class="final-totals-header">CM</th>
                             <th class="final-totals-header">CT</th>
                             <th class="final-totals-header">BIG</th>
                             <th class="final-totals-header pillar-divider-right">SPC</th>
 
-                            <!-- Day 1 Session Breakdown -->
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
                             <th>BIG</th>
                             <th>SPC</th>
                             
-                            <!-- Day 2 Session Breakdown -->
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
@@ -2441,7 +2271,6 @@
                                 </div>
                             </td>
                             
-                            <!-- 🏆 Combined Match Totals -->
                             <td class="final-totals-cell" style="text-align: center;">
                                 <div style="display: inline-block; background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.5); border-radius: 5px; padding: 2px 5px; font-weight: 700; color: var(--accent-gold); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${totPts}</div>
                             </td>
@@ -2450,14 +2279,12 @@
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-emerald);">${totBig}</td>
                             <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-cyan);">${totSpc}</td>
 
-                            <!-- Day 1 Session Breakdown -->
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d1Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d1Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Ct}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Big}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
 
-                            <!-- Day 2 Session Breakdown -->
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d2Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d2Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d2Ct}</td>
@@ -2790,7 +2617,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.4 deployment active'))
+                    .then(reg => console.log('v2.1.5 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
