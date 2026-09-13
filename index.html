@@ -8,8 +8,8 @@
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
-            venue:           "Elliot Beach",
-            dates:           "18th & 19th September 2026"
+            venue:           "Elliot Beach Lunan Bay",
+            dates:           "18th & 19th September"
         };
     </script>
     
@@ -20,12 +20,12 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Palette (v2.1.8) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.2.0) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
             --pill-btn-bg: #334155;
-            --pill-btn-border: #475569;
+            --pill-btn-border: rgba(255, 255, 255, 0.12);
             --accent-gold: #eab308;
             --accent-gold-light: rgba(234, 179, 8, 0.15);
             --accent-cyan: #38bdf8;
@@ -36,9 +36,9 @@
             --text-main: #f8fafc;
             --text-muted: #cbd5e1;
             --text-dark-contrast: #94a3b8;
-            --border-color: #475569;
-            --border-card: rgba(255, 255, 255, 0.08);
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-card: rgba(255, 255, 255, 0.12);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             --red-zone: #f87171;
             --blue-zone: #60a5fa;
             --green-zone: #34d399;
@@ -50,6 +50,19 @@
             margin: 0; 
             padding: 0; 
             -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* 📱 Custom Sleek Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         body {
@@ -74,8 +87,8 @@
             background: var(--surface-color);
             border-radius: 16px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
             position: relative;
         }
         
@@ -139,7 +152,7 @@
         .slide-btn {
             background: var(--pill-btn-bg);
             border: 1px solid var(--pill-btn-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 25px;
             padding: 12px 18px;
             color: var(--text-main);
@@ -149,8 +162,8 @@
             align-items: center;
             justify-content: space-between; 
             text-align: left;
-            transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
             position: relative;
             width: 100%;
             user-select: none;
@@ -199,12 +212,12 @@
         }
 
         .slide-btn:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             background: #3e4f67;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
         }
         .slide-btn:active { 
-            transform: scale(0.985); 
+            transform: scale(0.97); 
         }
 
         /* Full Screen Native Overlay */
@@ -225,13 +238,15 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            background: var(--surface-color); 
+            background: rgba(51, 65, 85, 0.85) !important; 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color); 
             flex-shrink: 0; 
             position: sticky;
             top: 0;
             z-index: 100; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.35);
             width: 100%;
         }
         .back-btn {
@@ -426,22 +441,6 @@
             display: flex;
             flex-direction: column;
             padding-bottom: 10px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-gold) #1e293b;
-        }
-
-        .custom-picker-list::-webkit-scrollbar {
-            width: 7px;
-        }
-        .custom-picker-list::-webkit-scrollbar-track {
-            background: #1e293b;
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
-        .custom-picker-list::-webkit-scrollbar-thumb {
-            background: var(--accent-gold);
-            border-radius: 5px;
-            border: 1.5px solid #1e293b;
         }
 
         .custom-picker-item {
@@ -525,7 +524,8 @@
             top: 0; left: 0; 
             width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.75); 
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: none;
             justify-content: center; 
             align-items: flex-start; 
@@ -540,11 +540,11 @@
             width: 100%; 
             max-width: 480px; 
             padding: 20px 18px;
-            box-shadow: 0 16px 24px -5px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 16px 30px -5px rgba(0, 0, 0, 0.45);
             position: relative;
             text-align: left;
             margin: auto 0; 
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-card);
         }
         .modal-close-btn {
             background: #1e293b; 
@@ -624,7 +624,7 @@
             border-radius: 14px;
             padding: 5px;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-card);
             margin-bottom: 16px;
             width: 100%;
         }
@@ -727,8 +727,8 @@
         }
         
         tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) td { background: rgba(15, 23, 42, 0.35); }
-        tr:hover td, tr:active td { background: rgba(56, 189, 248, 0.12) !important; }
+        tr:nth-child(even) td { background: rgba(15, 23, 42, 0.25); }
+        tr:hover td, tr:active td { background: rgba(56, 189, 248, 0.14) !important; }
         tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #1e293b !important; }
 
         table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
@@ -810,7 +810,7 @@
         }
         .stat-card {
             background: var(--surface-color);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-card);
             border-radius: 14px;
             padding: 16px 14px;
             box-shadow: var(--card-shadow); 
@@ -878,15 +878,15 @@
             z-index: 3;
         }
 
-        /* AFTER */
-.metric-subtext {
-    font-size: 0.78rem;           /* Increased from 0.7rem for readability */
-    color: var(--text-muted);     /* Switched to a lighter, higher-contrast text color */
-    font-weight: 500;
-    line-height: 1.4;             /* Added a touch more breathing room between lines */
-    display: block;
-    margin-top: 4px;              /* Clean gap below the bar */
-}
+        /* 👁️ Enhanced Subtext Readability (v2.2.0) */
+        .metric-subtext {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.4;
+            display: block;
+            margin-top: 4px;
+        }
 
         .chart-legend {
             display: flex;
@@ -943,7 +943,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.1.8</span>
+            <span class="header-badge">COMMAND PORTAL v2.2.0</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1048,7 +1048,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.1.8</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.2.0</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1134,7 +1134,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.1.8";
+            document.title = MATCH_CONFIG.competitionName + " | v2.2.0";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1316,7 +1316,6 @@
             return Math.min(Math.max(pct, 0), 99);
         }
 
-        /* 👤 v2.1.8 Streamlined 6 Core Stats Personal Report Card */
         async function generatePersonalReport() {
             if (!selectedAnglerName) {
                 alert("Please tap [ Choose Competitor... ] to select your name first.");
@@ -1358,7 +1357,6 @@
                 let uD2Fish = user.day2?.fishCount || 0;
                 let uPeakSession = Math.max(uD1Fish, uD2Fish);
 
-                // Field Array Distributions
                 let ptsArr = anglers.map(a => a.totals.cumulativePoints || 0);
                 let fishArr = anglers.map(a => a.totals.cumulativeFish || 0);
                 let lenArr = anglers.map(a => a.totals.cumulativeLengthCm || 0);
@@ -1366,7 +1364,6 @@
                 let avgSizeArr = anglers.map(a => (a.totals.cumulativeFish || 0) > 0 ? ((a.totals.cumulativeLengthCm || 0) / a.totals.cumulativeFish) : 0);
                 let peakSessionArr = anglers.map(a => Math.max(a.day1?.fishCount || 0, a.day2?.fishCount || 0));
 
-                // Percentile Math for 6 Core Stats
                 let pOverallMatch = calcPercentile(uPts, ptsArr, true);
                 let pLen = calcPercentile(uLen, lenArr);
                 let pFish = calcPercentile(uFish, fishArr);
@@ -1376,7 +1373,6 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
 
-                // 👤 Top Personal Summary Block
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -1394,7 +1390,6 @@
                     </div>
                 `;
 
-                // 📊 6 Core Performance Sliders
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Core Performance Metrics</div>
@@ -1403,7 +1398,6 @@
                             Each slider displays the percentage of active competitors you outperformed in that metric.
                         </div>
 
-                        <!-- 1. Total Zone Points -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">1. Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
@@ -1413,7 +1407,6 @@
                             <span class="metric-subtext">Overall match standing based on total zone points.</span>
                         </div>
 
-                        <!-- 2. Total Catch Length -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">2. Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
@@ -1423,7 +1416,6 @@
                             <span class="metric-subtext">Cumulative length of all measured fish.</span>
                         </div>
 
-                        <!-- 3. Total Fish Count -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">3. Total Fish Count (${uFish} Fish)</div>
                             <div class="bar-chart-container">
@@ -1433,7 +1425,6 @@
                             <span class="metric-subtext">Total fish quantity landed across both days.</span>
                         </div>
 
-                        <!-- 4. Biggest Single Fish -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">4. Biggest Single Fish (${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
@@ -1443,7 +1434,6 @@
                             <span class="metric-subtext">Longest single specimen landed during the match.</span>
                         </div>
 
-                        <!-- 5. Average Fish Size -->
                         <div class="metric-card-item">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">5. Average Fish Size (${uAvgSize.toFixed(1)}cm / Fish)</div>
                             <div class="bar-chart-container">
@@ -1453,7 +1443,6 @@
                             <span class="metric-subtext">Average catch size per individual fish.</span>
                         </div>
 
-                        <!-- 6. Peak Single-Session Catch -->
                         <div class="metric-card-item" style="margin-bottom:0;">
                             <div style="font-size: 0.75rem; font-weight: 700; color:var(--text-main);">6. Peak Single-Session Catch (${uPeakSession} Fish)</div>
                             <div class="bar-chart-container">
@@ -1466,7 +1455,6 @@
                     </div>
                 `;
 
-                // 🥊 Head-to-Head Rivalry Matchup
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
                 htmlMarkup += `
@@ -1770,7 +1758,7 @@
                         <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
                             <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-cyan);">${totalAnglers}</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Total Entries</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Total Anglers</div>
                             </div>
                             <div>
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${singleCompSuccessRate}%</div>
@@ -1780,11 +1768,12 @@
                     `;
                 }
 
+                /* 🏷️ "Total Anglers" Label Updated (v2.2.0) */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.1.8 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.0 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2202,6 +2191,7 @@
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
+                    /* 🏷️ Header Updated: "BIGGEST" (v2.2.0) */
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
@@ -2215,19 +2205,19 @@
                             <th class="final-totals-header" style="color: var(--accent-gold);">PTS</th>
                             <th class="final-totals-header">CM</th>
                             <th class="final-totals-header">CT</th>
-                            <th class="final-totals-header">BIG</th>
+                            <th class="final-totals-header">BIGGEST</th>
                             <th class="final-totals-header pillar-divider-right">SPC</th>
 
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
-                            <th>BIG</th>
+                            <th>BIGGEST</th>
                             <th>SPC</th>
                             
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
-                            <th>BIG</th>
+                            <th>BIGGEST</th>
                             <th>SPC</th>
                         </tr>
                     `;
@@ -2380,6 +2370,7 @@
                             return dayB.totalLengthCm - dayA.totalLengthCm;
                         });
                         
+                        /* ✂️ Peg Column Removed & Colspan Adjusted to 4 (v2.2.0) */
                         if (zoneAnglers.length > 0) {
                             htmlMarkup += `
                                 <div class="table-header-bar" style="margin-top:16px;">
@@ -2399,16 +2390,16 @@
                                 let currentZonePts = dayData.zonePoints;
 
                                 if (lastZonePts !== null && currentZonePts !== lastZonePts) {
-    htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
-}
-lastZonePts = currentZonePts;
+                                    htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
+                                }
+                                lastZonePts = currentZonePts;
 
-htmlMarkup += `<tr>
-    <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${dayData.zonePoints}</td>
-    <td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td>
-    <td style="text-align: left;">${teamDisp}</td>
-    <td class="tie-breaker-td">${ties}</td>
-</tr>`;
+                                htmlMarkup += `<tr>
+                                    <td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${dayData.zonePoints}</td>
+                                    <td style="text-align: left; font-weight: 700; color:var(--text-main);">${item.anglerName}</td>
+                                    <td style="text-align: left;">${teamDisp}</td>
+                                    <td class="tie-breaker-td">${ties}</td>
+                                </tr>`;
                             });
                             htmlMarkup += '</table></div></div>';
                         }
@@ -2618,7 +2609,7 @@ htmlMarkup += `<tr>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.1.8 deployment active'))
+                    .then(reg => console.log('v2.2.0 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
