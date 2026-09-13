@@ -8,8 +8,8 @@
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
-            venue:           "Elliot Beach",
-            dates:           "18th & 19th September 2026"
+            venue:           "Elliot Beach Lunan Bay",
+            dates:           "18th & 19th September"
         };
     </script>
     
@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.2.0) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.2.1) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -700,6 +700,11 @@
             border-left: 2px solid #1e293b;
         }
 
+        /* 💈 Session Separation Divider (v2.2.1) */
+        .session-divider-right {
+            border-right: 2.5px solid var(--accent-cyan) !important;
+        }
+
         td { 
             padding: 7px 7px; 
             text-align: center; 
@@ -878,7 +883,6 @@
             z-index: 3;
         }
 
-        /* 👁️ Enhanced Subtext Readability (v2.2.0) */
         .metric-subtext {
             font-size: 0.78rem;
             color: var(--text-muted);
@@ -943,7 +947,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.2.0</span>
+            <span class="header-badge">COMMAND PORTAL v2.2.1</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1048,7 +1052,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.2.0</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.2.1</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1134,7 +1138,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.2.0";
+            document.title = MATCH_CONFIG.competitionName + " | v2.2.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1768,12 +1772,11 @@
                     `;
                 }
 
-                /* 🏷️ "Total Anglers" Label Updated (v2.2.0) */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
                             <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.0 PROSPECTUS</span>
+                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.1 PROSPECTUS</span>
                         </div>
                         ${successBlockHtml}
                         <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
@@ -2191,12 +2194,12 @@
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     
-                    /* 🏷️ Header Updated: "BIGGEST" (v2.2.0) */
+                    /* 💈 Added session-divider-right to Day 1 Performance column block (v2.2.1) */
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
                             <th colspan="5" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
-                            <th colspan="5" class="col-divider-left" style="color: var(--red-zone);">DAY 1 PERFORMANCE</th>
+                            <th colspan="5" class="col-divider-left session-divider-right" style="color: var(--red-zone);">DAY 1 PERFORMANCE</th>
                             <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 PERFORMANCE</th>
                         </tr>
                         <tr class="sub-header-row">
@@ -2212,7 +2215,7 @@
                             <th>CM</th>
                             <th>CT</th>
                             <th>BIGGEST</th>
-                            <th>SPC</th>
+                            <th class="session-divider-right">SPC</th>
                             
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
@@ -2275,7 +2278,7 @@
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d1Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Ct}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Big}</td>
-                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
+                            <td class="session-breakdown-cell session-divider-right" style="font-family: 'JetBrains Mono'; color: var(--text-muted);">${d1Spc}</td>
 
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-muted);">${d2Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 600;">${d2Cm}</td>
@@ -2370,7 +2373,6 @@
                             return dayB.totalLengthCm - dayA.totalLengthCm;
                         });
                         
-                        /* ✂️ Peg Column Removed & Colspan Adjusted to 4 (v2.2.0) */
                         if (zoneAnglers.length > 0) {
                             htmlMarkup += `
                                 <div class="table-header-bar" style="margin-top:16px;">
@@ -2609,7 +2611,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.2.0 deployment active'))
+                    .then(reg => console.log('v2.2.1 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
