@@ -1634,7 +1634,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 🧮 Enhanced Helper: Key-Sanitized Midpoint SVG Pie Generator (v2.3.0 Fix) */
+       /* 🧮 Enhanced Helper: Mathematical Remainder Pie Generator (v2.3.1 Fix) */
         function createLabeledPieSvg(zoneData, totalFishInSession) {
             const radius = 48;
             const cx = 65;
@@ -1652,17 +1652,39 @@
                 return svgContent;
             }
 
+            // Step 1: Extract individual fish counts safely across possible object keys
+            function getFishCount(zName) {
+                let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
+                return rawObj.fish || 0;
+            }
+
+            let redFish = getFishCount('Red Zone');
+            let blueFish = getFishCount('Blue Zone');
+            let greenFish = getFishCount('Green Zone');
+            let knownFishSum = redFish + blueFish + greenFish;
+
+            // Step 2: Determine Yellow fish count (direct count OR mathematical deduction)
+            let yellowFish = getFishCount('Yellow Zone');
+            if (yellowFish === 0 && totalFishInSession > knownFishSum) {
+                yellowFish = totalFishInSession - knownFishSum;
+            }
+
+            const calculatedCounts = {
+                'Red Zone': redFish,
+                'Blue Zone': blueFish,
+                'Green Zone': greenFish,
+                'Yellow Zone': yellowFish
+            };
+
             let currentAngle = -90; // Start at 12 o'clock
 
+            // Step 3: Draw SVG slices and overlay percentage text
             zoneKeys.forEach(zName => {
-                // Key Sanitization: Match "Yellow Zone" OR "Yellow" cleanly
-                let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
-                let fishCount = rawObj.fish || 0;
+                let fishCount = calculatedCounts[zName];
                 let pct = (fishCount / totalFishInSession) * 100;
 
                 if (pct > 0) {
                     let strokeLength = (circumference * pct) / 100;
-                    let strokeOffset = circumference - strokeLength;
                     let angleRotation = currentAngle + 90;
 
                     // Draw Slice Ring Channel
@@ -2004,35 +2026,7 @@
                                 </div>
                             </div>
 
-                            <!-- 📊 Beach Catch Density Strip -->
-                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
-                                <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 8px; text-align: center;">Zone Catch Density Gradient</div>
-                                <div style="display: flex; flex-direction: column; gap: 6px;">
-                    `;
-
-                    const zoneColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
-                    zoneKeys.forEach(zName => {
-                        let zVol = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
-                        let fillPct = Math.min(Math.round((zVol / maxZoneVol) * 100), 100);
-                        let barColor = zoneColors[zName];
-
-                        htmlMarkup += `
-                            <div>
-                                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;">
-                                    <span>${zName.toUpperCase()}</span>
-                                    <span>${zVol} Fish (${fillPct}% Density)</span>
-                                </div>
-                                <div style="width: 100%; background: #0f172a; height: 8px; border-radius: 4px; overflow: hidden;">
-                                    <div style="width: ${fillPct}%; background: ${barColor}; height: 100%; border-radius: 4px; transition: width 0.6s ease;"></div>
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    htmlMarkup += `
-                                </div>
-                            </div>
-                        </div>
+                        
                     `;
                 }
 
