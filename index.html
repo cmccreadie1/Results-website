@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.3.4) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.5) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -818,7 +818,7 @@
         .stat-grid {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 26px; /* 🏆 Increased vertical card spacing for clean visual separation (v2.3.5) */
             margin-top: 8px;
             margin-bottom: 30px;
             width: 100%;
@@ -826,26 +826,26 @@
         .stat-card {
             background: var(--surface-color);
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 16px 14px;
+            border-radius: 16px;
+            padding: 20px 16px; /* 🏆 Generous internal card padding (v2.3.5) */
             box-shadow: var(--card-shadow); 
             text-align: center;
             position: relative;
             width: 100%;
         }
         
-        .profile-card-red { border-left: 4px solid var(--red-zone); }
-        .profile-card-blue { border-left: 4px solid var(--blue-zone); }
-        .profile-card-green { border-left: 4px solid var(--green-zone); }
-        .profile-card-yellow { border-left: 4px solid var(--yellow-zone); }
+        .profile-card-red { border-top: 4px solid var(--red-zone); }
+        .profile-card-blue { border-top: 4px solid var(--blue-zone); }
+        .profile-card-green { border-top: 4px solid var(--green-zone); }
+        .profile-card-yellow { border-top: 4px solid var(--yellow-zone); }
 
         .stat-title {
             color: var(--text-main);
             font-family: 'Oswald', sans-serif;
-            font-size: 1.08rem;
+            font-size: 1.12rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
         .metric-card-item {
@@ -944,7 +944,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.3.4</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.5</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1049,7 +1049,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.3.4</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.5</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1135,7 +1135,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.3.4";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.5";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1634,7 +1634,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.4) */
+        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.5) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1692,7 +1692,6 @@
 
             zones.forEach(z => {
                 let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
-                // Relative Scaling: Highest bar scales to ~85% of full container height
                 let relativeRatio = z.count / maxCount;
                 let barHeight = Math.max(Math.round(relativeRatio * 85), 20);
 
@@ -1906,9 +1905,9 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.4) */
+                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.5) */
                 htmlMarkup += `
-                    <div class="stat-card" style="text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 14px;">Daily Zone Distribution</div>
                         
                         <!-- Day 1 Vertical Bar Block -->
@@ -2121,7 +2120,7 @@
                 let finalIndStandings = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
 
                 htmlMarkup += `
-                    <div class="stat-card" style="text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">⏳ The "What If?" Timeline Simulation</div>
                         <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.3;">Compare leaderboard metrics tracked at the Day 1 close vs. final verified Day 2 standings.</div>
 
@@ -2176,7 +2175,7 @@
                 })).sort((a, b) => b.avgLen - a.avgLen);
 
                 htmlMarkup += `
-                    <div class="stat-card" style="text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
                         <div style="color: var(--accent-cyan); font-family: 'Oswald'; margin-bottom: 4px; font-size: 1.05rem; text-transform: uppercase; text-align: center;">🏆 Parent Club Championship</div>
                         <div style="font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 10px; line-height: 1.3; padding: 0 8px;">Combines every angler representing a parent club into one unified squad, regardless of how many separate teams they entered. Ranks clubs as a single collective force based on their overall average catch per angler.</div>
                         
@@ -2674,7 +2673,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.3.4 deployment active'))
+                    .then(reg => console.log('v2.3.5 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
