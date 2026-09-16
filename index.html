@@ -1634,7 +1634,7 @@
             outputBox.innerHTML = html;
         }
 
-       /* 🧮 Enhanced Helper: Mathematical Remainder Pie Generator (v2.3.1 Fix) */
+      /* 🧮 Enhanced Helper: Two-Pass Layered Pie Generator (v2.3.1 Fix) */
         function createLabeledPieSvg(zoneData, totalFishInSession) {
             const radius = 48;
             const cx = 65;
@@ -1644,15 +1644,11 @@
             const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
             const zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
 
-            let svgContent = `<svg width="130" height="130" viewBox="0 0 130 130">`;
-            svgContent += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="${strokeWidth}"/>`;
-
             if (!totalFishInSession || totalFishInSession <= 0) {
-                svgContent += `</svg>`;
-                return svgContent;
+                return `<svg width="130" height="130" viewBox="0 0 130 130"><circle cx="${cx}" cy="${cy}" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="${strokeWidth}"/></svg>`;
             }
 
-            // Step 1: Extract individual fish counts safely across possible object keys
+            // Extract fish counts safely across possible object keys
             function getFishCount(zName) {
                 let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
                 return rawObj.fish || 0;
@@ -1661,12 +1657,71 @@
             let redFish = getFishCount('Red Zone');
             let blueFish = getFishCount('Blue Zone');
             let greenFish = getFishCount('Green Zone');
-            let knownFishSum = redFish + blueFish + greenFish;
+            let knownSum = redFish + blueFish + greenFish;
 
-            // Step 2: Determine Yellow fish count (direct count OR mathematical deduction)
             let yellowFish = getFishCount('Yellow Zone');
-            if (yellowFish === 0 && totalFishInSession > knownFishSum) {
-                yellowFish = totalFishInSession - knownFishSum;
+            if (yellowFish === 0 && totalFishInSession > knownSum) {
+                yellowFish = totalFishInSession - knownSum;
+            }
+
+            const counts = {
+                'Red Zone': redFish,
+                'Blue Zone': blueFish,
+                'Green Zone': greenFish,
+                'Yellow Zone': yellowFish
+            };
+
+            let circlesSvg = `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="${strokeWidth}"/>`;
+            let labelsSvg = '';
+
+            let currentAngle = -90; // Start at 12 o'clock
+
+            zoneKeys.forEach(zName => {
+                let fishCount = counts[zName];
+                let pct = (fishCount / totalFishInSession) * 100;
+
+                if (pct > 0) {
+                    let strokeLength = (circumference * pct) / 100;
+                    let angleRotation = currentAngle + 90;
+
+                    // Pass 1: Add slice circle to background circle layer
+                    circlesSvg += `
+                        <circle cx="${cx}" cy="${cy}" r="${radius}" 
+                                fill="transparent" 
+                                stroke="${donutColors[zName]}" 
+                                stroke-width="${strokeWidth}" 
+                                stroke-dasharray="${strokeLength} ${circumference}" 
+                                stroke-dashoffset="0"
+                                transform="rotate(${angleRotation} ${cx} ${cy})" />
+                    `;
+
+                    // Pass 2: Calculate mid-angle position and add text to top label layer
+                    let sliceAngleDeg = (pct / 100) * 360;
+                    let midAngleDeg = currentAngle + (sliceAngleDeg / 2);
+                    let midAngleRad = (midAngleDeg * Math.PI) / 180;
+
+                    let textX = cx + radius * Math.cos(midAngleRad);
+                    let textY = cy + radius * Math.sin(midAngleRad);
+
+                    if (pct >= 2.5) {
+                        let textFillColor = (zName === 'Yellow Zone') ? '#000000' : '#0f172a';
+                        labelsSvg += `
+                            <text x="${textX.toFixed(2)}" y="${textY.toFixed(2)}" 
+                                  fill="${textFillColor}" 
+                                  font-size="11px" 
+                                  font-family="JetBrains Mono, monospace" 
+                                  font-weight="900" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="central">${Math.round(pct)}%</text>
+                        `;
+                    }
+
+                    currentAngle += sliceAngleDeg;
+                }
+            });
+
+            return `<svg width="130" height="130" viewBox="0 0 130 130">${circlesSvg}${labelsSvg}</svg>`;
+        }
             }
 
             const calculatedCounts = {
