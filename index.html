@@ -16,11 +16,11 @@
     <title>Results Portal | Loading...</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains Mono:wght@400;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.3.0) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.1) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -688,7 +688,7 @@
             background: #1e293b !important;
         }
 
-        /* 🏆 High-Contrast Combined Totals Vault Box (v2.3.0) */
+        /* 🏆 High-Contrast Combined Totals Vault Box */
         .final-totals-cell {
             background: rgba(234, 179, 8, 0.08) !important;
         }
@@ -944,7 +944,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.3.0</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.1</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1049,7 +1049,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.3.0</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.1</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1135,7 +1135,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.3.0";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1634,25 +1634,12 @@
             outputBox.innerHTML = html;
         }
 
-       /* 🧮 Enhanced Helper: Mathematical Remainder Pie Generator (v2.3.1 Fix) */
-        function createLabeledPieSvg(zoneData, totalFishInSession) {
-            const radius = 48;
-            const cx = 65;
-            const cy = 65;
-            const strokeWidth = 24;
-            const circumference = 2 * Math.PI * radius;
-            const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
-            const zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
-
-            let svgContent = `<svg width="130" height="130" viewBox="0 0 130 130">`;
-            svgContent += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="${strokeWidth}"/>`;
-
+        /* 📊 High-Contrast Stacked Volume Bar Component (v2.3.1) */
+        function createStackedVolumeBar(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
-                svgContent += `</svg>`;
-                return svgContent;
+                return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:10px;">No Data</div>`;
             }
 
-            // Step 1: Extract individual fish counts safely across possible object keys
             function getFishCount(zName) {
                 let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
                 return rawObj.fish || 0;
@@ -1661,69 +1648,52 @@
             let redFish = getFishCount('Red Zone');
             let blueFish = getFishCount('Blue Zone');
             let greenFish = getFishCount('Green Zone');
-            let knownFishSum = redFish + blueFish + greenFish;
+            let knownSum = redFish + blueFish + greenFish;
 
-            // Step 2: Determine Yellow fish count (direct count OR mathematical deduction)
             let yellowFish = getFishCount('Yellow Zone');
-            if (yellowFish === 0 && totalFishInSession > knownFishSum) {
-                yellowFish = totalFishInSession - knownFishSum;
+            if (yellowFish === 0 && totalFishInSession > knownSum) {
+                yellowFish = totalFishInSession - knownSum;
             }
 
-            const calculatedCounts = {
-                'Red Zone': redFish,
-                'Blue Zone': blueFish,
-                'Green Zone': greenFish,
-                'Yellow Zone': yellowFish
-            };
+            const zones = [
+                { name: 'Red', count: redFish, color: '#f87171', textColor: '#0f172a' },
+                { name: 'Blue', count: blueFish, color: '#60a5fa', textColor: '#0f172a' },
+                { name: 'Green', count: greenFish, color: '#34d399', textColor: '#0f172a' },
+                { name: 'Yellow', count: yellowFish, color: '#fbbf24', textColor: '#0f172a' }
+            ];
 
-            let currentAngle = -90; // Start at 12 o'clock
+            let barSegmentsHtml = '';
+            let legendHtml = '';
 
-            // Step 3: Draw SVG slices and overlay percentage text
-            zoneKeys.forEach(zName => {
-                let fishCount = calculatedCounts[zName];
-                let pct = (fishCount / totalFishInSession) * 100;
-
+            zones.forEach(z => {
+                let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
+                
                 if (pct > 0) {
-                    let strokeLength = (circumference * pct) / 100;
-                    let angleRotation = currentAngle + 90;
-
-                    // Draw Slice Ring Channel
-                    svgContent += `
-                        <circle cx="${cx}" cy="${cy}" r="${radius}" 
-                                fill="transparent" 
-                                stroke="${donutColors[zName]}" 
-                                stroke-width="${strokeWidth}" 
-                                stroke-dasharray="${strokeLength} ${circumference}" 
-                                stroke-dashoffset="0"
-                                transform="rotate(${angleRotation} ${cx} ${cy})" />
+                    barSegmentsHtml += `
+                        <div style="width: ${pct}%; background: ${z.color}; height: 100%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 900; color: ${z.textColor}; overflow: hidden; white-space: nowrap;" title="${z.name}: ${pct}% (${z.count} Fish)">
+                            ${pct >= 8 ? pct + '%' : ''}
+                        </div>
                     `;
-
-                    // Calculate mid-angle for text anchor
-                    let sliceAngleDeg = (pct / 100) * 360;
-                    let midAngleDeg = currentAngle + (sliceAngleDeg / 2);
-                    let midAngleRad = (midAngleDeg * Math.PI) / 180;
-
-                    let textX = cx + radius * Math.cos(midAngleRad);
-                    let textY = cy + radius * Math.sin(midAngleRad);
-
-                    if (pct >= 2.5) {
-                        svgContent += `
-                            <text x="${textX.toFixed(2)}" y="${textY.toFixed(2)}" 
-                                  fill="#0f172a" 
-                                  font-size="11px" 
-                                  font-family="JetBrains Mono, monospace" 
-                                  font-weight="900" 
-                                  text-anchor="middle" 
-                                  dominant-baseline="central">${Math.round(pct)}%</text>
-                        `;
-                    }
-
-                    currentAngle += sliceAngleDeg;
                 }
+
+                legendHtml += `
+                    <div style="display: flex; align-items: center; gap: 3px; font-size: 0.62rem; font-family: 'Inter', sans-serif; font-weight: 700; color: var(--text-main);">
+                        <span style="width: 7px; height: 7px; border-radius: 2px; background: ${z.color}; display: inline-block;"></span>
+                        <span>${z.name}: ${pct}%</span>
+                    </div>
+                `;
             });
 
-            svgContent += `</svg>`;
-            return svgContent;
+            return `
+                <div style="width: 100%; margin-top: 4px;">
+                    <div style="width: 100%; height: 26px; background: #0f172a; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid var(--border-color); box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);">
+                        ${barSegmentsHtml}
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 6px; text-align: left;">
+                        ${legendHtml}
+                    </div>
+                </div>
+            `;
         }
 
         async function loadMatchStats(displayTitle) {
@@ -1758,8 +1728,7 @@
                     d2ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
                 });
 
-                // Peg tracking data structures for Heat Map
-                let pegStats = {}; // { pegNo: { combinedFish, combinedLength, d1Fish, d1Zone, d2Fish, d2Zone } }
+                let pegStats = {};
 
                 anglers.forEach(item => {
                     let cFish = item.totals.cumulativeFish || 0;
@@ -1837,7 +1806,6 @@
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
                 let avgCatchPerAngler = totalAnglers > 0 ? (totalFish / totalAnglers).toFixed(1) : 0;
 
-                /* 🏆 Calculate Overall Day Winners across all 4 zones */
                 let topD1Zone = "", topD2Zone = "";
                 let maxD1FishCount = -1, maxD2FishCount = -1;
 
@@ -1917,41 +1885,34 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution (Pie Charts) */
+                /* CARD 2: Daily Zone Distribution (Side-by-Side Stacked Volume Bars v2.3.1) */
                 htmlMarkup += `
                     <div class="stat-card">
-                        <div class="stat-title">Daily Zone Distribution</div>
-                        <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; gap: 8px; margin: 10px 0 4px 0;">
+                        <div class="stat-title" style="margin-bottom: 8px;">Daily Zone Distribution</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;">
                             
-                            <!-- Day 1 Pie -->
-                            <div style="text-align: center; flex: 1; border-right: 1px dashed var(--border-color); padding-right: 4px;">
-                                <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 6px;">
-                                    ${createLabeledPieSvg(d1ZoneTotals, day1Fish)}
-                                </div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day1Fish} Fish</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Catch</div>
+                            <!-- Day 1 Stacked Bar -->
+                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
+                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
+                                <div style="font-family:'JetBrains Mono'; font-size: 1rem; font-weight: 800; color: var(--text-main); margin: 2px 0;">${day1Fish} Fish</div>
+                                ${createStackedVolumeBar(d1ZoneTotals, day1Fish)}
                             </div>
                             
-                            <!-- Day 2 Pie -->
-                            <div style="text-align: center; flex: 1; padding-left: 4px;">
-                                <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 6px;">
-                                    ${createLabeledPieSvg(d2ZoneTotals, day2Fish)}
-                                </div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day2Fish} Fish</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Daytime Catch</div>
+                            <!-- Day 2 Stacked Bar -->
+                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
+                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
+                                <div style="font-family:'JetBrains Mono'; font-size: 1rem; font-weight: 800; color: var(--text-main); margin: 2px 0;">${day2Fish} Fish</div>
+                                ${createStackedVolumeBar(d2ZoneTotals, day2Fish)}
                             </div>
 
                         </div>
                     </div>
                 `;
 
-                /* CARD 3: 🔥 Hot Pegs & Beach Heat Map (NEW v2.3.0) */
+                /* CARD 3: 🔥 Hot Pegs & Golden Peg */
                 let allPegNums = Object.keys(pegStats).map(Number).sort((a, b) => a - b);
                 
                 if (allPegNums.length > 0) {
-                    // 1. Identify Golden Peg (Most fish overall)
                     let goldenPegNo = allPegNums[0];
                     let maxPegFish = pegStats[goldenPegNo].combinedFish;
 
@@ -1962,7 +1923,6 @@
                         }
                     });
 
-                    // 2. Identify 3-Peg Hot Clusters for Day 1 and Day 2
                     function findHotCluster(dayKey) {
                         let bestStartPeg = allPegNums[0];
                         let maxClusterFish = -1;
@@ -1991,16 +1951,13 @@
 
                     let goldenZone = pegStats[goldenPegNo].d1Zone || pegStats[goldenPegNo].d2Zone || "";
 
-                    // Calculate max zone volume for relative density bars
-                    let maxZoneVol = Math.max(...zoneKeys.map(k => d1ZoneTotals[k].fish + d2ZoneTotals[k].fish)) || 1;
-
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--accent-flame); text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🔥 Hot Pegs & Beach Heat Map</div>
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🔥 Hot Pegs & Beach Analysis</div>
                             <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 12px;">Spatial catch density tracking across individual beach pegs and 3-peg hot clusters.</div>
 
                             <!-- 👑 The Golden Peg Vault Box -->
-                            <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #1e293b 100%); border: 1.5px solid var(--accent-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #1e293b 100%); border: 1.5px solid var(--accent-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
                                     <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; letter-spacing: 0.8px;">👑 THE GOLDEN PEG (MOST PRODUCTIVE OVERALL)</div>
                                     <div style="font-family: 'Oswald'; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-top: 1px;">PEG #${goldenPegNo} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">(${goldenZone})</span></div>
@@ -2012,7 +1969,7 @@
                             </div>
 
                             <!-- 🔥 3-Peg Hot Spot Clusters -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                                 <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
                                     <div style="font-family: 'Oswald'; font-size: 0.68rem; text-transform: uppercase; color: var(--accent-flame); font-weight: 700;">Day 1 Hot Cluster</div>
                                     <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 3px 0;">PEGS ${d1Cluster.startPeg} — ${d1Cluster.endPeg}</div>
@@ -2025,8 +1982,7 @@
                                     <div style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 700;">${d2Cluster.fishTotal} Fish Landed</div>
                                 </div>
                             </div>
-
-                        
+                        </div>
                     `;
                 }
 
@@ -2510,7 +2466,6 @@
                         fish.speciesName = speciesText;
                     });
                     
-                    // 📌 Trimmed strictly to Top 5 Specimen Catches (v2.3.0)
                     let top5Fish = flatFish.slice(0, 5);
 
                     htmlMarkup += `
@@ -2696,7 +2651,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.3.0 deployment active'))
+                    .then(reg => console.log('v2.3.1 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
