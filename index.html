@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.2.9) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.0) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -31,6 +31,7 @@
             --accent-cyan: #38bdf8;
             --accent-emerald: #10b981;
             --accent-slate: #0f172a;
+            --accent-flame: #f97316;
             --pill-bg: #475569;
             --pill-text: #f8fafc;
             --text-main: #f8fafc;
@@ -687,7 +688,7 @@
             background: #1e293b !important;
         }
 
-        /* 🏆 High-Contrast Combined Totals Vault Box (v2.2.9) */
+        /* 🏆 High-Contrast Combined Totals Vault Box (v2.3.0) */
         .final-totals-cell {
             background: rgba(234, 179, 8, 0.08) !important;
         }
@@ -943,7 +944,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.2.9</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.0</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1048,7 +1049,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.2.9</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.0</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1134,7 +1135,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.2.9";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.0";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1633,7 +1634,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 🧮 Enhanced Helper: Robust Midpoint SVG Pie Segment Generator with Crisp In-Slice Labels (v2.2.9) */
+        /* 🧮 Enhanced Helper: Key-Sanitized Midpoint SVG Pie Generator (v2.3.0 Fix) */
         function createLabeledPieSvg(zoneData, totalFishInSession) {
             const radius = 48;
             const cx = 65;
@@ -1654,7 +1655,9 @@
             let currentAngle = -90; // Start at 12 o'clock
 
             zoneKeys.forEach(zName => {
-                let fishCount = zoneData[zName].fish || 0;
+                // Key Sanitization: Match "Yellow Zone" OR "Yellow" cleanly
+                let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
+                let fishCount = rawObj.fish || 0;
                 let pct = (fishCount / totalFishInSession) * 100;
 
                 if (pct > 0) {
@@ -1673,7 +1676,7 @@
                                 transform="rotate(${angleRotation} ${cx} ${cy})" />
                     `;
 
-                    // Always calculate mid-angle correctly for text anchor (including yellow)
+                    // Calculate mid-angle for text anchor
                     let sliceAngleDeg = (pct / 100) * 360;
                     let midAngleDeg = currentAngle + (sliceAngleDeg / 2);
                     let midAngleRad = (midAngleDeg * Math.PI) / 180;
@@ -1718,15 +1721,13 @@
             try {
                 const scoresData = await fetchScores();
                 const anglers = scoresData.anglers || [];
-                const biggestFishSpecies = scoresData.biggestFishSpecies || null;
                 
                 let totalAnglers = anglers.length;
                 let totalFish = 0, day1Fish = 0, day2Fish = 0;
                 let totalLengthCm = 0, day1LengthTotal = 0, day2LengthTotal = 0;
                 let day1Blankers = 0, day2Blankers = 0;
                 let day1Entries = 0, day2Entries = 0;
-                let blankers = 0, soloCount = 0;
-                let teamsSet = new Set();
+                let blankers = 0;
 
                 let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
                 let d1ZoneTotals = {}, d2ZoneTotals = {};
@@ -1735,23 +1736,26 @@
                     d2ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
                 });
 
+                // Peg tracking data structures for Heat Map
+                let pegStats = {}; // { pegNo: { combinedFish, combinedLength, d1Fish, d1Zone, d2Fish, d2Zone } }
+
                 anglers.forEach(item => {
                     let cFish = item.totals.cumulativeFish || 0;
                     let cLen = item.totals.cumulativeLengthCm || 0;
-                    let teamRaw = String(item.teamName || "").trim();
                     
                     totalFish += cFish;
                     totalLengthCm += cLen;
                     if (cFish === 0) blankers++;
-                    if (teamRaw === "" || teamRaw.toUpperCase() === "SOLO") soloCount++; else teamsSet.add(teamRaw);
 
                     if (item.day1 && item.day1.zone) {
                         day1Entries++;
                         let z = item.day1.zone;
                         let d1f = item.day1.fishCount || 0;
+                        let p1 = item.day1.peg;
                         day1Fish += d1f;
                         day1LengthTotal += item.day1.totalLengthCm || 0;
                         if (d1f === 0) day1Blankers++;
+                        
                         if (d1ZoneTotals[z]) {
                             d1ZoneTotals[z].totalCompetitors++;
                             if (d1f > 0) {
@@ -1762,15 +1766,25 @@
                             }
                             if (item.day1.biggestFishCm > d1ZoneTotals[z].biggestFish) d1ZoneTotals[z].biggestFish = item.day1.biggestFishCm;
                         }
+
+                        if (p1 !== undefined && p1 !== null) {
+                            if (!pegStats[p1]) pegStats[p1] = { combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: z, d2Fish: 0, d2Zone: '' };
+                            pegStats[p1].combinedFish += d1f;
+                            pegStats[p1].combinedLength += item.day1.totalLengthCm || 0;
+                            pegStats[p1].d1Fish += d1f;
+                            pegStats[p1].d1Zone = z;
+                        }
                     }
 
                     if (item.day2 && item.day2.zone) {
                         day2Entries++;
                         let z = item.day2.zone;
                         let d2f = item.day2.fishCount || 0;
+                        let p2 = item.day2.peg;
                         day2Fish += d2f;
                         day2LengthTotal += item.day2.totalLengthCm || 0;
                         if (d2f === 0) day2Blankers++;
+
                         if (d2ZoneTotals[z]) {
                             d2ZoneTotals[z].totalCompetitors++;
                             if (d2f > 0) {
@@ -1780,6 +1794,14 @@
                                 if (d2f > d2ZoneTotals[z].maxFish) d2ZoneTotals[z].maxFish = d2f;
                             }
                             if (item.day2.biggestFishCm > d2ZoneTotals[z].biggestFish) d2ZoneTotals[z].biggestFish = item.day2.biggestFishCm;
+                        }
+
+                        if (p2 !== undefined && p2 !== null) {
+                            if (!pegStats[p2]) pegStats[p2] = { combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: '', d2Fish: 0, d2Zone: z };
+                            pegStats[p2].combinedFish += d2f;
+                            pegStats[p2].combinedLength += item.day2.totalLengthCm || 0;
+                            pegStats[p2].d2Fish += d2f;
+                            pegStats[p2].d2Zone = z;
                         }
                     }
                 });
@@ -1793,7 +1815,7 @@
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
                 let avgCatchPerAngler = totalAnglers > 0 ? (totalFish / totalAnglers).toFixed(1) : 0;
 
-                /* 🏆 Calculate Overall Day Winners across all 4 zones (v2.2.9 Fix) */
+                /* 🏆 Calculate Overall Day Winners across all 4 zones */
                 let topD1Zone = "", topD2Zone = "";
                 let maxD1FishCount = -1, maxD2FishCount = -1;
 
@@ -1842,6 +1864,7 @@
                     `;
                 }
 
+                /* CARD 1: Executive Summary */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
                         ${successBlockHtml}
@@ -1872,106 +1895,7 @@
                     </div>
                 `;
 
-                let d1BlankPct = totalAnglers > 0 ? ((day1Blankers / totalAnglers) * 100).toFixed(0) : 0;
-                let d2BlankPct = totalAnglers > 0 ? ((day2Blankers / totalAnglers) * 100).toFixed(0) : 0;
-                
-                htmlMarkup += `
-                    <div class="stat-card" style="text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Night vs. Daytime Session Comparison</div>
-                        <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">Side-by-side performance metrics across Evening/Night and Daytime conditions.</div>
-                        <div class="table-card-container">
-                            <div class="card-table-wrapper">
-                                <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
-                                    <tr>
-                                        <th style="text-align: left; padding: 5px 7px;">METRIC</th>
-                                        <th style="text-align: center; padding: 5px 7px;">DAY 1 (NIGHT)</th>
-                                        <th style="text-align: center; padding: 5px 7px;">DAY 2 (DAYTIME)</th>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left; font-weight: 700; color:var(--text-main);">Total Catch (Fish)</td>
-                                        <td style="text-align: center; font-weight: 600;">${day1Fish}</td>
-                                        <td style="text-align: center; font-weight: 600;">${day2Fish}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left; font-weight: 700; color:var(--text-main);">Total Meters Landed</td>
-                                        <td style="text-align: center; font-weight: 600;">${(day1LengthTotal / 100).toFixed(2)}m</td>
-                                        <td style="text-align: center; font-weight: 600;">${(day2LengthTotal / 100).toFixed(2)}m</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left; font-weight: 700; color:var(--text-main);">Session Blank Rate</td>
-                                        <td style="text-align: center; font-weight: 600;">${d1BlankPct}%</td>
-                                        <td style="text-align: center; font-weight: 600;">${d2BlankPct}%</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                let specimenList = [];
-                anglers.forEach(item => {
-                    if (item.day1 && item.day1.biggestFishCm > 0) {
-                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day1.biggestFishCm, zone: item.day1.zone, dayNum: 1, dayLabel: 'Day 1' });
-                    }
-                    if (item.day2 && item.day2.biggestFishCm > 0) {
-                        specimenList.push({ name: item.anglerName, team: item.teamName, lengthCm: item.day2.biggestFishCm, zone: item.day2.zone, dayNum: 2, dayLabel: 'Day 2' });
-                    }
-                });
-                specimenList.sort((a, b) => b.lengthCm - a.lengthCm);
-
-                let d1Rank = 1, d2Rank = 1;
-                specimenList.forEach(spec => {
-                    let speciesText = "";
-                    if (biggestFishSpecies) {
-                        if (spec.dayNum === 1 && biggestFishSpecies.day1 && biggestFishSpecies.day1[String(d1Rank)]) {
-                            speciesText = biggestFishSpecies.day1[String(d1Rank)];
-                            d1Rank++;
-                        } else if (spec.dayNum === 2 && biggestFishSpecies.day2 && biggestFishSpecies.day2[String(d2Rank)]) {
-                            speciesText = biggestFishSpecies.day2[String(d2Rank)];
-                            d2Rank++;
-                        }
-                    }
-                    spec.speciesName = speciesText;
-                });
-
-                let top5Specimens = specimenList.slice(0, 5);
-
-                if (top5Specimens.length > 0) {
-                    htmlMarkup += `
-                        <div class="stat-card" style="text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📏 Top 5 Specimen Length Leaderboard</div>
-                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">The five longest individual catches recorded across the tournament.</div>
-                            <div class="table-card-container">
-                                <div class="card-table-wrapper">
-                                    <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
-                                        <tr>
-                                            <th style="text-align: center; padding: 5px 7px;">RNK</th>
-                                            <th style="text-align: left; padding: 5px 7px;">ANGLER NAME</th>
-                                            <th style="text-align: left; padding: 5px 7px;">ZONE / DAY</th>
-                                            <th style="text-align: center; padding: 5px 7px;">CATCH SIZE</th>
-                                        </tr>
-                    `;
-                    top5Specimens.forEach((spec, idx) => {
-                        let rankDisplay = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : (idx + 1)));
-                        let sizeDisplay = spec.speciesName ? `${spec.lengthCm} cm <span style="font-size:0.68rem; color:var(--text-muted); font-weight:600;">(${spec.speciesName})</span>` : `${spec.lengthCm} cm`;
-                        
-                        htmlMarkup += `
-                            <tr>
-                                <td style="text-align: center; font-weight: 700; padding: 5px 7px;">${rankDisplay}</td>
-                                <td style="text-align: left; font-weight: 700; color: var(--text-main); padding: 5px 7px;">${spec.name}</td>
-                                <td style="text-align: left; color: var(--text-muted); padding: 5px 7px;">${spec.zone} (${spec.dayLabel})</td>
-                                <td style="text-align: center; font-weight: 700; color: var(--accent-gold); padding: 5px 7px;">${sizeDisplay}</td>
-                            </tr>
-                        `;
-                    });
-                    htmlMarkup += `
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
+                /* CARD 2: Daily Zone Distribution (Pie Charts) */
                 htmlMarkup += `
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
@@ -2001,7 +1925,118 @@
                     </div>
                 `;
 
-                /* 📌 Global Daily Winner Inline Zone Headings (v2.2.9) */
+                /* CARD 3: 🔥 Hot Pegs & Beach Heat Map (NEW v2.3.0) */
+                let allPegNums = Object.keys(pegStats).map(Number).sort((a, b) => a - b);
+                
+                if (allPegNums.length > 0) {
+                    // 1. Identify Golden Peg (Most fish overall)
+                    let goldenPegNo = allPegNums[0];
+                    let maxPegFish = pegStats[goldenPegNo].combinedFish;
+
+                    allPegNums.forEach(pNo => {
+                        if (pegStats[pNo].combinedFish > maxPegFish) {
+                            maxPegFish = pegStats[pNo].combinedFish;
+                            goldenPegNo = pNo;
+                        }
+                    });
+
+                    // 2. Identify 3-Peg Hot Clusters for Day 1 and Day 2
+                    function findHotCluster(dayKey) {
+                        let bestStartPeg = allPegNums[0];
+                        let maxClusterFish = -1;
+                        let clusterZone = "";
+
+                        for (let i = 0; i < allPegNums.length; i++) {
+                            let pStart = allPegNums[i];
+                            let pMid = pStart + 1;
+                            let pEnd = pStart + 2;
+
+                            let sumF = (pegStats[pStart]?.[dayKey] || 0) + 
+                                       (pegStats[pMid]?.[dayKey] || 0) + 
+                                       (pegStats[pEnd]?.[dayKey] || 0);
+
+                            if (sumF > maxClusterFish) {
+                                maxClusterFish = sumF;
+                                bestStartPeg = pStart;
+                                clusterZone = pegStats[pStart]?.d1Zone || pegStats[pStart]?.d2Zone || "";
+                            }
+                        }
+                        return { startPeg: bestStartPeg, endPeg: bestStartPeg + 2, fishTotal: maxClusterFish, zone: clusterZone };
+                    }
+
+                    let d1Cluster = findHotCluster('d1Fish');
+                    let d2Cluster = findHotCluster('d2Fish');
+
+                    let goldenZone = pegStats[goldenPegNo].d1Zone || pegStats[goldenPegNo].d2Zone || "";
+
+                    // Calculate max zone volume for relative density bars
+                    let maxZoneVol = Math.max(...zoneKeys.map(k => d1ZoneTotals[k].fish + d2ZoneTotals[k].fish)) || 1;
+
+                    htmlMarkup += `
+                        <div class="stat-card" style="border-top: 4px solid var(--accent-flame); text-align: left;">
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🔥 Hot Pegs & Beach Heat Map</div>
+                            <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 12px;">Spatial catch density tracking across individual beach pegs and 3-peg hot clusters.</div>
+
+                            <!-- 👑 The Golden Peg Vault Box -->
+                            <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #1e293b 100%); border: 1.5px solid var(--accent-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; letter-spacing: 0.8px;">👑 THE GOLDEN PEG (MOST PRODUCTIVE OVERALL)</div>
+                                    <div style="font-family: 'Oswald'; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-top: 1px;">PEG #${goldenPegNo} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">(${goldenZone})</span></div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 800; color: var(--accent-gold);">${maxPegFish} FISH</div>
+                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">${(pegStats[goldenPegNo].combinedLength / 100).toFixed(2)}m Landed</div>
+                                </div>
+                            </div>
+
+                            <!-- 🔥 3-Peg Hot Spot Clusters -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                                <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.68rem; text-transform: uppercase; color: var(--accent-flame); font-weight: 700;">Day 1 Hot Cluster</div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 3px 0;">PEGS ${d1Cluster.startPeg} — ${d1Cluster.endPeg}</div>
+                                    <div style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 700;">${d1Cluster.fishTotal} Fish Landed</div>
+                                </div>
+
+                                <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                    <div style="font-family: 'Oswald'; font-size: 0.68rem; text-transform: uppercase; color: var(--accent-flame); font-weight: 700;">Day 2 Hot Cluster</div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 3px 0;">PEGS ${d2Cluster.startPeg} — ${d2Cluster.endPeg}</div>
+                                    <div style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 700;">${d2Cluster.fishTotal} Fish Landed</div>
+                                </div>
+                            </div>
+
+                            <!-- 📊 Beach Catch Density Strip -->
+                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+                                <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 8px; text-align: center;">Zone Catch Density Gradient</div>
+                                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    `;
+
+                    const zoneColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
+                    zoneKeys.forEach(zName => {
+                        let zVol = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
+                        let fillPct = Math.min(Math.round((zVol / maxZoneVol) * 100), 100);
+                        let barColor = zoneColors[zName];
+
+                        htmlMarkup += `
+                            <div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px;">
+                                    <span>${zName.toUpperCase()}</span>
+                                    <span>${zVol} Fish (${fillPct}% Density)</span>
+                                </div>
+                                <div style="width: 100%; background: #0f172a; height: 8px; border-radius: 4px; overflow: hidden;">
+                                    <div style="width: ${fillPct}%; background: ${barColor}; height: 100%; border-radius: 4px; transition: width 0.6s ease;"></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    htmlMarkup += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                /* CARD 4: Inline Zone Profiles & Productivity Badges */
                 const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
                 
                 zoneKeys.forEach(zName => {
@@ -2032,7 +2067,6 @@
                     let cardProfileClass = 'profile-card-' + zName.split(' ')[0].toLowerCase();
                     let textAccentColor = donutColors[zName];
 
-                    /* Calculate true global daily productivity badge */
                     let isTopD1 = (zName === topD1Zone && maxD1FishCount > 0);
                     let isTopD2 = (zName === topD2Zone && maxD2FishCount > 0);
 
@@ -2051,7 +2085,6 @@
                                 ${zName.toUpperCase()}<span style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">${productiveText}</span>
                             </div>
                             
-                            <!-- 2-Day Text-Based Metrics Banner -->
                             <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;">
                                 <div>
                                     <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: ${textAccentColor};">${totalZFish} FISH</div>
@@ -2107,6 +2140,7 @@
                     `;
                 });
 
+                /* CARD 5: Timeline Simulation */
                 let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
                     if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
                     return b.day1.totalLengthCm - a.day1.totalLengthCm;
@@ -2146,6 +2180,7 @@
                     </div>
                 `;
 
+                /* CARD 6: Parent Club Championship */
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -2312,7 +2347,6 @@
                                 </div>
                             </td>
                             
-                            <!-- 🏆 Vault Container Final Totals (High-Contrast Bold) -->
                             <td class="final-totals-cell" style="text-align: center;">
                                 <div style="display: inline-block; background: var(--accent-gold); border-radius: 6px; padding: 2px 7px; font-weight: 800; color: #0f172a; font-size: 0.88rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">${totPts}</div>
                             </td>
@@ -2321,14 +2355,12 @@
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-emerald);">${totBig}</td>
                             <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--accent-cyan);">${totSpc}</td>
 
-                            <!-- 📊 Day 1 Breakdown (Crisp Bold Text) -->
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d1Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d1Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d1Ct}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d1Big}</td>
                             <td class="session-breakdown-cell session-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d1Spc}</td>
 
-                            <!-- 📊 Day 2 Breakdown (Crisp Bold Text) -->
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d2Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d2Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 700; color: var(--text-main);">${d2Ct}</td>
@@ -2484,15 +2516,19 @@
                         fish.speciesName = speciesText;
                     });
                     
+                    // 📌 Trimmed strictly to Top 5 Specimen Catches (v2.3.0)
+                    let top5Fish = flatFish.slice(0, 5);
+
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Specimen Catch Log</span>
+                            <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Top 5 Specimen Catch Log</span>
                             ${getCircleBadgeHtml('fish-table-wrapper')}
                         </div>
                         <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">ANGLER NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
-                    flatFish.forEach((fish, idx) => {
+                    
+                    top5Fish.forEach((fish, idx) => {
                         let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
                         let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">(${fish.speciesName})</span>` : `${fish.size} cm`;
 
@@ -2512,7 +2548,6 @@
                                 <button class="rules-btn" onclick="openSecretPairsRules(decodeURIComponent('${encodeURIComponent(secretPairsData.description || '')}'))">Rules & Info ⓘ</button>
                             </div>
 
-                            <!-- 🎯 Methodology & Draw Fairness Banner -->
                             <div class="info-banner" style="text-align: left; margin: 0 0 12px 0; padding: 8px 12px; font-size: 0.72rem; line-height: 1.35;">
                                 <strong style="color: var(--accent-cyan); text-transform: uppercase;">Fairness & Methodology:</strong> 
                                 Completely random computer pairings. Victory goes to the pair closest to the secret target length (chosen randomly by computer between the lowest and highest possible scores)—ensuring a 100% level playing field for every angler in the pool.
@@ -2667,7 +2702,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.2.9 deployment active'))
+                    .then(reg => console.log('v2.3.0 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
