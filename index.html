@@ -901,19 +901,6 @@
             margin-top: 4px;
         }
 
-        .chart-legend {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        .legend-item { display: flex; align-items: center; gap: 4px; }
-        .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
-
         .footer {
             margin-top: auto;
             padding: 20px 15px 15px 15px;
@@ -1646,6 +1633,70 @@
             outputBox.innerHTML = html;
         }
 
+        /* 🧮 Helper Function: Generate Large Pie Chart SVG with Embedded % Labels (v2.2.7) */
+        function createLabeledPieSvg(zoneData, totalFishInSession) {
+            const radius = 42;
+            const cx = 55;
+            const cy = 55;
+            const circumference = 2 * Math.PI * radius;
+            const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
+            const zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+
+            let svgContent = `<svg width="110" height="110" viewBox="0 0 110 110">`;
+            svgContent += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="16"/>`;
+
+            if (!totalFishInSession || totalFishInSession <= 0) {
+                svgContent += `</svg>`;
+                return svgContent;
+            }
+
+            let currentAngle = -90; // Start at 12 o'clock
+
+            zoneKeys.forEach(zName => {
+                let fishCount = zoneData[zName].fish || 0;
+                let pct = (fishCount / totalFishInSession) * 100;
+
+                if (pct > 0) {
+                    let strokeLength = (circumference * pct) / 100;
+                    let strokeOffset = circumference - strokeLength;
+                    let angleRotation = currentAngle + 90;
+
+                    // Draw Slice
+                    svgContent += `
+                        <circle cx="${cx}" cy="${cy}" r="${radius}" 
+                                fill="transparent" 
+                                stroke="${donutColors[zName]}" 
+                                stroke-width="16" 
+                                stroke-dasharray="${strokeLength} ${circumference}" 
+                                stroke-dashoffset="0"
+                                transform="rotate(${angleRotation} ${cx} ${cy})" />
+                    `;
+
+                    // Render embedded text label inside segment if big enough (> 6%)
+                    if (pct >= 6) {
+                        let midAngleRad = ((currentAngle + (pct * 3.6) / 2) * Math.PI) / 180;
+                        let textX = cx + radius * Math.cos(midAngleRad);
+                        let textY = cy + radius * Math.sin(midAngleRad);
+
+                        svgContent += `
+                            <text x="${textX}" y="${textY}" 
+                                  fill="#0f172a" 
+                                  font-size="8.5px" 
+                                  font-family="JetBrains Mono, monospace" 
+                                  font-weight="800" 
+                                  text-anchor="middle" 
+                                  dominant-baseline="central">${Math.round(pct)}%</text>
+                        `;
+                    }
+
+                    currentAngle += (pct * 3.6);
+                }
+            });
+
+            svgContent += `</svg>`;
+            return svgContent;
+        }
+
         async function loadMatchStats(displayTitle) {
             pushOverlayState();
             const overlay = document.getElementById('viewer-overlay');
@@ -1734,20 +1785,27 @@
                 let d2SuccessRate = day2Entries > 0 ? (((day2Entries - day2Blankers) / day2Entries) * 100).toFixed(0) : 0;
                 let singleCompSuccessRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
 
-                let scoringAnglersCount = totalAnglers - blankers;
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
+                let avgCatchPerAngler = totalAnglers > 0 ? (totalFish / totalAnglers).toFixed(1) : 0;
 
-                let maxZoneCombinedFish = 0;
-                let maxZoneCombinedAvgSize = 0;
+                /* 🔍 Determine Top Volume and Best Quality Zones */
+                let topVolumeZone = "", bestQualityZone = "";
+                let maxZoneFishCount = -1, maxZoneAvgSizeVal = -1;
 
                 zoneKeys.forEach(zName => {
-                    let combinedFish = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
-                    let combinedLen = d1ZoneTotals[zName].length + d2ZoneTotals[zName].length;
-                    let combinedAvg = combinedFish > 0 ? (combinedLen / combinedFish) : 0;
-                    
-                    if (combinedFish > maxZoneCombinedFish) maxZoneCombinedFish = combinedFish;
-                    if (combinedAvg > maxZoneCombinedAvgSize) maxZoneCombinedAvgSize = combinedAvg;
+                    let combFish = d1ZoneTotals[zName].fish + d2ZoneTotals[zName].fish;
+                    let combLen = d1ZoneTotals[zName].length + d2ZoneTotals[zName].length;
+                    let combAvg = combFish > 0 ? (combLen / combFish) : 0;
+
+                    if (combFish > maxZoneFishCount) {
+                        maxZoneFishCount = combFish;
+                        topVolumeZone = zName;
+                    }
+                    if (combAvg > maxZoneAvgSizeVal) {
+                        maxZoneAvgSizeVal = combAvg;
+                        bestQualityZone = zName;
+                    }
                 });
 
                 let htmlMarkup = '<div class="stat-grid">';
@@ -1756,11 +1814,11 @@
                 if (isTwoDayComp) {
                     successBlockHtml = `
                         <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
-                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
+                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px; text-align: center;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${d1SuccessRate}%</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Day 1 Catch Success</div>
                             </div>
-                            <div>
+                            <div style="text-align: center;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${d2SuccessRate}%</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Day 2 Catch Success</div>
                             </div>
@@ -1769,11 +1827,11 @@
                 } else {
                     successBlockHtml = `
                         <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
-                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px;">
+                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px; text-align: center;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-cyan);">${totalAnglers}</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Total Anglers</div>
                             </div>
-                            <div>
+                            <div style="text-align: center;">
                                 <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 700; color: var(--accent-emerald);">${singleCompSuccessRate}%</div>
                                 <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;">Catch Success %</div>
                             </div>
@@ -1781,29 +1839,32 @@
                     `;
                 }
 
+                /* 📌 Refinement 1 & 2: Cleaned Overview Header + Avg Catch / Angler Metric */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-cyan); text-align: left; padding: 0; overflow: hidden;">
-                        <div style="background: #1e293b; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);">
-                            <span style="font-family: 'Oswald'; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-main);">Tournament Overview</span>
-                            <span style="font-family: 'JetBrains Mono'; font-size: 0.6rem; font-weight: 700; background: var(--accent-cyan); color: #0f172a; padding: 2px 6px; border-radius: 4px;">v2.2.7 PROSPECTUS</span>
-                        </div>
                         ${successBlockHtml}
-                        <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #1e293b;">
+                        <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #1e293b; text-align: center;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalAnglers}</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Anglers</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Anglers</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalFish}</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Fish</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Fish</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${totalMeters}m</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Length</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 700; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Total Length</div>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-color); padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #0f172a; text-align: center;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 700; color: var(--accent-gold);">${avgCatchPerAngler} Fish</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Avg / Angler</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700; color: var(--text-main);">${avgFishLength}cm</div>
-                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">Avg Fish Size</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 700; color: var(--accent-cyan);">${avgFishLength} cm</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Avg Fish Size</div>
                             </div>
                         </div>
                     </div>
@@ -1909,75 +1970,39 @@
                     `;
                 }
 
-                let radius = 30;
-                let circumference = 2 * Math.PI * radius;
-                const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
-                
+                /* 📌 Refinements 3, 4 & 5: Bigger Side-by-Side Pie Charts with In-Slice % Labels, No Legend */
                 htmlMarkup += `
                     <div class="stat-card">
                         <div class="stat-title">Daily Zone Distribution</div>
-                        <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-space-around; gap: 12px; margin: 12px 0;">
-                            <div style="text-align: center; flex: 1; min-width: 130px; border-right: 1px dashed var(--border-color); padding-right:8px;">
-                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
-                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="12"/>
-                `;
-                
-                let d1CurrentOffset = 0;
-                zoneKeys.forEach(zName => {
-                    let zTotal = d1ZoneTotals[zName].fish;
-                    let share = day1Fish > 0 ? zTotal / day1Fish : 0;
-                    let strokeLength = circumference * share;
-                    if (strokeLength > 0) {
-                        htmlMarkup += `<circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="${donutColors[zName]}" stroke-width="12" stroke-dasharray="${strokeLength} ${circumference}" stroke-dashoffset="-${d1CurrentOffset}" />`;
-                        d1CurrentOffset += strokeLength;
-                    }
-                });
-                
-                htmlMarkup += `
-                                    </svg>
+                        <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; gap: 8px; margin: 10px 0 4px 0;">
+                            
+                            <!-- Day 1 Pie -->
+                            <div style="text-align: center; flex: 1; border-right: 1px dashed var(--border-color); padding-right: 4px;">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 6px;">
+                                    ${createLabeledPieSvg(d1ZoneTotals, day1Fish)}
                                 </div>
                                 <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day1Fish} Fish</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Total Catch</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Night Catch</div>
                             </div>
                             
-                            <div style="text-align: center; flex: 1; min-width: 130px;">
-                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
-                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 8px;">
-                                    <svg width="80" height="80" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
-                                        <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="#1e293b" stroke-width="12"/>
-                `;
-                
-                let d2CurrentOffset = 0;
-                zoneKeys.forEach(zName => {
-                    let zTotal = d2ZoneTotals[zName].fish;
-                    let share = day2Fish > 0 ? zTotal / day2Fish : 0;
-                    let strokeLength = circumference * share;
-                    if (strokeLength > 0) {
-                        htmlMarkup += `<circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="${donutColors[zName]}" stroke-width="12" stroke-dasharray="${strokeLength} ${circumference}" stroke-dashoffset="-${d2CurrentOffset}" />`;
-                        d2CurrentOffset += strokeLength;
-                    }
-                });
-                
-                htmlMarkup += `
-                                    </svg>
+                            <!-- Day 2 Pie -->
+                            <div style="text-align: center; flex: 1; padding-left: 4px;">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
+                                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 6px;">
+                                    ${createLabeledPieSvg(d2ZoneTotals, day2Fish)}
                                 </div>
                                 <div style="font-family:'JetBrains Mono'; font-size: 1.05rem; font-weight: 700; color: var(--text-main);">${day2Fish} Fish</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Daytime Total Catch</div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Daytime Catch</div>
                             </div>
-                        </div>
-                        
-                        <div class="chart-legend" style="border-top: 1px solid var(--border-color); padding-top: 10px;">
-                `;
-                zoneKeys.forEach(zName => {
-                    htmlMarkup += `<div class="legend-item"><span class="legend-dot" style="background:${donutColors[zName]}"></span>${zName.replace(' Zone', '')}</div>`;
-                });
-                htmlMarkup += `
+
                         </div>
                     </div>
                 `;
 
+                /* 📌 Refinement 6: Text-Based 2-Day Combined Totals & Zone Honor Badges */
+                const donutColors = { 'Red Zone': '#f87171', 'Blue Zone': '#60a5fa', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
+                
                 zoneKeys.forEach(zName => {
                     let d1F = d1ZoneTotals[zName].fish; let d1L = d1ZoneTotals[zName].length; let d1A = d1ZoneTotals[zName].anglers; let d1Max = d1ZoneTotals[zName].maxFish;
                     let d2F = d2ZoneTotals[zName].fish; let d2L = d2ZoneTotals[zName].length; let d2A = d2ZoneTotals[zName].anglers; let d2Max = d2ZoneTotals[zName].maxFish;
@@ -1999,10 +2024,6 @@
                     let d1AvgBag = d1ZoneTotals[zName].totalCompetitors > 0 ? (d1F / d1ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
                     let d2AvgBag = d2ZoneTotals[zName].totalCompetitors > 0 ? (d2F / d2ZoneTotals[zName].totalCompetitors).toFixed(1) : "0.0";
 
-                    let volumeWidthPercent = maxZoneCombinedFish > 0 ? (totalZFish / maxZoneCombinedFish) * 100 : 0;
-                    let sizeWidthPercent = maxZoneCombinedAvgSize > 0 ? (parseFloat(overallZAvg) / maxZoneCombinedAvgSize) * 100 : 0;
-                    let overallTournamentShare = totalFish > 0 ? ((totalZFish / totalFish) * 100).toFixed(0) : 0;
-
                     let fishSwing = d2F - d1F;
                     let sizeSwing = (parseFloat(d2ZAvg) - parseFloat(d1ZAvg)).toFixed(1);
                     let blankSwing = d2BlankRate - d1BlankRate;
@@ -2010,18 +2031,30 @@
                     let cardProfileClass = 'profile-card-' + zName.split(' ')[0].toLowerCase();
                     let textAccentColor = donutColors[zName];
 
+                    let honorBadgeHtml = "";
+                    if (zName === topVolumeZone) {
+                        honorBadgeHtml += `<span style="font-family:'JetBrains Mono'; font-size:0.6rem; font-weight:700; background:var(--accent-gold); color:#0f172a; padding:2px 6px; border-radius:4px; text-transform:uppercase;">🏆 #1 VOLUME ZONE</span>`;
+                    }
+                    if (zName === bestQualityZone) {
+                        honorBadgeHtml += `<span style="font-family:'JetBrains Mono'; font-size:0.6rem; font-weight:700; background:var(--accent-cyan); color:#0f172a; padding:2px 6px; border-radius:4px; text-transform:uppercase; margin-left:4px;">📏 BEST QUALITY ZONE</span>`;
+                    }
+
                     htmlMarkup += `
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
-                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.1rem; margin-bottom: 4px; font-weight: 700;">${zName.toUpperCase()}</div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                                <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.1rem; margin-bottom: 0; font-weight: 700;">${zName.toUpperCase()}</div>
+                                <div>${honorBadgeHtml}</div>
+                            </div>
                             
-                            <div style="margin: 8px 0 12px 0;">
-                                <div class="bar-chart-container">
-                                    <div class="bar-chart-fill" style="width: ${volumeWidthPercent}%; background: ${textAccentColor}; color: #0f172a;">Volume: ${totalZFish} f</div>
-                                    <div class="bar-chart-label-right">${overallTournamentShare}% tournament share</div>
+                            <!-- 2-Day Text-Based Metrics Banner -->
+                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;">
+                                <div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: ${textAccentColor};">${totalZFish} FISH</div>
+                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">2-Day Combined Volume</div>
                                 </div>
-                                <div class="bar-chart-container">
-                                    <div class="bar-chart-fill" style="width: ${sizeWidthPercent}%; background: #64748b; color: #fff;">Avg Size: ${overallZAvg} cm</div>
-                                    <div class="bar-chart-label-right">Quality Index</div>
+                                <div style="border-left: 1px solid var(--border-color);">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">${overallZAvg} CM</div>
+                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 1px;">2-Day Combined Avg Size</div>
                                 </div>
                             </div>
 
@@ -2207,8 +2240,8 @@
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / ANGLER DETAILS</th>
                             <th colspan="5" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
-                            <th colspan="5" class="col-divider-left session-divider-right" style="color: var(--red-zone);">DAY 1 SCORES</th>
-                            <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 SCORES</th>
+                            <th colspan="5" class="col-divider-left session-divider-right" style="color: var(--red-zone);">DAY 1 BREAKDOWN</th>
+                            <th colspan="5" class="col-divider-left" style="color: var(--blue-zone);">DAY 2 BREAKDOWN</th>
                         </tr>
                         <tr class="sub-header-row">
                             <th style="text-align: left;">POS & ANGLER (TEAM)</th>
