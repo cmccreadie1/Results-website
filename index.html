@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.3.3) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.4) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -944,7 +944,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.3.3</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.4</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1049,7 +1049,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.3.3</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1135,7 +1135,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.3.3";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1634,10 +1634,10 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Executive Corporate Vertical Zone Bar Component (v2.3.3) */
+        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.4) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
-                return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:40px 0;">No Catch Data Recorded</div>`;
+                return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
             }
 
             function getFishCount(zName) {
@@ -1686,23 +1686,27 @@
                 }
             ];
 
+            let maxCount = Math.max(...zones.map(z => z.count), 1);
+
             let columnsHtml = '';
 
             zones.forEach(z => {
                 let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
-                let barHeight = Math.max(pct, 16); 
+                // Relative Scaling: Highest bar scales to ~85% of full container height
+                let relativeRatio = z.count / maxCount;
+                let barHeight = Math.max(Math.round(relativeRatio * 85), 20);
 
                 columnsHtml += `
                     <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative;">
                         <div style="width: 100%; height: ${barHeight}%; background: ${z.gradient}; border-top: 2px solid ${z.borderHighlight}; display: flex; align-items: flex-start; justify-content: center; padding-top: 6px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.3); transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);" title="${z.name}: ${pct}% (${z.count} Fish)">
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 900; color: ${z.textColor}; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.8); background: rgba(0,0,0,0.25); padding: 2px 5px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);">${pct}%</span>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 900; color: ${z.textColor}; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.8); background: rgba(0,0,0,0.25); padding: 3px 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);">${pct}%</span>
                         </div>
                     </div>
                 `;
             });
 
             return `
-                <div style="width: 100%; height: 160px; background: #0f172a; border-radius: 8px; padding: 12px 10px 0 10px; display: flex; gap: 0; border: 1px solid var(--border-color); box-shadow: inset 0 3px 10px rgba(0,0,0,0.6); margin-top: 8px; position: relative; overflow: hidden;">
+                <div style="width: 100%; height: 160px; background: #0f172a; border-radius: 10px; padding: 12px 10px 0 10px; display: flex; gap: 0; border: 1px solid var(--border-color); box-shadow: inset 0 3px 10px rgba(0,0,0,0.6); margin-top: 6px; position: relative; overflow: hidden;">
                     <!-- Baseline Grid Sub-structure -->
                     <div style="position: absolute; top: 25%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); pointer-events: none;"></div>
                     <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.06); pointer-events: none;"></div>
@@ -1902,27 +1906,29 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution (Side-by-Side Corporate Vertical Bars v2.3.3) */
+                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.4) */
                 htmlMarkup += `
-                    <div class="stat-card">
-                        <div class="stat-title" style="margin-bottom: 8px;">Daily Zone Distribution</div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px;">
-                            
-                            <!-- Day 1 Vertical Bar Chart -->
-                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
-                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Day 1 (Night)</div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1rem; font-weight: 800; color: var(--text-main); margin: 2px 0;">${day1Fish} Fish</div>
-                                ${createVerticalZoneBars(d1ZoneTotals, day1Fish)}
+                    <div class="stat-card" style="text-align: left;">
+                        <div class="stat-title" style="text-align: center; margin-bottom: 14px;">Daily Zone Distribution</div>
+                        
+                        <!-- Day 1 Vertical Bar Block -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-family: 'Oswald'; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">DAY 1 (NIGHT)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--accent-gold);">${day1Fish} FISH</span>
                             </div>
-                            
-                            <!-- Day 2 Vertical Bar Chart -->
-                            <div style="background: #1e293b; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px;">
-                                <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Day 2 (Daytime)</div>
-                                <div style="font-family:'JetBrains Mono'; font-size: 1rem; font-weight: 800; color: var(--text-main); margin: 2px 0;">${day2Fish} Fish</div>
-                                ${createVerticalZoneBars(d2ZoneTotals, day2Fish)}
-                            </div>
-
+                            ${createVerticalZoneBars(d1ZoneTotals, day1Fish)}
                         </div>
+                        
+                        <!-- Day 2 Vertical Bar Block -->
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-family: 'Oswald'; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">DAY 2 (DAYTIME)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--accent-cyan);">${day2Fish} FISH</span>
+                            </div>
+                            ${createVerticalZoneBars(d2ZoneTotals, day2Fish)}
+                        </div>
+
                     </div>
                 `;
 
@@ -2668,7 +2674,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.3.3 deployment active'))
+                    .then(reg => console.log('v2.3.4 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
