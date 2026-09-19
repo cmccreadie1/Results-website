@@ -1,81 +1,185 @@
 {
   "anglers": [
     {
-      "anglerName": "LINDSAY BELL",
+      "anglerName": "KYLE LAWSON",
       "teamName": "EAST A",
       "day1": {
-        "zone": "Blue Zone",
-        "peg": 27,
-        "fishCount": 17,
-        "totalLengthCm": 398,
-        "biggestFishCm": 40,
+        "zone": "Yellow Zone",
+        "peg": 10,
+        "fishCount": 12,
+        "totalLengthCm": 245,
+        "biggestFishCm": 27,
         "zonePoints": 1
       },
       "day2": {
-        "zone": "Yellow Zone",
-        "peg": 9,
+        "zone": "Blue Zone",
+        "peg": 23,
         "fishCount": 9,
-        "totalLengthCm": 222,
-        "biggestFishCm": 34,
+        "totalLengthCm": 208,
+        "biggestFishCm": 35,
+        "zonePoints": 1
+      },
+      "totals": {
+        "cumulativePoints": 2,
+        "cumulativeFish": 21,
+        "cumulativeLengthCm": 453,
+        "overallRank": 1
+      }
+    },
+    {
+      "anglerName": "KEITH WILKINSON",
+      "teamName": "NORTH A",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 5,
+        "fishCount": 11,
+        "totalLengthCm": 209,
+        "biggestFishCm": 22,
+        "zonePoints": 1
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 24,
+        "fishCount": 6,
+        "totalLengthCm": 131,
+        "biggestFishCm": 27,
         "zonePoints": 2
       },
       "totals": {
         "cumulativePoints": 3,
-        "cumulativeFish": 26,
-        "cumulativeLengthCm": 620,
-        "overallRank": 1
+        "cumulativeFish": 17,
+        "cumulativeLengthCm": 340,
+        "overallRank": 2
+      }
+    },
+    {
+      "anglerName": "LINDSAY BELL",
+      "teamName": "EAST A",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 17,
+        "fishCount": 11,
+        "totalLengthCm": 207,
+        "biggestFishCm": 27,
+        "zonePoints": 1
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 7,
+        "fishCount": 7,
+        "totalLengthCm": 127,
+        "biggestFishCm": 25,
+        "zonePoints": 2
+      },
+      "totals": {
+        "cumulativePoints": 3,
+        "cumulativeFish": 18,
+        "cumulativeLengthCm": 334,
+        "overallRank": 3
+      }
+    },
+    {
+      "anglerName": "TOM LESSELS",
+      "teamName": "NORTH B",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 21,
+        "fishCount": 7,
+        "totalLengthCm": 140,
+        "biggestFishCm": 28,
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 3,
+        "fishCount": 8,
+        "totalLengthCm": 158,
+        "biggestFishCm": 27,
+        "zonePoints": 1
+      },
+      "totals": {
+        "cumulativePoints": 3,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 298,
+        "overallRank": 4
+      }
+    },
+    {
+      "anglerName": "STEWART CRILLEY",
+      "teamName": "WEST B",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 26,
+        "fishCount": 7,
+        "totalLengthCm": 136,
+        "biggestFishCm": 25,
+        "zonePoints": 1
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 13,
+        "fishCount": 3,
+        "totalLengthCm": 66,
+        "biggestFishCm": 30,
+        "zonePoints": 2
+      },
+      "totals": {
+        "cumulativePoints": 3,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 202,
+        "overallRank": 5
+      }
+    },
+    {
+      "anglerName": "GREGOR HAY",
+      "teamName": "NORTH A",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 19,
+        "fishCount": 8,
+        "totalLengthCm": 138,
+        "biggestFishCm": 26,
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 12,
+        "fishCount": 6,
+        "totalLengthCm": 128,
+        "biggestFishCm": 23,
+        "zonePoints": 1
+      },
+      "totals": {
+        "cumulativePoints": 4,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 266,
+        "overallRank": 6
       }
     },
     {
       "anglerName": "STEVE BALDWIN",
       "teamName": "WEST B",
       "day1": {
-        "zone": "Green Zone",
-        "peg": 15,
-        "fishCount": 13,
-        "totalLengthCm": 269,
-        "biggestFishCm": 33,
-        "zonePoints": 2
+        "zone": "Red Zone",
+        "peg": 2,
+        "fishCount": 5,
+        "totalLengthCm": 97,
+        "biggestFishCm": 24,
+        "zonePoints": 3
       },
       "day2": {
-        "zone": "Yellow Zone",
-        "peg": 12,
-        "fishCount": 10,
-        "totalLengthCm": 294,
-        "biggestFishCm": 49,
+        "zone": "Green Zone",
+        "peg": 18,
+        "fishCount": 2,
+        "totalLengthCm": 39,
+        "biggestFishCm": 23,
         "zonePoints": 1
       },
       "totals": {
-        "cumulativePoints": 3,
-        "cumulativeFish": 23,
-        "cumulativeLengthCm": 563,
-        "overallRank": 2
-      }
-    },
-    {
-      "anglerName": "WILLIE BRANDON",
-      "teamName": "WEST A",
-      "day1": {
-        "zone": "Yellow Zone",
-        "peg": 13,
-        "fishCount": 17,
-        "totalLengthCm": 381,
-        "biggestFishCm": 42,
-        "zonePoints": 2
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 15,
-        "fishCount": 13,
-        "totalLengthCm": 311,
-        "biggestFishCm": 38,
-        "zonePoints": 2
-      },
-      "totals": {
         "cumulativePoints": 4,
-        "cumulativeFish": 30,
-        "cumulativeLengthCm": 692,
-        "overallRank": 3
+        "cumulativeFish": 7,
+        "cumulativeLengthCm": 136,
+        "overallRank": 7
       }
     },
     {
@@ -83,129 +187,103 @@
       "teamName": "WEST C",
       "day1": {
         "zone": "Red Zone",
-        "peg": 5,
-        "fishCount": 7,
-        "totalLengthCm": 141,
-        "biggestFishCm": 38,
-        "zonePoints": 3
-      },
-      "day2": {
-        "zone": "Blue Zone",
-        "peg": 23,
-        "fishCount": 19,
-        "totalLengthCm": 411,
-        "biggestFishCm": 32,
-        "zonePoints": 1
-      },
-      "totals": {
-        "cumulativePoints": 4,
-        "cumulativeFish": 26,
-        "cumulativeLengthCm": 552,
-        "overallRank": 4
-      }
-    },
-    {
-      "anglerName": "CAMMIE FORBES",
-      "teamName": "NORTH B",
-      "day1": {
-        "zone": "Red Zone",
-        "peg": 4,
-        "fishCount": 9,
-        "totalLengthCm": 289,
-        "biggestFishCm": 46,
-        "zonePoints": 1
+        "peg": 1,
+        "fishCount": 11,
+        "totalLengthCm": 199,
+        "biggestFishCm": 25,
+        "zonePoints": 2
       },
       "day2": {
         "zone": "Blue Zone",
         "peg": 26,
-        "fishCount": 5,
-        "totalLengthCm": 262,
-        "biggestFishCm": 67,
+        "fishCount": 4,
+        "totalLengthCm": 87,
+        "biggestFishCm": 27,
         "zonePoints": 3
       },
       "totals": {
-        "cumulativePoints": 4,
-        "cumulativeFish": 14,
-        "cumulativeLengthCm": 551,
-        "overallRank": 5
+        "cumulativePoints": 5,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 286,
+        "overallRank": 8
       }
     },
     {
-      "anglerName": "STEWART CRILLEY",
-      "teamName": "WEST B",
+      "anglerName": "GEORGE BURNS",
+      "teamName": "NORTH A",
       "day1": {
-        "zone": "Red Zone",
-        "peg": 1,
-        "fishCount": 11,
-        "totalLengthCm": 170,
-        "biggestFishCm": 21,
+        "zone": "Yellow Zone",
+        "peg": 11,
+        "fishCount": 9,
+        "totalLengthCm": 187,
+        "biggestFishCm": 28,
         "zonePoints": 2
       },
       "day2": {
-        "zone": "Blue Zone",
-        "peg": 27,
-        "fishCount": 11,
-        "totalLengthCm": 278,
-        "biggestFishCm": 41,
-        "zonePoints": 2
-      },
-      "totals": {
-        "cumulativePoints": 4,
-        "cumulativeFish": 22,
-        "cumulativeLengthCm": 448,
-        "overallRank": 6
-      }
-    },
-    {
-      "anglerName": "KYLE LAWSON",
-      "teamName": "EAST A",
-      "day1": {
         "zone": "Green Zone",
-        "peg": 21,
-        "fishCount": 7,
-        "totalLengthCm": 185,
-        "biggestFishCm": 57,
-        "zonePoints": 5
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 4,
-        "fishCount": 14,
-        "totalLengthCm": 446,
-        "biggestFishCm": 51,
-        "zonePoints": 1
+        "peg": 15,
+        "fishCount": 1,
+        "totalLengthCm": 21,
+        "biggestFishCm": 21,
+        "zonePoints": 3.5
       },
       "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 21,
-        "cumulativeLengthCm": 631,
-        "overallRank": 7
+        "cumulativePoints": 5.5,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 208,
+        "overallRank": 9
       }
     },
     {
       "anglerName": "ALEX MCCREADIE",
       "teamName": "EAST A",
       "day1": {
-        "zone": "Yellow Zone",
-        "peg": 10,
-        "fishCount": 9,
-        "totalLengthCm": 391,
-        "biggestFishCm": 59,
-        "zonePoints": 1
+        "zone": "Blue Zone",
+        "peg": 23,
+        "fishCount": 4,
+        "totalLengthCm": 105,
+        "biggestFishCm": 31,
+        "zonePoints": 3
       },
       "day2": {
-        "zone": "Green Zone",
-        "peg": 16,
-        "fishCount": 8,
-        "totalLengthCm": 211,
-        "biggestFishCm": 41,
-        "zonePoints": 5
+        "zone": "Yellow Zone",
+        "peg": 11,
+        "fishCount": 2,
+        "totalLengthCm": 39,
+        "biggestFishCm": 22,
+        "zonePoints": 3
       },
       "totals": {
         "cumulativePoints": 6,
-        "cumulativeFish": 17,
-        "cumulativeLengthCm": 602,
-        "overallRank": 8
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 144,
+        "overallRank": 10
+      }
+    },
+    {
+      "anglerName": "ALAN GILL",
+      "teamName": "WEST C",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 25,
+        "fishCount": 5,
+        "totalLengthCm": 108,
+        "biggestFishCm": 39,
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 2,
+        "fishCount": 1,
+        "totalLengthCm": 21,
+        "biggestFishCm": 21,
+        "zonePoints": 5
+      },
+      "totals": {
+        "cumulativePoints": 7,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 129,
+        "overallRank": 11
       }
     },
     {
@@ -214,128 +292,24 @@
       "day1": {
         "zone": "Yellow Zone",
         "peg": 9,
-        "fishCount": 9,
-        "totalLengthCm": 281,
-        "biggestFishCm": 38,
-        "zonePoints": 3
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 21,
-        "fishCount": 9,
-        "totalLengthCm": 286,
-        "biggestFishCm": 43,
-        "zonePoints": 3
-      },
-      "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 18,
-        "cumulativeLengthCm": 567,
-        "overallRank": 9
-      }
-    },
-    {
-      "anglerName": "INNESS COULL",
-      "teamName": "NORTH B",
-      "day1": {
-        "zone": "Blue Zone",
-        "peg": 26,
-        "fishCount": 17,
-        "totalLengthCm": 332,
-        "biggestFishCm": 41,
-        "zonePoints": 3
-      },
-      "day2": {
-        "zone": "Yellow Zone",
-        "peg": 14,
-        "fishCount": 4,
-        "totalLengthCm": 178,
-        "biggestFishCm": 51,
-        "zonePoints": 3
-      },
-      "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 21,
-        "cumulativeLengthCm": 510,
-        "overallRank": 10
-      }
-    },
-    {
-      "anglerName": "KEITH WILKINSON",
-      "teamName": "NORTH A",
-      "day1": {
-        "zone": "Red Zone",
-        "peg": 2,
-        "fishCount": 4,
-        "totalLengthCm": 109,
-        "biggestFishCm": 34,
+        "fishCount": 3,
+        "totalLengthCm": 59,
+        "biggestFishCm": 21,
         "zonePoints": 5
       },
       "day2": {
         "zone": "Green Zone",
-        "peg": 17,
-        "fishCount": 17,
-        "totalLengthCm": 387,
-        "biggestFishCm": 31,
-        "zonePoints": 1
-      },
-      "totals": {
-        "cumulativePoints": 6,
-        "cumulativeFish": 21,
-        "cumulativeLengthCm": 496,
-        "overallRank": 11
-      }
-    },
-    {
-      "anglerName": "KENNY SPEIRS",
-      "teamName": "WEST B",
-      "day1": {
-        "zone": "Blue Zone",
-        "peg": 22,
-        "fishCount": 19,
-        "totalLengthCm": 331,
-        "biggestFishCm": 22,
-        "zonePoints": 4
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 5,
-        "fishCount": 16,
-        "totalLengthCm": 339,
-        "biggestFishCm": 29,
-        "zonePoints": 3
+        "peg": 19,
+        "fishCount": 1,
+        "totalLengthCm": 28,
+        "biggestFishCm": 28,
+        "zonePoints": 2
       },
       "totals": {
         "cumulativePoints": 7,
-        "cumulativeFish": 35,
-        "cumulativeLengthCm": 670,
+        "cumulativeFish": 4,
+        "cumulativeLengthCm": 87,
         "overallRank": 12
-      }
-    },
-    {
-      "anglerName": "CHRIS MCCREADIE",
-      "teamName": "WEST C",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 17,
-        "fishCount": 18,
-        "totalLengthCm": 399,
-        "biggestFishCm": 32,
-        "zonePoints": 1
-      },
-      "day2": {
-        "zone": "Yellow Zone",
-        "peg": 11,
-        "fishCount": 9,
-        "totalLengthCm": 167,
-        "biggestFishCm": 23,
-        "zonePoints": 6
-      },
-      "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 27,
-        "cumulativeLengthCm": 566,
-        "overallRank": 13
       }
     },
     {
@@ -343,181 +317,25 @@
       "teamName": "WEST A",
       "day1": {
         "zone": "Blue Zone",
-        "peg": 25,
-        "fishCount": 16,
-        "totalLengthCm": 349,
-        "biggestFishCm": 31,
-        "zonePoints": 2
-      },
-      "day2": {
-        "zone": "Yellow Zone",
-        "peg": 8,
-        "fishCount": 6,
-        "totalLengthCm": 171,
-        "biggestFishCm": 50,
+        "peg": 24,
+        "fishCount": 1,
+        "totalLengthCm": 24,
+        "biggestFishCm": 24,
         "zonePoints": 5
       },
-      "totals": {
-        "cumulativePoints": 7,
-        "cumulativeFish": 22,
-        "cumulativeLengthCm": 520,
-        "overallRank": 14
-      }
-    },
-    {
-      "anglerName": "PHIL STEVENSON",
-      "teamName": "Solo",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 18,
-        "fishCount": 7,
-        "totalLengthCm": 190,
-        "biggestFishCm": 37,
-        "zonePoints": 4
-      },
       "day2": {
-        "zone": "Yellow Zone",
-        "peg": 10,
-        "fishCount": 6,
-        "totalLengthCm": 174,
-        "biggestFishCm": 39,
-        "zonePoints": 4
+        "zone": "Red Zone",
+        "peg": 1,
+        "fishCount": 3,
+        "totalLengthCm": 73,
+        "biggestFishCm": 33,
+        "zonePoints": 3
       },
       "totals": {
         "cumulativePoints": 8,
-        "cumulativeFish": 13,
-        "cumulativeLengthCm": 364,
-        "overallRank": 15
-      }
-    },
-    {
-      "anglerName": "HENRY SHEMPER",
-      "teamName": "Solo",
-      "day1": {
-        "zone": "Yellow Zone",
-        "peg": 14,
-        "fishCount": 5,
-        "totalLengthCm": 95,
-        "biggestFishCm": 27,
-        "zonePoints": 7
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 6,
-        "fishCount": 9,
-        "totalLengthCm": 412,
-        "biggestFishCm": 51,
-        "zonePoints": 2
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 14,
-        "cumulativeLengthCm": 507,
-        "overallRank": 16
-      }
-    },
-    {
-      "anglerName": "GREGOR HAY",
-      "teamName": "NORTH A",
-      "day1": {
-        "zone": "Yellow Zone",
-        "peg": 12,
-        "fishCount": 6,
-        "totalLengthCm": 216,
-        "biggestFishCm": 45,
-        "zonePoints": 5
-      },
-      "day2": {
-        "zone": "Blue Zone",
-        "peg": 25,
-        "fishCount": 7,
-        "totalLengthCm": 228,
-        "biggestFishCm": 38,
-        "zonePoints": 4
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 13,
-        "cumulativeLengthCm": 444,
-        "overallRank": 17
-      }
-    },
-    {
-      "anglerName": "DAVE HEARSAY",
-      "teamName": "WEST A",
-      "day1": {
-        "zone": "Red Zone",
-        "peg": 3,
-        "fishCount": 5,
-        "totalLengthCm": 109,
-        "biggestFishCm": 30,
-        "zonePoints": 4
-      },
-      "day2": {
-        "zone": "Blue Zone",
-        "peg": 24,
-        "fishCount": 8,
-        "totalLengthCm": 227,
-        "biggestFishCm": 41,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 9,
-        "cumulativeFish": 13,
-        "cumulativeLengthCm": 336,
-        "overallRank": 18
-      }
-    },
-    {
-      "anglerName": "GEORGE BURNS",
-      "teamName": "NORTH A",
-      "day1": {
-        "zone": "Blue Zone",
-        "peg": 23,
-        "fishCount": 8,
-        "totalLengthCm": 278,
-        "biggestFishCm": 61,
-        "zonePoints": 5
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 3,
-        "fishCount": 11,
-        "totalLengthCm": 285,
-        "biggestFishCm": 30,
-        "zonePoints": 5
-      },
-      "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 19,
-        "cumulativeLengthCm": 563,
-        "overallRank": 19
-      }
-    },
-    {
-      "anglerName": "STEVIE FRASER",
-      "teamName": "WEST A",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 16,
-        "fishCount": 6,
-        "totalLengthCm": 222,
-        "biggestFishCm": 59,
-        "zonePoints": 3
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 2,
-        "fishCount": 8,
-        "totalLengthCm": 229,
-        "biggestFishCm": 45,
-        "zonePoints": 7
-      },
-      "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 14,
-        "cumulativeLengthCm": 451,
-        "overallRank": 20
+        "cumulativeFish": 4,
+        "cumulativeLengthCm": 97,
+        "overallRank": 13
       }
     },
     {
@@ -526,128 +344,50 @@
       "day1": {
         "zone": "Yellow Zone",
         "peg": 8,
-        "fishCount": 7,
-        "totalLengthCm": 217,
-        "biggestFishCm": 35,
-        "zonePoints": 4
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 20,
-        "fishCount": 9,
-        "totalLengthCm": 163,
+        "fishCount": 5,
+        "totalLengthCm": 91,
         "biggestFishCm": 20,
-        "zonePoints": 6
-      },
-      "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 16,
-        "cumulativeLengthCm": 380,
-        "overallRank": 21
-      }
-    },
-    {
-      "anglerName": "JANETTE MACKINTOSH",
-      "teamName": "Solo",
-      "day1": {
-        "zone": "Red Zone",
-        "peg": 6,
-        "fishCount": 5,
-        "totalLengthCm": 98,
-        "biggestFishCm": 23,
-        "zonePoints": 6
-      },
-      "day2": {
-        "zone": "Green Zone",
-        "peg": 19,
-        "fishCount": 5,
-        "totalLengthCm": 213,
-        "biggestFishCm": 45,
         "zonePoints": 4
       },
-      "totals": {
-        "cumulativePoints": 10,
-        "cumulativeFish": 10,
-        "cumulativeLengthCm": 311,
-        "overallRank": 22
-      }
-    },
-    {
-      "anglerName": "SHAUN MACPHERSON",
-      "teamName": "NORTH B",
-      "day1": {
-        "zone": "Green Zone",
-        "peg": 20,
-        "fishCount": 0,
-        "totalLengthCm": 0,
-        "biggestFishCm": 0,
-        "zonePoints": 7
-      },
       "day2": {
-        "zone": "Red Zone",
-        "peg": 7,
-        "fishCount": 9,
-        "totalLengthCm": 331,
-        "biggestFishCm": 48,
-        "zonePoints": 4
-      },
-      "totals": {
-        "cumulativePoints": 11,
-        "cumulativeFish": 9,
-        "cumulativeLengthCm": 331,
-        "overallRank": 23
-      }
-    },
-    {
-      "anglerName": "ALAN GILL",
-      "teamName": "WEST C",
-      "day1": {
         "zone": "Blue Zone",
-        "peg": 24,
-        "fishCount": 14,
-        "totalLengthCm": 211,
-        "biggestFishCm": 42,
-        "zonePoints": 6
-      },
-      "day2": {
-        "zone": "Red Zone",
-        "peg": 1,
-        "fishCount": 9,
-        "totalLengthCm": 263,
-        "biggestFishCm": 47,
-        "zonePoints": 6
+        "peg": 22,
+        "fishCount": 1,
+        "totalLengthCm": 16,
+        "biggestFishCm": 16,
+        "zonePoints": 5
       },
       "totals": {
-        "cumulativePoints": 12,
-        "cumulativeFish": 23,
-        "cumulativeLengthCm": 474,
-        "overallRank": 24
+        "cumulativePoints": 9,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 107,
+        "overallRank": 14
       }
     },
     {
-      "anglerName": "TOM LESSELS",
-      "teamName": "NORTH B",
+      "anglerName": "WILLIE BRANDON",
+      "teamName": "WEST A",
       "day1": {
-        "zone": "Yellow Zone",
-        "peg": 11,
-        "fishCount": 5,
-        "totalLengthCm": 198,
-        "biggestFishCm": 61,
-        "zonePoints": 6
+        "zone": "Red Zone",
+        "peg": 4,
+        "fishCount": 1,
+        "totalLengthCm": 25,
+        "biggestFishCm": 25,
+        "zonePoints": 5
       },
       "day2": {
-        "zone": "Green Zone",
-        "peg": 18,
-        "fishCount": 5,
-        "totalLengthCm": 105,
-        "biggestFishCm": 37,
-        "zonePoints": 7
+        "zone": "Blue Zone",
+        "peg": 25,
+        "fishCount": 1,
+        "totalLengthCm": 33,
+        "biggestFishCm": 33,
+        "zonePoints": 4
       },
       "totals": {
-        "cumulativePoints": 13,
-        "cumulativeFish": 10,
-        "cumulativeLengthCm": 303,
-        "overallRank": 25
+        "cumulativePoints": 9,
+        "cumulativeFish": 2,
+        "cumulativeLengthCm": 58,
+        "overallRank": 15
       }
     },
     {
@@ -655,50 +395,310 @@
       "teamName": "EAST A",
       "day1": {
         "zone": "Red Zone",
-        "peg": 7,
-        "fishCount": 3,
-        "totalLengthCm": 98,
-        "biggestFishCm": 51,
-        "zonePoints": 7
-      },
-      "day2": {
-        "zone": "Blue Zone",
-        "peg": 22,
-        "fishCount": 6,
-        "totalLengthCm": 178,
-        "biggestFishCm": 42,
+        "peg": 6,
+        "fishCount": 1,
+        "totalLengthCm": 18,
+        "biggestFishCm": 18,
         "zonePoints": 6
       },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 21,
+        "fishCount": 1,
+        "totalLengthCm": 21,
+        "biggestFishCm": 21,
+        "zonePoints": 3.5
+      },
       "totals": {
-        "cumulativePoints": 13,
-        "cumulativeFish": 9,
-        "cumulativeLengthCm": 276,
-        "overallRank": 26
+        "cumulativePoints": 9.5,
+        "cumulativeFish": 2,
+        "cumulativeLengthCm": 39,
+        "overallRank": 16
       }
     },
     {
-      "anglerName": "GEORGE BELL",
-      "teamName": "NORTH A",
+      "anglerName": "STEVIE FRASER",
+      "teamName": "WEST A",
       "day1": {
-        "zone": "Green Zone",
-        "peg": 19,
-        "fishCount": 5,
-        "totalLengthCm": 177,
-        "biggestFishCm": 38,
-        "zonePoints": 6
-      },
-      "day2": {
         "zone": "Yellow Zone",
         "peg": 13,
+        "fishCount": 7,
+        "totalLengthCm": 140,
+        "biggestFishCm": 21,
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 16,
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
         "zonePoints": 7
       },
       "totals": {
-        "cumulativePoints": 13,
+        "cumulativePoints": 10,
+        "cumulativeFish": 7,
+        "cumulativeLengthCm": 140,
+        "overallRank": 17
+      }
+    },
+    {
+      "anglerName": "KENNY SPEIRS",
+      "teamName": "WEST B",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 15,
+        "fishCount": 3,
+        "totalLengthCm": 95,
+        "biggestFishCm": 38,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 6,
+        "fishCount": 1,
+        "totalLengthCm": 19,
+        "biggestFishCm": 19,
+        "zonePoints": 6
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 4,
+        "cumulativeLengthCm": 114,
+        "overallRank": 18
+      }
+    },
+    {
+      "anglerName": "CHRIS MCCREADIE",
+      "teamName": "WEST C",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 16,
+        "fishCount": 3,
+        "totalLengthCm": 68,
+        "biggestFishCm": 27,
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 9,
+        "fishCount": 2,
+        "totalLengthCm": 25,
+        "biggestFishCm": 18,
+        "zonePoints": 5
+      },
+      "totals": {
+        "cumulativePoints": 10,
         "cumulativeFish": 5,
-        "cumulativeLengthCm": 177,
+        "cumulativeLengthCm": 93,
+        "overallRank": 19
+      }
+    },
+    {
+      "anglerName": "HENRY SHEMPER",
+      "teamName": "Solo",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 14,
+        "fishCount": 2,
+        "totalLengthCm": 40,
+        "biggestFishCm": 22,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 4,
+        "fishCount": 1,
+        "totalLengthCm": 22,
+        "biggestFishCm": 22,
+        "zonePoints": 4
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 3,
+        "cumulativeLengthCm": 62,
+        "overallRank": 20
+      }
+    },
+    {
+      "anglerName": "DAVE HEARSAY",
+      "teamName": "WEST A",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 18,
+        "fishCount": 2,
+        "totalLengthCm": 31,
+        "biggestFishCm": 16,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 14,
+        "fishCount": 1,
+        "totalLengthCm": 27,
+        "biggestFishCm": 27,
+        "zonePoints": 4
+      },
+      "totals": {
+        "cumulativePoints": 10,
+        "cumulativeFish": 3,
+        "cumulativeLengthCm": 58,
+        "overallRank": 21
+      }
+    },
+    {
+      "anglerName": "GEORGE BELL",
+      "teamName": "NORTH A",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 22,
+        "fishCount": 5,
+        "totalLengthCm": 87,
+        "biggestFishCm": 20,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": 5,
+        "fishCount": 1,
+        "totalLengthCm": 18,
+        "biggestFishCm": 18,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 11,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 105,
+        "overallRank": 22
+      }
+    },
+    {
+      "anglerName": "JANETTE MACKINTOSH",
+      "teamName": "Solo",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 7,
+        "fishCount": 3,
+        "totalLengthCm": 58,
+        "biggestFishCm": 29,
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 20,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 11,
+        "cumulativeFish": 3,
+        "cumulativeLengthCm": 58,
+        "overallRank": 23
+      }
+    },
+    {
+      "anglerName": "INNESS COULL",
+      "teamName": "NORTH B",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": 27,
+        "fishCount": 1,
+        "totalLengthCm": 15,
+        "biggestFishCm": 15,
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 8,
+        "fishCount": 1,
+        "totalLengthCm": 23,
+        "biggestFishCm": 23,
+        "zonePoints": 6.5
+      },
+      "totals": {
+        "cumulativePoints": 12.5,
+        "cumulativeFish": 2,
+        "cumulativeLengthCm": 38,
+        "overallRank": 24
+      }
+    },
+    {
+      "anglerName": "SHAUN MACPHERSON",
+      "teamName": "NORTH B",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": 3,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": 27,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 6
+      },
+      "totals": {
+        "cumulativePoints": 13,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0,
+        "overallRank": 25
+      }
+    },
+    {
+      "anglerName": "PHIL STEVENSON",
+      "teamName": "Solo",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": 20,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": 10,
+        "fishCount": 1,
+        "totalLengthCm": 23,
+        "biggestFishCm": 23,
+        "zonePoints": 6.5
+      },
+      "totals": {
+        "cumulativePoints": 13.5,
+        "cumulativeFish": 1,
+        "cumulativeLengthCm": 23,
+        "overallRank": 26
+      }
+    },
+    {
+      "anglerName": "CAMMIE FORBES",
+      "teamName": "NORTH B",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": 12,
+        "fishCount": 1,
+        "totalLengthCm": 23,
+        "biggestFishCm": 23,
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": 17,
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "zonePoints": 7
+      },
+      "totals": {
+        "cumulativePoints": 14,
+        "cumulativeFish": 1,
+        "cumulativeLengthCm": 23,
         "overallRank": 27
       }
     }
@@ -717,100 +717,107 @@
   },
   "secretPairs": {
     "description": "The computer calculated a hidden Target Length that falls strictly between the lowest and highest possible combined scores. The randomly chosen pair whose combined length finishes closest to the target wins.\n\nIf you have an uneven number of entries in the cash pool, the computer automatically generates a virtual partner named Joe Average. Joe is mathematically given the exact mean average score of the entire active field. Tie breaker if its a draw the tie breaker reverts to longest combined length.",
-    "targetLength": "348cm",
+    "targetLength": "171cm",
     "winners": [
       {
         "rank": 1,
-        "angler1": "IAN ELLIOT",
-        "angler2": "ANDY HASWELL",
-        "combinedLengthCm": 358,
-        "offBy": 10
+        "angler1": "JANETTE MACKINTOSH",
+        "angler2": "JOE AVERAGE (GHOST)",
+        "combinedLengthCm": 165,
+        "offBy": 6
       },
       {
         "rank": 2,
-        "angler1": "HENRY SHEMPER",
-        "angler2": "GEORGE BURNS",
-        "combinedLengthCm": 373,
-        "offBy": 25
+        "angler1": "STEVE BALDWIN",
+        "angler2": "PHIL STEVENSON",
+        "combinedLengthCm": 159,
+        "offBy": 12
       },
       {
         "rank": 3,
-        "angler1": "DAVE HEARSAY",
-        "angler2": "TOM LESSELS",
-        "combinedLengthCm": 307,
-        "offBy": 41
+        "angler1": "INNESS COULL",
+        "angler2": "GEORGE BELL",
+        "combinedLengthCm": 143,
+        "offBy": 28
       }
     ],
     "otherPairs": [
       {
         "rank": 4,
-        "angler1": "PHIL STEVENSON",
-        "angler2": "KEITH WILKINSON",
-        "combinedLengthCm": 391,
-        "offBy": 43
+        "angler1": "KENNY SPEIRS",
+        "angler2": "IAN ELLIOT",
+        "combinedLengthCm": 221,
+        "offBy": 50
       },
       {
         "rank": 5,
-        "angler1": "ALEX MCCREADIE",
-        "angler2": "SHAUN MACPHERSON",
-        "combinedLengthCm": 391,
-        "offBy": 43
+        "angler1": "STEWART CRILLEY",
+        "angler2": "CAMMIE FORBES",
+        "combinedLengthCm": 225,
+        "offBy": 54
       },
       {
         "rank": 6,
-        "angler1": "STEWART CRILLEY",
-        "angler2": "STEVIE FRASER",
-        "combinedLengthCm": 392,
-        "offBy": 44
-      },
-      {
-        "rank": 7,
-        "angler1": "INNESS COULL",
-        "angler2": "DAVID WOOD",
-        "combinedLengthCm": 430,
-        "offBy": 82
-      },
-      {
-        "rank": 8,
-        "angler1": "GERRY MCNEIL",
-        "angler2": "JANETTE MACKINTOSH",
-        "combinedLengthCm": 446,
+        "angler1": "STEVIE FRASER",
+        "angler2": "ALAN GILL",
+        "combinedLengthCm": 269,
         "offBy": 98
       },
       {
+        "rank": 7,
+        "angler1": "HENRY SHEMPER",
+        "angler2": "SHAUN MACPHERSON",
+        "combinedLengthCm": 62,
+        "offBy": 109
+      },
+      {
+        "rank": 8,
+        "angler1": "GEORGE BURNS",
+        "angler2": "WILLIE SHAW",
+        "combinedLengthCm": 305,
+        "offBy": 134
+      },
+      {
         "rank": 9,
-        "angler1": "GREGOR HAY",
-        "angler2": "CAMMIE FORBES",
-        "combinedLengthCm": 505,
-        "offBy": 157
+        "angler1": "WILLIE BRANDON",
+        "angler2": "ANDY HASWELL",
+        "combinedLengthCm": 344,
+        "offBy": 173
       },
       {
         "rank": 10,
-        "angler1": "WILLIE SHAW",
-        "angler2": "GEORGE BELL",
-        "combinedLengthCm": 526,
-        "offBy": 178
+        "angler1": "GREGOR HAY",
+        "angler2": "GERRY MCNEIL",
+        "combinedLengthCm": 353,
+        "offBy": 182
       },
       {
         "rank": 11,
-        "angler1": "KENNY SPEIRS",
-        "angler2": "ALAN GILL",
-        "combinedLengthCm": 542,
-        "offBy": 194
+        "angler1": "DAVID WOOD",
+        "angler2": "KEITH WILKINSON",
+        "combinedLengthCm": 379,
+        "offBy": 208
       },
       {
         "rank": 12,
-        "angler1": "LINDSAY BELL",
-        "angler2": "KYLE LAWSON",
-        "combinedLengthCm": 583,
-        "offBy": 235
+        "angler1": "CHRIS MCCREADIE",
+        "angler2": "TOM LESSELS",
+        "combinedLengthCm": 391,
+        "offBy": 220
       },
       {
         "rank": 13,
-        "angler1": "STEVE BALDWIN",
-        "angler2": "CHRIS MCCREADIE",
-        "combinedLengthCm": 668,
-        "offBy": 320
+        "angler1": "LINDSAY BELL",
+        "angler2": "ALEX MCCREADIE",
+        "combinedLengthCm": 478,
+        "offBy": 307
+      },
+      {
+        "rank": 14,
+        "angler1": "DAVE HEARSAY",
+        "angler2": "KYLE LAWSON",
+        "combinedLengthCm": 511,
+        "offBy": 340
       }
     ]
   }
