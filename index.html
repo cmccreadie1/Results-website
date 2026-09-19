@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.3.5) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.6) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -818,7 +818,7 @@
         .stat-grid {
             display: flex;
             flex-direction: column;
-            gap: 26px; /* 🏆 Increased vertical card spacing for clean visual separation (v2.3.5) */
+            gap: 26px;
             margin-top: 8px;
             margin-bottom: 30px;
             width: 100%;
@@ -827,7 +827,7 @@
             background: var(--surface-color);
             border: 1px solid var(--border-card);
             border-radius: 16px;
-            padding: 20px 16px; /* 🏆 Generous internal card padding (v2.3.5) */
+            padding: 20px 16px;
             box-shadow: var(--card-shadow); 
             text-align: center;
             position: relative;
@@ -944,7 +944,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.3.5</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.6</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -978,11 +978,7 @@
             <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Secret Pairs -->
-        <div class="slide-btn" onclick="loadExcelTab('SECRET PAIRS', 'Secret Pairs')">
-            <span class="btn-label">Secret Pairs</span>
-            <span class="btn-action-tag">VIEW ❯</span>
-        </div>
+        <!-- Secret Pairs Button Hidden per v2.3.6 request -->
 
         <!-- Biggest Fish -->
         <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
@@ -1049,7 +1045,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.3.5</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1135,7 +1131,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.3.5";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1634,7 +1630,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.5) */
+        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.6) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1905,7 +1901,7 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.5) */
+                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.6) */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 14px;">Daily Zone Distribution</div>
@@ -2507,149 +2503,6 @@
                     });
                     htmlMarkup += '</table></div></div>';
                 }
-                else if (targetTabName === 'SECRET PAIRS') {
-                    const secretPairsData = scoresData.secretPairs;
-
-                    if (secretPairsData && ((secretPairsData.winners && secretPairsData.winners.length > 0) || (secretPairsData.otherPairs && secretPairsData.otherPairs.length > 0))) {
-                        let targetNum = parseInt(secretPairsData.targetLength) || 0;
-
-                        htmlMarkup += `
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 12px 0 6px 0; width: 100%;">
-                                <span style="font-family: 'Oswald', sans-serif; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700;">Secret Pairs Standings</span>
-                                <button class="rules-btn" onclick="openSecretPairsRules(decodeURIComponent('${encodeURIComponent(secretPairsData.description || '')}'))">Rules & Info ⓘ</button>
-                            </div>
-
-                            <div class="info-banner" style="text-align: left; margin: 0 0 12px 0; padding: 8px 12px; font-size: 0.72rem; line-height: 1.35;">
-                                <strong style="color: var(--accent-cyan); text-transform: uppercase;">Fairness & Methodology:</strong> 
-                                Completely random computer pairings. Victory goes to the pair closest to the secret target length (chosen randomly by computer between the lowest and highest possible scores)—ensuring a 100% level playing field for every angler in the pool.
-                            </div>
-                        `;
-
-                        htmlMarkup += `
-                            <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 14px; text-align: center; margin: 8px auto 20px auto; width: 100%; box-shadow: var(--card-shadow);">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); margin-bottom: 2px;">OFFICIAL TARGET LENGTH</div>
-                                <div style="font-family: 'Inter'; font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; color: var(--text-main);">${secretPairsData.targetLength || 'N/A'}</div>
-                            </div>
-                        `;
-
-                        const winnersList = secretPairsData.winners || [];
-                        const otherPairsList = secretPairsData.otherPairs || [];
-
-                        if (winnersList.length > 0) {
-                            htmlMarkup += '<div style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; width: 100%;">';
-                            
-                            winnersList.forEach(pair => {
-                                let rankNum = parseInt(pair.rank) || 1;
-                                let borderAccent = 'var(--accent-cyan)';
-                                let medalLabel = 'THIRD PLACE';
-                                
-                                if (rankNum === 1) {
-                                    borderAccent = 'var(--accent-gold)';
-                                    medalLabel = '🥇 TOURNAMENT CHAMPIONS';
-                                } else if (rankNum === 2) {
-                                    borderAccent = '#cbd5e1';
-                                    medalLabel = '🥈 SECOND PLACE';
-                                } else if (rankNum === 3) {
-                                    borderAccent = '#b07247';
-                                    medalLabel = '🥉 THIRD PLACE';
-                                }
-
-                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
-                                
-                                let overUnderDirection = '';
-                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
-                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
-                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
-                                    else overUnderDirection = ' (Dead On!)';
-                                }
-                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
-
-                                htmlMarkup += `
-                                    <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-left: 5px solid ${borderAccent}; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--card-shadow); width: 100%;">
-                                        <div>
-                                            <div style="font-family: 'Oswald'; font-size: 0.72rem; text-transform: uppercase; color: ${borderAccent}; font-weight: 700; letter-spacing: 0.8px;">${medalLabel}</div>
-                                            <div style="font-size: 1rem; font-weight: 700; margin-top: 3px; color: var(--text-main); letter-spacing: -0.3px;">${pair.angler1} & ${pair.angler2}</div>
-                                        </div>
-                                        <div style="text-align: right; white-space: nowrap;">
-                                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-main);">${formattedLength}</div>
-                                            <div style="font-size: 0.72rem; font-weight: 700; color: var(--accent-gold); margin-top: 1px;">Missed by: ${formattedOffBy}</div>
-                                        </div>
-                                    </div>
-                                `;
-                            });
-                            
-                            htmlMarkup += '</div>';
-                        }
-
-                        if (otherPairsList.length > 0) {
-                            htmlMarkup += `
-                                <div class="table-header-bar" style="margin-top:16px;">
-                                    <h3 style="font-family: 'Oswald'; text-transform: uppercase; font-size: 0.92rem; color: var(--text-muted); letter-spacing: 0.8px;">📊 Field Standings (Informational Only)</h3>
-                                    ${getCircleBadgeHtml('pairs-other-wrapper')}
-                                </div>
-                                <div id="pairs-other-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
-                            `;
-                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: center;">TOTAL LENGTH</th><th style="text-align: center;">VARIANCE</th></tr>';
-                            
-                            otherPairsList.forEach(pair => {
-                                const formattedLength = typeof pair.combinedLengthCm === 'number' ? (pair.combinedLengthCm / 100).toFixed(2) + 'm' : '0.00m';
-                                
-                                let overUnderDirection = '';
-                                if (typeof pair.combinedLengthCm === 'number' && targetNum > 0) {
-                                    if (pair.combinedLengthCm > targetNum) overUnderDirection = ' (Over)';
-                                    else if (pair.combinedLengthCm < targetNum) overUnderDirection = ' (Under)';
-                                    else overUnderDirection = ' (Dead On!)';
-                                }
-                                const formattedOffBy = typeof pair.offBy === 'number' ? pair.offBy + 'cm' + overUnderDirection : '0cm';
-                                
-                                htmlMarkup += `
-                                    <tr>
-                                        <td style="font-weight: 700; color: var(--text-muted); text-align: center;">${pair.rank}</td>
-                                        <td style="text-align: left; font-weight: 700; color: var(--text-main);">${pair.angler1} & ${pair.angler2}</td>
-                                        <td style="font-weight: 600; text-align: center;">${formattedLength}</td>
-                                        <td style="font-weight: 400; color: var(--text-muted); font-size: 0.8rem; text-align: center;">${formattedOffBy}</td>
-                                    </tr>
-                                `;
-                            });
-
-                            htmlMarkup += '</table></div></div>';
-                        }
-
-                    } else {
-                        let hasPairsData = anglers.some(item => item.pairId || item.secretPairPartner);
-                        if (!hasPairsData) {
-                            htmlMarkup += '<div class="status-msg" style="color: var(--text-main); font-family: \'Inter\'; font-size: 0.82rem; text-transform: none; padding: 30px; line-height: 1.5;">';
-                            htmlMarkup += '<strong>Secret Pairs Section Initialized</strong><br>';
-                            htmlMarkup += 'To configure live tracking updates, pass down matching <code>"pairId"</code> tags within the input arrays or update your scoring app to export <code>"secretPairs"</code> directly.</div>';
-                        } else {
-                            let pairs = {};
-                            anglers.forEach(item => {
-                                let pId = item.pairId || item.secretPairPartner || "Unassigned";
-                                if (!pairs[pId]) pairs[pId] = { id: pId, anglers: [], totalPts: 0, totalLen: 0 };
-                                pairs[pId].anglers.push(item);
-                                pairs[pId].totalPts += item.totals.cumulativePoints || 0;
-                                pairs[pId].totalLen += item.totals.cumulativeLengthCm || 0;
-                            });
-                            let pairsArray = Object.values(pairs).sort((a,b) => {
-                                if(a.totalPts !== b.totalPts) return a.totalPts - b.totalPts;
-                                return b.totalLen - a.totalLen;
-                            });
-                            htmlMarkup += `
-                                <div class="table-header-bar">
-                                    <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Secret Pairs Leaderboard</span>
-                                    ${getCircleBadgeHtml('pairs-unformatted-wrapper')}
-                                </div>
-                                <div id="pairs-unformatted-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
-                            `;
-                            htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">PAIR MEMBERS</th><th style="text-align: center;">COMBINED PTS</th><th style="text-align: center;">COMBINED LENGTH</th></tr>';
-                            pairsArray.forEach((p, idx) => {
-                                let names = p.anglers.map(a => a.anglerName).join(' & ');
-                                htmlMarkup += `<tr><td style="font-weight: 700; text-align: center;">${idx + 1}</td><td style="text-align: left; font-weight: 700; color:var(--text-main);">${names}</td><td style="font-weight: 700; color: var(--accent-gold); text-align: center;">${p.totalPts}</td><td style="text-align: center; font-weight: 600;">${(p.totalLen/100).toFixed(2)}m</td></tr>`;
-                            });
-                            htmlMarkup += '</table></div></div>';
-                        }
-                    }
-                }
 
                 output.innerHTML = htmlMarkup;
                 triggerTableNudgeCue();
@@ -2673,7 +2526,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.3.5 deployment active'))
+                    .then(reg => console.log('v2.3.6 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
