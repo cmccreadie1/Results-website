@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.4.1) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.4.2) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -196,16 +196,10 @@
             border-left-color: var(--broadcast-gold);
             background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, #111827 100%);
         }
-        .slide-btn.btn-ind-hero .btn-action-tag {
-            color: var(--broadcast-gold);
-        }
 
         .slide-btn.btn-report {
             border-left-color: var(--broadcast-gold);
             background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #111827 100%);
-        }
-        .slide-btn.btn-report .btn-action-tag {
-            color: var(--broadcast-gold);
         }
 
         .slide-btn:hover {
@@ -983,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.4.1</span>
+            <span class="header-badge">LIVE BROADCAST v2.4.2</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -996,7 +990,7 @@
         <!-- Individual Champion -->
         <div class="slide-btn btn-ind-hero" onclick="loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span class="btn-label">Individual Champion</span>
-            <span class="btn-action-tag">LIVE ❯</span>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
         <!-- Zone Day 1 -->
@@ -1023,16 +1017,16 @@
             <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Gold Match Report Card Pill -->
+        <!-- Match Report Card Pill -->
         <div class="slide-btn btn-report" onclick="openReportModal()">
             <span class="btn-label">My Match Report Card</span>
-            <span class="btn-action-tag">ANALYZE ❯</span>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
         
         <!-- Tournament Overview Pill -->
         <div class="slide-btn" onclick="loadMatchStats('Tournament Overview')">
             <span class="btn-label">Tournament Overview</span>
-            <span class="btn-action-tag">TELEMETRY ❯</span>
+            <span class="btn-action-tag">VIEW ❯</span>
         </div>
     </nav>
 
@@ -1082,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.4.1</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.4.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1139,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.4.1) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.4.2) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1189,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.4.1";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.4.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1669,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.4.1) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.4.2) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -2575,7 +2569,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.4.1 broadcast active'))
+                    .then(reg => console.log('v2.4.2 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
