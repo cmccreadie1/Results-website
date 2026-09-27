@@ -8,8 +8,8 @@
     <script>
         const MATCH_CONFIG = {
             competitionName: "SPRA Scottish Shore Championship",
-            venue:           "Elliot Beach",
-            dates:           "18th & 19th September 2026"
+            venue:           "Elliot Beach Lunan Bay",
+            dates:           "18th & 19th September"
         };
     </script>
     
@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 🎨 Muted High-Contrast Glass Palette (v2.3.6) */
+            /* 🎨 Muted High-Contrast Glass Palette (v2.3.7) */
             --bg-main: #1e293b;
             --surface-color: #334155;
             --surface-card: #334155;
@@ -328,6 +328,38 @@
             border-color: var(--accent-slate);
         }
 
+        /* 🚀 Floating Swipe Pill Animation & Styling (v2.3.7) */
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .floating-swipe-pill {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 40;
+            pointer-events: none;
+            animation: floatBounce 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            transition: opacity 0.3s ease;
+        }
+
         .table-header-bar {
             display: flex;
             justify-content: space-between;
@@ -628,6 +660,7 @@
             border: 1px solid var(--border-card);
             margin-bottom: 16px;
             width: 100%;
+            position: relative;
         }
 
         .card-table-wrapper {
@@ -944,7 +977,7 @@
     <!-- 🏆 Floating Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">COMMAND PORTAL v2.3.6</span>
+            <span class="header-badge">COMMAND PORTAL v2.3.7</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -978,7 +1011,7 @@
             <span class="btn-action-tag">VIEW ❯</span>
         </div>
 
-        <!-- Secret Pairs Button Hidden per v2.3.6 request -->
+        <!-- Secret Pairs Hidden per v2.3.6 request -->
 
         <!-- Biggest Fish -->
         <div class="slide-btn" onclick="loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
@@ -1045,7 +1078,7 @@
     </div>
 
     <footer class="footer">
-        <div>OFFICIAL RESULTS PORTAL • v2.3.6</div>
+        <div>OFFICIAL RESULTS PORTAL • v2.3.7</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Checking Portal Sync...</span>
@@ -1102,15 +1135,38 @@
             }
         }
 
+        /* 🚀 Enhanced Fluid Spring Glide Nudge + Floating Swipe Pill (v2.3.7) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
-                const wrappers = document.querySelectorAll('#table-output .card-table-wrapper');
-                wrappers.forEach(w => {
-                    if (w.scrollWidth > w.clientWidth) {
-                        w.scrollTo({ left: 60, behavior: 'smooth' });
+                const containers = document.querySelectorAll('#table-output .table-card-container');
+                containers.forEach(container => {
+                    let scrollable = container.classList.contains('card-table-wrapper') ? container : container.querySelector('.card-table-wrapper');
+                    if (scrollable && scrollable.scrollWidth > scrollable.clientWidth) {
+                        
+                        // Attach Floating Swipe Pill if not already present
+                        if (!container.querySelector('.floating-swipe-pill')) {
+                            let pill = document.createElement('div');
+                            pill.className = 'floating-swipe-pill';
+                            pill.innerHTML = 'Swipe to Explore ➔';
+                            container.appendChild(pill);
+
+                            // Fade out pill on first user scroll interaction
+                            scrollable.addEventListener('scroll', function onScroll() {
+                                if (scrollable.scrollLeft > 15) {
+                                    pill.style.opacity = '0';
+                                    setTimeout(() => pill.remove(), 300);
+                                    scrollable.removeEventListener('scroll', onScroll);
+                                }
+                            }, { once: false });
+                        }
+
+                        // Organic fluid spring glide preview motion
                         setTimeout(() => {
-                            w.scrollTo({ left: 0, behavior: 'smooth' });
-                        }, 500);
+                            scrollable.scrollTo({ left: 100, behavior: 'smooth' });
+                            setTimeout(() => {
+                                scrollable.scrollTo({ left: 0, behavior: 'smooth' });
+                            }, 700);
+                        }, 400);
                     }
                 });
             }, 300);
@@ -1131,7 +1187,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | v2.3.6";
+            document.title = MATCH_CONFIG.competitionName + " | v2.3.7";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1630,7 +1686,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.6) */
+        /* 📊 Full-Width Responsive Relative Scale Bar Component (v2.3.7) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1901,7 +1957,7 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.6) */
+                /* CARD 2: Daily Zone Distribution (Stacked Full-Width Vertical Bars v2.3.7) */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--accent-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 14px;">Daily Zone Distribution</div>
@@ -2526,7 +2582,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.3.6 deployment active'))
+                    .then(reg => console.log('v2.3.7 deployment active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
