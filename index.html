@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.4.2) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.0) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.4.2</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.0</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.4.2</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.0</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1086,7 +1086,7 @@
     <script>
         const TAB_CONFIG = {
             'INDIVIDUAL RESULT': { 
-                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Biggest Fish ➔ Species Count"]
+                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Biggest Fish"]
             }, 
             'ZONE 1': { 
                 staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.4.2) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.0) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.4.2";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.0";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.4.2) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.0) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -2267,9 +2267,9 @@
                     htmlMarkup += `
                         <tr class="group-header-row">
                             <th style="text-align: left; min-width: 140px;">RANK / COMPETITOR DETAILS</th>
-                            <th colspan="5" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
-                            <th colspan="5" class="col-divider-left session-divider-right" style="color: var(--broadcast-red);">DAY 1 BREAKDOWN</th>
-                            <th colspan="5" class="col-divider-left" style="color: var(--broadcast-cyan);">DAY 2 BREAKDOWN</th>
+                            <th colspan="4" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
+                            <th colspan="4" class="col-divider-left session-divider-right" style="color: var(--broadcast-red);">DAY 1 BREAKDOWN</th>
+                            <th colspan="4" class="col-divider-left" style="color: var(--broadcast-cyan);">DAY 2 BREAKDOWN</th>
                         </tr>
                         <tr class="sub-header-row">
                             <th style="text-align: left;">POS & COMPETITOR (TEAM)</th>
@@ -2277,20 +2277,17 @@
                             <th class="final-totals-header" style="color: var(--broadcast-gold);">PTS</th>
                             <th class="final-totals-header">CM</th>
                             <th class="final-totals-header">CT</th>
-                            <th class="final-totals-header">BIGGEST</th>
-                            <th class="final-totals-header pillar-divider-right">SPC</th>
+                            <th class="final-totals-header pillar-divider-right">BIGGEST</th>
 
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
-                            <th>BIGGEST</th>
-                            <th class="session-divider-right">SPC</th>
+                            <th class="session-divider-right">BIGGEST</th>
                             
                             <th class="col-divider-left">PTS</th>
                             <th>CM</th>
                             <th>CT</th>
                             <th>BIGGEST</th>
-                            <th>SPC</th>
                         </tr>
                     `;
                     
@@ -2304,23 +2301,20 @@
                         let d1Cm  = item.day1 ? (item.day1.totalLengthCm || 0) : 0;
                         let d1Ct  = item.day1 ? (item.day1.fishCount || 0) : 0;
                         let d1Big = item.day1 ? (item.day1.biggestFishCm || 0) : 0;
-                        let d1Spc = item.day1 ? (item.day1.speciesCount || 0) : 0;
 
                         let d2Pts = item.day2 ? (item.day2.zonePoints || 0) : 0;
                         let d2Cm  = item.day2 ? (item.day2.totalLengthCm || 0) : 0;
                         let d2Ct  = item.day2 ? (item.day2.fishCount || 0) : 0;
                         let d2Big = item.day2 ? (item.day2.biggestFishCm || 0) : 0;
-                        let d2Spc = item.day2 ? (item.day2.speciesCount || 0) : 0;
 
                         let totPts = item.totals ? (item.totals.cumulativePoints || 0) : (d1Pts + d2Pts);
                         let totCm  = item.totals ? (item.totals.cumulativeLengthCm || 0) : (d1Cm + d2Cm);
                         let totCt  = item.totals ? (item.totals.cumulativeFish || 0) : (d1Ct + d2Ct);
                         let totBig = Math.max(d1Big, d2Big);
-                        let totSpc = item.totals ? (item.totals.cumulativeSpecies || (d1Spc + d2Spc)) : (d1Spc + d2Spc);
 
                         let currentPointsTier = totPts;
                         if (lastPointsTier !== null && currentPointsTier !== lastPointsTier) {
-                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="16">&nbsp;</td></tr>`;
+                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="13">&nbsp;</td></tr>`;
                         }
                         lastPointsTier = currentPointsTier;
 
@@ -2345,20 +2339,17 @@
                             </td>
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCm}</td>
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCt}</td>
-                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--broadcast-emerald);">${totBig}</td>
-                            <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--broadcast-cyan);">${totSpc}</td>
+                            <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--broadcast-emerald);">${totBig}</td>
 
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Ct}</td>
-                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Big}</td>
-                            <td class="session-breakdown-cell session-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Spc}</td>
+                            <td class="session-breakdown-cell session-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d1Big}</td>
 
                             <td class="col-divider-left session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d2Pts}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d2Cm}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d2Ct}</td>
                             <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d2Big}</td>
-                            <td class="session-breakdown-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${d2Spc}</td>
                         </tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
@@ -2569,7 +2560,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.4.2 broadcast active'))
+                    .then(reg => console.log('v2.5.0 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
