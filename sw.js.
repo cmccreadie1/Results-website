@@ -1,87 +1,41 @@
-const CACHE_NAME = 'spra-shore-v2-4-2';
-const ASSETS_TO_CACHE = [
-    './',
-    './index.html',
-    './scores.json',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800;900&family=Oswald:wght@500;600;700&display=swap'
+const CACHE_NAME = 'spra-shore-v2-5-0';
+const urlsToCache = [
+  './',
+  './index.html',
+  './scores.json'
 ];
 
-// 📦 Install Event: Cache Core Assets Immediately
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            console.log('[Service Worker] Caching App Shell & Assets: ', CACHE_NAME);
-            return cache.addAll(ASSETS_TO_CACHE);
-        }).then(() => self.skipWaiting())
-    );
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+  );
+  self.skipWaiting();
 });
 
-// 🧹 Activate Event: Clean Up Old Caches Immediately
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cache) => {
-                    if (cache !== CACHE_NAME) {
-                        console.log('[Service Worker] Deleting Old Cache:', cache);
-                        return caches.delete(cache);
-                    }
-                })
-            );
-        }).then(() => self.clients.claim())
-    );
-});
-
-// ⚡ Fetch Event: Network-First Strategy for scores.json & Cache-First for Shell Assets
-self.addEventListener('fetch', (event) => {
-    const requestUrl = new URL(event.request.url);
-
-    // Dynamic Scores JSON: Always try network first to show live results
-    if (requestUrl.pathname.endsWith('scores.json')) {
-        event.respondWith(
-            fetch(event.request)
-                .then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
-                        const responseClone = networkResponse.clone();
-                        caches.open(CACHE_NAME).then((cache) => {
-                            cache.put(event.request, responseClone);
-                        });
-                    }
-                    return networkResponse;
-                })
-                .catch(() => {
-                    console.log('[Service Worker] Network failed. Serving cached scores.json fallback.');
-                    return caches.match(event.request);
-                })
-        );
-        return;
-    }
-
-    // App Shell Assets & Google Fonts: Stale-While-Revalidate Strategy
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                // Return cached version while fetching update in background
-                fetch(event.request).then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
-                        caches.open(CACHE_NAME).then((cache) => {
-                            cache.put(event.request, networkResponse);
-                        });
-                    }
-                }).catch(() => {/* Offline fallback handling */});
-                return cachedResponse;
-            }
-
-            return fetch(event.request).then((networkResponse) => {
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                    return networkResponse;
-                }
-                const responseToCache = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseToCache);
-                });
-                return networkResponse;
-            });
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
         })
-    );
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
 });
