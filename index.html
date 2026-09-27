@@ -13,20 +13,21 @@
         };
     </script>
     
-    <title>Results Portal | Sky Sports Broadcast Edition</title>
+    <title>Results Portal | Broadcast Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette (v2.4.0) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.4.1) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
             --pill-btn-bg: linear-gradient(135deg, #172033 0%, #111827 100%);
             --pill-btn-border: rgba(255, 255, 255, 0.12);
-            --broadcast-yellow: #ffe600;
+            --broadcast-gold: #eab308;
+            --broadcast-gold-light: rgba(234, 179, 8, 0.15);
             --broadcast-red: #ff1e38;
             --broadcast-cyan: #00f0ff;
             --broadcast-emerald: #00ff88;
@@ -54,7 +55,7 @@
             height: 5px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 230, 0, 0.3);
+            background: rgba(234, 179, 8, 0.3);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-track {
@@ -84,7 +85,7 @@
             border-radius: 14px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-card);
-            border-top: 2px solid var(--broadcast-yellow);
+            border-top: 2px solid var(--broadcast-gold);
             position: relative;
         }
         
@@ -98,14 +99,14 @@
         .header-badge {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.6rem;
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
             font-weight: 800;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            background: rgba(255, 230, 0, 0.12);
+            background: rgba(234, 179, 8, 0.12);
             padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid rgba(255, 230, 0, 0.3);
+            border: 1px solid rgba(234, 179, 8, 0.3);
         }
 
         #app-header h1 {
@@ -192,19 +193,19 @@
         }
 
         .slide-btn.btn-ind-hero {
-            border-left-color: var(--broadcast-yellow);
-            background: linear-gradient(135deg, rgba(255, 230, 0, 0.12) 0%, #111827 100%);
+            border-left-color: var(--broadcast-gold);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, #111827 100%);
         }
         .slide-btn.btn-ind-hero .btn-action-tag {
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
         }
 
         .slide-btn.btn-report {
-            border-left-color: var(--broadcast-yellow);
-            background: linear-gradient(135deg, rgba(255, 230, 0, 0.15) 0%, #111827 100%);
+            border-left-color: var(--broadcast-gold);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #111827 100%);
         }
         .slide-btn.btn-report .btn-action-tag {
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
         }
 
         .slide-btn:hover {
@@ -262,7 +263,7 @@
             flex-shrink: 0;
         }
         .back-btn:active {
-            background: var(--broadcast-yellow);
+            background: var(--broadcast-gold);
             color: #07090e;
         }
 
@@ -307,7 +308,7 @@
         }
         .card-scroll-pill .pill-arrow {
             font-size: 0.7rem;
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
             line-height: 1;
             transition: transform 0.15s ease;
         }
@@ -319,7 +320,7 @@
         }
         .card-scroll-pill:active {
             transform: scale(0.95);
-            background: var(--broadcast-yellow);
+            background: var(--broadcast-gold);
             color: #07090e;
         }
 
@@ -336,8 +337,8 @@
             background: rgba(7, 9, 14, 0.92);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            border: 1px solid var(--broadcast-yellow);
-            color: var(--broadcast-yellow);
+            border: 1px solid var(--broadcast-gold);
+            color: var(--broadcast-gold);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
             font-weight: 800;
@@ -367,7 +368,7 @@
             width: 100%;
             padding: 10px 14px;
             background: #111827;
-            border: 1.5px solid var(--broadcast-yellow);
+            border: 1.5px solid var(--broadcast-gold);
             border-radius: 10px;
             color: var(--text-main);
             display: flex;
@@ -406,7 +407,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            background: var(--broadcast-yellow);
+            background: var(--broadcast-gold);
             color: #07090e;
             padding: 3px 10px;
             border-radius: 6px;
@@ -488,12 +489,12 @@
             border-bottom: none;
         }
         .custom-picker-item:active, .custom-picker-item.selected {
-            background: rgba(255, 230, 0, 0.15);
-            color: var(--broadcast-yellow);
+            background: rgba(234, 179, 8, 0.15);
+            color: var(--broadcast-gold);
         }
         .custom-picker-item .check-icon {
             opacity: 0;
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
             font-weight: 800;
         }
         .custom-picker-item.selected .check-icon {
@@ -573,7 +574,7 @@
             text-align: left;
             margin: auto 0; 
             border: 1px solid var(--border-card);
-            border-top: 2px solid var(--broadcast-yellow);
+            border-top: 2px solid var(--broadcast-gold);
         }
         .modal-close-btn {
             background: #172033; 
@@ -592,7 +593,7 @@
             transition: all 0.15s ease;
         }
         .modal-close-btn:active {
-            background: var(--broadcast-yellow);
+            background: var(--broadcast-gold);
             color: #07090e;
         }
 
@@ -691,7 +692,7 @@
             padding: 7px 8px;
             border-bottom: 1px solid #2a384c;
             background: #07090e !important;
-            color: var(--broadcast-yellow);
+            color: var(--broadcast-gold);
         }
 
         tr.sub-header-row th {
@@ -709,30 +710,30 @@
 
         /* 🏆 Podium Metallic Styling for Top 3 Ranks */
         tr.podium-gold td {
-            background: linear-gradient(90deg, rgba(255, 230, 0, 0.18) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
-            border-bottom: 1px solid rgba(255, 230, 0, 0.3);
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.2) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.35);
         }
         tr.podium-silver td {
             background: linear-gradient(90deg, rgba(226, 232, 240, 0.12) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
             border-bottom: 1px solid rgba(226, 232, 240, 0.25);
         }
         tr.podium-bronze td {
-            background: linear-gradient(90deg, rgba(217, 119, 6, 0.15) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.18) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
             border-bottom: 1px solid rgba(217, 119, 6, 0.25);
         }
 
         /* 🏆 High-Contrast Combined Totals Vault Box */
         .final-totals-cell {
-            background: rgba(255, 230, 0, 0.05) !important;
+            background: rgba(234, 179, 8, 0.06) !important;
         }
         .final-totals-header {
             background: #07090e !important;
-            color: var(--broadcast-yellow) !important;
+            color: var(--broadcast-gold) !important;
         }
         
         .pillar-divider-right {
             border-right: 3px solid #07090e !important;
-            border-left: 1px solid rgba(255, 230, 0, 0.25) !important;
+            border-left: 1px solid rgba(234, 179, 8, 0.3) !important;
         }
         
         .session-breakdown-cell {
@@ -813,7 +814,7 @@
         .beat-rate-summary-bar {
             background: #111827;
             border: 1px solid var(--border-color);
-            border-left: 3px solid var(--broadcast-yellow);
+            border-left: 3px solid var(--broadcast-gold);
             border-radius: 10px;
             padding: 10px 12px;
             margin-bottom: 12px;
@@ -829,7 +830,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-        .beat-rate-title.dominant { color: var(--broadcast-yellow); }
+        .beat-rate-title.dominant { color: var(--broadcast-gold); }
         .beat-rate-title.tied { color: var(--broadcast-cyan); }
         .beat-rate-title.behind { color: var(--broadcast-red); }
 
@@ -982,7 +983,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.4.0</span>
+            <span class="header-badge">LIVE BROADCAST v2.4.1</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1056,7 +1057,7 @@
     <!-- 👤 Personal Report Card Embedded Picker Modal -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.35rem; letter-spacing: 1.2px; color: var(--broadcast-yellow); margin-bottom: 4px;">My Match Report Card</h3>
+            <h3 style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.35rem; letter-spacing: 1.2px; color: var(--broadcast-gold); margin-bottom: 4px;">My Match Report Card</h3>
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">Select your competitor profile to generate your professional 6-metric telemetry report and head-to-head analysis.</div>
             
             <div style="margin-bottom: 16px;">
@@ -1075,13 +1076,13 @@
                 </div>
             </div>
 
-            <button class="modal-close-btn" style="background: var(--broadcast-yellow); color: #07090e; font-weight:800; margin-top: 0; border:none;" onclick="generatePersonalReport()">Generate Report ❯</button>
+            <button class="modal-close-btn" style="background: var(--broadcast-gold); color: #07090e; font-weight:800; margin-top: 0; border:none;" onclick="generatePersonalReport()">Generate Report ❯</button>
             <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 6px; border:none;" onclick="closeReportModal(event)">Cancel</button>
         </div>
     </div>
 
     <footer class="footer">
-        <div>SKY SPORTS BROADCAST TELEMETRY • v2.4.0</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.4.1</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1138,7 +1139,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.4.0) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.4.1) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1188,7 +1189,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.4.0";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.4.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1409,7 +1410,7 @@
                 let htmlMarkup = '<div class="stat-grid">';
 
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-yellow); text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-family: 'Barlow Condensed'; font-size: 1.4rem; text-transform: uppercase; font-weight: 800; color: var(--text-main);">${user.anglerName}</span>
                             <button onclick="openReportModal()" style="background: #172033; border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; font-family: 'Barlow Condensed'; font-size: 0.8rem; text-transform: uppercase; font-weight: 700; cursor: pointer;">Switch ↺</button>
@@ -1417,7 +1418,7 @@
                         <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; font-family: 'JetBrains Mono';">TEAM: ${user.teamName || 'SOLO COMPETITOR'}</div>
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; text-align: center; background: #0b0f19; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--border-color);">
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem; color:var(--broadcast-yellow);">${uPts}</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">ZONE PTS</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">ZONE PTS</div></div>
                             <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">LENGTH</div></div>
                             <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uFish}</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">FISH</div></div>
                             <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uMaxFish}cm</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">BEST</div></div>
@@ -1436,7 +1437,7 @@
                         <div class="metric-card-item">
                             <div style="font-size: 0.78rem; font-weight: 700; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">1. Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
-                                <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--broadcast-yellow); color: #07090e;">${pOverallMatch}%</div>
+                                <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--broadcast-gold); color: #07090e;">${pOverallMatch}%</div>
                                 <div class="bar-chart-label-right">Beats ${pOverallMatch}% of field</div>
                             </div>
                             <span class="metric-subtext">Overall championship standing based on cumulative zone points.</span>
@@ -1668,7 +1669,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.4.0) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.4.1) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1925,7 +1926,7 @@
                         </div>
                         <div style="border-top: 1px solid var(--border-color); padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #07090e; text-align: center;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: var(--broadcast-yellow);">${avgCatchPerAngler} Fish</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: var(--broadcast-gold);">${avgCatchPerAngler} Fish</div>
                                 <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Avg / Angler</div>
                             </div>
                             <div>
@@ -1938,13 +1939,13 @@
 
                 /* CARD 2: Daily Zone Distribution */
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-yellow); text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 14px;">Daily Zone Distribution</div>
                         
                         <div style="margin-bottom: 20px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                                 <span style="font-family: 'Barlow Condensed'; font-size: 0.95rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">DAY 1 (NIGHT)</span>
-                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--broadcast-yellow);">${day1Fish} FISH</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--broadcast-gold);">${day1Fish} FISH</span>
                             </div>
                             ${createVerticalZoneBars(d1ZoneTotals, day1Fish)}
                         </div>
@@ -2006,13 +2007,13 @@
                             <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🔥 Hot Pegs & Beach Telemetry</div>
                             <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Spatial catch density across individual beach pegs and 3-peg hot clusters.</div>
 
-                            <div style="background: linear-gradient(135deg, rgba(255, 230, 0, 0.15) 0%, #0b0f19 100%); border: 1.5px solid var(--broadcast-yellow); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #0b0f19 100%); border: 1.5px solid var(--broadcast-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.78rem; text-transform: uppercase; color: var(--broadcast-yellow); font-weight: 800; letter-spacing: 1px;">👑 THE GOLDEN PEG (MOST PRODUCTIVE)</div>
+                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.78rem; text-transform: uppercase; color: var(--broadcast-gold); font-weight: 800; letter-spacing: 1px;">👑 THE GOLDEN PEG (MOST PRODUCTIVE)</div>
                                     <div style="font-family: 'Barlow Condensed'; font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-top: 1px;">PEG #${goldenPegNo} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; font-family:'JetBrains Mono';">(${goldenZone})</span></div>
                                 </div>
                                 <div style="text-align: right;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--broadcast-yellow);">${maxPegFish} FISH</div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--broadcast-gold);">${maxPegFish} FISH</div>
                                     <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">${(pegStats[goldenPegNo].combinedLength / 100).toFixed(2)}m Landed</div>
                                 </div>
                             </div>
@@ -2021,13 +2022,13 @@
                                 <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
                                     <div style="font-family: 'Barlow Condensed'; font-size: 0.75rem; text-transform: uppercase; color: var(--broadcast-red); font-weight: 800; letter-spacing: 0.8px;">Day 1 Hot Cluster</div>
                                     <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main); margin: 3px 0;">PEGS ${d1Cluster.startPeg} — ${d1Cluster.endPeg}</div>
-                                    <div style="font-size: 0.65rem; color: var(--broadcast-yellow); font-weight: 800;">${d1Cluster.fishTotal} Fish Landed</div>
+                                    <div style="font-size: 0.65rem; color: var(--broadcast-gold); font-weight: 800;">${d1Cluster.fishTotal} Fish Landed</div>
                                 </div>
 
                                 <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
                                     <div style="font-family: 'Barlow Condensed'; font-size: 0.75rem; text-transform: uppercase; color: var(--broadcast-red); font-weight: 800; letter-spacing: 0.8px;">Day 2 Hot Cluster</div>
                                     <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main); margin: 3px 0;">PEGS ${d2Cluster.startPeg} — ${d2Cluster.endPeg}</div>
-                                    <div style="font-size: 0.65rem; color: var(--broadcast-yellow); font-weight: 800;">${d2Cluster.fishTotal} Fish Landed</div>
+                                    <div style="font-size: 0.65rem; color: var(--broadcast-gold); font-weight: 800;">${d2Cluster.fishTotal} Fish Landed</div>
                                 </div>
                             </div>
                         </div>
@@ -2163,7 +2164,7 @@
                 for (let i = 0; i < 10; i++) {
                     let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
                     let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
-                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-yellow);">${i+1}</td><td style="text-align: left; padding: 6px 7px; font-family:'Inter';">${d1Str}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${fStr}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; padding: 6px 7px; font-family:'Inter';">${d1Str}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${fStr}</td></tr>`;
                 }
                 
                 htmlMarkup += `
@@ -2196,7 +2197,7 @@
                 })).sort((a, b) => b.avgLen - a.avgLen);
 
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-yellow); text-align: left;">
+                    <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div style="color: var(--broadcast-cyan); font-family: 'Barlow Condensed'; margin-bottom: 4px; font-size: 1.25rem; font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing:1px;">🏆 Parent Club Championship</div>
                         <div style="font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 10px; line-height: 1.4; padding: 0 8px;">Unified club ranking based on overall average catch per angler across all squad delegations.</div>
                         
@@ -2217,7 +2218,7 @@
                 `;
                 
                 parentArray.forEach((p, i) => {
-                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-yellow);">${i+1}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${p.name}</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${p.avgFish.toFixed(1)}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${p.name}</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${p.avgFish.toFixed(1)}</td></tr>`;
                 });
                 
                 htmlMarkup += '</table></div></div></div></div>'; 
@@ -2279,7 +2280,7 @@
                         <tr class="sub-header-row">
                             <th style="text-align: left;">POS & COMPETITOR (TEAM)</th>
                             
-                            <th class="final-totals-header" style="color: var(--broadcast-yellow);">PTS</th>
+                            <th class="final-totals-header" style="color: var(--broadcast-gold);">PTS</th>
                             <th class="final-totals-header">CM</th>
                             <th class="final-totals-header">CT</th>
                             <th class="final-totals-header">BIGGEST</th>
@@ -2337,7 +2338,7 @@
                         htmlMarkup += `<tr class="${podiumClass}">
                             <td style="text-align: left; padding-left: 8px;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 900; color: ${rank === 1 ? 'var(--broadcast-yellow)' : 'var(--broadcast-cyan)'}; font-size: 0.95rem;">${rank}</span>
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 900; color: ${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'}; font-size: 0.95rem;">${rank}</span>
                                     <div>
                                         <div style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; font-family:'Inter';">${item.anglerName}</div>
                                         <div style="color: var(--text-muted); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; font-family:'JetBrains Mono';">${teamDisp}</div>
@@ -2346,7 +2347,7 @@
                             </td>
                             
                             <td class="final-totals-cell" style="text-align: center;">
-                                <div style="display: inline-block; background: var(--broadcast-yellow); border-radius: 4px; padding: 2px 7px; font-weight: 900; color: #07090e; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${totPts}</div>
+                                <div style="display: inline-block; background: var(--broadcast-gold); border-radius: 4px; padding: 2px 7px; font-weight: 900; color: #07090e; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${totPts}</div>
                             </td>
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCm}</td>
                             <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCt}</td>
@@ -2412,11 +2413,11 @@
                         else if (rank === 3) podiumClass = "podium-bronze";
 
                         htmlMarkup += `<tr class="${podiumClass}">
-                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-yellow)' : 'var(--broadcast-cyan)'};">${rank}</td>
+                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
                             <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Inter';">${team.name}</td>
                             
                             <td style="text-align: center;">
-                                <div style="display: inline-block; background: var(--broadcast-yellow); border-radius: 4px; padding: 2px 7px; font-weight: 900; color: #07090e; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${team.pts}</div>
+                                <div style="display: inline-block; background: var(--broadcast-gold); border-radius: 4px; padding: 2px 7px; font-weight: 900; color: #07090e; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${team.pts}</div>
                             </td>
                             <td style="font-weight: 800; text-align: center;">${team.len}</td>
                             <td style="font-weight: 800; text-align: center;">${team.fish}</td>
@@ -2483,7 +2484,7 @@
                                 lastZonePts = currentZonePts;
 
                                 htmlMarkup += `<tr>
-                                    <td style="font-weight: 900; color: var(--broadcast-yellow); text-align: center;">${dayData.zonePoints}</td>
+                                    <td style="font-weight: 900; color: var(--broadcast-gold); text-align: center;">${dayData.zonePoints}</td>
                                     <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Inter';">${item.anglerName}</td>
                                     <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
                                     <td class="tie-breaker-td">${ties}</td>
@@ -2542,11 +2543,11 @@
                         else if (rank === 3) podiumClass = "podium-bronze";
 
                         htmlMarkup += `<tr class="${podiumClass}">
-                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-yellow)' : 'var(--broadcast-cyan)'};">${rank}</td>
+                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
                             <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Inter';">${fish.name}</td>
                             <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
                             <td style="text-align: center;">${fish.details}</td>
-                            <td style="color: var(--broadcast-yellow); font-weight: 900; text-align: center;">${sizeDisplay}</td>
+                            <td style="color: var(--broadcast-gold); font-weight: 900; text-align: center;">${sizeDisplay}</td>
                         </tr>`;
                     });
                     htmlMarkup += '</table></div></div>';
@@ -2574,7 +2575,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.4.0 broadcast active'))
+                    .then(reg => console.log('v2.4.1 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
