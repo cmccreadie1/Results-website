@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.1) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.2) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.1</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.2</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.1</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.2</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.1) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.2) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.1";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.2";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.1) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.2) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1955,7 +1955,7 @@
                     </div>
                 `;
 
-                /* CARD 3: 🌟 Top 5 Most Productive Pegs */
+                /* CARD 3: 🌟 Most Productive Pegs (Overall - Both Days) */
                 let sortedPegs = Object.values(pegStats).sort((a, b) => {
                     if (b.combinedFish !== a.combinedFish) return b.combinedFish - a.combinedFish;
                     return b.combinedLength - a.combinedLength;
@@ -1965,8 +1965,8 @@
                 if (top5Pegs.length > 0) {
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--broadcast-red); text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🌟 Most Productive Pegs (Top 5)</div>
-                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Top performing beach pegs ranked by overall combined yield.</div>
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🌟 Most Productive Pegs (Overall - Both Days)</div>
+                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Top performing beach pegs ranked by combined yield across all sessions.</div>
 
                             <div class="table-header-bar">
                                 <span style="font-size:0.72rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Productivity Leaderboard</span>
@@ -2012,7 +2012,51 @@
                     `;
                 }
 
-                /* CARD 4: Inline Zone Profiles */
+                /* CARD 4: 🛡️ Toughest Fished Pegs (Lowest Yield / Blank Stations) */
+                let bottomPegs = [...sortedPegs].reverse().slice(0, 5);
+                if (bottomPegs.length > 0) {
+                    htmlMarkup += `
+                        <div class="stat-card" style="border-top: 4px solid var(--blue-zone); text-align: left;">
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🛡️ Toughest Fished Pegs (Overall - Both Days)</div>
+                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Stations where competitors faced the hardest conditions and lowest yields.</div>
+
+                            <div class="table-header-bar">
+                                <span style="font-size:0.72rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Tough Stations Log</span>
+                                ${getCircleBadgeHtml('tough-pegs-wrapper')}
+                            </div>
+
+                            <div id="tough-pegs-wrapper" class="table-card-container" style="margin-bottom:0;">
+                                <div class="card-table-wrapper">
+                                    <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
+                                        <tr>
+                                            <th style="text-align: left; padding: 6px 7px;">PEG #</th>
+                                            <th style="text-align: center; padding: 6px 7px;">ZONE</th>
+                                            <th style="text-align: center; padding: 6px 7px;">FISH CT</th>
+                                            <th style="text-align: center; padding: 6px 7px;">TOTAL LENGTH</th>
+                                        </tr>
+                    `;
+
+                    bottomPegs.forEach((p) => {
+                        let zoneName = p.d1Zone || p.d2Zone || "-";
+                        htmlMarkup += `
+                            <tr>
+                                <td style="text-align: left; font-weight: 800; color: var(--text-main); padding: 6px 7px;">PEG #${p.pegNo}</td>
+                                <td style="text-align: center; font-weight: 700; padding: 6px 7px; font-family:'JetBrains Mono';">${zoneName}</td>
+                                <td style="text-align: center; font-weight: 800; color: var(--broadcast-red); padding: 6px 7px;">${p.combinedFish} fish</td>
+                                <td style="text-align: center; font-weight: 800; padding: 6px 7px;">${(p.combinedLength / 100).toFixed(2)}m</td>
+                            </tr>
+                        `;
+                    });
+
+                    htmlMarkup += `
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                /* CARD 5: Inline Zone Profiles */
                 const donutColors = { 'Red Zone': '#ff4d4d', 'Blue Zone': '#38bdf8', 'Green Zone': '#34d399', 'Yellow Zone': '#fbbf24' };
                 
                 zoneKeys.forEach(zName => {
@@ -2111,7 +2155,7 @@
                     `;
                 });
 
-                /* CARD 5: Timeline Simulation */
+                /* CARD 6: Timeline Simulation */
                 let day1IndStandings = [...anglers].filter(a => a.day1).sort((a, b) => {
                     if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
                     return b.day1.totalLengthCm - a.day1.totalLengthCm;
@@ -2151,7 +2195,7 @@
                     </div>
                 `;
 
-                /* CARD 6: Parent Club Championship */
+                /* CARD 7: Parent Club Championship */
                 let parentUmbrellas = {};
                 anglers.forEach(item => {
                     let tName = String(item.teamName || "").trim();
@@ -2543,7 +2587,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.1 broadcast active'))
+                    .then(reg => console.log('v2.5.2 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
