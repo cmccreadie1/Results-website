@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.6) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.7) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.6</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.7</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.6</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.7</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.6) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.7) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.6";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.7";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component with Minimalist Top 10 Badges (v2.5.6) */
+        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.5.7) */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1700,7 +1700,6 @@
                     count: redFish, 
                     top10Count: top10ZoneCounts['Red'],
                     gradient: 'linear-gradient(180deg, #ff4d4d 0%, #991b1b 100%)', 
-                    textColor: '#ffffff',
                     borderHighlight: 'rgba(254, 202, 202, 0.6)'
                 },
                 { 
@@ -1708,7 +1707,6 @@
                     count: blueFish, 
                     top10Count: top10ZoneCounts['Blue'],
                     gradient: 'linear-gradient(180deg, #38bdf8 0%, #1e40af 100%)', 
-                    textColor: '#ffffff',
                     borderHighlight: 'rgba(191, 219, 254, 0.6)'
                 },
                 { 
@@ -1716,7 +1714,6 @@
                     count: greenFish, 
                     top10Count: top10ZoneCounts['Green'],
                     gradient: 'linear-gradient(180deg, #34d399 0%, #065f46 100%)', 
-                    textColor: '#ffffff',
                     borderHighlight: 'rgba(167, 243, 208, 0.6)'
                 },
                 { 
@@ -1724,7 +1721,6 @@
                     count: yellowFish, 
                     top10Count: top10ZoneCounts['Yellow'],
                     gradient: 'linear-gradient(180deg, #fbbf24 0%, #92400e 100%)', 
-                    textColor: '#ffffff',
                     borderHighlight: 'rgba(254, 240, 138, 0.6)'
                 }
             ];
@@ -1735,17 +1731,25 @@
             zones.forEach(z => {
                 let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
                 let relativeRatio = z.count / maxCount;
-                let barHeight = Math.max(Math.round(relativeRatio * 85), 20);
+                // Height calculation ensures minimum room for the internal badge even on small yields like 8%
+                let barHeight = Math.max(Math.round(relativeRatio * 75), 18);
 
                 let top10BadgeHtml = '';
                 if (z.top10Count > 0) {
-                    top10BadgeHtml = `<span style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; font-weight:900; color:var(--broadcast-gold); margin-top:4px; line-height:1; text-shadow: 0 1px 3px rgba(0,0,0,0.9);">${z.top10Count}</span>`;
+                    top10BadgeHtml = `
+                        <div style="background: rgba(7, 9, 14, 0.82); border: 1px solid rgba(234, 179, 8, 0.5); width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.7); margin-top: 4px;">
+                            <span style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; font-weight:900; color:var(--broadcast-gold); line-height:1;">${z.top10Count}</span>
+                        </div>
+                    `;
                 }
 
                 columnsHtml += `
                     <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative;">
-                        <div style="width: 100%; height: ${barHeight}%; background: ${z.gradient}; border-top: 2px solid ${z.borderHighlight}; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 6px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.5); transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);" title="${z.name}: ${pct}% (${z.count} Fish) - ${z.top10Count} of session Top 10 anglers">
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 900; color: ${z.textColor}; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.8); background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);">${pct}%</span>
+                        <!-- External Percentage Label positioned above top edge -->
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 900; color: #ffffff; line-height: 1; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.9);">${pct}%</span>
+                        
+                        <!-- Coloured Bar Area -->
+                        <div style="width: 100%; height: ${barHeight}%; background: ${z.gradient}; border-top: 2px solid ${z.borderHighlight}; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 2px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.5); transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);" title="${z.name}: ${pct}% (${z.count} Fish) - ${z.top10Count} of session Top 10 anglers">
                             ${top10BadgeHtml}
                         </div>
                     </div>
@@ -1753,10 +1757,10 @@
             });
 
             return `
-                <div style="width: 100%; height: 160px; background: #07090e; border-radius: 10px; padding: 12px 10px 0 10px; display: flex; gap: 0; border: 1px solid var(--border-color); box-shadow: inset 0 3px 12px rgba(0,0,0,0.8); margin-top: 6px; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: 25%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); pointer-events: none;"></div>
-                    <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.06); pointer-events: none;"></div>
-                    <div style="position: absolute; top: 75%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); pointer-events: none;"></div>
+                <div style="width: 100%; height: 165px; background: #07090e; border-radius: 10px; padding: 14px 10px 0 10px; display: flex; gap: 0; border: 1px solid var(--border-color); box-shadow: inset 0 3px 12px rgba(0,0,0,0.8); margin-top: 6px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 30%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); pointer-events: none;"></div>
+                    <div style="position: absolute; top: 55%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.06); pointer-events: none;"></div>
+                    <div style="position: absolute; top: 80%; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.04); pointer-events: none;"></div>
                     ${columnsHtml}
                 </div>
             `;
@@ -2648,7 +2652,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.6 broadcast active'))
+                    .then(reg => console.log('v2.5.7 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
