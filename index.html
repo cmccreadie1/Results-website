@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.5) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.6) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.5</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.6</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.5</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.5) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.6) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.5";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component with Top 10 Density Indicators (v2.5.5) */
+        /* 📊 Broadcast Zone Stacked Bars Component with Minimalist Top 10 Badges (v2.5.6) */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1684,7 +1684,7 @@
                 yellowFish = totalFishInSession - knownSum;
             }
 
-            // Calculate how many of the session's Top 10 anglers were pegged in each zone
+            // Count how many of the session's Top 10 anglers (ranked purely by raw fish caught) were pegged in each zone
             let top10ZoneCounts = { 'Red': 0, 'Blue': 0, 'Green': 0, 'Yellow': 0 };
             sessionTop10Anglers.forEach(angler => {
                 let zName = angler.zone || '';
@@ -1739,7 +1739,7 @@
 
                 let top10BadgeHtml = '';
                 if (z.top10Count > 0) {
-                    top10BadgeHtml = `<span style="font-family:'JetBrains Mono', monospace; font-size:0.58rem; font-weight:900; color:#07090e; background:var(--broadcast-gold); padding:2px 4px; border-radius:3px; margin-top:3px; box-shadow:0 1px 3px rgba(0,0,0,0.6); display:inline-block; line-height:1;">🏆 ${z.top10Count} IN T10</span>`;
+                    top10BadgeHtml = `<span style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; font-weight:900; color:var(--broadcast-gold); margin-top:4px; line-height:1; text-shadow: 0 1px 3px rgba(0,0,0,0.9);">${z.top10Count}</span>`;
                 }
 
                 columnsHtml += `
@@ -1863,17 +1863,15 @@
                     }
                 });
 
-                // Calculate Session Top 10 Anglers for Day 1 and Day 2
+                // Calculate Session Top 10 Anglers (ranked purely by raw fish caught, tie-breaker total length)
                 let d1Top10 = [...anglers].filter(a => a.day1 && a.day1.zone).sort((a,b) => {
-                    if (a.day1.zonePoints !== b.day1.zonePoints) return a.day1.zonePoints - b.day1.zonePoints;
-                    if (a.day1.totalLengthCm !== b.day1.totalLengthCm) return b.day1.totalLengthCm - a.day1.totalLengthCm;
-                    return b.day1.fishCount - a.day1.fishCount;
+                    if ((a.day1.fishCount || 0) !== (b.day1.fishCount || 0)) return (b.day1.fishCount || 0) - (a.day1.fishCount || 0);
+                    return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
                 }).slice(0, 10).map(a => ({ name: a.anglerName, zone: a.day1.zone }));
 
                 let d2Top10 = [...anglers].filter(a => a.day2 && a.day2.zone).sort((a,b) => {
-                    if (a.day2.zonePoints !== b.day2.zonePoints) return a.day2.zonePoints - b.day2.zonePoints;
-                    if (a.day2.totalLengthCm !== b.day2.totalLengthCm) return b.day2.totalLengthCm - a.day2.totalLengthCm;
-                    return b.day2.fishCount - a.day2.fishCount;
+                    if ((a.day2.fishCount || 0) !== (b.day2.fishCount || 0)) return (b.day2.fishCount || 0) - (a.day2.fishCount || 0);
+                    return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
                 }).slice(0, 10).map(a => ({ name: a.anglerName, zone: a.day2.zone }));
 
                 let isTwoDayComp = day2Entries > 0;
@@ -1995,7 +1993,7 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 2px;">Daily Zone Distribution</div>
-                        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Bars show catch share • Gold badges show Top 10 angler peg concentration</div>
+                        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Bars show % of total catch • Gold numbers indicate how many of the session's Top 10 anglers (by fish caught) were pegged in that zone.</div>
                         
                         <div style="margin-bottom: 20px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
@@ -2650,7 +2648,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.5 broadcast active'))
+                    .then(reg => console.log('v2.5.6 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
