@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.7) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.8) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.7</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.8</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.7</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.8</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.7) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.8) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.7";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.8";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.5.7) */
+        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.5.8) */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1731,7 +1731,6 @@
             zones.forEach(z => {
                 let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
                 let relativeRatio = z.count / maxCount;
-                // Height calculation ensures minimum room for the internal badge even on small yields like 8%
                 let barHeight = Math.max(Math.round(relativeRatio * 75), 18);
 
                 let top10BadgeHtml = '';
@@ -1993,11 +1992,11 @@
                     </div>
                 `;
 
-                /* CARD 2: Daily Zone Distribution */
+                /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">Daily Zone Distribution</div>
-                        <div style="text-align: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Bars show % of total catch • Gold numbers indicate how many of the session's Top 10 anglers (by fish caught) were pegged in that zone.</div>
+                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">FISH CAUGHT BY ZONE</div>
+                        <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3;">Gold numbers show how many of the day’s Top 10 anglers were in each zone.</div>
                         
                         <div style="margin-bottom: 20px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
@@ -2652,7 +2651,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.7 broadcast active'))
+                    .then(reg => console.log('v2.5.8 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
