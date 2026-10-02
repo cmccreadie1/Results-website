@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.0) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.1) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.0</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.1</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.0</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.1</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.0) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.1) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.0";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.1";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.0) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.1) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1805,7 +1805,7 @@
                         }
 
                         if (p1 !== undefined && p1 !== null) {
-                            if (!pegStats[p1]) pegStats[p1] = { combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: z, d2Fish: 0, d2Zone: '' };
+                            if (!pegStats[p1]) pegStats[p1] = { pegNo: p1, combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: z, d2Fish: 0, d2Zone: '' };
                             pegStats[p1].combinedFish += d1f;
                             pegStats[p1].combinedLength += item.day1.totalLengthCm || 0;
                             pegStats[p1].d1Fish += d1f;
@@ -1834,7 +1834,7 @@
                         }
 
                         if (p2 !== undefined && p2 !== null) {
-                            if (!pegStats[p2]) pegStats[p2] = { combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: '', d2Fish: 0, d2Zone: z };
+                            if (!pegStats[p2]) pegStats[p2] = { pegNo: p2, combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: '', d2Fish: 0, d2Zone: z };
                             pegStats[p2].combinedFish += d2f;
                             pegStats[p2].combinedLength += item.day2.totalLengthCm || 0;
                             pegStats[p2].d2Fish += d2f;
@@ -1955,74 +1955,57 @@
                     </div>
                 `;
 
-                /* CARD 3: 🔥 Hot Pegs & Golden Peg */
-                let allPegNums = Object.keys(pegStats).map(Number).sort((a, b) => a - b);
-                
-                if (allPegNums.length > 0) {
-                    let goldenPegNo = allPegNums[0];
-                    let maxPegFish = pegStats[goldenPegNo].combinedFish;
+                /* CARD 3: 🌟 Top 5 Most Productive Pegs */
+                let sortedPegs = Object.values(pegStats).sort((a, b) => {
+                    if (b.combinedFish !== a.combinedFish) return b.combinedFish - a.combinedFish;
+                    return b.combinedLength - a.combinedLength;
+                });
+                let top5Pegs = sortedPegs.slice(0, 5);
 
-                    allPegNums.forEach(pNo => {
-                        if (pegStats[pNo].combinedFish > maxPegFish) {
-                            maxPegFish = pegStats[pNo].combinedFish;
-                            goldenPegNo = pNo;
-                        }
-                    });
-
-                    function findHotCluster(dayKey) {
-                        let bestStartPeg = allPegNums[0];
-                        let maxClusterFish = -1;
-                        let clusterZone = "";
-
-                        for (let i = 0; i < allPegNums.length; i++) {
-                            let pStart = allPegNums[i];
-                            let pMid = pStart + 1;
-                            let pEnd = pStart + 2;
-
-                            let sumF = (pegStats[pStart]?.[dayKey] || 0) + 
-                                       (pegStats[pMid]?.[dayKey] || 0) + 
-                                       (pegStats[pEnd]?.[dayKey] || 0);
-
-                            if (sumF > maxClusterFish) {
-                                maxClusterFish = sumF;
-                                bestStartPeg = pStart;
-                                clusterZone = pegStats[pStart]?.d1Zone || pegStats[pStart]?.d2Zone || "";
-                            }
-                        }
-                        return { startPeg: bestStartPeg, endPeg: bestStartPeg + 2, fishTotal: maxClusterFish, zone: clusterZone };
-                    }
-
-                    let d1Cluster = findHotCluster('d1Fish');
-                    let d2Cluster = findHotCluster('d2Fish');
-                    let goldenZone = pegStats[goldenPegNo].d1Zone || pegStats[goldenPegNo].d2Zone || "";
-
+                if (top5Pegs.length > 0) {
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--broadcast-red); text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🔥 Hot Pegs & Beach Telemetry</div>
-                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Spatial catch density across individual beach pegs and 3-peg hot clusters.</div>
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🌟 Most Productive Pegs (Top 5)</div>
+                            <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Top performing beach pegs ranked by overall combined yield.</div>
 
-                            <div style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, #0b0f19 100%); border: 1.5px solid var(--broadcast-gold); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.78rem; text-transform: uppercase; color: var(--broadcast-gold); font-weight: 800; letter-spacing: 1px;">👑 THE GOLDEN PEG (MOST PRODUCTIVE)</div>
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-top: 1px;">PEG #${goldenPegNo} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; font-family:'JetBrains Mono';">(${goldenZone})</span></div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--broadcast-gold);">${maxPegFish} FISH</div>
-                                    <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">${(pegStats[goldenPegNo].combinedLength / 100).toFixed(2)}m Landed</div>
-                                </div>
+                            <div class="table-header-bar">
+                                <span style="font-size:0.72rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Productivity Leaderboard</span>
+                                ${getCircleBadgeHtml('productive-pegs-wrapper')}
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.75rem; text-transform: uppercase; color: var(--broadcast-red); font-weight: 800; letter-spacing: 0.8px;">Day 1 Hot Cluster</div>
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main); margin: 3px 0;">PEGS ${d1Cluster.startPeg} — ${d1Cluster.endPeg}</div>
-                                    <div style="font-size: 0.65rem; color: var(--broadcast-gold); font-weight: 800;">${d1Cluster.fishTotal} Fish Landed</div>
-                                </div>
+                            <div id="productive-pegs-wrapper" class="table-card-container" style="margin-bottom:0;">
+                                <div class="card-table-wrapper">
+                                    <table style="width: 100%; font-size: 0.8rem; margin-bottom: 0;">
+                                        <tr>
+                                            <th style="text-align: center; padding: 6px 7px;">RNK</th>
+                                            <th style="text-align: left; padding: 6px 7px;">PEG #</th>
+                                            <th style="text-align: center; padding: 6px 7px;">ZONE</th>
+                                            <th style="text-align: center; padding: 6px 7px;">FISH CT</th>
+                                            <th style="text-align: center; padding: 6px 7px;">TOTAL LENGTH</th>
+                                        </tr>
+                    `;
 
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.75rem; text-transform: uppercase; color: var(--broadcast-red); font-weight: 800; letter-spacing: 0.8px;">Day 2 Hot Cluster</div>
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main); margin: 3px 0;">PEGS ${d2Cluster.startPeg} — ${d2Cluster.endPeg}</div>
-                                    <div style="font-size: 0.65rem; color: var(--broadcast-gold); font-weight: 800;">${d2Cluster.fishTotal} Fish Landed</div>
+                    top5Pegs.forEach((p, idx) => {
+                        let rank = idx + 1;
+                        let zoneName = p.d1Zone || p.d2Zone || "-";
+                        let podiumClass = "";
+                        if (rank === 1) podiumClass = "podium-gold";
+                        else if (rank === 2) podiumClass = "podium-silver";
+                        else if (rank === 3) podiumClass = "podium-bronze";
+
+                        htmlMarkup += `
+                            <tr class="${podiumClass}">
+                                <td style="font-weight: 900; text-align: center; padding: 6px 7px; color: ${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
+                                <td style="text-align: left; font-weight: 800; color: var(--text-main); padding: 6px 7px;">PEG #${p.pegNo}</td>
+                                <td style="text-align: center; font-weight: 700; padding: 6px 7px; font-family:'JetBrains Mono';">${zoneName}</td>
+                                <td style="text-align: center; font-weight: 900; color: var(--broadcast-gold); padding: 6px 7px;">${p.combinedFish} fish</td>
+                                <td style="text-align: center; font-weight: 800; padding: 6px 7px;">${(p.combinedLength / 100).toFixed(2)}m</td>
+                            </tr>
+                        `;
+                    });
+
+                    htmlMarkup += `
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -2560,7 +2543,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.0 broadcast active'))
+                    .then(reg => console.log('v2.5.1 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
