@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.3) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.4) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.3</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.4</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.3</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.4</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.3) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.4) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.3";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.4";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1663,7 +1663,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.3) */
+        /* 📊 Broadcast Zone Stacked Bars Component (v2.5.4) */
         function createVerticalZoneBars(zoneData, totalFishInSession) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -1844,9 +1844,15 @@
                 });
 
                 let isTwoDayComp = day2Entries > 0;
-                let d1SuccessRate = day1Entries > 0 ? (((day1Entries - day1Blankers) / day1Entries) * 100).toFixed(0) : 0;
-                let d2SuccessRate = day2Entries > 0 ? (((day2Entries - day2Blankers) / day2Entries) * 100).toFixed(0) : 0;
-                let singleCompSuccessRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
+                
+                let d1CatchingRate = day1Entries > 0 ? (((day1Entries - day1Blankers) / day1Entries) * 100).toFixed(0) : 0;
+                let d1BlankRate = day1Entries > 0 ? ((day1Blankers / day1Entries) * 100).toFixed(0) : 0;
+                
+                let d2CatchingRate = day2Entries > 0 ? (((day2Entries - day2Blankers) / day2Entries) * 100).toFixed(0) : 0;
+                let d2BlankRate = day2Entries > 0 ? ((day2Blankers / day2Entries) * 100).toFixed(0) : 0;
+
+                let singleCompCatchingRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
+                let singleCompBlankRate = totalAnglers > 0 ? ((blankers / totalAnglers) * 100).toFixed(0) : 0;
 
                 let totalMeters = (totalLengthCm / 100).toFixed(2);
                 let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
@@ -1874,27 +1880,48 @@
                 let successBlockHtml = '';
                 if (isTwoDayComp) {
                     successBlockHtml = `
-                        <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
-                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px; text-align: center;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 800; color: var(--broadcast-emerald);">${d1SuccessRate}%</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Day 1 Catch Success</div>
+                        <div style="padding: 14px 14px; display: flex; flex-direction: column; gap: 10px; background: var(--surface-color);">
+                            <div>
+                                <div style="font-size: 0.65rem; color: var(--broadcast-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">DAY 1 (NIGHT) FIELD TELEMETRY</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--broadcast-emerald);">${d1CatchingRate}%</div>
+                                        <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Anglers Catching</div>
+                                    </div>
+                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--text-muted);">${d1BlankRate}%</div>
+                                        <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Blank Rate</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div style="text-align: center;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 800; color: var(--broadcast-emerald);">${d2SuccessRate}%</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Day 2 Catch Success</div>
+
+                            <div>
+                                <div style="font-size: 0.65rem; color: var(--broadcast-cyan); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">DAY 2 (DAYTIME) FIELD TELEMETRY</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--broadcast-emerald);">${d2CatchingRate}%</div>
+                                        <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Anglers Catching</div>
+                                    </div>
+                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--text-muted);">${d2BlankRate}%</div>
+                                        <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Blank Rate</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `;
                 } else {
                     successBlockHtml = `
-                        <div style="padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--surface-color);">
-                            <div style="border-right: 1px solid var(--border-color); padding-right: 8px; text-align: center;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 800; color: var(--broadcast-cyan);">${totalAnglers}</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Total Anglers</div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.6rem; font-weight: 800; color: var(--broadcast-emerald);">${singleCompSuccessRate}%</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Catch Success %</div>
+                        <div style="padding: 14px 14px; background: var(--surface-color);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.5rem; font-weight: 800; color: var(--broadcast-emerald);">${singleCompCatchingRate}%</div>
+                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Anglers Catching</div>
+                                </div>
+                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.5rem; font-weight: 800; color: var(--text-muted);">${singleCompBlankRate}%</div>
+                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px;">Blank Rate</div>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -2017,7 +2044,7 @@
                 if (bottomPegs.length > 0) {
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--blue-zone); text-align: left;">
-                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🛡️️ Toughest Fished Pegs (Overall - Both Days)</div>
+                            <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🛡 Toughest Fished Pegs (Overall - Both Days)</div>
                             <div style="text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Stations where competitors faced the hardest conditions and lowest yields.</div>
 
                             <div class="table-header-bar">
@@ -2589,7 +2616,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.3 broadcast active'))
+                    .then(reg => console.log('v2.5.4 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
