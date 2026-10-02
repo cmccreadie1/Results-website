@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.8) */
+            /* 📺 Sky Sports / Broadcast OLED Palette with Warm Tournament Gold (v2.5.9) */
             --bg-main: #07090e;
             --surface-color: #111827;
             --surface-card: #131c2e;
@@ -977,7 +977,7 @@
     <!-- 🏆 Broadcast Executive Header Card -->
     <header id="app-header">
         <div class="header-top-tag">
-            <span class="header-badge">LIVE BROADCAST v2.5.8</span>
+            <span class="header-badge">LIVE BROADCAST v2.5.9</span>
         </div>
         <h1 id="meta-title-inject">Results Portal</h1>
         <div class="header-divider"></div>
@@ -1076,7 +1076,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.8</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.5.9</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1133,7 +1133,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.8) */
+        /* 🚀 Broadcast Fluid Glide & Persistent Floating Swipe Pill (v2.5.9) */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1183,7 +1183,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.8";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.5.9";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1377,6 +1377,31 @@
                     return;
                 }
 
+                // 📊 Calculate Session Ranks for Day 1 and Day 2
+                let d1RankStr = "-", d2RankStr = "-";
+
+                let d1Anglers = anglers.filter(a => a.day1 && a.day1.zone).sort((a,b) => {
+                    if ((a.day1.zonePoints || 999) !== (b.day1.zonePoints || 999)) return (a.day1.zonePoints || 999) - (b.day1.zonePoints || 999);
+                    return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
+                });
+                let userD1Idx = d1Anglers.findIndex(a => a.anglerName === selectedAnglerName);
+                if (userD1Idx !== -1) d1RankStr = `${userD1Idx + 1}${getOrdinalSuffix(userD1Idx + 1)}`;
+
+                let d2Anglers = anglers.filter(a => a.day2 && a.day2.zone).sort((a,b) => {
+                    if ((a.day2.zonePoints || 999) !== (b.day2.zonePoints || 999)) return (a.day2.zonePoints || 999) - (b.day2.zonePoints || 999);
+                    return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
+                });
+                let userD2Idx = d2Anglers.findIndex(a => a.anglerName === selectedAnglerName);
+                if (userD2Idx !== -1) d2RankStr = `${userD2Idx + 1}${getOrdinalSuffix(userD2Idx + 1)}`;
+
+                function getOrdinalSuffix(i) {
+                    let j = i % 10, k = i % 100;
+                    if (j === 1 && k !== 11) return "st";
+                    if (j === 2 && k !== 12) return "nd";
+                    if (j === 3 && k !== 13) return "rd";
+                    return "th";
+                }
+
                 let uFish = user.totals.cumulativeFish || 0;
                 let uLen = user.totals.cumulativeLengthCm || 0;
                 let uPts = user.totals.cumulativePoints || 0;
@@ -1411,11 +1436,13 @@
                         </div>
                         <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; font-family: 'JetBrains Mono';">TEAM: ${user.teamName || 'SOLO COMPETITOR'}</div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; text-align: center; background: #0b0f19; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--border-color);">
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">ZONE PTS</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">LENGTH</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uFish}</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">FISH</div></div>
-                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uMaxFish}cm</div><div style="font-size:0.58rem; color:var(--text-muted); font-weight:800;">BEST</div></div>
+                        <!-- 🏆 5-Column Headline Telemetry Box with Day 1 ➔ Day 2 Rank Movement -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 4px; text-align: center; background: #0b0f19; padding: 10px 4px; border-radius: 10px; border: 1px solid var(--border-color);">
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.55rem; color:var(--text-muted); font-weight:800;">ZONE PTS</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.55rem; color:var(--text-muted); font-weight:800;">LENGTH</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uFish}</div><div style="font-size:0.55rem; color:var(--text-muted); font-weight:800;">FISH</div></div>
+                            <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.05rem;">${uMaxFish}cm</div><div style="font-size:0.55rem; color:var(--text-muted); font-weight:800;">BEST</div></div>
+                            <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2px;"><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:0.82rem; color:var(--broadcast-cyan); line-height: 1.25; margin-top:2px;">${d1RankStr}<br><span style="color:var(--text-muted); font-size:0.65rem;">➔</span> ${d2RankStr}</div><div style="font-size:0.52rem; color:var(--broadcast-gold); font-weight:800; margin-top:3px;">DAY 1➔2</div></div>
                         </div>
                     </div>
                 `;
@@ -1663,7 +1690,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.5.8) */
+        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.5.9) */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.75rem; color:var(--text-muted); padding:30px 0;">No Catch Data Recorded</div>`;
@@ -2651,7 +2678,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.5.8 broadcast active'))
+                    .then(reg => console.log('v2.5.9 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
