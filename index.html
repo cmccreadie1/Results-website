@@ -20,7 +20,7 @@
     
     <style>
         :root {
-            /* 📺 Lighter Slate-Navy Studio Canvas (v2.8.8 High Contrast & Pop) */
+            /* 📺 Lighter Slate-Navy Studio Canvas (v2.8.9 High Contrast & Pop) */
             --bg-main: #2d3d59;
             --surface-color: #090d16;
             --surface-card: #0d1320;
@@ -789,7 +789,7 @@
             font-size: 0.78rem;
         }
 
-        /* 🎴 Canvas-Matched Points Group Tier Separator (v2.8.8 Floating "Mini-Card" Effect) */
+        /* 🎴 Canvas-Matched Points Group Tier Separator (Individual Result Floating "Mini-Card" Effect) */
         tr.tier-separator-row td {
             height: 12px;
             padding: 0;
@@ -1128,7 +1128,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.8</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.9</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1244,7 +1244,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.8";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.9";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -2566,17 +2566,9 @@
                         <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: center;">PTS</th><th style="text-align: center;">CM</th><th style="text-align: center;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
-                    
-                    let lastTeamPts = null;
 
                     teamArray.forEach((team, idx) => {
                         let rank = idx + 1;
-                        let currentTeamPts = team.pts;
-
-                        if (lastTeamPts !== null && currentTeamPts !== lastTeamPts) {
-                            htmlMarkup += `<tr class="tier-separator-row"><td colspan="6">&nbsp;</td></tr>`;
-                        }
-                        lastTeamPts = currentTeamPts;
 
                         let podiumClass = "";
                         if (rank === 1) podiumClass = "podium-gold";
@@ -2640,19 +2632,11 @@
                                 <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
                             `;
                             htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: left;">COMPETITOR NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
-                            
-                            let lastZonePts = null;
 
                             zoneAnglers.forEach(item => {
                                 let dayData = isDay1 ? item.day1 : item.day2;
                                 let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
                                 let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
-                                let currentZonePts = dayData.zonePoints;
-
-                                if (lastZonePts !== null && currentZonePts !== lastZonePts) {
-                                    htmlMarkup += `<tr class="tier-separator-row"><td colspan="4">&nbsp;</td></tr>`;
-                                }
-                                lastZonePts = currentZonePts;
 
                                 htmlMarkup += `<tr>
                                     <td style="font-weight: 900; color: var(--broadcast-gold); text-align: center;">${dayData.zonePoints}</td>
@@ -2746,7 +2730,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.8.8 broadcast active'))
+                    .then(reg => console.log('v2.8.9 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
