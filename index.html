@@ -20,11 +20,11 @@
     
     <style>
         :root {
-            /* 📺 Elevated Studio Broadcast Canvas with Pop Contrast (v2.7.0) */
-            --bg-main: #0b0f19;
-            --surface-color: #131c2e;
-            --surface-card: #18233c;
-            --pill-btn-bg: linear-gradient(135deg, #1d2a44 0%, #131c2e 100%);
+            /* 📺 Lighter Studio Canvas for High Card Pop & Depth (v2.7.0) */
+            --bg-main: #162032;
+            --surface-color: #0c111d;
+            --surface-card: #101726;
+            --pill-btn-bg: linear-gradient(135deg, #131c2e 0%, #0c111d 100%);
             --pill-btn-border: rgba(255, 255, 255, 0.16);
             --broadcast-gold: #eab308;
             --broadcast-gold-light: rgba(234, 179, 8, 0.15);
@@ -35,7 +35,7 @@
             --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.12);
             --border-card: rgba(255, 255, 255, 0.18);
-            --card-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            --card-shadow: 0 18px 40px -4px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
             --red-zone: #ff4d4d;
             --blue-zone: #38bdf8;
             --green-zone: #34d399;
@@ -55,7 +55,7 @@
             height: 5px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(234, 179, 8, 0.3);
+            background: rgba(234, 179, 8, 0.4);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-track {
@@ -75,43 +75,43 @@
 
         /* 🏆 Broadcast Executive Header Card */
         #app-header {
-            margin-top: 16px;
-            margin-bottom: 16px;
+            margin-top: 18px;
+            margin-bottom: 18px;
             text-align: center;
             width: calc(100% - 24px);
             max-width: 500px;
-            padding: 18px 16px 14px 16px;
+            padding: 20px 18px 16px 18px;
             background: var(--surface-color);
-            border-radius: 14px;
+            border-radius: 16px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-card);
-            border-top: 3px solid var(--broadcast-gold);
+            border-top: 4px solid var(--broadcast-gold);
             position: relative;
         }
 
         #app-header h1 {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.85rem;
+            font-size: 2.1rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
             line-height: 1.05;
             color: var(--text-main);
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
         .header-divider {
             width: 100%;
             height: 1px;
             background: var(--border-color);
-            margin: 10px 0 8px 0;
+            margin: 12px 0 10px 0;
         }
         #app-header .subtitle-line {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
             line-height: 1.4;
             display: block;
         }
@@ -123,12 +123,12 @@
             padding: 0 12px; 
             display: flex; 
             flex-direction: column;
-            gap: 10px; 
-            margin-bottom: 20px;
+            gap: 12px; 
+            margin-bottom: 24px;
         }
 
         .section-divider-bar {
-            margin: 10px 0 4px 0;
+            margin: 12px 0 6px 0;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -141,20 +141,22 @@
         }
         .section-divider-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            letter-spacing: 1.8px;
             color: var(--broadcast-gold);
             text-transform: uppercase;
             white-space: nowrap;
         }
 
+        /* 🎛️ Tactile Action Pad Button Styling */
         .slide-btn {
             background: var(--pill-btn-bg);
             border: 1px solid var(--pill-btn-border);
             border-left: 4px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 14px 12px 18px;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+            border-radius: 14px;
+            padding: 12px 12px 12px 18px;
             color: var(--text-main);
             cursor: pointer;
             display: flex; 
@@ -162,8 +164,8 @@
             align-items: center;
             justify-content: space-between; 
             text-align: left;
-            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+            transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
             position: relative;
             width: 100%;
             user-select: none;
@@ -171,7 +173,7 @@
 
         .btn-label {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -182,54 +184,54 @@
             text-overflow: ellipsis;
         }
 
-        .btn-action-tag {
+        .btn-action-pad {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--broadcast-cyan);
-            letter-spacing: 1px;
+            font-size: 0.88rem;
+            font-weight: 900;
+            color: #07090e;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 4px;
             flex-shrink: 0;
-            background: rgba(0, 240, 255, 0.12);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            padding: 5px 12px;
+            background: var(--broadcast-cyan);
+            border: 1px solid var(--broadcast-cyan);
+            padding: 6px 14px;
             border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            transition: all 0.15s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+            transition: all 0.12s ease;
         }
 
         .slide-btn.btn-ind-hero {
             border-left-color: var(--broadcast-gold);
-            background: linear-gradient(135deg, rgba(234, 179, 8, 0.18) 0%, #131c2e 100%);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.22) 0%, #0c111d 100%);
         }
-        .slide-btn.btn-ind-hero .btn-action-tag {
-            color: #07090e;
+        .slide-btn.btn-ind-hero .btn-action-pad {
             background: var(--broadcast-gold);
             border-color: var(--broadcast-gold);
         }
 
         .slide-btn.btn-report {
             border-left-color: var(--broadcast-cyan);
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, #131c2e 100%);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.18) 0%, #0c111d 100%);
         }
 
         .slide-btn:hover {
             transform: translateY(-2px);
             border-left-color: var(--broadcast-gold);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8);
         }
-        .slide-btn:hover .btn-action-tag {
+        .slide-btn:hover .btn-action-pad {
             background: var(--broadcast-gold);
-            color: #07090e;
             border-color: var(--broadcast-gold);
+            color: #07090e;
         }
 
         .slide-btn:active { 
-            transform: scale(0.97); 
-            background: var(--surface-card);
+            transform: scale(0.97) translateY(2px); 
+            border-bottom-width: 1px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
         }
 
         /* Full Screen Native Overlay */
@@ -250,49 +252,49 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            background: rgba(11, 15, 25, 0.94) !important; 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(12, 17, 29, 0.96) !important; 
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color); 
             flex-shrink: 0; 
             position: sticky;
             top: 0;
             z-index: 100; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.7);
             width: 100%;
         }
+        
         .back-btn {
-            background: linear-gradient(135deg, #1d2a44 0%, #131c2e 100%);
-            color: var(--text-main); 
-            border: 1px solid var(--pill-btn-border);
-            border-left: 3px solid var(--broadcast-cyan);
+            background: var(--broadcast-gold);
+            color: #07090e; 
+            border: 1px solid var(--broadcast-gold);
             padding: 8px 16px; 
             border-radius: 8px;
             font-family: 'Barlow Condensed', sans-serif; 
-            font-weight: 800; 
+            font-weight: 900; 
             cursor: pointer; 
             text-transform: uppercase; 
-            font-size: 1rem;
+            font-size: 1.05rem;
             letter-spacing: 1.2px;
             white-space: nowrap;
-            transition: all 0.15s ease;
+            transition: all 0.12s ease;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
         }
         .back-btn:active {
-            background: var(--broadcast-gold);
+            background: var(--broadcast-cyan);
+            border-color: var(--broadcast-cyan);
             color: #07090e;
-            border-left-color: #07090e;
             transform: scale(0.95);
         }
 
         #current-title {
             color: var(--text-main); 
             font-family: 'Barlow Condensed', sans-serif; 
-            font-size: 1.35rem; 
-            font-weight: 800;
+            font-size: 1.45rem; 
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
             flex-grow: 1; 
             text-align: left; 
             white-space: nowrap; 
@@ -386,7 +388,7 @@
         .picker-trigger-btn {
             width: 100%;
             padding: 10px 14px;
-            background: #111827;
+            background: #0c111d;
             border: 1.5px solid var(--broadcast-gold);
             border-radius: 10px;
             color: var(--text-main);
@@ -403,32 +405,34 @@
         }
 
         .picker-trigger-btn:hover {
-            background: #1c283f;
+            background: #18233c;
         }
         .picker-trigger-btn:active {
             transform: translateY(1px);
         }
 
         .picker-trigger-name {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.88rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
             color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         .picker-trigger-action {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 800;
+            font-size: 0.88rem;
+            font-weight: 900;
             letter-spacing: 1px;
             text-transform: uppercase;
             background: var(--broadcast-gold);
             color: #07090e;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
             display: inline-flex;
             align-items: center;
@@ -455,7 +459,7 @@
         .custom-picker-container {
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            background: #111827;
+            background: #0c111d;
             overflow: hidden;
             display: none;
             flex-direction: column;
@@ -475,7 +479,7 @@
             left: 0;
             right: 0;
             height: 24px;
-            background: linear-gradient(to bottom, rgba(17, 24, 39, 0) 0%, rgba(17, 24, 39, 0.95) 100%);
+            background: linear-gradient(to bottom, rgba(12, 17, 29, 0) 0%, rgba(12, 17, 29, 0.95) 100%);
             pointer-events: none;
             z-index: 10;
             border-bottom-left-radius: 10px;
@@ -493,11 +497,13 @@
 
         .custom-picker-item {
             padding: 10px 14px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
             color: var(--text-main);
-            border-bottom: 1px solid #1f293d;
+            border-bottom: 1px solid #18233c;
             cursor: pointer;
             transition: background 0.12s ease;
             display: flex;
@@ -508,7 +514,7 @@
             border-bottom: none;
         }
         .custom-picker-item:active, .custom-picker-item.selected {
-            background: rgba(234, 179, 8, 0.15);
+            background: rgba(234, 179, 8, 0.18);
             color: var(--broadcast-gold);
         }
         .custom-picker-item .check-icon {
@@ -524,7 +530,7 @@
             flex: 1; 
             overflow-x: hidden; 
             overflow-y: auto; 
-            padding: 12px 10px 25px 10px; 
+            padding: 14px 12px 28px 12px; 
             background: var(--bg-main);
             -webkit-overflow-scrolling: touch;
             width: 100%;
@@ -540,7 +546,7 @@
             width: 100%;
         }
         .matrix-card {
-            background-color: #111827;
+            background-color: #0c111d;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 8px 10px;
@@ -550,7 +556,7 @@
         }
         .matrix-name {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: var(--text-main);
             text-transform: uppercase;
@@ -572,9 +578,9 @@
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%;
-            background: rgba(7, 9, 14, 0.85); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(7, 9, 14, 0.88); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: none;
             justify-content: center; 
             align-items: flex-start; 
@@ -585,28 +591,28 @@
         }
         .modal-card {
             background: var(--surface-color); 
-            border-radius: 14px;
+            border-radius: 16px;
             width: 100%; 
             max-width: 480px; 
-            padding: 20px 18px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            padding: 22px 20px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9);
             position: relative;
             text-align: left;
             margin: auto 0; 
             border: 1px solid var(--border-card);
-            border-top: 3px solid var(--broadcast-gold);
+            border-top: 4px solid var(--broadcast-gold);
         }
         .modal-close-btn {
             background: #172033; 
             color: var(--text-main);
             border: 1px solid var(--border-color); 
-            padding: 10px 14px; 
-            border-radius: 8px;
+            padding: 12px 14px; 
+            border-radius: 10px;
             font-family: 'Barlow Condensed', sans-serif; 
             text-transform: uppercase;
-            font-weight: 800;
-            font-size: 1.05rem; 
-            letter-spacing: 1px;
+            font-weight: 900;
+            font-size: 1.1rem; 
+            letter-spacing: 1.2px;
             width: 100%; 
             margin-top: 12px; 
             cursor: pointer;
@@ -618,32 +624,35 @@
         }
 
         .info-banner {
-            background: #111827; 
+            background: #0c111d; 
             border: 1px solid var(--border-color); 
-            border-left: 3px solid var(--broadcast-cyan);
-            border-radius: 8px;
-            padding: 8px 12px; 
-            margin: 4px auto 12px auto; 
+            border-left: 4px solid var(--broadcast-cyan);
+            border-radius: 10px;
+            padding: 10px 14px; 
+            margin: 4px auto 14px auto; 
             width: 100%; 
             color: var(--text-muted);
-            font-family: 'Inter', sans-serif; 
-            font-size: 0.72rem; 
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-size: 0.88rem; 
             line-height: 1.4; 
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         .skeleton-wrapper { 
             width: 100%; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 12px; 
             margin-top: 10px; 
         }
         .skeleton-row { 
-            height: 44px; 
+            height: 48px; 
             background: var(--surface-color); 
-            border-radius: 10px; 
+            border-radius: 12px; 
             position: relative; 
             overflow: hidden; 
             box-shadow: var(--card-shadow);
@@ -652,18 +661,18 @@
             content: ""; 
             position: absolute; 
             top: 0; right: 0; bottom: 0; left: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
             animation: shimmer 1.5s infinite;
         }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         .table-card-container {
             background: var(--surface-color);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 4px;
             box-shadow: var(--card-shadow);
             border: 1px solid var(--border-card);
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             width: 100%;
             position: relative;
         }
@@ -681,87 +690,87 @@
             border-spacing: 0; 
             width: 100%; 
             color: var(--text-main); 
-            font-family: 'Inter', sans-serif; 
-            font-size: 0.85rem; 
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-size: 0.95rem; 
             white-space: nowrap; 
         }
 
         th {
-            background: #0b0f19 !important; 
+            background: #07090e !important; 
             color: var(--text-muted); 
             font-family: 'Barlow Condensed', sans-serif; 
             text-transform: uppercase;
-            font-weight: 800; 
-            letter-spacing: 1.2px; 
-            font-size: 0.9rem;
-            padding: 8px 8px; 
+            font-weight: 900; 
+            letter-spacing: 1.3px; 
+            font-size: 0.92rem;
+            padding: 9px 8px; 
             border-bottom: 2px solid var(--border-color);
             position: sticky; 
             top: 0; 
             z-index: 25;
             text-align: center; 
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         tr.group-header-row th {
             position: sticky;
             top: 0;
             z-index: 30;
-            font-size: 0.82rem;
-            letter-spacing: 1.4px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
             padding: 7px 8px;
-            border-bottom: 1px solid #2a384c;
-            background: #07090e !important;
+            border-bottom: 1px solid #1f2d47;
+            background: #05070c !important;
             color: var(--broadcast-gold);
         }
 
         tr.sub-header-row th {
             position: sticky;
-            top: 29px;
+            top: 31px;
             z-index: 29;
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 800;
             letter-spacing: 0.8px;
             padding: 6px 6px;
             border-bottom: 2px solid var(--broadcast-cyan);
-            background: #111827 !important;
+            background: #0c111d !important;
         }
 
         /* 🏆 Podium Metallic Styling for Top 3 Ranks */
         tr.podium-gold td {
-            background: linear-gradient(90deg, rgba(234, 179, 8, 0.2) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
-            border-bottom: 1px solid rgba(234, 179, 8, 0.35);
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.22) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.4);
         }
         tr.podium-silver td {
-            background: linear-gradient(90deg, rgba(226, 232, 240, 0.12) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.25);
+            background: linear-gradient(90deg, rgba(226, 232, 240, 0.14) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.3);
         }
         tr.podium-bronze td {
-            background: linear-gradient(90deg, rgba(217, 119, 6, 0.18) 0%, rgba(17, 24, 39, 0.8) 100%) !important;
-            border-bottom: 1px solid rgba(217, 119, 6, 0.25);
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.2) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.3);
         }
 
         /* 🏆 High-Contrast Combined Totals Vault Box */
         .final-totals-cell {
-            background: rgba(234, 179, 8, 0.06) !important;
+            background: rgba(234, 179, 8, 0.08) !important;
         }
         .final-totals-header {
-            background: #07090e !important;
+            background: #05070c !important;
             color: var(--broadcast-gold) !important;
         }
         
         .pillar-divider-right {
-            border-right: 3px solid #07090e !important;
+            border-right: 3px solid #05070c !important;
             border-left: 1px solid rgba(234, 179, 8, 0.3) !important;
         }
         
         .session-breakdown-cell {
-            background: rgba(7, 9, 14, 0.5);
+            background: rgba(5, 7, 12, 0.6);
         }
 
         .col-divider-left {
-            border-left: 2px solid #111827;
+            border-left: 2px solid #131c2e;
         }
 
         .session-divider-right {
@@ -769,37 +778,37 @@
         }
 
         td { 
-            padding: 7px 8px; 
+            padding: 8px 8px; 
             text-align: center; 
-            border-bottom: 1px solid #172033;
+            border-bottom: 1px solid #141e30;
             transition: background 0.15s ease;
             font-feature-settings: "tnum";
             font-variant-numeric: tabular-nums;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
         }
 
         tr.tier-separator-row td {
             height: 8px;
             padding: 0;
-            background: #07090e !important;
-            border-top: 1px solid #2a384c;
-            border-bottom: 1px solid #2a384c;
+            background: #05070c !important;
+            border-top: 1px solid #1f2d47;
+            border-bottom: 1px solid #1f2d47;
             line-height: 0;
             font-size: 0;
         }
 
         .tie-breaker-td {
             color: var(--text-muted) !important;
-            font-size: 0.78rem !important;
-            font-weight: 600 !important;
+            font-size: 0.8rem !important;
+            font-weight: 700 !important;
             text-align: center;
         }
         
         tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) td { background: rgba(7, 9, 14, 0.3); }
-        tr:hover td, tr:active td { background: rgba(0, 240, 255, 0.12) !important; }
-        tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #07090e !important; }
+        tr:nth-child(even) td { background: rgba(5, 7, 12, 0.35); }
+        tr:hover td, tr:active td { background: rgba(0, 240, 255, 0.14) !important; }
+        tr.tier-separator-row:hover td, tr.tier-separator-row:active td { background: #05070c !important; }
 
         table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
         table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
@@ -816,28 +825,31 @@
         }
         .rivalry-val {
             font-weight: 800;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
         }
         .rivalry-badge {
-            font-size: 0.55rem;
-            font-weight: 800;
-            padding: 1px 5px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 1px 6px;
             border-radius: 4px;
             margin-top: 2px;
             text-transform: uppercase;
             display: inline-block;
+            letter-spacing: 0.8px;
         }
         .rivalry-badge.win { background: var(--broadcast-emerald); color: #07090e; }
         .rivalry-badge.draw { background: #475569; color: #ffffff; }
 
         .beat-rate-summary-bar {
-            background: #111827;
+            background: #0c111d;
             border: 1px solid var(--border-color);
-            border-left: 3px solid var(--broadcast-gold);
+            border-left: 4px solid var(--broadcast-gold);
             border-radius: 10px;
             padding: 10px 12px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -845,9 +857,9 @@
         }
         .beat-rate-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 1.2px;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 1.4px;
             text-transform: uppercase;
         }
         .beat-rate-title.dominant { color: var(--broadcast-gold); }
@@ -856,8 +868,8 @@
 
         .beat-rate-sub {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.68rem;
+            font-weight: 800;
             color: var(--text-muted);
         }
 
@@ -867,15 +879,15 @@
             text-align: center; 
             padding: 40px 20px; 
             text-transform: uppercase; 
-            font-size: 1.2rem; 
-            letter-spacing: 1.4px;
-            font-weight: 800;
+            font-size: 1.3rem; 
+            letter-spacing: 1.5px;
+            font-weight: 900;
         }
         
         .stat-grid {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 26px;
             margin-top: 8px;
             margin-bottom: 30px;
             width: 100%;
@@ -883,8 +895,8 @@
         .stat-card {
             background: var(--surface-color);
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 20px 16px;
+            border-radius: 16px;
+            padding: 22px 18px;
             box-shadow: var(--card-shadow); 
             text-align: center;
             position: relative;
@@ -899,28 +911,28 @@
         .stat-title {
             color: var(--text-main);
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.45rem;
-            font-weight: 800;
+            font-size: 1.55rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
             margin-bottom: 14px;
         }
 
         .metric-card-item {
-            background: #0b0f19;
+            background: #07090e;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 10px 12px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             width: 100%;
         }
 
         .bar-chart-container {
             width: 100%;
-            background: #1e293b;
+            background: #18233c;
             border-radius: 5px;
             margin: 6px 0 3px 0;
-            height: 22px;
+            height: 24px;
             position: relative;
             overflow: hidden;
         }
@@ -928,10 +940,10 @@
             height: 100%;
             display: flex;
             align-items: center;
-            padding-left: 6px;
+            padding-left: 8px;
             font-family: 'JetBrains Mono', monospace;
-            font-weight: 800;
-            font-size: 0.68rem;
+            font-weight: 900;
+            font-size: 0.72rem;
             white-space: nowrap;
             transition: width 0.8s ease-out;
             position: relative;
@@ -944,31 +956,35 @@
             top: 0; bottom: 0;
             display: flex;
             align-items: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.65rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            font-weight: 700;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
             z-index: 3;
         }
 
         .metric-subtext {
-            font-size: 0.76rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            font-weight: 500;
-            line-height: 1.4;
+            font-weight: 700;
+            line-height: 1.35;
             display: block;
             margin-top: 4px;
             text-align: left;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Barlow Condensed', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
         }
 
         .footer {
             margin-top: auto;
-            padding: 20px 15px 15px 15px;
+            padding: 22px 15px 15px 15px;
             text-align: center;
             width: 100%;
             max-width: 500px;
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
             display: flex;
@@ -992,11 +1008,12 @@
         .live-status-badge {
             display: inline-flex;
             align-items: center;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.68rem;
+            font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.8px;
+            font-family: 'Barlow Condensed', sans-serif;
         }
     </style>
 </head>
@@ -1015,13 +1032,13 @@
         <!-- 1st: Tournament Overview -->
         <div class="slide-btn" onclick="triggerHaptic(); loadMatchStats('Tournament Overview')">
             <span class="btn-label">Tournament Overview</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 2nd: My Match Report Card -->
         <div class="slide-btn btn-report" onclick="triggerHaptic(); openReportModal()">
             <span class="btn-label">My Match Report Card</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 🏆 Section Divider -->
@@ -1034,31 +1051,31 @@
         <!-- 3rd: Individual Champion (Hero Button) -->
         <div class="slide-btn btn-ind-hero" onclick="triggerHaptic(); loadExcelTab('INDIVIDUAL RESULT', 'Individual Winner')">
             <span class="btn-label">Individual Champion</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 4th: Team Winners -->
         <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('TEAM RESULT', 'Team Result')">
             <span class="btn-label">Team Winners</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 5th: Zone Day 1 -->
         <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('ZONE 1', 'Zone Day 1')">
             <span class="btn-label">Zone Day 1</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 6th: Zone Day 2 -->
         <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('ZONE 2', 'Zone Day 2')">
             <span class="btn-label">Zone Day 2</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
 
         <!-- 7th: Biggest Fish -->
         <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
             <span class="btn-label">Biggest Fish</span>
-            <span class="btn-action-tag">VIEW ❯</span>
+            <span class="btn-action-pad">VIEW ❯</span>
         </div>
     </nav>
 
@@ -1074,8 +1091,8 @@
     <!-- 🎯 Interactive Popup Modal Overlay -->
     <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 id="modal-title" style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.4rem; letter-spacing: 1.2px; color: var(--broadcast-cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
-            <div id="modal-body" style="font-size: 0.85rem; line-height: 1.45; color: var(--text-main); font-family: 'Inter', sans-serif;"></div>
+            <h3 id="modal-title" style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.5rem; letter-spacing: 1.4px; color: var(--broadcast-cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px;">Rules</h3>
+            <div id="modal-body" style="font-size: 0.92rem; line-height: 1.45; color: var(--text-main); font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-weight: 700;"></div>
             <button class="modal-close-btn" onclick="triggerHaptic(); closeModal(event)">Close Rules</button>
         </div>
     </div>
@@ -1083,8 +1100,8 @@
     <!-- 👤 Personal Report Card Embedded Picker Modal -->
     <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
-            <h3 style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.45rem; letter-spacing: 1.4px; color: var(--broadcast-gold); margin-bottom: 4px;">My Match Report Card</h3>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4; font-family:'Inter';">Select your competitor profile to generate your professional 6-metric telemetry report and head-to-head analysis.</div>
+            <h3 style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.6rem; letter-spacing: 1.5px; color: var(--broadcast-gold); margin-bottom: 4px;">My Match Report Card</h3>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4; font-family:'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase;">Select your competitor profile to generate your professional 6-metric telemetry report and head-to-head analysis.</div>
             
             <div style="margin-bottom: 16px;">
                 <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 1px;">STEP 1: SELECT COMPETITOR</span>
@@ -1472,25 +1489,25 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-family: 'Barlow Condensed'; font-size: 1.55rem; text-transform: uppercase; font-weight: 900; color: var(--text-main); line-height:1;">${user.anglerName}</span>
-                            <button onclick="triggerHaptic(); openReportModal()" style="background: #172033; border: 1px solid var(--border-color); color: var(--text-main); padding: 4px 10px; border-radius: 6px; font-family: 'Barlow Condensed'; font-size: 0.85rem; text-transform: uppercase; font-weight: 800; cursor: pointer;">Switch ↺</button>
+                            <span style="font-family: 'Barlow Condensed'; font-size: 1.65rem; text-transform: uppercase; font-weight: 900; color: var(--text-main); line-height:1;">${user.anglerName}</span>
+                            <button onclick="triggerHaptic(); openReportModal()" style="background: #172033; border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 12px; border-radius: 6px; font-family: 'Barlow Condensed'; font-size: 0.9rem; text-transform: uppercase; font-weight: 800; cursor: pointer;">Switch ↺</button>
                         </div>
-                        <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-bottom: 12px; font-family: 'JetBrains Mono';">TEAM: ${user.teamName || 'SOLO COMPETITOR'}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; font-family: 'JetBrains Mono';">TEAM: ${user.teamName || 'SOLO COMPETITOR'}</div>
 
                         <!-- 🏆 Executive Headline Box: Clean 4-Column Grid + Full-Width Rank Progression Banner -->
-                        <div style="background: #0b0f19; padding: 10px 8px; border-radius: 10px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #07090e; padding: 12px 10px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px;">
                             <!-- 4-Column Metric Row -->
                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; text-align: center;">
-                                <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.1rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">ZONE PTS</div></div>
-                                <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">LENGTH</div></div>
-                                <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.1rem;">${uFish}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">FISH</div></div>
-                                <div><div style="font-family:'JetBrains Mono'; font-weight:800; font-size:1.1rem;">${uMaxFish}cm</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">BEST</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.15rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.8px;">ZONE PTS</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.15rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.8px;">LENGTH</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.15rem;">${uFish}</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.8px;">FISH</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.15rem;">${uMaxFish}cm</div><div style="font-size:0.65rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.8px;">BEST</div></div>
                             </div>
 
                             <!-- Full-Width Session Rank Progression Banner -->
-                            <div style="background: linear-gradient(90deg, rgba(0, 240, 255, 0.08) 0%, rgba(234, 179, 8, 0.08) 100%); border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.88rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">SESSION RANK MOVEMENT</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--broadcast-cyan);">${d1RankStr} <span style="color:var(--broadcast-gold); font-size:0.8rem; margin: 0 2px;">➔</span> ${d2RankStr}</span>
+                            <div style="background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, rgba(234, 179, 8, 0.1) 100%); border-top: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; font-weight: 900; color: var(--text-muted); letter-spacing: 1.2px; text-transform: uppercase;">SESSION RANK MOVEMENT</span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 900; color: var(--broadcast-cyan);">${d1RankStr} <span style="color:var(--broadcast-gold); font-size:0.85rem; margin: 0 3px;">➔</span> ${d2RankStr}</span>
                             </div>
                         </div>
                     </div>
@@ -1500,12 +1517,12 @@
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">📊 Core Telemetry Metrics</div>
                         
-                        <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 12px; margin-bottom: 14px; text-align: center; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; font-family:'Inter';">
+                        <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; text-align: center; font-size: 0.82rem; color: var(--text-muted); line-height: 1.35; font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; font-weight:700;">
                             Each broadcast bar displays the percentage of the active field outperformed in that metric.
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">1. Total Zone Points (${uPts} Points)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">1. Total Zone Points (${uPts} Points)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--broadcast-gold); color: #07090e;">${pOverallMatch}%</div>
                                 <div class="bar-chart-label-right">Beats ${pOverallMatch}% of field</div>
@@ -1514,7 +1531,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">2. Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">2. Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pLen}%; background: #475569; color: #fff;">${pLen}%</div>
                                 <div class="bar-chart-label-right">Beats ${pLen}% of field</div>
@@ -1523,7 +1540,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">3. Total Fish Count (${uFish} Fish)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">3. Total Fish Count (${uFish} Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--broadcast-cyan); color: #07090e;">${pFish}%</div>
                                 <div class="bar-chart-label-right">Beats ${pFish}% of field</div>
@@ -1532,7 +1549,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">4. Biggest Single Specimen (${uMaxFish}cm)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">4. Biggest Single Specimen (${uMaxFish}cm)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pSpec}%; background: var(--broadcast-emerald); color: #07090e;">${pSpec}%</div>
                                 <div class="bar-chart-label-right">Beats ${pSpec}% of field</div>
@@ -1541,7 +1558,7 @@
                         </div>
 
                         <div class="metric-card-item">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">5. Average Fish Size (${uAvgSize.toFixed(1)}cm / Fish)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">5. Average Fish Size (${uAvgSize.toFixed(1)}cm / Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pAvgSize}%; background: #0284c7; color: #fff;">${pAvgSize}%</div>
                                 <div class="bar-chart-label-right">Beats ${pAvgSize}% of field</div>
@@ -1550,7 +1567,7 @@
                         </div>
 
                         <div class="metric-card-item" style="margin-bottom:0;">
-                            <div style="font-size: 0.88rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">6. Peak Single-Session Catch (${uPeakSession} Fish)</div>
+                            <div style="font-size: 0.95rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">6. Peak Single-Session Catch (${uPeakSession} Fish)</div>
                             <div class="bar-chart-container">
                                 <div class="bar-chart-fill" style="width: ${pPeakSession}%; background: var(--broadcast-red); color: #fff;">${pPeakSession}%</div>
                                 <div class="bar-chart-label-right">Beats ${pPeakSession}% of field</div>
@@ -1566,7 +1583,7 @@
                 htmlMarkup += `
                     <div class="stat-card" style="text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">🥊 Head-to-Head Telemetry Matchup</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Inter';">Select any rival competitor for a direct broadcast side-by-side analysis.</div>
+                        <div style="text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; font-weight:700;">Select any rival competitor for a direct broadcast side-by-side analysis.</div>
 
                         <div style="margin-bottom: 12px;">
                             <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; letter-spacing: 1px;">STEP 2: CHOOSE RIVAL</span>
@@ -1594,7 +1611,7 @@
                             </div>
                         </div>
 
-                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px; font-family:'Inter';">Tap the button above to choose a rival competitor.</div></div>
+                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.88rem; padding: 12px; font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; font-weight:700;">Tap the button above to choose a rival competitor.</div></div>
                     </div>
                 `;
 
@@ -1704,32 +1721,32 @@
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.p} pts`, u.p, r.p, true, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Points</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Points</td>
                                 <td>${renderCellHtml(`${r.p} pts`, u.p, r.p, true, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.f} fish`, u.f, r.f, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Fish</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Fish</td>
                                 <td>${renderCellHtml(`${r.f} fish`, u.f, r.f, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${(u.l/100).toFixed(2)}m`, u.l, r.l, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Length</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Length</td>
                                 <td>${renderCellHtml(`${(r.l/100).toFixed(2)}m`, u.l, r.l, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.maxF} cm`, u.maxF, r.maxF, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Biggest Fish</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Biggest Fish</td>
                                 <td>${renderCellHtml(`${r.maxF} cm`, u.maxF, r.maxF, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Avg Fish Size</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Avg Fish Size</td>
                                 <td>${renderCellHtml(`${r.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, false)}</td>
                             </tr>
                             <tr>
                                 <td>${renderCellHtml(`${u.peakSession} fish`, u.peakSession, r.peakSession, false, true)}</td>
-                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.78rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Peak Session</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.85rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Peak Session</td>
                                 <td>${renderCellHtml(`${r.peakSession} fish`, u.peakSession, r.peakSession, false, false)}</td>
                             </tr>
                         </table>
@@ -1742,7 +1759,7 @@
         /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.7.0) */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
-                return `<div style="text-align:center; font-size:0.85rem; font-family:'Barlow Condensed'; font-weight:800; color:var(--text-muted); padding:30px 0; text-transform:uppercase; letter-spacing:1px;">No Catch Data Recorded</div>`;
+                return `<div style="text-align:center; font-size:0.9rem; font-family:'Barlow Condensed'; font-weight:800; color:var(--text-muted); padding:30px 0; text-transform:uppercase; letter-spacing:1px;">No Catch Data Recorded</div>`;
             }
 
             function getFishCount(zName) {
@@ -1811,7 +1828,7 @@
                 let top10BadgeHtml = '';
                 if (z.top10Count > 0) {
                     top10BadgeHtml = `
-                        <div style="background: rgba(7, 9, 14, 0.82); border: 1px solid rgba(234, 179, 8, 0.5); width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.7); margin-top: 4px;">
+                        <div style="background: rgba(7, 9, 14, 0.85); border: 1px solid rgba(234, 179, 8, 0.5); width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.7); margin-top: 4px;">
                             <span style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; font-weight:900; color:var(--broadcast-gold); line-height:1;">${z.top10Count}</span>
                         </div>
                     `;
@@ -1990,29 +2007,29 @@
                     successBlockHtml = `
                         <div style="padding: 14px 14px; display: flex; flex-direction: column; gap: 10px; background: var(--surface-color);">
                             <div>
-                                <div style="font-size: 0.72rem; color: var(--broadcast-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 1 (NIGHT) FIELD TELEMETRY</div>
+                                <div style="font-size: 0.78rem; color: var(--broadcast-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 1 (NIGHT) FIELD TELEMETRY</div>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--broadcast-emerald);">${d1CatchingRate}%</div>
-                                        <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                    <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.45rem; font-weight: 900; color: var(--broadcast-emerald);">${d1CatchingRate}%</div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
                                     </div>
-                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--text-muted);">${d1BlankRate}%</div>
-                                        <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                    <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.45rem; font-weight: 900; color: var(--text-muted);">${d1BlankRate}%</div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
-                                <div style="font-size: 0.72rem; color: var(--broadcast-cyan); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 2 (DAYTIME) FIELD TELEMETRY</div>
+                                <div style="font-size: 0.78rem; color: var(--broadcast-cyan); font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 2 (DAYTIME) FIELD TELEMETRY</div>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--broadcast-emerald);">${d2CatchingRate}%</div>
-                                        <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                    <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.45rem; font-weight: 900; color: var(--broadcast-emerald);">${d2CatchingRate}%</div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
                                     </div>
-                                    <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 800; color: var(--text-muted);">${d2BlankRate}%</div>
-                                        <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                    <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.45rem; font-weight: 900; color: var(--text-muted);">${d2BlankRate}%</div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
                                     </div>
                                 </div>
                             </div>
@@ -2022,13 +2039,13 @@
                     successBlockHtml = `
                         <div style="padding: 14px 14px; background: var(--surface-color);">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.5rem; font-weight: 800; color: var(--broadcast-emerald);">${singleCompCatchingRate}%</div>
-                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.55rem; font-weight: 900; color: var(--broadcast-emerald);">${singleCompCatchingRate}%</div>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
                                 </div>
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.5rem; font-weight: 800; color: var(--text-muted);">${singleCompBlankRate}%</div>
-                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.55rem; font-weight: 900; color: var(--text-muted);">${singleCompBlankRate}%</div>
+                                    <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
                                 </div>
                             </div>
                         </div>
@@ -2039,28 +2056,28 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-cyan); text-align: left; padding: 0; overflow: hidden;">
                         ${successBlockHtml}
-                        <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #0b0f19; text-align: center;">
+                        <div style="border-top: 1px solid var(--border-color); padding: 14px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #07090e; text-align: center;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">${totalAnglers}</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Anglers</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Anglers</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">${totalFish}</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Fish</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Fish</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">${totalMeters}m</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Length</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Length</div>
                             </div>
                         </div>
-                        <div style="border-top: 1px solid var(--border-color); padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #07090e; text-align: center;">
+                        <div style="border-top: 1px solid var(--border-color); padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #05070c; text-align: center;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: var(--broadcast-gold);">${avgCatchPerAngler} Fish</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; font-family:'Barlow Condensed';">Avg / Angler</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--broadcast-gold);">${avgCatchPerAngler} Fish</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; font-family:'Barlow Condensed';">Avg / Angler</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 800; color: var(--broadcast-cyan);">${avgFishLength} cm</div>
-                                <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; font-family:'Barlow Condensed';">Avg Fish Size</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--broadcast-cyan);">${avgFishLength} cm</div>
+                                <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; font-family:'Barlow Condensed';">Avg Fish Size</div>
                             </div>
                         </div>
                     </div>
@@ -2070,20 +2087,20 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 2px;">FISH CAUGHT BY ZONE</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3; font-family:'Inter';">Gold numbers show how many of the day’s Top 10 anglers were in each zone.</div>
+                        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.3; font-family:'Barlow Condensed'; font-weight:700; text-transform:uppercase;">Gold numbers show how many of the day’s Top 10 anglers were in each zone.</div>
                         
                         <div style="margin-bottom: 20px;">
-                            <div style="display: flex; justify-content: space-between; align-align: center; margin-bottom: 4px;">
-                                <span style="font-family: 'Barlow Condensed'; font-size: 1.05rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">DAY 1 (NIGHT)</span>
-                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--broadcast-gold);">${day1Fish} FISH</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-family: 'Barlow Condensed'; font-size: 1.1rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">DAY 1 (NIGHT)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 1rem; font-weight: 900; color: var(--broadcast-gold);">${day1Fish} FISH</span>
                             </div>
                             ${createVerticalZoneBars(d1ZoneTotals, day1Fish, d1Top10)}
                         </div>
                         
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <span style="font-family: 'Barlow Condensed'; font-size: 1.05rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">DAY 2 (DAYTIME)</span>
-                                <span style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 800; color: var(--broadcast-cyan);">${day2Fish} FISH</span>
+                                <span style="font-family: 'Barlow Condensed'; font-size: 1.1rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">DAY 2 (DAYTIME)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 1rem; font-weight: 900; color: var(--broadcast-cyan);">${day2Fish} FISH</span>
                             </div>
                             ${createVerticalZoneBars(d2ZoneTotals, day2Fish, d2Top10)}
                         </div>
@@ -2102,10 +2119,10 @@
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--broadcast-red); text-align: left;">
                             <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🌟 Most Productive Pegs (Overall - Both Days)</div>
-                            <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Inter';">Top performing beach pegs ranked by combined yield across all sessions.</div>
+                            <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Barlow Condensed'; font-weight:700; text-transform:uppercase;">Top performing beach pegs ranked by combined yield across all sessions.</div>
 
                             <div class="table-header-bar">
-                                <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Productivity Leaderboard</span>
+                                <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Productivity Leaderboard</span>
                                 ${getCircleBadgeHtml('productive-pegs-wrapper')}
                             </div>
 
@@ -2133,7 +2150,7 @@
                         htmlMarkup += `
                             <tr class="${podiumClass}">
                                 <td style="text-align: left; font-weight: 800; color: var(--text-main); padding: 6px 7px;">${p.pegNo}</td>
-                                <td style="text-align: center; font-weight: 700; padding: 6px 7px; font-family:'JetBrains Mono';">${zoneName}</td>
+                                <td style="text-align: center; font-weight: 800; padding: 6px 7px; font-family:'Barlow Condensed'; text-transform:uppercase;">${zoneName}</td>
                                 <td style="text-align: center; font-weight: 900; color: var(--broadcast-gold); padding: 6px 7px;">${p.combinedFish}</td>
                                 <td style="text-align: center; font-weight: 800; padding: 6px 7px;">${(p.combinedLength / 100).toFixed(2)}m</td>
                             </tr>
@@ -2154,10 +2171,10 @@
                     htmlMarkup += `
                         <div class="stat-card" style="border-top: 4px solid var(--blue-zone); text-align: left;">
                             <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🛡 Toughest Fished Pegs (Overall - Both Days)</div>
-                            <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Inter';">Stations where competitors faced the hardest conditions and lowest yields.</div>
+                            <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Barlow Condensed'; font-weight:700; text-transform:uppercase;">Stations where competitors faced the hardest conditions and lowest yields.</div>
 
                             <div class="table-header-bar">
-                                <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Tough Stations Log</span>
+                                <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Tough Stations Log</span>
                                 ${getCircleBadgeHtml('tough-pegs-wrapper')}
                             </div>
 
@@ -2179,7 +2196,7 @@
                         htmlMarkup += `
                             <tr>
                                 <td style="text-align: left; font-weight: 800; color: var(--text-main); padding: 6px 7px;">${p.pegNo}</td>
-                                <td style="text-align: center; font-weight: 700; padding: 6px 7px; font-family:'JetBrains Mono';">${zoneName}</td>
+                                <td style="text-align: center; font-weight: 800; padding: 6px 7px; font-family:'Barlow Condensed'; text-transform:uppercase;">${zoneName}</td>
                                 <td style="text-align: center; font-weight: 800; color: var(--broadcast-red); padding: 6px 7px;">${p.combinedFish}</td>
                                 <td style="text-align: center; font-weight: 800; padding: 6px 7px;">${(p.combinedLength / 100).toFixed(2)}m</td>
                             </tr>
@@ -2234,25 +2251,25 @@
 
                     htmlMarkup += `
                         <div class="stat-card ${cardProfileClass}" style="text-align: left;">
-                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.25rem; margin-bottom: 6px; font-weight: 800; font-family:'Barlow Condensed'; text-transform:uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                ${zName.toUpperCase()}<span style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700;">${productiveText}</span>
+                            <div class="stat-title" style="color: ${textAccentColor}; font-size: 1.35rem; margin-bottom: 6px; font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                ${zName.toUpperCase()}<span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 800;">${productiveText}</span>
                             </div>
                             
-                            <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;">
+                            <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin: 8px 0 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;">
                                 <div>
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: ${textAccentColor};">${totalZFish} FISH</div>
-                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Combined Volume</div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 900; color: ${textAccentColor};">${totalZFish} FISH</div>
+                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Combined Volume</div>
                                 </div>
                                 <div style="border-left: 1px solid var(--border-color);">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.15rem; font-weight: 900; color: var(--text-main);">${overallZAvg} CM</div>
-                                    <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Combined Avg Size</div>
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 900; color: var(--text-main);">${overallZAvg} CM</div>
+                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Combined Avg Size</div>
                                 </div>
                             </div>
 
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0;">
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.88rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 800; letter-spacing: 0.8px; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 1 (Night)</div>
-                                    <div style="font-size: 0.76rem; line-height: 1.4; color: var(--text-main); font-family:'JetBrains Mono';">
+                                <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
+                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.92rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 900; letter-spacing: 0.8px; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 1 (Night)</div>
+                                    <div style="font-size: 0.78rem; line-height: 1.4; color: var(--text-main); font-family:'JetBrains Mono';">
                                         <strong>Fish:</strong> ${d1F}<br>
                                         <strong>Avg:</strong> ${d1ZAvg}cm<br>
                                         <strong style="color: var(--broadcast-cyan);">Bag:</strong> ${d1AvgBag}<br>
@@ -2262,9 +2279,9 @@
                                     </div>
                                 </div>
                                 
-                                <div style="background: #0b0f19; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
-                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.88rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 800; letter-spacing: 0.8px; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 2 (Daytime)</div>
-                                    <div style="font-size: 0.76rem; line-height: 1.4; color: var(--text-main); font-family:'JetBrains Mono';">
+                                <div style="background: #07090e; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px;">
+                                    <div style="font-family: 'Barlow Condensed'; font-size: 0.92rem; text-transform: uppercase; color: ${textAccentColor}; font-weight: 900; letter-spacing: 0.8px; border-bottom: 1px solid var(--border-color); padding-bottom: 3px; margin-bottom: 4px;">Day 2 (Daytime)</div>
+                                    <div style="font-size: 0.78rem; line-height: 1.4; color: var(--text-main); font-family:'JetBrains Mono';">
                                         <strong>Fish:</strong> ${d2F}<br>
                                         <strong>Avg:</strong> ${d2ZAvg}cm<br>
                                         <strong style="color: var(--broadcast-cyan);">Bag:</strong> ${d2AvgBag}<br>
@@ -2275,7 +2292,7 @@
                                 </div>
                             </div>
 
-                            <div style="background: #0b0f19; border-radius: 6px; padding: 6px; font-size: 0.65rem; font-weight: 800; color: var(--text-main); text-align: center; border: 1px solid var(--border-color); font-family:'JetBrains Mono';">
+                            <div style="background: #07090e; border-radius: 6px; padding: 6px; font-size: 0.68rem; font-weight: 800; color: var(--text-main); text-align: center; border: 1px solid var(--border-color); font-family:'JetBrains Mono';">
                     `;
                     
                     let fsText = fishSwing > 0 ? `▲ +${fishSwing}F` : (fishSwing < 0 ? `▼ ${fishSwing}F` : `► Stable Vol`);
@@ -2286,7 +2303,7 @@
                                 Shift: ${fsText} | ${ssText} | ${bsText}
                             </div>
 
-                            <div style="border-top: 1px solid var(--border-color); margin-top: 8px; padding-top: 6px; display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 800; font-family:'Barlow Condensed'; color: var(--text-muted); text-transform:uppercase;">
+                            <div style="border-top: 1px solid var(--border-color); margin-top: 8px; padding-top: 6px; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; font-family:'Barlow Condensed'; color: var(--text-muted); text-transform:uppercase; letter-spacing:0.8px;">
                                 <span>Per Capita Catch:</span><span style="font-family:'JetBrains Mono'; color:var(--text-main);">${zoneAvgPerCapita.toFixed(1)} Fish / Angler</span>
                             </div>
                         </div>
@@ -2303,10 +2320,10 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-cyan); text-align: left;">
                         <div class="stat-title" style="text-align: center; margin-bottom: 4px;">⏳ Timeline Simulation</div>
-                        <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.3; font-family:'Inter';">Compare leaderboard standings at the Day 1 close vs. final verified Day 2 results.</div>
+                        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.3; font-family:'Barlow Condensed'; font-weight:700; text-transform:uppercase;">Compare leaderboard standings at the Day 1 close vs. final verified Day 2 results.</div>
 
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Timeline Matrix</span>
+                            <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Timeline Matrix</span>
                             ${getCircleBadgeHtml('timeline-sim-wrapper')}
                         </div>
 
@@ -2323,7 +2340,7 @@
                 for (let i = 0; i < 10; i++) {
                     let d1Str = day1IndStandings[i] ? day1IndStandings[i].anglerName : "-";
                     let fStr = finalIndStandings[i] ? finalIndStandings[i].anglerName : "-";
-                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; padding: 6px 7px; font-family:'Inter';">${d1Str}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${fStr}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; padding: 6px 7px; font-family:'Barlow Condensed'; font-weight:800; text-transform:uppercase; font-size:0.95rem;">${d1Str}</td><td style="text-align: left; font-weight: 900; color:var(--text-main); padding: 6px 7px; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.95rem;">${fStr}</td></tr>`;
                 }
                 
                 htmlMarkup += `
@@ -2357,11 +2374,11 @@
 
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 4px solid var(--broadcast-gold); text-align: left;">
-                        <div style="color: var(--broadcast-cyan); font-family: 'Barlow Condensed'; margin-bottom: 4px; font-size: 1.35rem; font-weight: 800; text-transform: uppercase; text-align: center; letter-spacing:1.2px;">🏆 Parent Club Championship</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-bottom: 10px; line-height: 1.4; padding: 0 8px; font-family:'Inter';">Unified club ranking based on overall average catch per angler across all squad delegations.</div>
+                        <div style="color: var(--broadcast-cyan); font-family: 'Barlow Condensed'; margin-bottom: 4px; font-size: 1.45rem; font-weight: 900; text-transform: uppercase; text-align: center; letter-spacing:1.3px;">🏆 Parent Club Championship</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-bottom: 10px; line-height: 1.4; padding: 0 8px; font-family:'Barlow Condensed'; font-weight:700; text-transform:uppercase;">Unified club ranking based on overall average catch per angler across all squad delegations.</div>
                         
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Club Rankings</span>
+                            <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Club Rankings</span>
                             ${getCircleBadgeHtml('parent-club-wrapper')}
                         </div>
 
@@ -2377,7 +2394,7 @@
                 `;
                 
                 parentArray.forEach((p, i) => {
-                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Inter';">${p.name}</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${p.avgFish.toFixed(1)}</td></tr>`;
+                    htmlMarkup += `<tr><td style="font-weight: 800; text-align: center; padding: 6px 7px; color:var(--broadcast-gold);">${i+1}</td><td style="text-align: left; font-weight: 800; color:var(--text-main); padding: 6px 7px; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.95rem;">${p.name}</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${(p.avgLen / 100).toFixed(2)}m</td><td style="text-align: center; font-weight: 700; padding: 6px 7px;">${p.avgFish.toFixed(1)}</td></tr>`;
                 });
                 
                 htmlMarkup += '</table></div></div></div></div>'; 
@@ -2423,7 +2440,7 @@
                     let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Individual Championship Standings</span>
+                            <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Individual Championship Standings</span>
                             ${getCircleBadgeHtml('ind-table-wrapper')}
                         </div>
                         <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2493,7 +2510,7 @@
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <span style="font-family: 'JetBrains Mono', monospace; font-weight: 900; color: ${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'}; font-size: 0.95rem;">${rank}</span>
                                     <div>
-                                        <div style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; font-family:'Inter';">${item.anglerName}</div>
+                                        <div style="font-weight: 800; color: var(--text-main); font-size: 0.95rem; font-family:'Barlow Condensed'; text-transform:uppercase;">${item.anglerName}</div>
                                         <div style="color: var(--text-muted); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; font-family:'JetBrains Mono';">${teamDisp}</div>
                                     </div>
                                 </div>
@@ -2539,7 +2556,7 @@
                     
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Squad Leaderboard</span>
+                            <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Squad Leaderboard</span>
                             ${getCircleBadgeHtml('team-table-wrapper')}
                         </div>
                         <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2564,7 +2581,7 @@
 
                         htmlMarkup += `<tr class="${podiumClass}">
                             <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
-                            <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Inter';">${team.name}</td>
+                            <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.95rem;">${team.name}</td>
                             
                             <td style="text-align: center;">
                                 <div style="display: inline-block; background: var(--broadcast-gold); border-radius: 4px; padding: 2px 7px; font-weight: 900; color: #07090e; font-size: 0.9rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 1px 3px rgba(0,0,0,0.5);">${team.pts}</div>
@@ -2613,7 +2630,7 @@
                         if (zoneAnglers.length > 0) {
                             htmlMarkup += `
                                 <div class="table-header-bar" style="margin-top:16px;">
-                                    <h3 class="${block.colorClass}" style="font-family: 'Barlow Condensed'; text-transform: uppercase; font-size: 1.25rem; font-weight: 800; letter-spacing: 1.2px;">${block.name}</h3>
+                                    <h3 class="${block.colorClass}" style="font-family: 'Barlow Condensed'; text-transform: uppercase; font-size: 1.35rem; font-weight: 900; letter-spacing: 1.3px;">${block.name}</h3>
                                     ${getCircleBadgeHtml(block.wrapperId)}
                                 </div>
                                 <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
@@ -2635,8 +2652,8 @@
 
                                 htmlMarkup += `<tr>
                                     <td style="font-weight: 900; color: var(--broadcast-gold); text-align: center;">${dayData.zonePoints}</td>
-                                    <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Inter';">${item.anglerName}</td>
-                                    <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
+                                    <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.95rem;">${item.anglerName}</td>
+                                    <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.78rem;">${teamDisp}</td>
                                     <td class="tie-breaker-td">${ties}</td>
                                 </tr>`;
                             });
@@ -2675,7 +2692,7 @@
 
                     htmlMarkup += `
                         <div class="table-header-bar">
-                            <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Top 5 Specimen Catch Log</span>
+                            <span style="font-size:0.8rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:1px;">Top 5 Specimen Catch Log</span>
                             ${getCircleBadgeHtml('fish-table-wrapper')}
                         </div>
                         <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
@@ -2685,7 +2702,7 @@
                     top5Fish.forEach((fish, idx) => {
                         let rank = idx + 1;
                         let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
-                        let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700;">(${fish.speciesName})</span>` : `${fish.size} cm`;
+                        let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.75rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">(${fish.speciesName})</span>` : `${fish.size} cm`;
 
                         let podiumClass = "";
                         if (rank === 1) podiumClass = "podium-gold";
@@ -2694,9 +2711,9 @@
 
                         htmlMarkup += `<tr class="${podiumClass}">
                             <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
-                            <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Inter';">${fish.name}</td>
-                            <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
-                            <td style="text-align: center;">${fish.details}</td>
+                            <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.95rem;">${fish.name}</td>
+                            <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.78rem;">${teamDisp}</td>
+                            <td style="text-align: center; font-family:'Barlow Condensed'; font-weight:800; text-transform:uppercase;">${fish.details}</td>
                             <td style="color: var(--broadcast-gold); font-weight: 900; text-align: center;">${sizeDisplay}</td>
                         </tr>`;
                     });
