@@ -20,12 +20,12 @@
     
     <style>
         :root {
-            /* 📺 Lighter Studio Canvas for High Card Pop & Depth (v2.8.0 Compact) */
-            --bg-main: #162032;
-            --surface-color: #0c111d;
-            --surface-card: #101726;
-            --pill-btn-bg: linear-gradient(135deg, #131c2e 0%, #0c111d 100%);
-            --pill-btn-border: rgba(255, 255, 255, 0.16);
+            /* 📺 High-Contrast Studio Canvas (v2.8.5 Pop & Elevation) */
+            --bg-main: #223048;
+            --surface-color: #090d16;
+            --surface-card: #0d1320;
+            --pill-btn-bg: linear-gradient(135deg, #131c2e 0%, #090d16 100%);
+            --pill-btn-border: rgba(255, 255, 255, 0.22);
             --broadcast-gold: #eab308;
             --broadcast-gold-light: rgba(234, 179, 8, 0.15);
             --broadcast-red: #ff1e38;
@@ -33,9 +33,9 @@
             --broadcast-emerald: #00ff88;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.12);
-            --border-card: rgba(255, 255, 255, 0.18);
-            --card-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.85), 0 2px 5px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            --border-color: rgba(255, 255, 255, 0.14);
+            --border-card: rgba(255, 255, 255, 0.22);
+            --card-shadow: 0 14px 32px -4px rgba(0, 0, 0, 0.95), 0 4px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18);
             --red-zone: #ff4d4d;
             --blue-zone: #38bdf8;
             --green-zone: #34d399;
@@ -137,7 +137,7 @@
         .section-divider-line {
             flex: 1;
             height: 1px;
-            background: var(--border-color);
+            background: rgba(255, 255, 255, 0.25);
         }
         .section-divider-title {
             font-family: 'Barlow Condensed', sans-serif;
@@ -147,6 +147,7 @@
             color: var(--broadcast-gold);
             text-transform: uppercase;
             white-space: nowrap;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
         }
 
         /* 🎛️ Compact Tactile Action Pad Button Styling */
@@ -154,7 +155,7 @@
             background: var(--pill-btn-bg);
             border: 1px solid var(--pill-btn-border);
             border-left: 3px solid var(--border-color);
-            border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.7);
             border-radius: 10px;
             padding: 8px 10px 8px 12px;
             color: var(--text-main);
@@ -165,7 +166,7 @@
             justify-content: space-between; 
             text-align: left;
             transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
-            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75);
             position: relative;
             width: 100%;
             user-select: none;
@@ -205,7 +206,7 @@
 
         .slide-btn.btn-ind-hero {
             border-left-color: var(--broadcast-gold);
-            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, #0c111d 100%);
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.25) 0%, #090d16 100%);
         }
         .slide-btn.btn-ind-hero .btn-action-pad {
             background: var(--broadcast-gold);
@@ -214,13 +215,13 @@
 
         .slide-btn.btn-report {
             border-left-color: var(--broadcast-cyan);
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.16) 0%, #0c111d 100%);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, #090d16 100%);
         }
 
         .slide-btn:hover {
             transform: translateY(-1px);
             border-left-color: var(--broadcast-gold);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
         }
         .slide-btn:hover .btn-action-pad {
             background: var(--broadcast-gold);
@@ -252,7 +253,7 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            background: rgba(12, 17, 29, 0.96) !important; 
+            background: rgba(9, 13, 22, 0.96) !important; 
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border-color); 
@@ -260,7 +261,7 @@
             position: sticky;
             top: 0;
             z-index: 100; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.8);
             width: 100%;
         }
         
@@ -388,7 +389,7 @@
         .picker-trigger-btn {
             width: 100%;
             padding: 8px 12px;
-            background: #0c111d;
+            background: #090d16;
             border: 1.5px solid var(--broadcast-gold);
             border-radius: 8px;
             color: var(--text-main);
@@ -459,7 +460,7 @@
         .custom-picker-container {
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: #0c111d;
+            background: #090d16;
             overflow: hidden;
             display: none;
             flex-direction: column;
@@ -479,7 +480,7 @@
             left: 0;
             right: 0;
             height: 20px;
-            background: linear-gradient(to bottom, rgba(12, 17, 29, 0) 0%, rgba(12, 17, 29, 0.95) 100%);
+            background: linear-gradient(to bottom, rgba(9, 13, 22, 0) 0%, rgba(9, 13, 22, 0.95) 100%);
             pointer-events: none;
             z-index: 10;
             border-bottom-left-radius: 8px;
@@ -546,7 +547,7 @@
             width: 100%;
         }
         .matrix-card {
-            background-color: #0c111d;
+            background-color: #090d16;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 6px 8px;
@@ -595,7 +596,7 @@
             width: 100%; 
             max-width: 440px; 
             padding: 16px 14px;
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
             position: relative;
             text-align: left;
             margin: auto 0; 
@@ -624,7 +625,7 @@
         }
 
         .info-banner {
-            background: #0c111d; 
+            background: #090d16; 
             border: 1px solid var(--border-color); 
             border-left: 3px solid var(--broadcast-cyan);
             border-radius: 8px;
@@ -696,7 +697,7 @@
         }
 
         th {
-            background: #07090e !important; 
+            background: #05070c !important; 
             color: var(--text-muted); 
             font-family: 'Barlow Condensed', sans-serif; 
             text-transform: uppercase;
@@ -734,20 +735,20 @@
             letter-spacing: 0.6px;
             padding: 5px 5px;
             border-bottom: 2px solid var(--broadcast-cyan);
-            background: #0c111d !important;
+            background: #090d16 !important;
         }
 
         /* 🏆 Podium Metallic Styling for Top 3 Ranks */
         tr.podium-gold td {
-            background: linear-gradient(90deg, rgba(234, 179, 8, 0.22) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.22) 0%, rgba(9, 13, 22, 0.85) 100%) !important;
             border-bottom: 1px solid rgba(234, 179, 8, 0.4);
         }
         tr.podium-silver td {
-            background: linear-gradient(90deg, rgba(226, 232, 240, 0.14) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            background: linear-gradient(90deg, rgba(226, 232, 240, 0.14) 0%, rgba(9, 13, 22, 0.85) 100%) !important;
             border-bottom: 1px solid rgba(226, 232, 240, 0.3);
         }
         tr.podium-bronze td {
-            background: linear-gradient(90deg, rgba(217, 119, 6, 0.2) 0%, rgba(12, 17, 29, 0.85) 100%) !important;
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.2) 0%, rgba(9, 13, 22, 0.85) 100%) !important;
             border-bottom: 1px solid rgba(217, 119, 6, 0.3);
         }
 
@@ -844,7 +845,7 @@
         .rivalry-badge.draw { background: #475569; color: #ffffff; }
 
         .beat-rate-summary-bar {
-            background: #0c111d;
+            background: #090d16;
             border: 1px solid var(--border-color);
             border-left: 3px solid var(--broadcast-gold);
             border-radius: 8px;
@@ -985,13 +986,14 @@
             width: 100%;
             max-width: 480px;
             font-size: 0.65rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
+            color: #cbd5e1;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
             font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
@@ -1010,7 +1012,7 @@
             align-items: center;
             font-size: 0.62rem;
             font-weight: 800;
-            color: var(--text-muted);
+            color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: 0.6px;
             font-family: 'Barlow Condensed', sans-serif;
@@ -1125,7 +1127,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.0</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.5</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1190,7 +1192,7 @@
             }
         }
 
-        /* 🚀 Broadcast Fluid Glide & Smart Overflow Cue (v2.8.0 Fix: Requires Actual Horizontal Overflow) */
+        /* 🚀 Broadcast Fluid Glide & Smart Overflow Cue */
         function triggerTableNudgeCue() {
             setTimeout(() => {
                 const containers = document.querySelectorAll('#table-output .table-card-container');
@@ -1241,7 +1243,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.0";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.5";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -1757,7 +1759,7 @@
             outputBox.innerHTML = html;
         }
 
-        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges (v2.8.0) */
+        /* 📊 Broadcast Zone Stacked Bars Component with External % Labels & Dark Top 10 Badges */
         function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
             if (!totalFishInSession || totalFishInSession <= 0) {
                 return `<div style="text-align:center; font-size:0.82rem; font-family:'Barlow Condensed'; font-weight:800; color:var(--text-muted); padding:24px 0; text-transform:uppercase; letter-spacing:0.8px;">No Catch Data Recorded</div>`;
@@ -2743,7 +2745,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.8.0 broadcast active'))
+                    .then(reg => console.log('v2.8.5 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
