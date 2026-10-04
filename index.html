@@ -20,8 +20,8 @@
     
     <style>
         :root {
-            /* 📺 High-Contrast Studio Canvas (v2.8.5 Pop & Elevation) */
-            --bg-main: #223048;
+            /* 📺 Lighter Slate-Navy Studio Canvas (v2.8.6 High Contrast & Pop) */
+            --bg-main: #2d3d59;
             --surface-color: #090d16;
             --surface-card: #0d1320;
             --pill-btn-bg: linear-gradient(135deg, #131c2e 0%, #090d16 100%);
@@ -137,7 +137,7 @@
         .section-divider-line {
             flex: 1;
             height: 1px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.28);
         }
         .section-divider-title {
             font-family: 'Barlow Condensed', sans-serif;
@@ -987,7 +987,7 @@
             max-width: 480px;
             font-size: 0.65rem;
             color: #cbd5e1;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1127,7 +1127,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.5</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v2.8.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1243,7 +1243,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.5";
+            document.title = MATCH_CONFIG.competitionName + " | Broadcast Edition v2.8.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -2745,7 +2745,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v2.8.5 broadcast active'))
+                    .then(reg => console.log('v2.8.6 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
