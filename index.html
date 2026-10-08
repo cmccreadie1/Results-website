@@ -1,1583 +1,2541 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club Fishing League Table</title>
-  <!-- LZ-String library for URL compression -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
-  <style>
-    :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #cbd5e1;
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --accent-gold: #f59e0b;
-      --accent-silver: #cbd5e1;
-      --accent-bronze: #d97706;
-      --dropped-color: #64748b;
-      --danger: #ef4444;
-      --success: #4ade80;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding: 10px;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 1750px;
-      margin: 0 auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--card-border);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .title-input-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .league-title-display {
-      font-size: 1.5rem;
-      color: var(--primary);
-      font-weight: 800;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background-color: var(--card-bg);
-      color: var(--text-main);
-      border: 1px solid var(--card-border);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn:hover {
-      background-color: var(--card-border);
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: #0f172a;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-      color: #fff;
-    }
-
-    .btn-danger {
-      background-color: rgba(239, 68, 68, 0.2);
-      color: var(--danger);
-      border: 1px solid var(--danger);
-    }
-
-    .btn-danger:hover {
-      background-color: var(--danger);
-      color: #fff;
-    }
-
-    .nav-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 6px;
-      overflow-x: auto;
-    }
-
-    .tab-btn {
-      padding: 8px 14px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .tab-btn.active {
-      background-color: var(--card-bg);
-      color: var(--primary);
-      border: 1px solid var(--card-border);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 14px;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      color: var(--primary);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    /* Scroll Prompt & Unified Table Styles */
-    .table-container {
-      overflow-x: auto;
-      position: relative;
-      border-radius: 6px;
-      border: 1px solid var(--card-border);
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .scroll-hint {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--primary);
-      background-color: rgba(56, 189, 248, 0.1);
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    @keyframes horizontalBump {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(12px); }
-      50% { transform: translateX(0); }
-      75% { transform: translateX(8px); }
-      100% { transform: translateX(0); }
-    }
-
-    .bump-animation {
-      animation: horizontalBump 1.2s ease-in-out 2;
-    }
-
-    #leaderboard-table, .bulletin-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.88rem;
-    }
-
-    th, td {
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--card-border);
-      white-space: nowrap;
-    }
-
-    th {
-      background-color: #0b1329;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.3px;
-    }
-
-    /* Standard Columns (No Sticky Pinning) */
-    .col-pos { 
-      min-width: 58px;
-      text-align: center;
-      padding: 6px 4px;
-    }
-
-    .col-name { 
-      min-width: 140px;
-      max-width: 160px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 0.9rem;
-    }
-
-    /* Dual-entry Rank & Points Display */
-    .rank-points-cell {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-    }
-
-    .pts-pill {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--primary);
-      background-color: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 1px 6px;
-      border-radius: 10px;
-      line-height: 1.1;
-    }
-
-    th.leg-header {
-      min-width: 95px;
-      text-align: center;
-      padding: 6px 4px;
-    }
-
-    .col-total-len { min-width: 80px; text-align: center; font-size: 0.88rem; }
-    .col-fish-cnt { min-width: 65px; text-align: center; font-size: 0.88rem; }
-
-    .leg-title {
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--text-main);
-      display: block;
-    }
-
-    .leg-venue {
-      font-size: 0.75rem;
-      color: var(--primary);
-      display: block;
-      margin-top: 1px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 90px;
-    }
-
-    .leg-date {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      display: block;
-      margin-top: 1px;
-      font-weight: normal;
-    }
-
-    tr:hover td {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .rank-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      font-weight: 800;
-      font-size: 0.65rem;
-    }
-
-    .rank-1 { background-color: var(--accent-gold); color: #000; }
-    .rank-2 { background-color: var(--accent-silver); color: #000; }
-    .rank-3 { background-color: var(--accent-bronze); color: #fff; }
-
-    .score-cell {
-      text-align: center;
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-
-    .score-dropped {
-      color: var(--dropped-color);
-      text-decoration: line-through;
-      font-weight: normal;
-      opacity: 0.55;
-    }
-
-    .score-counted {
-      color: var(--success);
-      font-weight: 800;
-    }
-
-    .score-dnf {
-      color: var(--danger);
-      font-size: 0.8rem;
-      font-weight: 700;
-      opacity: 0.8;
-    }
-
-    /* Podium Cards */
-    .podium-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .podium-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .podium-card.gold { border-color: rgba(245, 158, 11, 0.6); }
-    .podium-card.silver { border-color: rgba(203, 213, 225, 0.6); }
-    .podium-card.bronze { border-color: rgba(217, 119, 6, 0.6); }
-
-    .podium-icon {
-      font-size: 1.8rem;
-    }
-
-    .podium-name {
-      font-weight: 800;
-      font-size: 1rem;
-      color: var(--text-main);
-    }
-
-    .podium-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    /* Form Styles */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    input, select {
-      background-color: var(--bg-color);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 8px 10px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
-
-    .leg-selector-bar {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .leg-btn {
-      padding: 6px 12px;
-      background-color: var(--bg-color);
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.85rem;
-      white-space: nowrap;
-    }
-
-    .leg-btn.active {
-      background-color: var(--primary);
-      color: #0f172a;
-      border-color: var(--primary);
-    }
-
-    .roster-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .roster-card {
-      background-color: var(--bg-color);
-      border: 1px solid var(--card-border);
-      padding: 10px 12px;
-      border-radius: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.92rem;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 20px 12px;
-      color: var(--text-muted);
-    }
-
-    .venue-info-box {
-      background-color: rgba(56, 189, 248, 0.05);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      border-radius: 6px;
-      padding: 12px;
-      margin-bottom: 14px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
-    }
-
-    /* Side-by-side Breakdowns Grid */
-    .breakdown-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
-
-    .breakdown-card {
-      background-color: var(--bg-color);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 12px;
-    }
-
-    .breakdown-header {
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 8px;
-      margin-bottom: 8px;
-    }
-
-    .breakdown-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--primary);
-    }
-
-    .breakdown-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 1px;
-    }
-
-    .breakdown-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .breakdown-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      padding: 6px 8px;
-      border-radius: 6px;
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-
-    .breakdown-item.first-place {
-      background-color: rgba(245, 158, 11, 0.15);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-    }
-
-    /* BULLETIN REPORT STYLES */
-    #bulletin-view {
-      display: none;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .bulletin-header {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .bulletin-title h1 {
-      color: var(--primary);
-      font-size: 1.4rem;
-    }
-
-    .bulletin-title p {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      margin-top: 2px;
-    }
-
-    .bulletin-badge {
-      background-color: rgba(56, 189, 248, 0.15);
-      color: var(--primary);
-      border: 1px solid var(--primary);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .stat-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .stat-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      margin-bottom: 2px;
-    }
-
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .bulletin-footer {
-      text-align: center;
-      padding: 16px 0 8px;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      border-top: 1px solid var(--card-border);
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
+    <script>
+        const MATCH_CONFIG = {
+            competitionName: "SPRA Scottish Shore Championship",
+            venue:           "Elliot Beach Lunan Bay",
+            dates:           "18th & 19th September"
+        };
+    </script>
+    
+    <title>Results Portal | Pixel Liquid Glass Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* 📱 Google Pixel Material You "Liquid Glass" Deep Palette */
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 45%, #070a12 100%);
+            --glass-surface: rgba(19, 28, 46, 0.65);
+            --glass-surface-solid: #0f172a;
+            --glass-card: rgba(15, 23, 42, 0.72);
+            --glass-border: rgba(255, 255, 255, 0.16);
+            --glass-border-glow: rgba(234, 179, 8, 0.35);
+            
+            /* 🎨 Expressive Accent Tokens */
+            --broadcast-gold: #fbbf24;
+            --broadcast-gold-glow: rgba(251, 191, 36, 0.25);
+            --broadcast-cyan: #38bdf8;
+            --broadcast-cyan-glow: rgba(56, 189, 248, 0.25);
+            --broadcast-emerald: #34d399;
+            --broadcast-red: #f87171;
+            
+            /* 🔤 Typography & Contrast */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-subtle: #64748b;
+            
+            /* 🎛️ Pixel Pill Radius Standards */
+            --radius-hero: 28px;
+            --radius-tile: 22px;
+            --radius-pill: 100px;
+            --radius-modal: 32px;
+            
+            /* 💫 Depth & Glow Shadows */
+            --shadow-liquid: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            --shadow-tile: 0 10px 24px -6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            
+            /* 🎨 Zone Palette */
+            --red-zone: #f87171;
+            --blue-zone: #38bdf8;
+            --green-zone: #34d399;
+            --yellow-zone: #fbbf24;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        /* 📱 Custom Glass Scrollbars */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(251, 191, 36, 0.4);
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            padding: 12px 14px 28px 14px;
+            overflow-x: hidden;
+        }
+
+        /* 📱 Pixel Settings Hero Header (Liquid Glass) */
+        #app-header {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px 18px 18px 18px;
+            background: var(--glass-surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-hero);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-liquid);
+            margin-top: 6px;
+            margin-bottom: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #app-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--broadcast-cyan), var(--broadcast-gold), var(--broadcast-emerald));
+            border-radius: var(--radius-hero) var(--radius-hero) 0 0;
+        }
+
+        .pixel-badge-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--broadcast-gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        #app-header h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            line-height: 1.1;
+            color: var(--text-main);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            margin-bottom: 8px;
+        }
+
+        .subtitle-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .subtitle-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        /* 📱 Pixel Settings Group Stack Layout */
+        .button-stack { 
+            width: 100%; 
+            max-width: 480px; 
+            display: flex; 
+            flex-direction: column;
+            gap: 10px; 
+            margin-bottom: 20px;
+        }
+
+        .section-header-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: var(--broadcast-gold);
+            text-transform: uppercase;
+            padding: 6px 12px 2px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        /* 🎛️ Pixel "Liquid Glass" Settings Tile Button */
+        .slide-btn {
+            background: var(--glass-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-tile);
+            padding: 14px 16px;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex; 
+            align-items: center;
+            justify-content: space-between; 
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-tile);
+            width: 100%;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .btn-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .btn-icon-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            color: var(--broadcast-cyan);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-label-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+
+        .btn-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-main);
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-subtext {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 1px;
+        }
+
+        .btn-action-chip {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: #07090e;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+            background: var(--broadcast-cyan);
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        /* Special Tile Variants */
+        .slide-btn.btn-ind-hero {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        .slide-btn.btn-ind-hero .btn-icon-avatar {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--broadcast-gold);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        .slide-btn.btn-ind-hero .btn-action-chip {
+            background: var(--broadcast-gold);
+            color: #07090e;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+        }
+
+        .slide-btn.btn-report {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+
+        .slide-btn:hover {
+            transform: scale(1.01) translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6);
+        }
+
+        .slide-btn:active { 
+            transform: scale(0.97); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Full Screen Native Viewport Overlay */
+        #viewer-overlay {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: var(--bg-gradient);
+            display: none; 
+            flex-direction: column; 
+            z-index: 2000;
+        }
+        
+        .viewer-nav {
+            padding: 12px 16px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: rgba(15, 23, 42, 0.85) !important; 
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border); 
+            flex-shrink: 0; 
+            position: sticky;
+            top: 0;
+            z-index: 100; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            width: 100%;
+        }
+        
+        .back-btn {
+            background: var(--broadcast-gold);
+            color: #07090e; 
+            border: none;
+            padding: 8px 16px; 
+            border-radius: var(--radius-pill);
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-weight: 900; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 0.95rem;
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35);
+        }
+        .back-btn:active {
+            transform: scale(0.92);
+            background: var(--broadcast-cyan);
+        }
+
+        #current-title {
+            color: var(--text-main); 
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-size: 1.35rem; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            flex-grow: 1; 
+            text-align: left; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            padding-right: 12px;
+        }
+
+        .card-scroll-pill {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 5px 10px;
+            border-radius: var(--radius-pill);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .card-scroll-pill .pill-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            line-height: 1;
+            white-space: nowrap;
+        }
+        .card-scroll-pill .pill-arrow {
+            font-size: 0.7rem;
+            color: var(--broadcast-gold);
+            line-height: 1;
+        }
+        .card-scroll-pill:active {
+            transform: scale(0.92);
+            background: var(--broadcast-gold);
+            color: #07090e;
+        }
+
+        /* 🚀 Pixel Floating Swipe Cue Pill */
+        @keyframes floatBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .floating-swipe-pill {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--broadcast-gold);
+            color: var(--broadcast-gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 40;
+            pointer-events: none;
+            animation: floatBounce 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            transition: opacity 0.3s ease;
+        }
+
+        .table-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+
+        /* 📱 Modern Pixel Picker Dropdown Trigger */
+        .picker-trigger-btn {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid var(--broadcast-gold);
+            border-radius: var(--radius-tile);
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .picker-trigger-btn.rival-btn {
+            border-color: var(--broadcast-cyan);
+        }
+
+        .picker-trigger-btn:active {
+            transform: scale(0.98);
+        }
+
+        .picker-trigger-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 8px;
+        }
+
+        .picker-trigger-action {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: var(--broadcast-gold);
+            color: #07090e;
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .picker-trigger-btn.rival-btn .picker-trigger-action {
+            background: var(--broadcast-cyan);
+        }
+
+        .picker-trigger-btn .trigger-arrow {
+            font-size: 0.65rem;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .picker-trigger-btn.open .trigger-arrow {
+            transform: rotate(180deg);
+        }
+
+        @keyframes pickerPopIn {
+            0% { opacity: 0; transform: translateY(-8px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .custom-picker-container {
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-tile);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-liquid);
+            position: relative;
+        }
+        .custom-picker-container.visible {
+            display: flex;
+            animation: pickerPopIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .picker-gradient-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 24px;
+            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.95));
+            pointer-events: none;
+        }
+
+        .custom-picker-list {
+            max-height: 200px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            padding: 4px 0;
+        }
+
+        .custom-picker-item {
+            padding: 10px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: background 0.12s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-picker-item:last-child {
+            border-bottom: none;
+        }
+        .custom-picker-item:active, .custom-picker-item.selected {
+            background: rgba(251, 191, 36, 0.18);
+            color: var(--broadcast-gold);
+        }
+        .custom-picker-item .check-icon {
+            opacity: 0;
+            color: var(--broadcast-gold);
+            font-weight: 800;
+        }
+        .custom-picker-item.selected .check-icon {
+            opacity: 1;
+        }
+
+        .table-scroll-box {
+            flex: 1; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            padding: 14px 12px 28px 12px; 
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .matrix-container {
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 2px 0;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        .matrix-card {
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 6px 10px;
+            min-width: 135px;
+            flex-shrink: 0;
+            text-align: left;
+        }
+        .matrix-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            margin-bottom: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .matrix-stats {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--broadcast-cyan);
+            white-space: nowrap;
+        }
+
+        /* 📱 Pixel Glass Modal Overlay */
+        .modal-overlay {
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            background: rgba(7, 10, 18, 0.82); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center; 
+            align-items: center; 
+            z-index: 3000;
+            padding: 16px; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .modal-card {
+            background: rgba(15, 23, 42, 0.9); 
+            border-radius: var(--radius-modal);
+            width: 100%; 
+            max-width: 440px; 
+            padding: 20px 18px;
+            box-shadow: var(--shadow-liquid);
+            position: relative;
+            text-align: left;
+            border: 1px solid var(--glass-border);
+            border-top: 3px solid var(--broadcast-gold);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.08); 
+            color: var(--text-main);
+            border: 1px solid var(--glass-border); 
+            padding: 12px; 
+            border-radius: var(--radius-pill);
+            font-family: 'Barlow Condensed', sans-serif; 
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 1rem; 
+            letter-spacing: 1px;
+            width: 100%; 
+            margin-top: 10px; 
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .modal-close-btn:active {
+            background: var(--broadcast-gold);
+            color: #07090e;
+            transform: scale(0.97);
+        }
+
+        .info-banner {
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); 
+            border-left: 3px solid var(--broadcast-cyan);
+            border-radius: 14px;
+            padding: 10px 12px; 
+            margin: 2px auto 14px auto; 
+            width: 100%; 
+            color: var(--text-muted);
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-size: 0.85rem; 
+            line-height: 1.35; 
+            text-align: center;
+            box-shadow: var(--shadow-tile);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .skeleton-wrapper { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            margin-top: 8px; 
+        }
+        .skeleton-row { 
+            height: 48px; 
+            background: rgba(15, 23, 42, 0.6); 
+            border-radius: var(--radius-tile); 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: var(--shadow-tile);
+        }
+        .skeleton-row::after {
+            content: ""; 
+            position: absolute; 
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        .table-card-container {
+            background: var(--glass-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-tile);
+            padding: 4px;
+            box-shadow: var(--shadow-liquid);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 16px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-table-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+            border-radius: calc(var(--radius-tile) - 2px);
+        }
+
+        /* 🔤 Compact Glass Telemetry Table Styling */
+        table { 
+            border-collapse: separate; 
+            border-spacing: 0; 
+            width: 100%; 
+            color: var(--text-main); 
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-size: 0.88rem; 
+            white-space: nowrap; 
+        }
+
+        th {
+            background: rgba(7, 10, 18, 0.95) !important; 
+            color: var(--text-muted); 
+            font-family: 'Barlow Condensed', sans-serif; 
+            text-transform: uppercase;
+            font-weight: 900; 
+            letter-spacing: 1px; 
+            font-size: 0.82rem;
+            padding: 8px 8px; 
+            border-bottom: 2px solid var(--glass-border);
+            position: sticky; 
+            top: 0; 
+            z-index: 25;
+            text-align: center; 
+        }
+
+        tr.group-header-row th {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            font-size: 0.78rem;
+            letter-spacing: 1.2px;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(7, 10, 18, 0.98) !important;
+            color: var(--broadcast-gold);
+        }
+
+        tr.sub-header-row th {
+            position: sticky;
+            top: 28px;
+            z-index: 29;
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            padding: 6px 6px;
+            border-bottom: 2px solid var(--broadcast-cyan);
+            background: rgba(15, 23, 42, 0.95) !important;
+        }
+
+        /* 🏆 Podium Metallic Styling for Top 3 Ranks */
+        tr.podium-gold td {
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.22) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        tr.podium-silver td {
+            background: linear-gradient(90deg, rgba(226, 232, 240, 0.14) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.25);
+        }
+        tr.podium-bronze td {
+            background: linear-gradient(90deg, rgba(217, 119, 6, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.25);
+        }
+
+        .final-totals-cell {
+            background: rgba(251, 191, 36, 0.08) !important;
+        }
+        .final-totals-header {
+            background: rgba(7, 10, 18, 0.98) !important;
+            color: var(--broadcast-gold) !important;
+        }
+        
+        .pillar-divider-right {
+            border-right: 3px solid rgba(7, 10, 18, 0.95) !important;
+            border-left: 1px solid rgba(251, 191, 36, 0.3) !important;
+        }
+        
+        .session-breakdown-cell {
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        .col-divider-left {
+            border-left: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .session-divider-right {
+            border-right: 2px solid var(--broadcast-cyan) !important;
+        }
+
+        td { 
+            padding: 7px 8px; 
+            text-align: center; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.15s ease;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        tr.tier-separator-row td {
+            height: 12px;
+            padding: 0;
+            background: transparent !important;
+            border: none !important;
+            line-height: 0;
+            font-size: 0;
+        }
+
+        .tie-breaker-td {
+            color: var(--text-muted) !important;
+            font-size: 0.74rem !important;
+            font-weight: 700 !important;
+            text-align: center;
+        }
+        
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) td { background: rgba(0, 0, 0, 0.2); }
+        tr:hover td, tr:active td { background: rgba(56, 189, 248, 0.15) !important; }
+
+        table.zone-red th { border-bottom-color: var(--red-zone); color: var(--red-zone); }
+        table.zone-yellow th { border-bottom-color: var(--yellow-zone); color: var(--yellow-zone); }
+        table.zone-green th { border-bottom-color: var(--green-zone); color: var(--green-zone); }
+        table.zone-blue th { border-bottom-color: var(--blue-zone); color: var(--blue-zone); }
+
+        .rivalry-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.15;
+            padding: 2px 2px;
+        }
+        .rivalry-val {
+            font-weight: 800;
+            font-size: 0.82rem;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .rivalry-badge {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: var(--radius-pill);
+            margin-top: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            letter-spacing: 0.6px;
+        }
+        .rivalry-badge.win { background: var(--broadcast-emerald); color: #07090e; }
+        .rivalry-badge.draw { background: #475569; color: #ffffff; }
+
+        .beat-rate-summary-bar {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--broadcast-gold);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .beat-rate-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .beat-rate-title.dominant { color: var(--broadcast-gold); }
+        .beat-rate-title.tied { color: var(--broadcast-cyan); }
+        .beat-rate-title.behind { color: var(--broadcast-red); }
+
+        .beat-rate-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.64rem;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .status-msg { 
+            font-family: 'Barlow Condensed', sans-serif; 
+            color: var(--text-muted); 
+            text-align: center; 
+            padding: 36px 16px; 
+            text-transform: uppercase; 
+            font-size: 1.2rem; 
+            letter-spacing: 1.2px;
+            font-weight: 900;
+        }
+        
+        .stat-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 4px;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+        .stat-card {
+            background: var(--glass-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-tile);
+            padding: 16px 14px;
+            box-shadow: var(--shadow-liquid); 
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        
+        .profile-card-red { border-top: 3px solid var(--red-zone); }
+        .profile-card-blue { border-top: 3px solid var(--blue-zone); }
+        .profile-card-green { border-top: 3px solid var(--green-zone); }
+        .profile-card-yellow { border-top: 3px solid var(--yellow-zone); }
+
+        .stat-title {
+            color: var(--text-main);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 12px;
+        }
+
+        .metric-card-item {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .bar-chart-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-pill);
+            margin: 6px 0 3px 0;
+            height: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .bar-chart-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 0.68rem;
+            white-space: nowrap;
+            transition: width 0.8s ease-out;
+            position: relative;
+            z-index: 2;
+            border-radius: var(--radius-pill);
+        }
+        .bar-chart-label-right {
+            position: absolute;
+            right: 8px;
+            top: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            z-index: 3;
+        }
+
+        .metric-subtext {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.3;
+            display: block;
+            margin-top: 2px;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 18px 14px 12px 14px;
+            text-align: center;
+            width: 100%;
+            max-width: 480px;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        @keyframes pulseGlow { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.9); } }
+        
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background-color: var(--broadcast-emerald);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--broadcast-emerald);
+            animation: pulseGlow 1.8s ease-in-out infinite;
+        }
+        .live-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
 </head>
 <body>
-  <!-- Hidden File Input for Importing JSON Data -->
-  <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="handleFileImport(event)">
 
-  <div class="container">
-    <!-- ADMIN HEADER -->
-    <header id="admin-header">
-      <div class="title-input-group">
-        <span class="league-title-display" id="admin-league-title-display">🎣 Fishing League Table</span>
-        <button class="btn" onclick="promptEditLeagueTitle()" title="Change Competition Name" style="padding: 2px 8px; font-size: 0.75rem;">✏️ Rename</button>
-      </div>
-      <div class="header-actions no-print">
-        <button class="btn btn-primary" onclick="showBulletinView()">📰 Match Bulletin Report</button>
-        <button class="btn" onclick="copyShareableLink()">📋 Copy Shareable Link</button>
-        <button class="btn" onclick="exportDataJSON()">📥 Export Data</button>
-        <button class="btn" onclick="triggerFileInput()">📤 Import Data</button>
-        <button class="btn btn-danger" onclick="confirmResetNewSeason()">🔄 Reset Season</button>
-      </div>
+    <!-- 📱 Pixel Settings Hero Header (Liquid Glass) -->
+    <header id="app-header">
+        <div class="pixel-badge-chip">
+            <span class="pulse-dot"></span> Official Broadcast Deck
+        </div>
+        <h1 id="meta-title-inject">Results Portal</h1>
+        <div class="subtitle-group">
+            <span id="meta-venue-inject" class="subtitle-pill">Loading Venue...</span>
+            <span id="meta-dates-inject" class="subtitle-pill">Loading Dates...</span>
+        </div>
     </header>
 
-    <!-- ADMIN TABS -->
-    <div class="nav-tabs no-print" id="admin-tabs">
-      <button class="tab-btn active" onclick="switchTab('leaderboard')">🏆 Overall Standings</button>
-      <button class="tab-btn" onclick="switchTab('breakdown')">📊 Match Breakdown</button>
-      <button class="tab-btn" onclick="switchTab('match-entry')">📝 Match Results & Venues</button>
-      <button class="tab-btn" onclick="switchTab('roster')">👥 Angler Roster</button>
-    </div>
+    <!-- 📱 Pixel Settings Group Stack Layout -->
+    <nav class="button-stack">
+        <!-- Section 1 Header -->
+        <div class="section-header-title">Analytics & Personal Telemetry</div>
 
-    <!-- MAIN ADMIN CONTENT CONTAINER -->
-    <div id="admin-content">
-      <!-- TAB 1: OVERALL LEADERBOARD -->
-      <div id="tab-leaderboard" class="tab-content active">
-        <div class="card">
-          <div class="card-title">
-            <span>Overall Club Standings</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">* Top 4 leg scores count (green)</span>
-          </div>
-          <div class="scroll-hint">
-            <span>👈 Swipe left / right to view full standings table 👉</span>
-          </div>
-          <div class="table-container" id="admin-table-container">
-            <table id="leaderboard-table">
-              <thead>
-                <tr id="leaderboard-header-row"></tr>
-              </thead>
-              <tbody id="leaderboard-body"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2: SIDE-BY-SIDE MATCH BREAKDOWN -->
-      <div id="tab-breakdown" class="tab-content">
-        <div class="card">
-          <div class="card-title">Leg-by-Leg Match Results</div>
-          <div class="breakdown-grid" id="breakdown-grid-container"></div>
-        </div>
-      </div>
-
-      <!-- TAB 3: MATCH RESULTS & VENUE ENTRY -->
-      <div id="tab-match-entry" class="tab-content">
-        <div class="card">
-          <div class="card-title">Select Match Leg</div>
-          <div class="leg-selector-bar" id="leg-selector"></div>
-
-          <div class="venue-info-box">
-            <div class="form-group">
-              <label for="venue-name">Venue / Location Name</label>
-              <input type="text" id="venue-name" placeholder="e.g. Whitby Pier, Loch Awe..." onchange="saveLegVenueInfo()">
+        <!-- Tile 1: Tournament Overview -->
+        <div class="slide-btn" onclick="triggerHaptic(); loadMatchStats('Tournament Overview')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">📊</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Tournament Overview</span>
+                    <span class="btn-subtext">Stats, pegs, zone totals & timeline</span>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="venue-date">Match Date</label>
-              <input type="date" id="venue-date" onchange="saveLegVenueInfo()">
+            <span class="btn-action-chip">OPEN ❯</span>
+        </div>
+
+        <!-- Tile 2: My Match Report Card -->
+        <div class="slide-btn btn-report" onclick="triggerHaptic(); openReportModal()">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar" style="color: var(--broadcast-cyan);">🎴</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">My Match Report Card</span>
+                    <span class="btn-subtext">Personal 6-metric card & head-to-head</span>
+                </div>
             </div>
-          </div>
-
-          <div class="card-title" style="margin-top: 14px;">Match Entries for Selected Leg</div>
-          <div class="table-container">
-            <table style="width:100%; font-size:0.88rem;">
-              <thead>
-                <tr>
-                  <th>Angler Name</th>
-                  <th>Length (cm)</th>
-                  <th>Fish Count</th>
-                  <th>Rank</th>
-                  <th>Points</th>
-                </tr>
-              </thead>
-              <tbody id="match-entry-body"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 4: ROSTER MANAGEMENT -->
-      <div id="tab-roster" class="tab-content">
-        <div class="card">
-          <div class="card-title">Add New Angler</div>
-          <form id="add-angler-form" onsubmit="handleAddAngler(event)" style="display: flex; gap: 8px; max-width: 400px;">
-            <input type="text" id="new-angler-name" placeholder="Enter angler full name..." required style="flex: 1;">
-            <button type="submit" class="btn btn-primary">+ Add</button>
-          </form>
+            <span class="btn-action-chip">SELECT ❯</span>
         </div>
 
-        <div class="card">
-          <div class="card-title">Current Angler Roster (<span id="roster-count">0</span>)</div>
-          <div class="roster-grid" id="roster-grid-container"></div>
+        <!-- Section 2 Header -->
+        <div class="section-header-title" style="margin-top: 6px;">Official Results & Breakdown</div>
+
+        <!-- Tile 3: Individual Champion (Hero) -->
+        <div class="slide-btn btn-ind-hero" onclick="triggerHaptic(); loadExcelTab('INDIVIDUAL RESULT', 'Individual Champion')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">🏆</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Individual Champion</span>
+                    <span class="btn-subtext">Full match standings & zone breakdown</span>
+                </div>
+            </div>
+            <span class="btn-action-chip">VIEW ❯</span>
         </div>
-      </div>
+
+        <!-- Tile 4: Team Winners -->
+        <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('TEAM RESULT', 'Team Winners')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">🥇</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Team Winners</span>
+                    <span class="btn-subtext">Squad leaderboard & member matrix</span>
+                </div>
+            </div>
+            <span class="btn-action-chip">VIEW ❯</span>
+        </div>
+
+        <!-- Tile 5: Zone Day 1 -->
+        <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('ZONE 1', 'Zone Day 1')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">🌙</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Zone Day 1</span>
+                    <span class="btn-subtext">Night session zone standings</span>
+                </div>
+            </div>
+            <span class="btn-action-chip">VIEW ❯</span>
+        </div>
+
+        <!-- Tile 6: Zone Day 2 -->
+        <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('ZONE 2', 'Zone Day 2')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">☀️</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Zone Day 2</span>
+                    <span class="btn-subtext">Daytime session zone standings</span>
+                </div>
+            </div>
+            <span class="btn-action-chip">VIEW ❯</span>
+        </div>
+
+        <!-- Tile 7: Biggest Fish -->
+        <div class="slide-btn" onclick="triggerHaptic(); loadExcelTab('BIGGEST FISH', 'Biggest Fish')">
+            <div class="btn-left-group">
+                <div class="btn-icon-avatar">🐟</div>
+                <div class="btn-label-group">
+                    <span class="btn-label">Biggest Fish</span>
+                    <span class="btn-subtext">Longest single specimen log</span>
+                </div>
+            </div>
+            <span class="btn-action-chip">VIEW ❯</span>
+        </div>
+    </nav>
+
+    <!-- Full Screen Viewport Overlay -->
+    <div id="viewer-overlay">
+        <div class="viewer-nav">
+            <span id="current-title"></span>
+            <button class="back-btn" onclick="triggerHaptic(); closeViewer()">❮ BACK</button>
+        </div>
+        <div class="table-scroll-box" id="table-output"></div>
     </div>
 
-    <!-- READ-ONLY MATCH BULLETIN VIEW (COMPETITOR VIEW) -->
-    <div id="bulletin-view">
-      <div class="no-print" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-        <button class="btn" id="btn-back-admin" onclick="hideBulletinView()" style="display:none;">🔙 Back to Admin Dashboard</button>
-      </div>
-
-      <div class="bulletin-header">
-        <div class="bulletin-title">
-          <h1 id="bulletin-league-title">🎣 Club Fishing League</h1>
-          <p>Official Season Standings & Competition Bulletin</p>
+    <!-- Rules Modal Overlay -->
+    <div id="rules-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <h3 id="modal-title" style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.35rem; letter-spacing: 1.2px; color: var(--broadcast-cyan); margin-bottom: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 4px;">Rules</h3>
+            <div id="modal-body" style="font-size: 0.88rem; line-height: 1.4; color: var(--text-main); font-family: 'Inter', sans-serif; font-weight: 500;"></div>
+            <button class="modal-close-btn" onclick="triggerHaptic(); closeModal(event)">Close Rules</button>
         </div>
-        <div class="bulletin-badge" id="bulletin-progress-badge">0 of 6 Legs Completed</div>
-      </div>
-
-      <!-- TOP 3 PODIUM SHOWCASE -->
-      <div class="podium-grid" id="podium-container"></div>
-
-      <!-- SEASON STATS -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">League Leader</div>
-          <div class="stat-value" id="stat-leader-name" style="color: var(--accent-gold);">-</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Fish Caught</div>
-          <div class="stat-value" id="stat-total-fish">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Total Combined Length</div>
-          <div class="stat-value" id="stat-total-length">0 cm</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Recent Winner</div>
-          <div class="stat-value" id="stat-recent-winner" style="color: var(--success);">-</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <span>Official Season Standings</span>
-          <span style="font-size:0.78rem; color:var(--text-muted); font-weight:normal;">* Best 4 out of 6 leg scores count</span>
-        </div>
-        <div class="scroll-hint">
-          <span>👈 Swipe left / right to view full standings table 👉</span>
-        </div>
-        <div class="table-container" id="bulletin-table-container">
-          <table class="bulletin-table" id="bulletin-table">
-            <thead>
-              <tr id="bulletin-header-row"></tr>
-            </thead>
-            <tbody id="bulletin-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Completed Match Summaries</div>
-        <div class="breakdown-grid" id="bulletin-breakdown-container"></div>
-      </div>
-
-      <div class="bulletin-footer">
-        <p id="bulletin-last-updated">Official Competition Bulletin • Updated Live</p>
-      </div>
     </div>
-  </div>
 
-  <script>
-    // BASELINE DEFAULT DATA
-    const DEFAULT_DATA = {
-      "title": "Club Fishing League Table",
-      "anglers": [
-        { "id": "a_1791227057506", "name": "Stewart Crilly" },
-        { "id": "a_1791227066733", "name": "Stewart P" },
-        { "id": "a_1791227082728", "name": "Danny Connor" },
-        { "id": "a_1791227096165", "name": "Chris McCreadie" },
-        { "id": "a_1791227105830", "name": "Willie Shaw" },
-        { "id": "a_1791227117551", "name": "Ian Elliot" },
-        { "id": "a_1791227137167", "name": "Andy Haswell" },
-        { "id": "a_1791227179965", "name": "Kenny Speirs" },
-        { "id": "a_1791227190301", "name": "Dave Hearsay" },
-        { "id": "a_1791227198169", "name": "Willie Brandon" },
-        { "id": "a_1791227205491", "name": "Barry Gilbert" },
-        { "id": "a_1791303310294", "name": "Gerry c" },
-        { "id": "a_1791303322494", "name": "Gerry McNeil" }
-      ],
-      "legs": [
-        { "id": 1, "venue": "Elliot Beach", "date": "2026-05-24" },
-        { "id": 2, "venue": "Carsthorne", "date": "2026-06-18" },
-        { "id": 3, "venue": "Cairndow", "date": "2026-07-20" },
-        { "id": 4, "venue": "Erskine Walkway", "date": "2026-09-06" },
-        { "id": 5, "venue": "Ardrossan Beach", "date": "2026-10-03" },
-        { "id": 6, "venue": "", "date": "" }
-      ],
-      "results": {
-        "a_1791227057506_leg_1": { "length": 350, "count": 19 },
-        "a_1791227066733_leg_1": { "length": 318, "count": 17 },
-        "a_1791227082728_leg_1": { "length": 194, "count": 10 },
-        "a_1791227096165_leg_1": { "length": 127, "count": 7 },
-        "a_1791227105830_leg_1": { "length": 116, "count": 6 },
-        "a_1791227117551_leg_1": { "length": 114, "count": 6 },
-        "a_1791227137167_leg_1": { "length": 89, "count": 4 },
-        "a_1791227179965_leg_1": { "length": 60, "count": 4 },
-        "a_1791227057506_leg_2": { "length": 0, "count": 0 },
-        "a_1791227096165_leg_2": { "length": 0, "count": 0 },
-        "a_1791227105830_leg_2": { "length": 84, "count": 2 },
-        "a_1791227096165_leg_3": { "length": 133, "count": 3 },
-        "a_1791227105830_leg_3": { "length": 320, "count": 7 },
-        "a_1791227117551_leg_3": { "length": 17, "count": 1 },
-        "a_1791227205491_leg_3": { "length": 0, "count": 0 },
-        "a_1791227082728_leg_4": { "length": 47, "count": 2 },
-        "a_1791227096165_leg_4": { "length": 45, "count": 2 },
-        "a_1791227105830_leg_4": { "length": 88, "count": 5 },
-        "a_1791227117551_leg_4": { "length": 0, "count": 0 },
-        "a_1791227205491_leg_4": { "length": 16, "count": 1 },
-        "a_1791227057506_leg_5": { "length": 54, "count": 3 },
-        "a_1791227082728_leg_5": { "length": 78, "count": 3 },
-        "a_1791227117551_leg_5": { "length": 56, "count": 2 },
-        "a_1791227105830_leg_5": { "length": 84, "count": 4 },
-        "a_1791227205491_leg_5": { "length": 0, "count": 0 }
-      },
-      "currentSelectedLeg": 5
-    };
+    <!-- Personal Match Report Modal Overlay -->
+    <div id="report-modal" class="modal-overlay" onclick="closeReportModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <h3 style="font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; font-size: 1.4rem; letter-spacing: 1.3px; color: var(--broadcast-gold); margin-bottom: 4px;">My Match Report Card</h3>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.35; font-family:'Inter', sans-serif;">Select your competitor profile to generate your 6-metric telemetry report and direct head-to-head matchup.</div>
+            
+            <div style="margin-bottom: 14px;">
+                <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.8px;">COMPETITOR PROFILE</span>
+                
+                <button id="angler-picker-btn" class="picker-trigger-btn" onclick="triggerHaptic(); toggleAnglerPicker()">
+                    <span id="angler-picker-btn-text" class="picker-trigger-name">Choose your name</span>
+                    <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
+                </button>
 
-    const DEFAULT_LEGS = [
-      { id: 1, venue: '', date: '' },
-      { id: 2, venue: '', date: '' },
-      { id: 3, venue: '', date: '' },
-      { id: 4, venue: '', date: '' },
-      { id: 5, venue: '', date: '' },
-      { id: 6, venue: '', date: '' }
-    ];
+                <div id="angler-picker-container" class="custom-picker-container">
+                    <div id="custom-angler-picker" class="custom-picker-list">
+                        <div class="custom-picker-item" style="color: var(--text-muted);">Loading Competitors...</div>
+                    </div>
+                    <div class="picker-gradient-overlay"></div>
+                </div>
+            </div>
 
-    let appData = {
-      title: "Club Fishing League Table",
-      anglers: [],
-      legs: JSON.parse(JSON.stringify(DEFAULT_LEGS)),
-      results: {},
-      currentSelectedLeg: 1
-    };
+            <button class="modal-close-btn" style="background: var(--broadcast-gold); color: #07090e; font-weight:900; border:none;" onclick="triggerHaptic(); generatePersonalReport()">Generate Report ❯</button>
+            <button class="modal-close-btn" style="background: transparent; color: var(--text-muted); margin-top: 4px; border:none;" onclick="triggerHaptic(); closeReportModal(event)">Cancel</button>
+        </div>
+    </div>
 
-    let isPublicView = false;
+    <footer class="footer">
+        <div>PIXEL LIQUID GLASS EDITION • v3.0.0</div>
+        <div class="live-status-badge">
+            <span class="pulse-dot"></span>
+            <span id="sync-time-text">Live Telemetry Connected</span>
+        </div>
+    </footer>
 
-    // DATA MINIFICATION & UNPACKING FOR SHORT URLS
-    function minifyAppData(data) {
-      const minData = {
-        t: data.title || "",
-        a: (data.anglers || []).map(a => ({ i: a.id, n: a.name })),
-        l: (data.legs || []).filter(l => l.venue || l.date).map(l => ({ i: l.id, v: l.venue, d: l.date })),
-        r: {}
-      };
-
-      Object.keys(data.results || {}).forEach(k => {
-        const item = data.results[k];
-        if (item && (item.length > 0 || item.count > 0 || item.length === 0)) {
-          minData.r[k] = [item.length || 0, item.count || 0];
-        }
-      });
-
-      return minData;
-    }
-
-    function unpackMinifiedData(minData) {
-      if (!minData.a || !minData.l) return null;
-
-      const fullLegs = JSON.parse(JSON.stringify(DEFAULT_LEGS));
-      (minData.l || []).forEach(ml => {
-        const target = fullLegs.find(fl => fl.id === ml.i);
-        if (target) {
-          target.venue = ml.v || "";
-          target.date = ml.d || "";
-        }
-      });
-
-      const fullResults = {};
-      Object.keys(minData.r || {}).forEach(k => {
-        const arr = minData.r[k];
-        fullResults[k] = { length: arr[0], count: arr[1] };
-      });
-
-      return {
-        title: minData.t || "Club Fishing League Table",
-        anglers: (minData.a || []).map(ma => ({ id: ma.i, name: ma.n })),
-        legs: fullLegs,
-        results: fullResults,
-        currentSelectedLeg: 1
-      };
-    }
-
-    // RENAME COMPETITION LEAGUE TITLE
-    function promptEditLeagueTitle() {
-      const currentTitle = appData.title || "Club Fishing League Table";
-      const newTitle = prompt("Enter Competition Name:", currentTitle);
-      if (newTitle && newTitle.trim()) {
-        appData.title = newTitle.trim();
-        saveData();
-      }
-    }
-
-    // CHECK URL FOR ENCODED DATA & SHAREABLE BULLETIN MODE
-    function checkURLViewMode() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const encodedData = urlParams.get('data');
-      const isBulletin = urlParams.get('view') === 'bulletin';
-
-      if (encodedData) {
-        try {
-          const decompressed = LZString.decompressFromEncodedURIComponent(encodedData);
-          if (decompressed) {
-            const parsed = JSON.parse(decompressed);
-            if (parsed.a && parsed.r) {
-              const unpacked = unpackMinifiedData(parsed);
-              if (unpacked) appData = unpacked;
-            } else {
-              appData = parsed;
-            }
-          }
-        } catch (e) {
-          console.error("Failed to parse URL encoded data", e);
-        }
-      }
-
-      if (isBulletin || encodedData) {
-        isPublicView = true;
-        document.getElementById('admin-header').style.display = 'none';
-        document.getElementById('admin-tabs').style.display = 'none';
-        document.getElementById('admin-content').style.display = 'none';
-        document.getElementById('bulletin-view').style.display = 'block';
-        document.getElementById('btn-back-admin').style.display = 'none';
-        triggerHorizontalBump('bulletin-table-container');
-      }
-    }
-
-    // COPY FULL SHAREABLE DATA LINK TO CLIPBOARD FOR SHORTENER SITES
-    function copyShareableLink() {
-      const baseURL = window.location.href.split('?')[0];
-      const minified = minifyAppData(appData);
-      const jsonStr = JSON.stringify(minified);
-      const compressed = LZString.compressToEncodedURIComponent(jsonStr);
-      const shareURL = `${baseURL}?data=${compressed}&view=bulletin`;
-
-      navigator.clipboard.writeText(shareURL).then(() => {
-        alert("📋 Full Web Link Copied to Clipboard!\n\nYou can now open tinyurl.com or is.gd, paste this link, create a short link, and send it to your members.");
-      }).catch(err => {
-        prompt("Copy this full link to paste into TinyURL:", shareURL);
-      });
-    }
-
-    function triggerHorizontalBump(containerId) {
-      setTimeout(() => {
-        const el = document.getElementById(containerId);
-        if (el) {
-          el.classList.add('bump-animation');
-          setTimeout(() => el.classList.remove('bump-animation'), 2500);
-        }
-      }, 300);
-    }
-
-    // LOCAL STORAGE MANAGEMENT
-    function loadData() {
-      const saved = localStorage.getItem('fishing_league_data');
-      if (saved) {
-        try {
-          appData = JSON.parse(saved);
-        } catch (e) {
-          console.error("Failed to parse local storage", e);
-        }
-      } else if (DEFAULT_DATA) {
-        appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-      }
-    }
-
-    function saveData() {
-      localStorage.setItem('fishing_league_data', JSON.stringify(appData));
-      renderApp();
-    }
-
-    // RESET FOR NEW SEASON
-    function confirmResetNewSeason() {
-      if (confirm("End Season & Reset?\n\nThis will download a backup JSON file of the current season and reset match results for next year.")) {
-        exportDataJSON();
-        appData.results = {};
-        appData.legs = JSON.parse(JSON.stringify(DEFAULT_LEGS));
-        appData.currentSelectedLeg = 1;
-        saveData();
-        alert("✅ Season reset! A backup file of previous results was downloaded.");
-      }
-    }
-
-    // DATA EXPORT & IMPORT FUNCTIONS
-    function exportDataJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `fishing_league_backup_${new Date().toISOString().slice(0, 10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-    }
-
-    function triggerFileInput() {
-      document.getElementById('import-file-input').click();
-    }
-
-    function handleFileImport(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const importedData = JSON.parse(e.target.result);
-          if (importedData && Array.isArray(importedData.anglers) && Array.isArray(importedData.legs)) {
-            if (confirm("Importing this file will replace current data. Proceed?")) {
-              appData = importedData;
-              saveData();
-              alert("✅ Data successfully imported!");
-            }
-          } else {
-            alert("❌ Invalid backup file format.");
-          }
-        } catch (err) {
-          alert("❌ Error reading data file.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function showBulletinView() {
-      document.getElementById('admin-header').style.display = 'none';
-      document.getElementById('admin-tabs').style.display = 'none';
-      document.getElementById('admin-content').style.display = 'none';
-      document.getElementById('bulletin-view').style.display = 'block';
-      document.getElementById('btn-back-admin').style.display = 'inline-flex';
-      renderBulletinView();
-      triggerHorizontalBump('bulletin-table-container');
-    }
-
-    function hideBulletinView() {
-      document.getElementById('bulletin-view').style.display = 'none';
-      document.getElementById('admin-header').style.display = 'flex';
-      document.getElementById('admin-tabs').style.display = 'flex';
-      document.getElementById('admin-content').style.display = 'block';
-    }
-
-    // TAB SWITCHING
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      
-      event.target.classList.add('active');
-      document.getElementById(`tab-${tabName}`).classList.add('active');
-    }
-
-    // SCORE & LEAGUE COMPUTATION LOGIC
-    function calculateLegPoints(legId) {
-      const entries = [];
-
-      appData.anglers.forEach(angler => {
-        const key = `${angler.id}_leg_${legId}`;
-        const res = appData.results[key];
-        
-        if (res !== undefined && res !== null && res.length !== '' && res.length !== null) {
-          entries.push({
-            anglerId: angler.id,
-            length: Number(res.length) || 0,
-            count: Number(res.count) || 0,
-            hasRecord: true
-          });
-        }
-      });
-
-      entries.sort((a, b) => {
-        if (b.length !== a.length) return b.length - a.length;
-        return b.count - a.count;
-      });
-
-      const pointsMap = {};
-      const rankMap = {};
-      const statusMap = {};
-
-      appData.anglers.forEach(angler => {
-        const entryIdx = entries.findIndex(e => e.anglerId === angler.id);
-        
-        if (entryIdx === -1) {
-          pointsMap[angler.id] = 0;
-          rankMap[angler.id] = '-';
-          statusMap[angler.id] = 'DNF';
-        } else {
-          const entry = entries[entryIdx];
-          rankMap[angler.id] = entryIdx + 1;
-
-          if (entry.length === 0 && entry.count === 0) {
-            pointsMap[angler.id] = 1;
-            statusMap[angler.id] = 'BLANK';
-          } else {
-            const pts = Math.max(10 - entryIdx, 1);
-            pointsMap[angler.id] = pts;
-            statusMap[angler.id] = 'OK';
-          }
-        }
-      });
-
-      return { pointsMap, rankMap, statusMap, sortedEntries: entries };
-    }
-
-    function calculateOverallStandings() {
-      const legPointsByLeg = {};
-      const legStatusByLeg = {};
-
-      for (let l = 1; l <= 6; l++) {
-        const calculated = calculateLegPoints(l);
-        legPointsByLeg[l] = calculated.pointsMap;
-        legStatusByLeg[l] = calculated.statusMap;
-      }
-
-      const standings = appData.anglers.map(angler => {
-        const legScores = [];
-        let totalLengthAll = 0;
-        let totalCountAll = 0;
-
-        for (let l = 1; l <= 6; l++) {
-          const key = `${angler.id}_leg_${l}`;
-          const res = appData.results[key];
-          const pts = legPointsByLeg[l][angler.id] || 0;
-          const status = legStatusByLeg[l][angler.id] || 'DNF';
-
-          const len = (res && res.length !== null && res.length !== '') ? Number(res.length) : 0;
-          const cnt = (res && res.count !== null && res.count !== '') ? Number(res.count) : 0;
-
-          totalLengthAll += len;
-          totalCountAll += cnt;
-
-          legScores.push({
-            legId: l,
-            points: pts,
-            status: status,
-            length: len,
-            count: cnt
-          });
-        }
-
-        const sortedIndices = legScores
-          .map((item, index) => ({ index, points: item.points }))
-          .sort((a, b) => b.points - a.points);
-
-        const countedIndices = new Set(sortedIndices.slice(0, 4).map(item => item.index));
-
-        let best4Points = 0;
-        legScores.forEach((item, idx) => {
-          if (countedIndices.has(idx)) {
-            item.isCounted = true;
-            best4Points += item.points;
-          } else {
-            item.isCounted = false;
-          }
-        });
-
-        return {
-          angler,
-          legScores,
-          best4Points,
-          totalLengthAll,
-          totalCountAll
+    <script>
+        const TAB_CONFIG = {
+            'INDIVIDUAL RESULT': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Match Total Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Cumulative Length ➔ Cumulative Fish Count ➔ Biggest Fish"]
+            }, 
+            'ZONE 1': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
+            },                 
+            'ZONE 2': { 
+                staticRules: ["<strong>RANKING:</strong> Lowest Zone Points &nbsp;|&nbsp; <strong>TIES:</strong> Session Length ➔ Fish Count"]
+            }                  
         };
-      });
 
-      standings.sort((a, b) => {
-        if (b.best4Points !== a.best4Points) return b.best4Points - a.best4Points;
-        if (b.totalLengthAll !== a.totalLengthAll) return b.totalLengthAll - a.totalLengthAll;
-        return b.totalCountAll - a.totalCountAll;
-      });
+        let cachedScores = null;
+        let selectedAnglerName = "";
+        let selectedRivalName = "";
 
-      return standings;
-    }
-
-    // RENDER FUNCTIONS
-    function renderApp() {
-      const titleText = appData.title || "Club Fishing League Table";
-      document.title = titleText;
-      document.getElementById('admin-league-title-display').innerText = `🎣 ${titleText}`;
-      document.getElementById('bulletin-league-title').innerText = `🎣 ${titleText}`;
-
-      renderLeaderboard();
-      renderBreakdown();
-      renderLegSelector();
-      renderMatchEntry();
-      renderRoster();
-      renderBulletinView();
-    }
-
-    function renderLeaderboard() {
-      const headerRow = document.getElementById('leaderboard-header-row');
-      const body = document.getElementById('leaderboard-body');
-
-      let headerHTML = `
-        <th class="col-pos"># / PTS</th>
-        <th class="col-name">Angler Name</th>
-      `;
-
-      appData.legs.forEach(leg => {
-        const venueText = leg.venue ? leg.venue : 'TBD';
-        const dateText = leg.date ? formatDate(leg.date) : 'No Date';
-        headerHTML += `
-          <th class="leg-header">
-            <span class="leg-title">L${leg.id}</span>
-            <span class="leg-venue" title="${venueText}">${venueText}</span>
-            <span class="leg-date">${dateText}</span>
-          </th>
-        `;
-      });
-
-      headerHTML += `
-        <th class="col-total-len">Total Len</th>
-        <th class="col-fish-cnt">Fish</th>
-      `;
-      headerRow.innerHTML = headerHTML;
-
-      const standings = calculateOverallStandings();
-
-      if (standings.length === 0) {
-        body.innerHTML = `
-          <tr>
-            <td colspan="10" class="empty-state">
-              <h3>No Anglers in Roster</h3>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      body.innerHTML = standings.map((item, idx) => {
-        const rank = idx + 1;
-        let rankBadgeClass = '';
-        if (rank === 1) rankBadgeClass = 'rank-1';
-        else if (rank === 2) rankBadgeClass = 'rank-2';
-        else if (rank === 3) rankBadgeClass = 'rank-3';
-
-        const rankBadgeHtml = rankBadgeClass 
-          ? `<span class="rank-badge ${rankBadgeClass}">${rank}</span>` 
-          : `<span style="font-weight:700; color:var(--text-muted); font-size:0.72rem;">#${rank}</span>`;
-
-        const rankPointsComposite = `
-          <div class="rank-points-cell">
-            ${rankBadgeHtml}
-            <span class="pts-pill">${item.best4Points}pts</span>
-          </div>
-        `;
-
-        let legsCellsHTML = '';
-        item.legScores.forEach(score => {
-          let scoreDisplay = '';
-          let cls = score.isCounted ? 'score-counted' : 'score-dropped';
-
-          if (score.status === 'DNF') {
-            scoreDisplay = `<span class="score-dnf">DNF</span>`;
-          } else {
-            scoreDisplay = `${score.points} <span style="font-size:0.7rem; font-weight:normal; opacity:0.8;">pt</span>`;
-          }
-
-          legsCellsHTML += `<td class="score-cell ${cls}">${scoreDisplay}</td>`;
-        });
-
-        return `
-          <tr>
-            <td class="col-pos">${rankPointsComposite}</td>
-            <td class="col-name" style="font-weight: 700;" title="${escapeHTML(item.angler.name)}">${escapeHTML(item.angler.name)}</td>
-            ${legsCellsHTML}
-            <td class="col-total-len" style="color: var(--text-muted); font-weight:600;">${item.totalLengthAll} cm</td>
-            <td class="col-fish-cnt" style="color: var(--text-muted); font-weight:600;">${item.totalCountAll}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderBreakdown() {
-      const container = document.getElementById('breakdown-grid-container');
-
-      if (appData.anglers.length === 0) {
-        container.innerHTML = `<div class="empty-state"><h3>No Anglers in Roster</h3></div>`;
-        return;
-      }
-
-      container.innerHTML = appData.legs.map(leg => {
-        const venueText = leg.venue ? leg.venue : 'TBD Venue';
-        const dateText = leg.date ? formatDate(leg.date) : 'No Date';
-        const { pointsMap, rankMap, statusMap } = calculateLegPoints(leg.id);
-
-        const sortedAnglers = [...appData.anglers].sort((a, b) => {
-          const rankA = rankMap[a.id] === '-' ? 999 : rankMap[a.id];
-          const rankB = rankMap[b.id] === '-' ? 999 : rankMap[b.id];
-          return rankA - rankB;
-        });
-
-        const listItems = sortedAnglers.map(angler => {
-          const rank = rankMap[angler.id];
-          const pts = pointsMap[angler.id];
-          const status = statusMap[angler.id];
-          const key = `${angler.id}_leg_${leg.id}`;
-          const res = appData.results[key] || {};
-
-          let badge = '';
-          let isWinner = false;
-
-          if (rank === 1 && status === 'OK') {
-            badge = '🥇';
-            isWinner = true;
-          } else if (rank === 2 && status === 'OK') {
-            badge = '🥈';
-          } else if (rank === 3 && status === 'OK') {
-            badge = '🥉';
-          }
-
-          let scoreMeta = '';
-          if (status === 'DNF') {
-            scoreMeta = `<span class="score-dnf">DNF</span>`;
-          } else if (status === 'BLANK') {
-            scoreMeta = `<span style="color:var(--accent-gold); font-size:0.8rem; font-weight:700;">Blank (1 pt)</span>`;
-          } else {
-            scoreMeta = `<span style="color:var(--text-muted); font-size:0.8rem;">${res.length || 0}cm / ${res.count || 0}f → <strong style="color:var(--primary); font-size:0.88rem;">${pts}pts</strong></span>`;
-          }
-
-          return `
-            <div class="breakdown-item ${isWinner ? 'first-place' : ''}">
-              <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
-                <span style="font-weight:bold; font-size:0.8rem; color:var(--text-muted); width:18px;">${rank !== '-' ? '#' + rank : '-'}</span>
-                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:700;">${badge} ${escapeHTML(angler.name)}</span>
-              </div>
-              <div>${scoreMeta}</div>
-            </div>
-          `;
-        }).join('');
-
-        return `
-          <div class="breakdown-card">
-            <div class="breakdown-header">
-              <div class="breakdown-title">Leg ${leg.id}: ${escapeHTML(venueText)}</div>
-              <div class="breakdown-sub">${dateText}</div>
-            </div>
-            <div class="breakdown-list">${listItems}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderBulletinView() {
-      const standings = calculateOverallStandings();
-
-      let totalFish = 0;
-      let totalLength = 0;
-      let completedLegsCount = 0;
-      let recentWinner = '-';
-
-      appData.legs.forEach(leg => {
-        const { sortedEntries } = calculateLegPoints(leg.id);
-        if (sortedEntries.length > 0) {
-          completedLegsCount++;
-          const winnerEntry = sortedEntries[0];
-          const winnerAngler = appData.anglers.find(a => a.id === winnerEntry.anglerId);
-          if (winnerAngler) {
-            recentWinner = `${winnerAngler.name} (Leg ${leg.id})`;
-          }
-        }
-      });
-
-      standings.forEach(item => {
-        totalFish += item.totalCountAll;
-        totalLength += item.totalLengthAll;
-      });
-
-      // Render Podium Top 3 Cards
-      const podiumContainer = document.getElementById('podium-container');
-      if (standings.length >= 3) {
-        podiumContainer.innerHTML = `
-          <div class="podium-card gold">
-            <div class="podium-icon">🥇</div>
-            <div>
-              <div class="podium-name">${escapeHTML(standings[0].angler.name)}</div>
-              <div class="podium-sub">1st Place • ${standings[0].best4Points} pts (${standings[0].totalLengthAll} cm)</div>
-            </div>
-          </div>
-          <div class="podium-card silver">
-            <div class="podium-icon">🥈</div>
-            <div>
-              <div class="podium-name">${escapeHTML(standings[1].angler.name)}</div>
-              <div class="podium-sub">2nd Place • ${standings[1].best4Points} pts (${standings[1].totalLengthAll} cm)</div>
-            </div>
-          </div>
-          <div class="podium-card bronze">
-            <div class="podium-icon">🥉</div>
-            <div>
-              <div class="podium-name">${escapeHTML(standings[2].angler.name)}</div>
-              <div class="podium-sub">3rd Place • ${standings[2].best4Points} pts (${standings[2].totalLengthAll} cm)</div>
-            </div>
-          </div>
-        `;
-      } else {
-        podiumContainer.innerHTML = '';
-      }
-
-      document.getElementById('bulletin-progress-badge').innerText = `${completedLegsCount} of 6 Legs Completed`;
-      document.getElementById('stat-leader-name').innerText = standings.length > 0 ? standings[0].angler.name : '-';
-      document.getElementById('stat-total-fish').innerText = `${totalFish} Fish`;
-      document.getElementById('stat-total-length').innerText = `${totalLength} cm`;
-      document.getElementById('stat-recent-winner').innerText = recentWinner;
-
-      document.getElementById('bulletin-header-row').innerHTML = document.getElementById('leaderboard-header-row').innerHTML;
-      document.getElementById('bulletin-body').innerHTML = document.getElementById('leaderboard-body').innerHTML;
-      document.getElementById('bulletin-breakdown-container').innerHTML = document.getElementById('breakdown-grid-container').innerHTML;
-      
-      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-      document.getElementById('bulletin-last-updated').innerText = `Official Competition Bulletin • Updated ${today}`;
-    }
-
-    function renderLegSelector() {
-      const container = document.getElementById('leg-selector');
-      container.innerHTML = appData.legs.map(leg => {
-        const activeClass = leg.id === appData.currentSelectedLeg ? 'active' : '';
-        const venueLabel = leg.venue ? ` (${leg.venue})` : '';
-        return `
-          <button class="leg-btn ${activeClass}" onclick="selectLeg(${leg.id})">
-            Leg ${leg.id}${venueLabel}
-          </button>
-        `;
-      }).join('');
-
-      const currentLeg = appData.legs.find(l => l.id === appData.currentSelectedLeg);
-      if (currentLeg) {
-        document.getElementById('venue-name').value = currentLeg.venue || '';
-        document.getElementById('venue-date').value = currentLeg.date || '';
-      }
-    }
-
-    function selectLeg(legId) {
-      appData.currentSelectedLeg = legId;
-      renderLegSelector();
-      renderMatchEntry();
-    }
-
-    function saveLegVenueInfo() {
-      const leg = appData.legs.find(l => l.id === appData.currentSelectedLeg);
-      if (leg) {
-        leg.venue = document.getElementById('venue-name').value;
-        leg.date = document.getElementById('venue-date').value;
-        saveData();
-      }
-    }
-
-    function renderMatchEntry() {
-      const body = document.getElementById('match-entry-body');
-      const legId = appData.currentSelectedLeg;
-
-      if (appData.anglers.length === 0) {
-        body.innerHTML = `<tr><td colspan="5" class="empty-state"><h3>No Anglers Found</h3></td></tr>`;
-        return;
-      }
-
-      const { pointsMap, rankMap, statusMap } = calculateLegPoints(legId);
-
-      body.innerHTML = appData.anglers.map(angler => {
-        const key = `${angler.id}_leg_${legId}`;
-        const res = appData.results[key] || { length: '', count: '' };
-        const pts = pointsMap[angler.id] || 0;
-        const rank = rankMap[angler.id] || '-';
-        const status = statusMap[angler.id];
-
-        let pointsText = '';
-        if (status === 'DNF') {
-          pointsText = `<span class="score-dnf">0 pts (DNF)</span>`;
-        } else if (status === 'BLANK') {
-          pointsText = `<span class="score-counted" style="color:var(--accent-gold);">1 pt (Blank)</span>`;
-        } else {
-          pointsText = `<span class="score-counted">${pts} pts</span>`;
+        // 📳 Universal Touch Haptic Feedback Trigger
+        function triggerHaptic() {
+            if ('vibrate' in navigator) {
+                try { navigator.vibrate(12); } catch (e) {}
+            }
         }
 
-        return `
-          <tr>
-            <td style="font-weight: 700;">${escapeHTML(angler.name)}</td>
-            <td>
-              <input type="number" min="0" placeholder="DNF" value="${res.length !== undefined && res.length !== null ? res.length : ''}" 
-                style="width: 85px; font-weight:600;"
-                onchange="updateScore('${angler.id}', ${legId}, 'length', this.value)"> cm
-            </td>
-            <td>
-              <input type="number" min="0" placeholder="DNF" value="${res.count !== undefined && res.count !== null ? res.count : ''}" 
-                style="width: 75px; font-weight:600;"
-                onchange="updateScore('${angler.id}', ${legId}, 'count', this.value)">
-            </td>
-            <td><span style="font-weight:700; color:var(--text-muted);">${rank !== '-' ? '#' + rank : '-'}</span></td>
-            <td>${pointsText}</td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function updateScore(anglerId, legId, field, value) {
-      const key = `${anglerId}_leg_${legId}`;
-      if (!appData.results[key]) {
-        appData.results[key] = { length: '', count: '' };
-      }
-
-      if (value === '') {
-        appData.results[key][field] = '';
-      } else {
-        appData.results[key][field] = Number(value);
-      }
-
-      if (appData.results[key].length === '' && appData.results[key].count === '') {
-        delete appData.results[key];
-      }
-
-      saveData();
-    }
-
-    function renderRoster() {
-      const grid = document.getElementById('roster-grid-container');
-      document.getElementById('roster-count').innerText = appData.anglers.length;
-
-      if (appData.anglers.length === 0) {
-        grid.innerHTML = `<div class="empty-state"><h3>Roster is Empty</h3></div>`;
-        return;
-      }
-
-      grid.innerHTML = appData.anglers.map(angler => `
-        <div class="roster-card">
-          <span style="font-weight: 700;">${escapeHTML(angler.name)}</span>
-          <button class="btn btn-danger" style="padding: 2px 8px; font-size:0.75rem;" onclick="removeAngler('${angler.id}')">Remove</button>
-        </div>
-      `).join('');
-    }
-
-    function handleAddAngler(e) {
-      e.preventDefault();
-      const input = document.getElementById('new-angler-name');
-      const name = input.value.trim();
-      if (name) {
-        const newId = 'a_' + Date.now();
-        appData.anglers.push({ id: newId, name });
-        input.value = '';
-        saveData();
-      }
-    }
-
-    function removeAngler(id) {
-      if (confirm("Remove angler? Deletes all logged match scores.")) {
-        appData.anglers = appData.anglers.filter(a => a.id !== id);
-        Object.keys(appData.results).forEach(key => {
-          if (key.startsWith(`${id}_`)) {
-            delete appData.results[key];
-          }
+        window.addEventListener('popstate', function(event) {
+            dismissActiveOverlays();
         });
-        saveData();
-      }
-    }
 
-    // UTILS
-    function escapeHTML(str) {
-      return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-      );
-    }
+        function dismissActiveOverlays() {
+            const overlay = document.getElementById('viewer-overlay');
+            const rulesModal = document.getElementById('rules-modal');
+            const reportModal = document.getElementById('report-modal');
 
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const d = new Date(dateStr);
-      if (isNaN(d.getTime())) return dateStr;
-      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-    }
+            if (rulesModal && rulesModal.style.display === 'flex') {
+                rulesModal.style.display = 'none';
+            } else if (reportModal && reportModal.style.display === 'flex') {
+                reportModal.style.display = 'none';
+            } else if (overlay && overlay.style.display === 'flex') {
+                closeViewer(false);
+            }
+        }
 
-    // INITIALIZATION
-    loadData();
-    checkURLViewMode();
-    renderApp();
-  </script>
+        function pushOverlayState() {
+            if (!history.state || !history.state.overlayOpen) {
+                history.pushState({ overlayOpen: true }, '');
+            }
+        }
+
+        function scrollCardWrapperRight(wrapperId) {
+            triggerHaptic();
+            let container = document.getElementById(wrapperId);
+            if (!container) return;
+            let scrollable = container.classList.contains('card-table-wrapper') ? container : container.querySelector('.card-table-wrapper');
+            if (scrollable) {
+                scrollable.scrollBy({ left: 180, behavior: 'smooth' });
+            }
+        }
+
+        /* 🚀 Pixel Fluid Swipe Cue Indicator */
+        function triggerTableNudgeCue() {
+            setTimeout(() => {
+                const containers = document.querySelectorAll('#table-output .table-card-container');
+                containers.forEach(container => {
+                    let scrollable = container.querySelector('.card-table-wrapper');
+                    if (!scrollable) return;
+
+                    if (scrollable.scrollWidth > scrollable.clientWidth + 12) {
+                        if (!container.querySelector('.floating-swipe-pill')) {
+                            let pill = document.createElement('div');
+                            pill.className = 'floating-swipe-pill';
+                            pill.innerHTML = 'Swipe to Explore ➔';
+                            container.appendChild(pill);
+
+                            scrollable.addEventListener('scroll', function onScroll() {
+                                if (scrollable.scrollLeft > 20) {
+                                    pill.style.opacity = '0';
+                                    setTimeout(() => pill.remove(), 300);
+                                    scrollable.removeEventListener('scroll', onScroll);
+                                }
+                            });
+                        }
+
+                        setTimeout(() => {
+                            scrollable.scrollTo({ left: 90, behavior: 'smooth' });
+                            setTimeout(() => {
+                                scrollable.scrollTo({ left: 0, behavior: 'smooth' });
+                            }, 550);
+                        }, 300);
+                    }
+                });
+            }, 250);
+        }
+
+        function getCircleBadgeHtml(wrapperId) {
+            return `
+                <button class="card-scroll-pill" onclick="scrollCardWrapperRight('${wrapperId}')" title="Scroll Table Right">
+                    <span class="pill-text">MORE DATA</span>
+                    <span class="pill-arrow">➔</span>
+                </button>
+            `;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initMatchMetadata();
+            updateSyncTime();
+        });
+
+        function initMatchMetadata() {
+            document.title = MATCH_CONFIG.competitionName + " | Pixel Liquid Glass Edition v3.0.0";
+            document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
+            document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
+            document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
+        }
+
+        async function updateSyncTime() {
+            try {
+                const timestampForFetch = new Date().getTime();
+                const response = await fetch('scores.json?v=' + timestampForFetch, { method: 'HEAD' });
+                if (response.ok === true) {
+                    const lastMod = response.headers.get('Last-Modified');
+                    if (lastMod !== null) {
+                        const dateObj = new Date(lastMod);
+                        document.getElementById('sync-time-text').innerText = 'Synced: ' + dateObj.toLocaleDateString() + ', ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        return;
+                    }
+                }
+                document.getElementById('sync-time-text').innerText = 'Live Telemetry Connected';
+            } catch (error) { 
+                document.getElementById('sync-time-text').innerText = 'Telemetry Offline'; 
+            }
+        }
+
+        async function fetchScores() {
+            if (cachedScores !== null) return cachedScores;
+            const timestampForFetch = new Date().getTime();
+            const response = await fetch('scores.json?v=' + timestampForFetch);
+            if (response.ok === false) throw new Error("JSON payload unavailable.");
+            const data = await response.json();
+            
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                cachedScores = data;
+            } else if (Array.isArray(data)) {
+                cachedScores = { anglers: data, secretPairs: null, biggestFishSpecies: null };
+            } else {
+                throw new Error("Invalid JSON structure.");
+            }
+            return cachedScores;
+        }
+
+        function openRulesModal(title, contentHtml) {
+            pushOverlayState();
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerHTML = contentHtml;
+            document.getElementById('rules-modal').style.display = 'flex';
+        }
+        function closeModal(event) {
+            if (event) event.preventDefault();
+            document.getElementById('rules-modal').style.display = 'none';
+        }
+
+        function toggleAnglerPicker() {
+            const container = document.getElementById('angler-picker-container');
+            const btn = document.getElementById('angler-picker-btn');
+            const isVisible = container.classList.contains('visible');
+            
+            if (isVisible) {
+                container.classList.remove('visible');
+                btn.classList.remove('open');
+            } else {
+                container.classList.add('visible');
+                btn.classList.add('open');
+            }
+        }
+
+        function toggleRivalPicker() {
+            const container = document.getElementById('rival-picker-container');
+            const btn = document.getElementById('rival-picker-btn');
+            if (!container || !btn) return;
+
+            const isVisible = container.classList.contains('visible');
+            if (isVisible) {
+                container.classList.remove('visible');
+                btn.classList.remove('open');
+            } else {
+                container.classList.add('visible');
+                btn.classList.add('open');
+            }
+        }
+
+        async function openReportModal() {
+            pushOverlayState();
+            selectedAnglerName = "";
+            document.getElementById('angler-picker-btn-text').innerText = "Choose your name";
+            
+            const container = document.getElementById('angler-picker-container');
+            const btn = document.getElementById('angler-picker-btn');
+            container.classList.remove('visible');
+            btn.classList.remove('open');
+            
+            try {
+                const data = await fetchScores();
+                const anglers = data.anglers || [];
+                const sortedNames = [...anglers].sort((a,b) => a.anglerName.localeCompare(b.anglerName));
+                
+                const listElem = document.getElementById('custom-angler-picker');
+                listElem.innerHTML = '';
+                
+                sortedNames.forEach((a) => {
+                    let itemDiv = document.createElement('div');
+                    itemDiv.className = 'custom-picker-item';
+                    itemDiv.onclick = function() { triggerHaptic(); selectPickerAngler(a.anglerName, itemDiv); };
+                    itemDiv.innerHTML = `<span>${a.anglerName}</span><span class="check-icon">✓</span>`;
+                    listElem.appendChild(itemDiv);
+                });
+                
+                document.getElementById('report-modal').style.display = 'flex';
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function selectPickerAngler(name, targetElem) {
+            selectedAnglerName = name;
+            document.getElementById('angler-picker-btn-text').innerText = name;
+            
+            const items = document.querySelectorAll('#custom-angler-picker .custom-picker-item');
+            items.forEach(el => el.classList.remove('selected'));
+            if (targetElem) targetElem.classList.add('selected');
+            
+            toggleAnglerPicker();
+        }
+
+        function closeReportModal(event) {
+            if (event) event.preventDefault();
+            document.getElementById('report-modal').style.display = 'none';
+        }
+
+        function selectRivalAngler(rivalName, targetElem, primaryAnglerName) {
+            triggerHaptic();
+            selectedRivalName = rivalName;
+            const btnText = document.getElementById('rival-picker-btn-text');
+            if (btnText) btnText.innerText = rivalName;
+
+            const items = document.querySelectorAll('#custom-rival-picker .custom-picker-item');
+            items.forEach(el => el.classList.remove('selected'));
+            if (targetElem) targetElem.classList.add('selected');
+            
+            toggleRivalPicker();
+            renderRivalryComparison(primaryAnglerName, rivalName);
+        }
+
+        function calcPercentile(targetVal, array, isLowerBetter = false) {
+            if (!array || array.length <= 1) return 0;
+            let allEqualOrZero = array.every(v => v === array[0]);
+            if (allEqualOrZero || targetVal === 0) return 0;
+
+            let countBetterThan = 0;
+            array.forEach(v => {
+                if (isLowerBetter) {
+                    if (v > targetVal) countBetterThan++;
+                } else {
+                    if (v < targetVal) countBetterThan++;
+                }
+            });
+
+            if (countBetterThan === 0) return 0;
+            let pct = Math.round((countBetterThan / (array.length - 1)) * 100);
+            return Math.min(Math.max(pct, 0), 99);
+        }
+
+        async function generatePersonalReport() {
+            if (!selectedAnglerName) {
+                alert("Please tap [ Choose your name ] to select your competitor profile first.");
+                return;
+            }
+
+            closeReportModal();
+            pushOverlayState();
+
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            titleDisplay.innerText = "Telemetry: " + selectedAnglerName;
+            
+            output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            try {
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
+                const user = anglers.find(a => a.anglerName === selectedAnglerName);
+
+                if (!user) {
+                    output.innerHTML = '<div class="status-msg">Competitor Record Not Found</div>';
+                    return;
+                }
+
+                let d1RankStr = "-", d2RankStr = "-";
+
+                let d1Anglers = anglers.filter(a => a.day1 && a.day1.zone).sort((a,b) => {
+                    if ((a.day1.zonePoints || 999) !== (b.day1.zonePoints || 999)) return (a.day1.zonePoints || 999) - (b.day1.zonePoints || 999);
+                    return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
+                });
+                let userD1Idx = d1Anglers.findIndex(a => a.anglerName === selectedAnglerName);
+                if (userD1Idx !== -1) d1RankStr = `${userD1Idx + 1}${getOrdinalSuffix(userD1Idx + 1)}`;
+
+                let d2Anglers = anglers.filter(a => a.day2 && a.day2.zone).sort((a,b) => {
+                    if ((a.day2.zonePoints || 999) !== (b.day2.zonePoints || 999)) return (a.day2.zonePoints || 999) - (b.day2.zonePoints || 999);
+                    return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
+                });
+                let userD2Idx = d2Anglers.findIndex(a => a.anglerName === selectedAnglerName);
+                if (userD2Idx !== -1) d2RankStr = `${userD2Idx + 1}${getOrdinalSuffix(userD2Idx + 1)}`;
+
+                function getOrdinalSuffix(i) {
+                    let j = i % 10, k = i % 100;
+                    if (j === 1 && k !== 11) return "st";
+                    if (j === 2 && k !== 12) return "nd";
+                    if (j === 3 && k !== 13) return "rd";
+                    return "th";
+                }
+
+                let uFish = user.totals.cumulativeFish || 0;
+                let uLen = user.totals.cumulativeLengthCm || 0;
+                let uPts = user.totals.cumulativePoints || 0;
+                let uAvgSize = uFish > 0 ? (uLen / uFish) : 0;
+                let uMaxFish = Math.max(user.day1?.biggestFishCm || 0, user.day2?.biggestFishCm || 0);
+                
+                let uD1Fish = user.day1?.fishCount || 0;
+                let uD2Fish = user.day2?.fishCount || 0;
+                let uPeakSession = Math.max(uD1Fish, uD2Fish);
+
+                let ptsArr = anglers.map(a => a.totals.cumulativePoints || 0);
+                let fishArr = anglers.map(a => a.totals.cumulativeFish || 0);
+                let lenArr = anglers.map(a => a.totals.cumulativeLengthCm || 0);
+                let specArr = anglers.map(a => Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0));
+                let avgSizeArr = anglers.map(a => (a.totals.cumulativeFish || 0) > 0 ? ((a.totals.cumulativeLengthCm || 0) / a.totals.cumulativeFish) : 0);
+                let peakSessionArr = anglers.map(a => Math.max(a.day1?.fishCount || 0, a.day2?.fishCount || 0));
+
+                let pOverallMatch = calcPercentile(uPts, ptsArr, true);
+                let pLen = calcPercentile(uLen, lenArr);
+                let pFish = calcPercentile(uFish, fishArr);
+                let pSpec = calcPercentile(uMaxFish, specArr);
+                let pAvgSize = calcPercentile(uAvgSize, avgSizeArr);
+                let pPeakSession = calcPercentile(uPeakSession, peakSessionArr);
+
+                let htmlMarkup = '<div class="stat-grid">';
+
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 3px solid var(--broadcast-gold); text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-family: 'Barlow Condensed'; font-size: 1.55rem; text-transform: uppercase; font-weight: 900; color: var(--text-main); line-height:1;">${user.anglerName}</span>
+                            <button onclick="triggerHaptic(); openReportModal()" style="background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--text-main); padding: 5px 12px; border-radius: var(--radius-pill); font-family: 'Barlow Condensed'; font-size: 0.82rem; text-transform: uppercase; font-weight: 800; cursor: pointer;">Switch ↺</button>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 12px; font-family: 'JetBrains Mono';">TEAM: ${user.teamName || 'SOLO COMPETITOR'}</div>
+
+                        <div style="background: rgba(15, 23, 42, 0.8); padding: 12px 10px; border-radius: 16px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 10px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; text-align: center;">
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.1rem; color:var(--broadcast-gold);">${uPts}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.6px;">ZONE PTS</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.1rem;">${(uLen/100).toFixed(2)}m</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.6px;">LENGTH</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.1rem;">${uFish}</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.6px;">FISH</div></div>
+                                <div><div style="font-family:'JetBrains Mono'; font-weight:900; font-size:1.1rem;">${uMaxFish}cm</div><div style="font-size:0.6rem; color:var(--text-muted); font-weight:900; font-family:'Barlow Condensed'; text-transform:uppercase; letter-spacing:0.6px;">BEST</div></div>
+                            </div>
+
+                            <div style="background: linear-gradient(90deg, rgba(56, 189, 248, 0.12) 0%, rgba(251, 191, 36, 0.12) 100%); border-top: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.88rem; font-weight: 900; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">SESSION RANK MOVEMENT</span>
+                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 900; color: var(--broadcast-cyan);">${d1RankStr} <span style="color:var(--broadcast-gold); font-size:0.8rem; margin: 0 2px;">➔</span> ${d2RankStr}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                htmlMarkup += `
+                    <div class="stat-card" style="text-align: left;">
+                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">📊 Core Telemetry Metrics</div>
+                        
+                        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; text-align: center; font-size: 0.78rem; color: var(--text-muted); line-height: 1.35; font-family:'Inter', sans-serif;">
+                            Each liquid bar displays the percentage of the active field outperformed in that metric.
+                        </div>
+
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">1. Total Zone Points (${uPts} Points)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pOverallMatch}%; background: var(--broadcast-gold); color: #07090e;">${pOverallMatch}%</div>
+                                <div class="bar-chart-label-right">Beats ${pOverallMatch}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Overall championship standing based on cumulative zone points.</span>
+                        </div>
+
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">2. Total Catch Length (${(uLen/100).toFixed(2)}m)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pLen}%; background: #475569; color: #fff;">${pLen}%</div>
+                                <div class="bar-chart-label-right">Beats ${pLen}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Cumulative length of all verified fish landed.</span>
+                        </div>
+
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">3. Total Fish Count (${uFish} Fish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pFish}%; background: var(--broadcast-cyan); color: #07090e;">${pFish}%</div>
+                                <div class="bar-chart-label-right">Beats ${pFish}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Total fish volume across all match sessions.</span>
+                        </div>
+
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">4. Biggest Single Specimen (${uMaxFish}cm)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pSpec}%; background: var(--broadcast-emerald); color: #07090e;">${pSpec}%</div>
+                                <div class="bar-chart-label-right">Beats ${pSpec}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Longest single specimen landed during the competition.</span>
+                        </div>
+
+                        <div class="metric-card-item">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">5. Average Fish Size (${uAvgSize.toFixed(1)}cm / Fish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pAvgSize}%; background: #0284c7; color: #fff;">${pAvgSize}%</div>
+                                <div class="bar-chart-label-right">Beats ${pAvgSize}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Average catch size per individual landed specimen.</span>
+                        </div>
+
+                        <div class="metric-card-item" style="margin-bottom:0;">
+                            <div style="font-size: 0.92rem; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase;">6. Peak Single-Session Catch (${uPeakSession} Fish)</div>
+                            <div class="bar-chart-container">
+                                <div class="bar-chart-fill" style="width: ${pPeakSession}%; background: var(--broadcast-red); color: #fff;">${pPeakSession}%</div>
+                                <div class="bar-chart-label-right">Beats ${pPeakSession}% of field</div>
+                            </div>
+                            <span class="metric-subtext">Highest fish count recorded in any single match session.</span>
+                        </div>
+
+                    </div>
+                `;
+
+                const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
+
+                htmlMarkup += `
+                    <div class="stat-card" style="text-align: left;">
+                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">🥊 Head-to-Head Telemetry Matchup</div>
+                        <div style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; font-family:'Inter', sans-serif;">Select any rival competitor for a direct broadcast side-by-side analysis.</div>
+
+                        <div style="margin-bottom: 12px;">
+                            <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.8px;">CHOOSE RIVAL COMPETITOR</span>
+
+                            <button id="rival-picker-btn" class="picker-trigger-btn rival-btn" onclick="triggerHaptic(); toggleRivalPicker()">
+                                <span id="rival-picker-btn-text" class="picker-trigger-name">Choose Rival Competitor...</span>
+                                <span class="picker-trigger-action">SELECT <span class="trigger-arrow">▾</span></span>
+                            </button>
+
+                            <div id="rival-picker-container" class="custom-picker-container">
+                                <div id="custom-rival-picker" class="custom-picker-list">
+                `;
+
+                rivals.forEach((r) => {
+                    htmlMarkup += `
+                        <div class="custom-picker-item" onclick="selectRivalAngler('${r.anglerName.replace(/'/g, "\\'")}', this, '${user.anglerName.replace(/'/g, "\\'")}')">
+                            <span>${r.anglerName}</span><span class="check-icon">✓</span>
+                        </div>
+                    `;
+                });
+
+                htmlMarkup += `
+                                </div>
+                                <div class="picker-gradient-overlay"></div>
+                            </div>
+                        </div>
+
+                        <div id="rivalry-output-box"><div style="text-align: center; color: var(--text-muted); font-size: 0.82rem; padding: 14px; font-family:'Inter', sans-serif;">Tap the button above to choose a rival competitor.</div></div>
+                    </div>
+                `;
+
+                htmlMarkup += '</div>';
+                output.innerHTML = htmlMarkup;
+
+            } catch(e) {
+                console.error(e);
+                output.innerHTML = '<div class="status-msg">Telemetry Generation Error</div>';
+            }
+        }
+
+        async function renderRivalryComparison(userAnglerName, rivalName) {
+            const outputBox = document.getElementById('rivalry-output-box');
+            if (!rivalName || !outputBox) return;
+
+            const data = await fetchScores();
+            const anglers = data.anglers || [];
+            const user = anglers.find(a => a.anglerName === userAnglerName);
+            const rival = anglers.find(a => a.anglerName === rivalName);
+
+            if (!user || !rival) return;
+
+            function getStats(a) {
+                let f = a.totals.cumulativeFish || 0;
+                let l = a.totals.cumulativeLengthCm || 0;
+                let p = a.totals.cumulativePoints || 0;
+                let avgS = f > 0 ? (l / f) : 0;
+                let maxF = Math.max(a.day1?.biggestFishCm || 0, a.day2?.biggestFishCm || 0);
+                
+                let d1f = a.day1?.fishCount || 0;
+                let d2f = a.day2?.fishCount || 0;
+                let peakSession = Math.max(d1f, d2f);
+
+                return { f, l, p, avgS, maxF, d1f, d2f, peakSession };
+            }
+
+            let u = getStats(user);
+            let r = getStats(rival);
+
+            let metricsList = [
+                { uVal: u.p, rVal: r.p, isLowerBetter: true },
+                { uVal: u.f, rVal: r.f, isLowerBetter: false },
+                { uVal: u.l, rVal: r.l, isLowerBetter: false },
+                { uVal: u.maxF, rVal: r.maxF, isLowerBetter: false },
+                { uVal: u.avgS, rVal: r.avgS, isLowerBetter: false },
+                { uVal: u.peakSession, rVal: r.peakSession, isLowerBetter: false }
+            ];
+
+            let wins = 0, draws = 0, losses = 0;
+            metricsList.forEach(m => {
+                if (m.uVal === m.rVal) {
+                    draws++;
+                } else {
+                    let uWins = m.isLowerBetter ? (m.uVal < m.rVal) : (m.uVal > m.rVal);
+                    if (uWins) wins++; else losses++;
+                }
+            });
+
+            let totalMetrics = metricsList.length;
+            let dominancePct = Math.round((wins / totalMetrics) * 100);
+
+            let summaryTitleClass = "dominant";
+            let summaryTitleText = `YOU WON ${wins} OF ${totalMetrics} METRICS (${dominancePct}% DOMINANCE)`;
+
+            if (wins < losses) {
+                summaryTitleClass = "behind";
+                summaryTitleText = `${rival.anglerName.split(' ')[0].toUpperCase()} WON ${losses} OF ${totalMetrics} METRICS (${100 - dominancePct}% ADVANTAGE)`;
+            } else if (wins === losses) {
+                summaryTitleClass = "tied";
+                summaryTitleText = `DEAD HEAT: TIED AT ${wins} METRICS EACH`;
+            }
+
+            function renderCellHtml(valStr, valU, valR, isLowerBetter = false, isUser = true) {
+                if (valU === valR) {
+                    return `
+                        <div class="rivalry-cell">
+                            <span class="rivalry-val">${valStr}</span>
+                            <span class="rivalry-badge draw">DRAW</span>
+                        </div>
+                    `;
+                }
+                let uWins = isLowerBetter ? (valU < valR) : (valU > valR);
+                let thisWins = isUser ? uWins : !uWins;
+
+                return `
+                    <div class="rivalry-cell">
+                        <span class="rivalry-val">${valStr}</span>
+                        ${thisWins ? '<span class="rivalry-badge win">WIN</span>' : ''}
+                    </div>
+                `;
+            }
+
+            let html = `
+                <div class="beat-rate-summary-bar">
+                    <div class="beat-rate-title ${summaryTitleClass}">${summaryTitleText}</div>
+                    <div class="beat-rate-sub">MATCH RECORD: ${wins} WINS &nbsp;|&nbsp; ${draws} DRAWS &nbsp;|&nbsp; ${losses} LOSSES</div>
+                </div>
+
+                <div class="table-card-container" style="margin-bottom:0; padding:2px;">
+                    <div class="card-table-wrapper">
+                        <table style="width:100%; font-size: 0.78rem; margin-bottom:0;">
+                            <tr>
+                                <th style="text-align:center; width:33%; padding: 6px 4px;">${user.anglerName.split(' ')[0]}</th>
+                                <th style="text-align:center; width:34%; padding: 6px 4px;">METRIC</th>
+                                <th style="text-align:center; width:33%; padding: 6px 4px;">${rival.anglerName.split(' ')[0]}</th>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${u.p} pts`, u.p, r.p, true, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Points</td>
+                                <td>${renderCellHtml(`${r.p} pts`, u.p, r.p, true, false)}</td>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${u.f} fish`, u.f, r.f, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Fish</td>
+                                <td>${renderCellHtml(`${r.f} fish`, u.f, r.f, false, false)}</td>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${(u.l/100).toFixed(2)}m`, u.l, r.l, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Total Length</td>
+                                <td>${renderCellHtml(`${(r.l/100).toFixed(2)}m`, u.l, r.l, false, false)}</td>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${u.maxF} cm`, u.maxF, r.maxF, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Biggest Fish</td>
+                                <td>${renderCellHtml(`${r.maxF} cm`, u.maxF, r.maxF, false, false)}</td>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${u.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Avg Fish Size</td>
+                                <td>${renderCellHtml(`${r.avgS.toFixed(1)} cm`, u.avgS, r.avgS, false, false)}</td>
+                            </tr>
+                            <tr>
+                                <td>${renderCellHtml(`${u.peakSession} fish`, u.peakSession, r.peakSession, false, true)}</td>
+                                <td style="text-align:center; color:var(--text-muted); font-weight:800; font-size: 0.8rem; font-family:'Barlow Condensed'; text-transform:uppercase;">Peak Session</td>
+                                <td>${renderCellHtml(`${r.peakSession} fish`, u.peakSession, r.peakSession, false, false)}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+            outputBox.innerHTML = html;
+        }
+
+        function createVerticalZoneBars(zoneData, totalFishInSession, sessionTop10Anglers = []) {
+            if (!totalFishInSession || totalFishInSession <= 0) {
+                return `<div style="text-align:center; font-size:0.85rem; font-family:'Barlow Condensed'; font-weight:800; color:var(--text-muted); padding:24px 0; text-transform:uppercase; letter-spacing:0.8px;">No Catch Data Recorded</div>`;
+            }
+
+            function getFishCount(zName) {
+                let rawObj = zoneData[zName] || zoneData[zName.replace(' Zone', '')] || zoneData[zName.split(' ')[0]] || {};
+                return rawObj.fish || 0;
+            }
+
+            let redFish = getFishCount('Red Zone');
+            let blueFish = getFishCount('Blue Zone');
+            let greenFish = getFishCount('Green Zone');
+            let knownSum = redFish + blueFish + greenFish;
+
+            let yellowFish = getFishCount('Yellow Zone');
+            if (yellowFish === 0 && totalFishInSession > knownSum) {
+                yellowFish = totalFishInSession - knownSum;
+            }
+
+            let top10ZoneCounts = { 'Red': 0, 'Blue': 0, 'Green': 0, 'Yellow': 0 };
+            sessionTop10Anglers.forEach(angler => {
+                let zName = angler.zone || '';
+                let key = zName.split(' ')[0];
+                if (top10ZoneCounts[key] !== undefined) {
+                    top10ZoneCounts[key]++;
+                }
+            });
+
+            const zones = [
+                { 
+                    name: 'Red', 
+                    count: redFish, 
+                    top10Count: top10ZoneCounts['Red'],
+                    gradient: 'linear-gradient(180deg, #f87171 0%, #991b1b 100%)', 
+                    borderHighlight: 'rgba(254, 202, 202, 0.6)'
+                },
+                { 
+                    name: 'Blue', 
+                    count: blueFish, 
+                    top10Count: top10ZoneCounts['Blue'],
+                    gradient: 'linear-gradient(180deg, #38bdf8 0%, #1e40af 100%)', 
+                    borderHighlight: 'rgba(191, 219, 254, 0.6)'
+                },
+                { 
+                    name: 'Green', 
+                    count: greenFish, 
+                    top10Count: top10ZoneCounts['Green'],
+                    gradient: 'linear-gradient(180deg, #34d399 0%, #065f46 100%)', 
+                    borderHighlight: 'rgba(167, 243, 208, 0.6)'
+                },
+                { 
+                    name: 'Yellow', 
+                    count: yellowFish, 
+                    top10Count: top10ZoneCounts['Yellow'],
+                    gradient: 'linear-gradient(180deg, #fbbf24 0%, #92400e 100%)', 
+                    borderHighlight: 'rgba(254, 240, 138, 0.6)'
+                }
+            ];
+
+            let maxCount = Math.max(...zones.map(z => z.count), 1);
+            let columnsHtml = '';
+
+            zones.forEach(z => {
+                let pct = Math.round((z.count / totalFishInSession) * 100) || 0;
+                let relativeRatio = z.count / maxCount;
+                let barHeight = Math.max(Math.round(relativeRatio * 75), 18);
+
+                let top10BadgeHtml = '';
+                if (z.top10Count > 0) {
+                    top10BadgeHtml = `
+                        <div style="background: rgba(7, 10, 18, 0.88); border: 1px solid rgba(251, 191, 36, 0.5); width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.7); margin-top: 3px;">
+                            <span style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; font-weight:900; color:var(--broadcast-gold); line-height:1;">${z.top10Count}</span>
+                        </div>
+                    `;
+                }
+
+                columnsHtml += `
+                    <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative;">
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 900; color: #ffffff; line-height: 1; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.9);">${pct}%</span>
+                        
+                        <div style="width: 100%; height: ${barHeight}%; background: ${z.gradient}; border-top: 2px solid ${z.borderHighlight}; border-radius: 10px 10px 0 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 2px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.5); transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);" title="${z.name}: ${pct}% (${z.count} Fish)">
+                            ${top10BadgeHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            return `
+                <div style="width: 100%; height: 150px; background: rgba(15, 23, 42, 0.85); border-radius: 16px; padding: 12px 10px 0 10px; display: flex; gap: 4px; border: 1px solid var(--glass-border); box-shadow: inset 0 3px 10px rgba(0,0,0,0.8); margin-top: 4px; position: relative; overflow: hidden;">
+                    ${columnsHtml}
+                </div>
+            `;
+        }
+
+        async function loadMatchStats(displayTitle) {
+            pushOverlayState();
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            titleDisplay.innerText = displayTitle;
+            
+            output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            try {
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
+                
+                let totalAnglers = anglers.length;
+                let totalFish = 0, day1Fish = 0, day2Fish = 0;
+                let totalLengthCm = 0, day1LengthTotal = 0, day2LengthTotal = 0;
+                let day1Blankers = 0, day2Blankers = 0;
+                let day1Entries = 0, day2Entries = 0;
+                let blankers = 0;
+
+                let zoneKeys = ['Red Zone', 'Blue Zone', 'Green Zone', 'Yellow Zone'];
+                let d1ZoneTotals = {}, d2ZoneTotals = {};
+                zoneKeys.forEach(k => {
+                    d1ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
+                    d2ZoneTotals[k] = { fish: 0, length: 0, anglers: 0, maxFish: 0, totalCompetitors: 0, biggestFish: 0 };
+                });
+
+                let pegStats = {};
+
+                anglers.forEach(item => {
+                    let cFish = item.totals.cumulativeFish || 0;
+                    let cLen = item.totals.cumulativeLengthCm || 0;
+                    
+                    totalFish += cFish;
+                    totalLengthCm += cLen;
+                    if (cFish === 0) blankers++;
+
+                    if (item.day1 && item.day1.zone) {
+                        day1Entries++;
+                        let z = item.day1.zone;
+                        let d1f = item.day1.fishCount || 0;
+                        let p1 = item.day1.peg;
+                        day1Fish += d1f;
+                        day1LengthTotal += item.day1.totalLengthCm || 0;
+                        if (d1f === 0) day1Blankers++;
+                        
+                        if (d1ZoneTotals[z]) {
+                            d1ZoneTotals[z].totalCompetitors++;
+                            if (d1f > 0) {
+                                d1ZoneTotals[z].fish += d1f;
+                                d1ZoneTotals[z].length += item.day1.totalLengthCm;
+                                d1ZoneTotals[z].anglers++;
+                                if (d1f > d1ZoneTotals[z].maxFish) d1ZoneTotals[z].maxFish = d1f;
+                            }
+                            if (item.day1.biggestFishCm > d1ZoneTotals[z].biggestFish) d1ZoneTotals[z].biggestFish = item.day1.biggestFishCm;
+                        }
+
+                        if (p1 !== undefined && p1 !== null) {
+                            if (!pegStats[p1]) pegStats[p1] = { pegNo: p1, combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: z, d2Fish: 0, d2Zone: '' };
+                            pegStats[p1].combinedFish += d1f;
+                            pegStats[p1].combinedLength += item.day1.totalLengthCm || 0;
+                            pegStats[p1].d1Fish += d1f;
+                            pegStats[p1].d1Zone = z;
+                        }
+                    }
+
+                    if (item.day2 && item.day2.zone) {
+                        day2Entries++;
+                        let z = item.day2.zone;
+                        let d2f = item.day2.fishCount || 0;
+                        let p2 = item.day2.peg;
+                        day2Fish += d2f;
+                        day2LengthTotal += item.day2.totalLengthCm || 0;
+                        if (d2f === 0) day2Blankers++;
+
+                        if (d2ZoneTotals[z]) {
+                            d2ZoneTotals[z].totalCompetitors++;
+                            if (d2f > 0) {
+                                d2ZoneTotals[z].fish += d2f;
+                                d2ZoneTotals[z].length += item.day2.totalLengthCm;
+                                d2ZoneTotals[z].anglers++;
+                                if (d2f > d2ZoneTotals[z].maxFish) d2ZoneTotals[z].maxFish = d2f;
+                            }
+                            if (item.day2.biggestFishCm > d2ZoneTotals[z].biggestFish) d2ZoneTotals[z].biggestFish = item.day2.biggestFishCm;
+                        }
+
+                        if (p2 !== undefined && p2 !== null) {
+                            if (!pegStats[p2]) pegStats[p2] = { pegNo: p2, combinedFish: 0, combinedLength: 0, d1Fish: 0, d1Zone: '', d2Fish: 0, d2Zone: z };
+                            pegStats[p2].combinedFish += d2f;
+                            pegStats[p2].combinedLength += item.day2.totalLengthCm || 0;
+                            pegStats[p2].d2Fish += d2f;
+                            pegStats[p2].d2Zone = z;
+                        }
+                    }
+                });
+
+                let d1Top10 = [...anglers].filter(a => a.day1 && a.day1.zone).sort((a,b) => {
+                    if ((a.day1.fishCount || 0) !== (b.day1.fishCount || 0)) return (b.day1.fishCount || 0) - (a.day1.fishCount || 0);
+                    return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
+                }).slice(0, 10).map(a => ({ name: a.anglerName, zone: a.day1.zone }));
+
+                let d2Top10 = [...anglers].filter(a => a.day2 && a.day2.zone).sort((a,b) => {
+                    if ((a.day2.fishCount || 0) !== (b.day2.fishCount || 0)) return (b.day2.fishCount || 0) - (a.day2.fishCount || 0);
+                    return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
+                }).slice(0, 10).map(a => ({ name: a.anglerName, zone: a.day2.zone }));
+
+                let isTwoDayComp = day2Entries > 0;
+                
+                let d1CatchingRate = day1Entries > 0 ? (((day1Entries - day1Blankers) / day1Entries) * 100).toFixed(0) : 0;
+                let d1BlankRate = day1Entries > 0 ? ((day1Blankers / day1Entries) * 100).toFixed(0) : 0;
+                
+                let d2CatchingRate = day2Entries > 0 ? (((day2Entries - day2Blankers) / day2Entries) * 100).toFixed(0) : 0;
+                let d2BlankRate = day2Entries > 0 ? ((day2Blankers / day2Entries) * 100).toFixed(0) : 0;
+
+                let singleCompCatchingRate = totalAnglers > 0 ? (((totalAnglers - blankers) / totalAnglers) * 100).toFixed(0) : 0;
+                let singleCompBlankRate = totalAnglers > 0 ? ((blankers / totalAnglers) * 100).toFixed(0) : 0;
+
+                let totalMeters = (totalLengthCm / 100).toFixed(2);
+                let avgFishLength = totalFish > 0 ? (totalLengthCm / totalFish).toFixed(1) : 0;
+                let avgCatchPerAngler = totalAnglers > 0 ? (totalFish / totalAnglers).toFixed(1) : 0;
+
+                let htmlMarkup = '<div class="stat-grid">';
+                
+                let successBlockHtml = '';
+                if (isTwoDayComp) {
+                    successBlockHtml = `
+                        <div style="padding: 12px 12px; display: flex; flex-direction: column; gap: 10px; background: rgba(15, 23, 42, 0.7);">
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--broadcast-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 1 (NIGHT) FIELD TELEMETRY</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                    <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.35rem; font-weight: 900; color: var(--broadcast-emerald);">${d1CatchingRate}%</div>
+                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                    </div>
+                                    <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.35rem; font-weight: 900; color: var(--text-muted);">${d1BlankRate}%</div>
+                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--broadcast-cyan); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 2 (DAYTIME) FIELD TELEMETRY</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                    <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.35rem; font-weight: 900; color: var(--broadcast-emerald);">${d2CatchingRate}%</div>
+                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                    </div>
+                                    <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 8px; text-align: center;">
+                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.35rem; font-weight: 900; color: var(--text-muted);">${d2BlankRate}%</div>
+                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    successBlockHtml = `
+                        <div style="padding: 12px 12px; background: rgba(15, 23, 42, 0.7);">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 900; color: var(--broadcast-emerald);">${singleCompCatchingRate}%</div>
+                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Anglers Catching</div>
+                                </div>
+                                <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; text-align: center;">
+                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 900; color: var(--text-muted);">${singleCompBlankRate}%</div>
+                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; font-family:'Barlow Condensed';">Blank Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                /* CARD 1: Executive Summary */
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 3px solid var(--broadcast-cyan); text-align: left; padding: 0; overflow: hidden;">
+                        ${successBlockHtml}
+                        <div style="border-top: 1px solid var(--glass-border); padding: 12px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; background: rgba(15, 23, 42, 0.85); text-align: center;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Anglers</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Fish</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; margin-top: 1px; font-family:'Barlow Condensed';">Total Length</div>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--glass-border); padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(7, 10, 18, 0.9); text-align: center;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.05rem; font-weight: 900; color: var(--broadcast-gold);">${avgCatchPerAngler} Fish</div>
+                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; font-family:'Barlow Condensed';">Avg / Angler</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 1.05rem; font-weight: 900; color: var(--broadcast-cyan);">${avgFishLength} cm</div>
+                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 900; text-transform: uppercase; font-family:'Barlow Condensed';">Avg Fish Size</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                /* CARD 2: Fish Caught By Zone */
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 3px solid var(--broadcast-gold); text-align: left;">
+                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">FISH CAUGHT BY ZONE</div>
+                        <div style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.3; font-family:'Inter', sans-serif;">Gold badges show how many of the day’s Top 10 anglers were in each zone.</div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-family: 'Barlow Condensed'; font-size: 1rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">DAY 1 (NIGHT)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 0.9rem; font-weight: 900; color: var(--broadcast-gold);">${day1Fish} FISH</span>
+                            </div>
+                            ${createVerticalZoneBars(d1ZoneTotals, day1Fish, d1Top10)}
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-family: 'Barlow Condensed'; font-size: 1rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">DAY 2 (DAYTIME)</span>
+                                <span style="font-family: 'JetBrains Mono'; font-size: 0.9rem; font-weight: 900; color: var(--broadcast-cyan);">${day2Fish} FISH</span>
+                            </div>
+                            ${createVerticalZoneBars(d2ZoneTotals, day2Fish, d2Top10)}
+                        </div>
+
+                    </div>
+                `;
+
+                output.innerHTML = htmlMarkup;
+                triggerTableNudgeCue();
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = '<div class="status-msg">Telemetry Offline</div>';
+            }
+        }
+
+        async function loadExcelTab(targetTabName, displayTitle) {
+            pushOverlayState();
+            const overlay = document.getElementById('viewer-overlay');
+            const output = document.getElementById('table-output');
+            const titleDisplay = document.getElementById('current-title');
+            
+            titleDisplay.innerText = displayTitle;
+            
+            output.innerHTML = `<div class="skeleton-wrapper"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></div>`;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            try {
+                const scoresData = await fetchScores();
+                const anglers = scoresData.anglers || [];
+                const biggestFishSpecies = scoresData.biggestFishSpecies || null;
+                let htmlMarkup = '';
+
+                if (TAB_CONFIG[targetTabName] && TAB_CONFIG[targetTabName].staticRules) {
+                    htmlMarkup += '<div class="info-banner">';
+                    TAB_CONFIG[targetTabName].staticRules.forEach(r => {
+                        htmlMarkup += '<span class="rule-segment">' + r + '</span>';
+                    });
+                    htmlMarkup += '</div>';
+                }
+
+                if (targetTabName === 'INDIVIDUAL RESULT') {
+                    let sorted = [...anglers].sort((a, b) => (a.totals.overallRank || 999) - (b.totals.overallRank || 999));
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:0.8px;">Individual Championship Standings</span>
+                            ${getCircleBadgeHtml('ind-table-wrapper')}
+                        </div>
+                        <div id="ind-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
+                    
+                    htmlMarkup += `
+                        <tr class="group-header-row">
+                            <th style="text-align: left; min-width: 140px;">RANK / COMPETITOR DETAILS</th>
+                            <th colspan="4" class="final-totals-header pillar-divider-right">🏆 COMBINED MATCH TOTALS (FINAL)</th>
+                            <th colspan="4" class="col-divider-left session-divider-right" style="color: var(--broadcast-red);">DAY 1 BREAKDOWN</th>
+                            <th colspan="4" class="col-divider-left" style="color: var(--broadcast-cyan);">DAY 2 BREAKDOWN</th>
+                        </tr>
+                        <tr class="sub-header-row">
+                            <th style="text-align: left;">POS & COMPETITOR (TEAM)</th>
+                            
+                            <th class="final-totals-header" style="color: var(--broadcast-gold);">PTS</th>
+                            <th class="final-totals-header">CM</th>
+                            <th class="final-totals-header">CT</th>
+                            <th class="final-totals-header pillar-divider-right">BIGGEST</th>
+
+                            <th class="col-divider-left">PTS</th>
+                            <th>CM</th>
+                            <th>CT</th>
+                            <th class="session-divider-right">BIGGEST</th>
+                            
+                            <th class="col-divider-left">PTS</th>
+                            <th>CM</th>
+                            <th>CT</th>
+                            <th>BIGGEST</th>
+                        </tr>
+                    `;
+
+                    sorted.forEach((item, idx) => {
+                        let rank = item.totals.overallRank || (idx + 1);
+                        let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "SOLO" : item.teamName;
+                        
+                        let d1Pts = item.day1 ? (item.day1.zonePoints || 0) : 0;
+                        let d1Cm  = item.day1 ? (item.day1.totalLengthCm || 0) : 0;
+                        let d1Ct  = item.day1 ? (item.day1.fishCount || 0) : 0;
+                        let d1Big = item.day1 ? (item.day1.biggestFishCm || 0) : 0;
+
+                        let d2Pts = item.day2 ? (item.day2.zonePoints || 0) : 0;
+                        let d2Cm  = item.day2 ? (item.day2.totalLengthCm || 0) : 0;
+                        let d2Ct  = item.day2 ? (item.day2.fishCount || 0) : 0;
+                        let d2Big = item.day2 ? (item.day2.biggestFishCm || 0) : 0;
+
+                        let totPts = item.totals ? (item.totals.cumulativePoints || 0) : (d1Pts + d2Pts);
+                        let totCm  = item.totals ? (item.totals.cumulativeLengthCm || 0) : (d1Cm + d2Cm);
+                        let totCt  = item.totals ? (item.totals.cumulativeFish || 0) : (d1Ct + d2Ct);
+                        let totBig = Math.max(d1Big, d2Big);
+
+                        let podiumClass = "";
+                        if (rank === 1) podiumClass = "podium-gold";
+                        else if (rank === 2) podiumClass = "podium-silver";
+                        else if (rank === 3) podiumClass = "podium-bronze";
+
+                        htmlMarkup += `<tr class="${podiumClass}">
+                            <td style="text-align: left; padding-left: 8px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 900; color: ${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'}; font-size: 0.9rem;">${rank}</span>
+                                    <div>
+                                        <div style="font-weight: 800; color: var(--text-main); font-size: 0.9rem; font-family:'Barlow Condensed'; text-transform:uppercase;">${item.anglerName}</div>
+                                        <div style="color: var(--text-muted); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; font-family:'JetBrains Mono';">${teamDisp}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td class="final-totals-cell" style="text-align: center;">
+                                <div style="display: inline-block; background: var(--broadcast-gold); border-radius: var(--radius-pill); padding: 2px 8px; font-weight: 900; color: #07090e; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; box-shadow: 0 2px 6px rgba(251, 191, 36, 0.3);">${totPts}</div>
+                            </td>
+                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCm}</td>
+                            <td class="final-totals-cell" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--text-main);">${totCt}</td>
+                            <td class="final-totals-cell pillar-divider-right" style="font-family: 'JetBrains Mono'; font-weight: 800; color: var(--broadcast-emerald);">${totBig}</td>
+
+                            <td class="col-divider-left session-breakdown-cell">${d1Pts}</td>
+                            <td class="session-breakdown-cell">${d1Cm}</td>
+                            <td class="session-breakdown-cell">${d1Ct}</td>
+                            <td class="session-breakdown-cell session-divider-right">${d1Big}</td>
+
+                            <td class="col-divider-left session-breakdown-cell">${d2Pts}</td>
+                            <td class="session-breakdown-cell">${d2Cm}</td>
+                            <td class="session-breakdown-cell">${d2Ct}</td>
+                            <td class="session-breakdown-cell">${d2Big}</td>
+                        </tr>`;
+                    });
+                    htmlMarkup += '</table></div></div>';
+                } 
+                else if (targetTabName === 'TEAM RESULT') {
+                    let teams = {};
+                    anglers.forEach(item => {
+                        let t = item.teamName ? item.teamName.trim() : "";
+                        if (t === "" || t.toUpperCase() === "SOLO" || t.toUpperCase() === "INDEPENDENT") return;
+                        if (!teams[t]) teams[t] = { name: t, pts: 0, len: 0, fish: 0, members: [] };
+                        teams[t].pts += item.totals.cumulativePoints || 0;
+                        teams[t].len += item.totals.cumulativeLengthCm || 0;
+                        teams[t].fish += item.totals.cumulativeFish || 0;
+                        teams[t].members.push(item);
+                    });
+                    
+                    let teamArray = Object.values(teams).sort((a, b) => {
+                        if (a.pts !== b.pts) return a.pts - b.pts;
+                        if (a.len !== b.len) return b.len - a.len;
+                        return b.fish - a.fish;
+                    });
+                    
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:0.8px;">Squad Leaderboard</span>
+                            ${getCircleBadgeHtml('team-table-wrapper')}
+                        </div>
+                        <div id="team-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: center;">PTS</th><th style="text-align: center;">CM</th><th style="text-align: center;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
+
+                    teamArray.forEach((team, idx) => {
+                        let rank = idx + 1;
+
+                        let podiumClass = "";
+                        if (rank === 1) podiumClass = "podium-gold";
+                        else if (rank === 2) podiumClass = "podium-silver";
+                        else if (rank === 3) podiumClass = "podium-bronze";
+
+                        htmlMarkup += `<tr class="${podiumClass}">
+                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
+                            <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.92rem;">${team.name}</td>
+                            
+                            <td style="text-align: center;">
+                                <div style="display: inline-block; background: var(--broadcast-gold); border-radius: var(--radius-pill); padding: 2px 8px; font-weight: 900; color: #07090e; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
+                            </td>
+                            <td style="font-weight: 800; text-align: center;">${team.len}</td>
+                            <td style="font-weight: 800; text-align: center;">${team.fish}</td>
+                            <td style="text-align: left;">
+                                <div class="matrix-container">`;
+                        
+                        team.members.forEach(m => {
+                            htmlMarkup += `
+                                <div class="matrix-card">
+                                    <div class="matrix-name">${m.anglerName}</div>
+                                    <div class="matrix-stats">${m.totals.cumulativePoints}PTS / ${m.totals.cumulativeLengthCm}CM / ${m.totals.cumulativeFish}F</div>
+                                </div>
+                            `;
+                        });
+                        
+                        htmlMarkup += `
+                                </div>
+                            </td>
+                        </tr>`;
+                    });
+                    htmlMarkup += '</table></div></div>';
+                }
+                else if (targetTabName === 'ZONE 1' || targetTabName === 'ZONE 2') {
+                    const isDay1 = targetTabName === 'ZONE 1';
+                    const zoneBlocks = [
+                        { name: 'Red Zone', colorClass: 'zone-red', wrapperId: 'z-red-wrapper' },       
+                        { name: 'Yellow Zone', colorClass: 'zone-yellow', wrapperId: 'z-yellow-wrapper' }, 
+                        { name: 'Green Zone', colorClass: 'zone-green', wrapperId: 'z-green-wrapper' }, 
+                        { name: 'Blue Zone', colorClass: 'zone-blue', wrapperId: 'z-blue-wrapper' }    
+                    ];
+                    
+                    zoneBlocks.forEach(block => {
+                        let zoneAnglers = anglers.filter(item => {
+                            let dayData = isDay1 ? item.day1 : item.day2;
+                            return dayData && dayData.zone === block.name;
+                        }).sort((a, b) => {
+                            let dayA = isDay1 ? a.day1 : a.day2;
+                            let dayB = isDay1 ? b.day1 : b.day2;
+                            if (dayA.zonePoints !== dayB.zonePoints) return dayA.zonePoints - dayB.zonePoints;
+                            return dayB.totalLengthCm - dayA.totalLengthCm;
+                        });
+                        
+                        if (zoneAnglers.length > 0) {
+                            htmlMarkup += `
+                                <div class="table-header-bar" style="margin-top:14px;">
+                                    <h3 class="${block.colorClass}" style="font-family: 'Barlow Condensed'; text-transform: uppercase; font-size: 1.25rem; font-weight: 900; letter-spacing: 1px;">${block.name}</h3>
+                                    ${getCircleBadgeHtml(block.wrapperId)}
+                                </div>
+                                <div id="${block.wrapperId}" class="table-card-container"><div class="card-table-wrapper"><table class="${block.colorClass}">
+                            `;
+                            htmlMarkup += '<tr><th style="text-align: center;">PTS</th><th style="text-align: left;">COMPETITOR NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">TIE BREAKERS</th></tr>';
+
+                            zoneAnglers.forEach(item => {
+                                let dayData = isDay1 ? item.day1 : item.day2;
+                                let teamDisp = (item.teamName === "Solo" || !item.teamName) ? "" : item.teamName;
+                                let ties = `${dayData.totalLengthCm}cm / ${dayData.fishCount} fish / Max: ${dayData.biggestFishCm}cm`;
+
+                                htmlMarkup += `<tr>
+                                    <td style="font-weight: 900; color: var(--broadcast-gold); text-align: center;">${dayData.zonePoints}</td>
+                                    <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.9rem;">${item.anglerName}</td>
+                                    <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
+                                    <td class="tie-breaker-td">${ties}</td>
+                                </tr>`;
+                            });
+                            htmlMarkup += '</table></div></div>';
+                        }
+                    });
+                }
+                else if (targetTabName === 'BIGGEST FISH') {
+                    let flatFish = [];
+                    anglers.forEach(item => {
+                        if (item.day1 && item.day1.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day1.biggestFishCm, dayNum: 1, details: `${item.day1.zone} (Day 1)` });
+                        }
+                        if (item.day2 && item.day2.biggestFishCm > 0) {
+                            flatFish.push({ name: item.anglerName, team: item.teamName, size: item.day2.biggestFishCm, dayNum: 2, details: `${item.day2.zone} (Day 2)` });
+                        }
+                    });
+                    flatFish.sort((a, b) => b.size - a.size);
+
+                    let d1Rank = 1, d2Rank = 1;
+                    flatFish.forEach(fish => {
+                        let speciesText = "";
+                        if (biggestFishSpecies) {
+                            if (fish.dayNum === 1 && biggestFishSpecies.day1 && biggestFishSpecies.day1[String(d1Rank)]) {
+                                speciesText = biggestFishSpecies.day1[String(d1Rank)];
+                                d1Rank++;
+                            } else if (fish.dayNum === 2 && biggestFishSpecies.day2 && biggestFishSpecies.day2[String(d2Rank)]) {
+                                speciesText = biggestFishSpecies.day2[String(d2Rank)];
+                                d2Rank++;
+                            }
+                        }
+                        fish.speciesName = speciesText;
+                    });
+                    
+                    let top5Fish = flatFish.slice(0, 5);
+
+                    htmlMarkup += `
+                        <div class="table-header-bar">
+                            <span style="font-size:0.75rem; font-weight:900; color:var(--text-muted); text-transform:uppercase; font-family:'Barlow Condensed'; letter-spacing:0.8px;">Top 5 Specimen Catch Log</span>
+                            ${getCircleBadgeHtml('fish-table-wrapper')}
+                        </div>
+                        <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
+                    `;
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">COMPETITOR NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
+                    
+                    top5Fish.forEach((fish, idx) => {
+                        let rank = idx + 1;
+                        let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
+                        let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.72rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">(${fish.speciesName})</span>` : `${fish.size} cm`;
+
+                        let podiumClass = "";
+                        if (rank === 1) podiumClass = "podium-gold";
+                        else if (rank === 2) podiumClass = "podium-silver";
+                        else if (rank === 3) podiumClass = "podium-bronze";
+
+                        htmlMarkup += `<tr class="${podiumClass}">
+                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--broadcast-gold)' : 'var(--broadcast-cyan)'};">${rank}</td>
+                            <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.92rem;">${fish.name}</td>
+                            <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.75rem;">${teamDisp}</td>
+                            <td style="text-align: center; font-family:'Barlow Condensed'; font-weight:800; text-transform:uppercase;">${fish.details}</td>
+                            <td style="color: var(--broadcast-gold); font-weight: 900; text-align: center;">${sizeDisplay}</td>
+                        </tr>`;
+                    });
+                    htmlMarkup += '</table></div></div>';
+                }
+
+                output.innerHTML = htmlMarkup;
+                triggerTableNudgeCue();
+
+            } catch (error) {
+                console.error(error);
+                output.innerHTML = '<div class="status-msg">Broadcast Telemetry Offline</div>';
+            }
+        }
+
+        function closeViewer(triggerBack = true) {
+            document.getElementById('viewer-overlay').style.display = 'none';
+            document.getElementById('table-output').innerHTML = '';
+            document.body.style.overflow = 'auto';
+
+            if (triggerBack && history.state && history.state.overlayOpen) {
+                history.back();
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('v3.0.0 Pixel Liquid Glass Active'))
+                    .catch(err => console.error('SW Error:', err));
+            });
+        }
+    </script>
 </body>
 </html>
