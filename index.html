@@ -523,28 +523,30 @@
         .matrix-container {
             display: flex;
             flex-direction: row;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
-            padding: 4px 0;
+            padding: 2px 0;
             -webkit-overflow-scrolling: touch;
             width: 100%;
+            align-items: center;
         }
         .matrix-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 8px 10px;
-            min-width: 140px;
+            border-radius: 10px;
+            padding: 4px 8px;
+            min-width: 130px;
             flex-shrink: 0;
             text-align: left;
         }
         .matrix-name {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: var(--text-main);
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 0px;
+            line-height: 1.1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -2535,7 +2537,7 @@
                     `;
                     htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">TEAM NAME</th><th style="text-align: center;">PTS</th><th style="text-align: center;">CM</th><th style="text-align: center;">FISH CT</th><th style="text-align: left;">TEAM SCORES MATRIX</th></tr>';
 
-                    teamArray.forEach((team, idx) => {
+                   teamArray.forEach((team, idx) => {
                         let rank = idx + 1;
 
                         let podiumClass = "";
@@ -2544,15 +2546,15 @@
                         else if (rank === 3) podiumClass = "podium-bronze";
 
                         htmlMarkup += `<tr class="${podiumClass}">
-                            <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--pixel-gold)' : 'var(--pixel-cyan)'};">${rank}</td>
-                            <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.88rem;">${team.name}</td>
+                            <td style="font-weight: 900; text-align: center; padding: 3px 6px; color:${rank === 1 ? 'var(--pixel-gold)' : 'var(--pixel-cyan)'};">${rank}</td>
+                            <td style="text-align: left; font-weight: 800; color:var(--text-main); white-space: nowrap; font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.88rem; padding: 3px 6px;">${team.name}</td>
                             
-                            <td style="text-align: center;">
-                                <div style="display: inline-block; background: var(--pixel-gold); border-radius: 6px; padding: 2px 8px; font-weight: 900; color: #07090e; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
+                            <td style="text-align: center; padding: 3px 6px;">
+                                <div style="display: inline-block; background: var(--pixel-gold); border-radius: 6px; padding: 1px 6px; font-weight: 900; color: #07090e; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;">${team.pts}</div>
                             </td>
-                            <td style="font-weight: 800; text-align: center;">${team.len}</td>
-                            <td style="font-weight: 800; text-align: center;">${team.fish}</td>
-                            <td style="text-align: left;">
+                            <td style="font-weight: 800; text-align: center; padding: 3px 6px;">${team.len}</td>
+                            <td style="font-weight: 800; text-align: center; padding: 3px 6px;">${team.fish}</td>
+                            <td style="text-align: left; padding: 3px 6px;">
                                 <div class="matrix-container">`;
                         
                         team.members.forEach(m => {
