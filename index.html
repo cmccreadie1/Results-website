@@ -2046,8 +2046,10 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                /* CARD 1: Compact Executive Summary Tile */
+               /* CARD 1: Compact Executive Summary Tile with Biggest Mover */
                 let fieldPerfStrip = '';
+                let moverStripHtml = '';
+
                 if (isTwoDayComp) {
                     fieldPerfStrip = `
                         <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; display: flex; justify-content: space-around; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800;">
@@ -2056,6 +2058,33 @@
                             <span style="color: var(--pixel-cyan);">D2 DAY: <span style="color: var(--pixel-emerald);">${d2CatchingRate}% SESSION CATCH RATE</span></span>
                         </div>
                     `;
+
+                    // Calculate Biggest Upwards Mover between Day 1 and Day 2
+                    let maxClimb = 0;
+                    let biggestMoverName = "";
+
+                    anglers.forEach(a => {
+                        let d1Idx = d1Anglers.findIndex(x => x.anglerName === a.anglerName);
+                        let d2Idx = d2Anglers.findIndex(x => x.anglerName === a.anglerName);
+                        
+                        if (d1Idx !== -1 && d2Idx !== -1) {
+                            let d1R = d1Idx + 1;
+                            let d2R = d2Idx + 1;
+                            let climb = d1R - d2R; // Positive number = climbed positions
+                            if (climb > maxClimb) {
+                                maxClimb = climb;
+                                biggestMoverName = a.anglerName;
+                            }
+                        }
+                    });
+
+                    if (maxClimb > 0 && biggestMoverName !== "") {
+                        moverStripHtml = `
+                            <div style="background: rgba(74, 222, 128, 0.1); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
+                                🚀 BIGGEST MOVER: ${biggestMoverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES)
+                            </div>
+                        `;
+                    }
                 } else {
                     fieldPerfStrip = `
                         <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
@@ -2067,6 +2096,7 @@
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; overflow: hidden; margin-bottom: 12px;">
                         ${fieldPerfStrip}
+                        ${moverStripHtml}
                         <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
                             <div>
                                 <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
@@ -2091,7 +2121,6 @@
                         </div>
                     </div>
                 `;
-
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 3px solid var(--pixel-gold); text-align: left;">
