@@ -2046,6 +2046,7 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
+
 /* CARD 1: Compact Executive Summary Tile with Biggest Mover */
                 let fieldPerfStrip = '';
                 let moverStripHtml = '';
@@ -2063,18 +2064,25 @@
                         </div>
                     `;
 
-                    // Find Biggest Mover using pre-calculated rankDiff property from personal telemetry
+                    // Directly calculate session rank shift (D1 Rank - D2 Rank)
                     let maxClimb = 0;
                     let moverName = "";
 
-                    if (Array.isArray(anglers)) {
-                        anglers.forEach(a => {
-                            if (a.rankDiff && a.rankDiff > maxClimb) {
-                                maxClimb = a.rankDiff;
+                    let d1Ranks = [...anglers].sort((a, b) => (b.d1Pts - a.d1Pts) || (b.d1Len - a.d1Len));
+                    let d2Ranks = [...anglers].sort((a, b) => (b.d2Pts - a.d2Pts) || (b.d2Len - a.d2Len));
+
+                    anglers.forEach(a => {
+                        let r1 = d1Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
+                        let r2 = d2Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
+                        
+                        if (r1 > 0 && r2 > 0) {
+                            let climb = r1 - r2;
+                            if (climb > maxClimb) {
+                                maxClimb = climb;
                                 moverName = a.anglerName;
                             }
-                        });
-                    }
+                        }
+                    });
 
                     if (maxClimb > 0 && moverName !== "") {
                         moverStripHtml = `
@@ -2119,6 +2127,7 @@
                         </div>
                     </div>
                 `;
+                
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 3px solid var(--pixel-gold); text-align: left;">
