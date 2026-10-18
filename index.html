@@ -2046,82 +2046,47 @@
 
                 let htmlMarkup = '<div class="stat-grid">';
                 
-                let successBlockHtml = '';
+                /* CARD 1: Compact Executive Summary Tile */
+                let fieldPerfStrip = '';
                 if (isTwoDayComp) {
-                    successBlockHtml = `
-                        <div style="padding: 12px 12px; display: flex; flex-direction: column; gap: 10px;">
-                            <div>
-                                <div style="font-size: 0.75rem; color: var(--pixel-gold); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 1 (NIGHT) FIELD TELEMETRY</div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 900; color: var(--pixel-emerald);">${d1CatchingRate}%</div>
-                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
-                                    </div>
-                                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 900; color: var(--text-muted);">${d1BlankRate}%</div>
-                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div style="font-size: 0.75rem; color: var(--pixel-cyan); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family:'Barlow Condensed';">DAY 2 (DAYTIME) FIELD TELEMETRY</div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 900; color: var(--pixel-emerald);">${d2CatchingRate}%</div>
-                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
-                                    </div>
-                                    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 8px; text-align: center;">
-                                        <div style="font-family: 'JetBrains Mono'; font-size: 1.3rem; font-weight: 900; color: var(--text-muted);">${d2BlankRate}%</div>
-                                        <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
-                                    </div>
-                                </div>
-                            </div>
+                    fieldPerfStrip = `
+                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; display: flex; justify-content: space-around; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800;">
+                            <span style="color: var(--pixel-gold);">D1 NIGHT: <span style="color: var(--pixel-emerald);">${d1CatchingRate}% SESSION CATCH RATE</span></span>
+                            <span style="color: var(--glass-border);">|</span>
+                            <span style="color: var(--pixel-cyan);">D2 DAY: <span style="color: var(--pixel-emerald);">${d2CatchingRate}% SESSION CATCH RATE</span></span>
                         </div>
                     `;
                 } else {
-                    successBlockHtml = `
-                        <div style="padding: 12px 12px;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 10px; text-align: center;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 900; color: var(--pixel-emerald);">${singleCompCatchingRate}%</div>
-                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Anglers Catching</div>
-                                </div>
-                                <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 10px; text-align: center;">
-                                    <div style="font-family: 'JetBrains Mono'; font-size: 1.4rem; font-weight: 900; color: var(--text-muted);">${singleCompBlankRate}%</div>
-                                    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Blank Rate</div>
-                                </div>
-                            </div>
+                    fieldPerfStrip = `
+                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
+                            SESSION CATCH RATE: ${singleCompCatchingRate}%
                         </div>
                     `;
                 }
 
-                /* CARD 1: Executive Summary */
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; overflow: hidden;">
-                        ${successBlockHtml}
-                        <div style="border-top: 1px solid var(--glass-border); padding: 12px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; background: rgba(15, 23, 42, 0.4); text-align: center;">
+                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; overflow: hidden; margin-bottom: 12px;">
+                        ${fieldPerfStrip}
+                        <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Anglers</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">ANG</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Total Fish</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">FISH</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; margin-top: 2px; font-family:'Barlow Condensed';">Total Length</div>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid var(--glass-border); padding: 10px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(15, 23, 42, 0.6); text-align: center;">
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.05rem; font-weight: 900; color: var(--pixel-gold);">${avgCatchPerAngler} Fish</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; font-family:'Barlow Condensed';">Avg / Angler</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">LEN</div>
                             </div>
                             <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 1.05rem; font-weight: 900; color: var(--pixel-cyan);">${avgFishLength} cm</div>
-                                <div style="font-size: 0.62rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; font-family:'Barlow Condensed';">Avg Fish Size</div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-gold);">${avgCatchPerAngler}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG/ANG</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-cyan);">${avgFishLength}cm</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG SIZE</div>
                             </div>
                         </div>
                     </div>
