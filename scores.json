@@ -9,6 +9,7 @@
         "fishCount": 14,
         "totalLengthCm": 332,
         "biggestFishCm": 48,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "day2": {
@@ -17,6 +18,7 @@
         "fishCount": 19,
         "totalLengthCm": 354,
         "biggestFishCm": 31,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "totals": {
@@ -35,6 +37,7 @@
         "fishCount": 32,
         "totalLengthCm": 643,
         "biggestFishCm": 38,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "day2": {
@@ -43,6 +46,7 @@
         "fishCount": 8,
         "totalLengthCm": 181,
         "biggestFishCm": 30,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "totals": {
@@ -61,6 +65,7 @@
         "fishCount": 21,
         "totalLengthCm": 543,
         "biggestFishCm": 50,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "day2": {
@@ -69,6 +74,7 @@
         "fishCount": 7,
         "totalLengthCm": 182,
         "biggestFishCm": 56,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "totals": {
@@ -87,6 +93,7 @@
         "fishCount": 9,
         "totalLengthCm": 432,
         "biggestFishCm": 67,
+        "biggestFishSpecies": "LING",
         "zonePoints": 1
       },
       "day2": {
@@ -95,6 +102,7 @@
         "fishCount": 8,
         "totalLengthCm": 281,
         "biggestFishCm": 40,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "totals": {
@@ -113,6 +121,7 @@
         "fishCount": 9,
         "totalLengthCm": 199,
         "biggestFishCm": 27,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "day2": {
@@ -121,6 +130,7 @@
         "fishCount": 9,
         "totalLengthCm": 237,
         "biggestFishCm": 51,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "totals": {
@@ -139,6 +149,7 @@
         "fishCount": 9,
         "totalLengthCm": 222,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "day2": {
@@ -147,6 +158,7 @@
         "fishCount": 10,
         "totalLengthCm": 300,
         "biggestFishCm": 33,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "totals": {
@@ -165,6 +177,7 @@
         "fishCount": 5,
         "totalLengthCm": 98,
         "biggestFishCm": 26,
+        "biggestFishSpecies": "",
         "zonePoints": 5
       },
       "day2": {
@@ -173,6 +186,7 @@
         "fishCount": 17,
         "totalLengthCm": 401,
         "biggestFishCm": 32,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "totals": {
@@ -191,6 +205,7 @@
         "fishCount": 4,
         "totalLengthCm": 117,
         "biggestFishCm": 39,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "day2": {
@@ -199,6 +214,7 @@
         "fishCount": 11,
         "totalLengthCm": 373,
         "biggestFishCm": 48,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "totals": {
@@ -217,6 +233,7 @@
         "fishCount": 5,
         "totalLengthCm": 117,
         "biggestFishCm": 28,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "day2": {
@@ -225,6 +242,7 @@
         "fishCount": 8,
         "totalLengthCm": 281,
         "biggestFishCm": 56,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "totals": {
@@ -243,6 +261,7 @@
         "fishCount": 5,
         "totalLengthCm": 117,
         "biggestFishCm": 37,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "day2": {
@@ -251,6 +270,7 @@
         "fishCount": 15,
         "totalLengthCm": 456,
         "biggestFishCm": 47,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "totals": {
@@ -269,6 +289,7 @@
         "fishCount": 9,
         "totalLengthCm": 335,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "day2": {
@@ -277,6 +298,7 @@
         "fishCount": 3,
         "totalLengthCm": 211,
         "biggestFishCm": 81,
+        "biggestFishSpecies": "COD",
         "zonePoints": 6
       },
       "totals": {
@@ -295,6 +317,7 @@
         "fishCount": 9,
         "totalLengthCm": 331,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "day2": {
@@ -303,6 +326,7 @@
         "fishCount": 4,
         "totalLengthCm": 96,
         "biggestFishCm": 28,
+        "biggestFishSpecies": "",
         "zonePoints": 5
       },
       "totals": {
@@ -321,6 +345,7 @@
         "fishCount": 8,
         "totalLengthCm": 201,
         "biggestFishCm": 54,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "day2": {
@@ -329,6 +354,7 @@
         "fishCount": 7,
         "totalLengthCm": 189,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "totals": {
@@ -347,6 +373,7 @@
         "fishCount": 5,
         "totalLengthCm": 111,
         "biggestFishCm": 32,
+        "biggestFishSpecies": "",
         "zonePoints": 5
       },
       "day2": {
@@ -355,6 +382,7 @@
         "fishCount": 9,
         "totalLengthCm": 243,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "totals": {
@@ -373,6 +401,7 @@
         "fishCount": 18,
         "totalLengthCm": 564,
         "biggestFishCm": 35,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "day2": {
@@ -381,6 +410,7 @@
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "totals": {
@@ -399,6 +429,7 @@
         "fishCount": 6,
         "totalLengthCm": 312,
         "biggestFishCm": 31,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "day2": {
@@ -407,6 +438,7 @@
         "fishCount": 7,
         "totalLengthCm": 225,
         "biggestFishCm": 61,
+        "biggestFishSpecies": "COD",
         "zonePoints": 5
       },
       "totals": {
@@ -425,6 +457,7 @@
         "fishCount": 1,
         "totalLengthCm": 11,
         "biggestFishCm": 11,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "day2": {
@@ -433,6 +466,7 @@
         "fishCount": 8,
         "totalLengthCm": 385,
         "biggestFishCm": 51,
+        "biggestFishSpecies": "",
         "zonePoints": 1
       },
       "totals": {
@@ -451,6 +485,7 @@
         "fishCount": 8,
         "totalLengthCm": 198,
         "biggestFishCm": 43,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "day2": {
@@ -459,6 +494,7 @@
         "fishCount": 6,
         "totalLengthCm": 117,
         "biggestFishCm": 29,
+        "biggestFishSpecies": "",
         "zonePoints": 5
       },
       "totals": {
@@ -477,6 +513,7 @@
         "fishCount": 8,
         "totalLengthCm": 316,
         "biggestFishCm": 54,
+        "biggestFishSpecies": "",
         "zonePoints": 2
       },
       "day2": {
@@ -485,6 +522,7 @@
         "fishCount": 7,
         "totalLengthCm": 101,
         "biggestFishCm": 28,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "totals": {
@@ -503,6 +541,7 @@
         "fishCount": 6,
         "totalLengthCm": 213,
         "biggestFishCm": 56,
+        "biggestFishSpecies": "BASS",
         "zonePoints": 5
       },
       "day2": {
@@ -511,6 +550,7 @@
         "fishCount": 7,
         "totalLengthCm": 172,
         "biggestFishCm": 36,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "totals": {
@@ -529,6 +569,7 @@
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "day2": {
@@ -537,6 +578,7 @@
         "fishCount": 17,
         "totalLengthCm": 334,
         "biggestFishCm": 28,
+        "biggestFishSpecies": "",
         "zonePoints": 3
       },
       "totals": {
@@ -555,6 +597,7 @@
         "fishCount": 9,
         "totalLengthCm": 256,
         "biggestFishCm": 59,
+        "biggestFishSpecies": "BASS",
         "zonePoints": 3
       },
       "day2": {
@@ -563,6 +606,7 @@
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "totals": {
@@ -581,6 +625,7 @@
         "fishCount": 1,
         "totalLengthCm": 21,
         "biggestFishCm": 21,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "day2": {
@@ -589,6 +634,7 @@
         "fishCount": 9,
         "totalLengthCm": 229,
         "biggestFishCm": 33,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "totals": {
@@ -607,6 +653,7 @@
         "fishCount": 5,
         "totalLengthCm": 117,
         "biggestFishCm": 28,
+        "biggestFishSpecies": "",
         "zonePoints": 4
       },
       "day2": {
@@ -615,6 +662,7 @@
         "fishCount": 4,
         "totalLengthCm": 92,
         "biggestFishCm": 40,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "totals": {
@@ -633,6 +681,7 @@
         "fishCount": 4,
         "totalLengthCm": 106,
         "biggestFishCm": 31,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "day2": {
@@ -641,6 +690,7 @@
         "fishCount": 3,
         "totalLengthCm": 88,
         "biggestFishCm": 41,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "totals": {
@@ -659,6 +709,7 @@
         "fishCount": 1,
         "totalLengthCm": 21,
         "biggestFishCm": 21,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "day2": {
@@ -667,6 +718,7 @@
         "fishCount": 3,
         "totalLengthCm": 78,
         "biggestFishCm": 29,
+        "biggestFishSpecies": "",
         "zonePoints": 5
       },
       "totals": {
@@ -685,6 +737,7 @@
         "fishCount": 2,
         "totalLengthCm": 87,
         "biggestFishCm": 45,
+        "biggestFishSpecies": "",
         "zonePoints": 6
       },
       "day2": {
@@ -693,6 +746,7 @@
         "fishCount": 4,
         "totalLengthCm": 89,
         "biggestFishCm": 25,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "totals": {
@@ -711,6 +765,7 @@
         "fishCount": 6,
         "totalLengthCm": 87,
         "biggestFishCm": 21,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "day2": {
@@ -719,6 +774,7 @@
         "fishCount": 0,
         "totalLengthCm": 0,
         "biggestFishCm": 0,
+        "biggestFishSpecies": "",
         "zonePoints": 7
       },
       "totals": {
@@ -731,14 +787,14 @@
   ],
   "biggestFishSpecies": {
     "day1": [
-      "",
-      "",
-      ""
+      "LING",
+      "BASS",
+      "BASS"
     ],
     "day2": [
-      "",
-      "",
-      ""
+      "COD",
+      "COD",
+      "Unspecified"
     ]
   },
   "secretPairs": {
