@@ -2063,41 +2063,25 @@
                         </div>
                     `;
 
-                    // Safely calculate Biggest Upwards Mover using overall anglers data
-                    try {
-                        let maxClimb = 0;
-                        let moverName = "";
+                    // Find Biggest Mover using pre-calculated rankDiff property from personal telemetry
+                    let maxClimb = 0;
+                    let moverName = "";
 
-                        // Sort anglers by session ranks if available
-                        let d1Sorted = [...anglers].filter(a => a.d1Pts > 0 || a.d1Fish > 0)
-                            .sort((a,b) => (b.d1Pts - a.d1Pts) || (b.d1Len - a.d1Len));
-                        let d2Sorted = [...anglers].filter(a => a.d2Pts > 0 || a.d2Fish > 0)
-                            .sort((a,b) => (b.d2Pts - a.d2Pts) || (b.d2Len - a.d2Len));
+                    if (Array.isArray(anglers)) {
+                        anglers.forEach(a => {
+                            if (a.rankDiff && a.rankDiff > maxClimb) {
+                                maxClimb = a.rankDiff;
+                                moverName = a.anglerName;
+                            }
+                        });
+                    }
 
-                        if (d1Sorted.length > 0 && d2Sorted.length > 0) {
-                            anglers.forEach(a => {
-                                let d1R = d1Sorted.findIndex(x => x.anglerName === a.anglerName) + 1;
-                                let d2R = d2Sorted.findIndex(x => x.anglerName === a.anglerName) + 1;
-
-                                if (d1R > 0 && d2R > 0) {
-                                    let climb = d1R - d2R;
-                                    if (climb > maxClimb) {
-                                        maxClimb = climb;
-                                        moverName = a.anglerName;
-                                    }
-                                }
-                            });
-                        }
-
-                        if (maxClimb > 0 && moverName !== "") {
-                            moverStripHtml = `
-                                <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
-                                    🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES)
-                                </div>
-                            `;
-                        }
-                    } catch (e) {
-                        console.warn("Biggest mover calculation skipped safely:", e);
+                    if (maxClimb > 0 && moverName !== "") {
+                        moverStripHtml = `
+                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
+                                🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES)
+                            </div>
+                        `;
                     }
                 } else {
                     fieldPerfStrip = `
@@ -2135,7 +2119,6 @@
                         </div>
                     </div>
                 `;
-                
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 3px solid var(--pixel-gold); text-align: left;">
