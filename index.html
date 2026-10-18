@@ -899,8 +899,8 @@
         }
         .gauge-ring-wrapper {
             position: relative;
-            width: 46px;
-            height: 46px;
+            width: 54px;
+            height: 54px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -926,7 +926,7 @@
             position: absolute;
             font-family: 'Barlow Condensed', sans-serif;
             font-weight: 900;
-            font-size: 0.72rem;
+            font-size: 0.85rem;
             color: var(--text-main);
             text-transform: uppercase;
             text-align: center;
@@ -1618,17 +1618,18 @@
                 `;
 
                 /* Helper function to generate SVG Ring Gauges */
+               /* Helper function to generate enlarged SVG Ring Gauges */
                 function renderSvgRingCard(title, valStr, rankInfo, colorHex, subtext) {
-                    let radius = 18;
-                    let circumference = 2 * Math.PI * radius;
+                    let radius = 21;
+                    let circumference = 2 * Math.PI * radius; // ~131.9
                     let offset = circumference - (rankInfo.pct / 100) * circumference;
 
                     return `
                         <div class="gauge-metric-card">
                             <div class="gauge-ring-wrapper">
-                                <svg class="gauge-svg" viewBox="0 0 44 44">
-                                    <circle class="gauge-bg-circle" cx="22" cy="22" r="${radius}"></circle>
-                                    <circle class="gauge-fill-circle" cx="22" cy="22" r="${radius}"
+                                <svg class="gauge-svg" viewBox="0 0 50 50">
+                                    <circle class="gauge-bg-circle" cx="25" cy="25" r="${radius}"></circle>
+                                    <circle class="gauge-fill-circle" cx="25" cy="25" r="${radius}"
                                             stroke="${colorHex}"
                                             stroke-dasharray="${circumference}"
                                             stroke-dashoffset="${offset}">
