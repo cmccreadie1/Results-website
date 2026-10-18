@@ -7,7 +7,7 @@
         "zone": "Green Zone",
         "peg": 17,
         "fishCount": 14,
-        "totalLengthCm": 532,
+        "totalLengthCm": 332,
         "biggestFishCm": 48,
         "zonePoints": 3
       },
@@ -15,14 +15,14 @@
         "zone": "Blue Zone",
         "peg": 24,
         "fishCount": 19,
-        "totalLengthCm": 554,
+        "totalLengthCm": 354,
         "biggestFishCm": 31,
         "zonePoints": 1
       },
       "totals": {
         "cumulativePoints": 4,
         "cumulativeFish": 33,
-        "cumulativeLengthCm": 1086,
+        "cumulativeLengthCm": 686,
         "overallRank": 1
       }
     },
@@ -57,7 +57,7 @@
       "teamName": "US CITIES",
       "day1": {
         "zone": "Green Zone",
-        "peg": 18,
+        "peg": 16,
         "fishCount": 21,
         "totalLengthCm": 543,
         "biggestFishCm": 50,
@@ -299,7 +299,7 @@
       },
       "day2": {
         "zone": "Yellow Zone",
-        "peg": 8,
+        "peg": 9,
         "fishCount": 4,
         "totalLengthCm": 96,
         "biggestFishCm": 28,
@@ -421,7 +421,7 @@
       "teamName": "EUROPEAN COUNTRIES",
       "day1": {
         "zone": "Green Zone",
-        "peg": 15,
+        "peg": 18,
         "fishCount": 1,
         "totalLengthCm": 11,
         "biggestFishCm": 11,
@@ -499,7 +499,7 @@
       "teamName": "TREES",
       "day1": {
         "zone": "Green Zone",
-        "peg": 16,
+        "peg": 15,
         "fishCount": 6,
         "totalLengthCm": 213,
         "biggestFishCm": 56,
@@ -507,7 +507,7 @@
       },
       "day2": {
         "zone": "Yellow Zone",
-        "peg": 9,
+        "peg": 8,
         "fishCount": 7,
         "totalLengthCm": 172,
         "biggestFishCm": 36,
