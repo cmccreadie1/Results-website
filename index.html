@@ -2724,11 +2724,11 @@
                         </div>
                         <div id="fish-table-wrapper" class="table-card-container"><div class="card-table-wrapper"><table>
                     `;
-                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">COMPETITOR NAME</th><th style="text-align: left;">TEAM</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
+                    htmlMarkup += '<tr><th style="text-align: center;">RANK</th><th style="text-align: left;">COMPETITOR NAME</th><th style="text-align: center;">ZONE / SESSION</th><th style="text-align: center;">SIZE (cm)</th></tr>';
                     
                     top5Fish.forEach((fish, idx) => {
                         let rank = idx + 1;
-                        let teamDisp = (fish.team === "Solo" || !fish.team) ? "" : fish.team;
+                        let teamDisp = (fish.team === "Solo" || !fish.team) ? "SOLO" : fish.team;
                         let sizeDisplay = fish.speciesName ? `${fish.size} cm <span style="font-size:0.7rem; color:var(--text-muted); font-weight:800; font-family:'Barlow Condensed'; text-transform:uppercase;">(${fish.speciesName})</span>` : `${fish.size} cm`;
 
                         let podiumClass = "";
@@ -2738,8 +2738,10 @@
 
                         htmlMarkup += `<tr class="${podiumClass}">
                             <td style="font-weight: 900; text-align: center; color:${rank === 1 ? 'var(--pixel-gold)' : 'var(--pixel-cyan)'};">${rank}</td>
-                            <td style="text-align: left; font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.88rem;">${fish.name}</td>
-                            <td style="text-align: left; font-family:'JetBrains Mono'; font-size:0.72rem;">${teamDisp}</td>
+                            <td style="text-align: left; padding-left: 8px;">
+                                <div style="font-weight: 800; color:var(--text-main); font-family:'Barlow Condensed'; text-transform:uppercase; font-size:0.88rem;">${fish.name}</div>
+                                <div style="color: var(--text-muted); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; font-family:'JetBrains Mono';">${teamDisp}</div>
+                            </td>
                             <td style="text-align: center; font-family:'Barlow Condensed'; font-weight:800; text-transform:uppercase;">${fish.details}</td>
                             <td style="color: var(--pixel-gold); font-weight: 900; text-align: center;">${sizeDisplay}</td>
                         </tr>`;
