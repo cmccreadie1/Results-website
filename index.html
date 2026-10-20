@@ -7,7 +7,7 @@
     <!-- 🏆 MATCH CONTROL DECK: PRE-POPULATE LOCAL EVENT DETAILS HERE -->
     <script>
         const MATCH_CONFIG = {
-            competitionName: "SPRA Scottish Shore Championship 2027",
+            competitionName: "SPRA Scottish Shore Championship",
             venue:           "Elliot Beach Lunan Bay",
             dates:           "18th & 19th September"
         };
@@ -2047,88 +2047,86 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
 
-/* --- PRE-COMPUTATION PASS FOR TELEMETRY HIGHLIGHTS --- */
-                let highlightBannerHtml = '';
+/* CARD 1: Compact Executive Summary Tile with Biggest Mover */
+                let fieldPerfStrip = '';
+                let moverStripHtml = '';
 
-                try {
-                    if (isTwoDayComp && Array.isArray(anglers) && anglers.length > 0) {
-                        // Safe extraction of session ranks based on session fish count and length
-                        let d1List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d1Fish || 0, len: a.d1Len || 0 }))
-                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
+                let d1Rate = typeof d1CatchingRate !== 'undefined' ? d1CatchingRate : 0;
+                let d2Rate = typeof d2CatchingRate !== 'undefined' ? d2CatchingRate : 0;
+                let singleRate = typeof singleCompCatchingRate !== 'undefined' ? singleCompCatchingRate : 0;
+
+                if (isTwoDayComp) {
+                    fieldPerfStrip = `
+                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; display: flex; justify-content: space-around; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800;">
+                            <span style="color: var(--pixel-gold);">D1 NIGHT: <span style="color: var(--pixel-emerald);">${d1Rate}% SESSION CATCH RATE</span></span>
+                            <span style="color: var(--glass-border);">|</span>
+                            <span style="color: var(--pixel-cyan);">D2 DAY: <span style="color: var(--pixel-emerald);">${d2Rate}% SESSION CATCH RATE</span></span>
+                        </div>
+                    `;
+
+                    // Directly calculate session rank shift (D1 Rank - D2 Rank)
+                    let maxClimb = 0;
+                    let moverName = "";
+
+                    let d1Ranks = [...anglers].sort((a, b) => (b.d1Pts - a.d1Pts) || (b.d1Len - a.d1Len));
+                    let d2Ranks = [...anglers].sort((a, b) => (b.d2Pts - a.d2Pts) || (b.d2Len - a.d2Len));
+
+                    anglers.forEach(a => {
+                        let r1 = d1Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
+                        let r2 = d2Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
                         
-                        let d2List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d2Fish || 0, len: a.d2Len || 0 }))
-                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
-
-                        let maxClimb = 0;
-                        let topClimber = "";
-
-                        anglers.forEach(a => {
-                            let aName = a.anglerName || a.name;
-                            let r1 = d1List.findIndex(x => x.name === aName) + 1;
-                            let r2 = d2List.findIndex(x => x.name === aName) + 1;
-
-                            if (r1 > 0 && r2 > 0) {
-                                let climb = r1 - r2;
-                                if (climb > maxClimb) {
-                                    maxClimb = climb;
-                                    topClimber = aName;
-                                }
+                        if (r1 > 0 && r2 > 0) {
+                            let climb = r1 - r2;
+                            if (climb > maxClimb) {
+                                maxClimb = climb;
+                                moverName = a.anglerName;
                             }
-                        });
-
-                        if (maxClimb > 0 && topClimber !== "") {
-                            highlightBannerHtml = `
-                                <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
-                                    🚀 BIGGEST MOVER: ${topClimber.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)
-                                </div>
-                            `;
                         }
+                    });
+
+                    if (maxClimb > 0 && moverName !== "") {
+                        moverStripHtml = `
+                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
+                                🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES)
+                            </div>
+                        `;
                     }
-                } catch (err) {
-                    console.warn("Pre-computation failed gracefully:", err);
+                } else {
+                    fieldPerfStrip = `
+                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
+                            SESSION CATCH RATE: ${singleRate}%
+                        </div>
+                    `;
                 }
 
-               /* --- PRE-COMPUTATION PASS FOR TELEMETRY HIGHLIGHTS --- */
-                let highlightBannerHtml = '';
-
-                try {
-                    if (isTwoDayComp && Array.isArray(anglers) && anglers.length > 0) {
-                        let d1List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d1Fish || 0, len: a.d1Len || 0 }))
-                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
-                        
-                        let d2List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d2Fish || 0, len: a.d2Len || 0 }))
-                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
-
-                        let maxClimb = 0;
-                        let topClimber = "";
-
-                        anglers.forEach(a => {
-                            let aName = a.anglerName || a.name;
-                            let r1 = d1List.findIndex(x => x.name === aName) + 1;
-                            let r2 = d2List.findIndex(x => x.name === aName) + 1;
-
-                            if (r1 > 0 && r2 > 0) {
-                                let climb = r1 - r2;
-                                if (climb > maxClimb) {
-                                    maxClimb = climb;
-                                    topClimber = aName;
-                                }
-                            }
-                        });
-
-                        if (maxClimb > 0 && topClimber !== "") {
-                            highlightBannerHtml = `
-                                <div style="background: rgba(74, 222, 128, 0.15); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: #4ade80;">
-                                    🚀 BIGGEST MOVER: ${topClimber.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)
-                                </div>
-                            `;
-                        }
-                    }
-                } catch (err) {
-                    console.warn("Pre-computation failed gracefully:", err);
-                }
-
-                
+                htmlMarkup += `
+                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; overflow: hidden; margin-bottom: 12px;">
+                        ${fieldPerfStrip}
+                        ${moverStripHtml}
+                        <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">ANG</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">FISH</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">LEN</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-gold);">${avgCatchPerAngler}</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG/ANG</div>
+                            </div>
+                            <div>
+                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-cyan);">${avgFishLength}cm</div>
+                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG SIZE</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
                 
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
