@@ -2088,7 +2088,47 @@
                     console.warn("Pre-computation failed gracefully:", err);
                 }
 
-                /* CARD 1: Compact Executive Summary Tile */
+               /* --- PRE-COMPUTATION PASS FOR TELEMETRY HIGHLIGHTS --- */
+                let highlightBannerHtml = '';
+
+                try {
+                    if (isTwoDayComp && Array.isArray(anglers) && anglers.length > 0) {
+                        let d1List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d1Fish || 0, len: a.d1Len || 0 }))
+                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
+                        
+                        let d2List = [...anglers].map(a => ({ name: a.anglerName || a.name, fish: a.d2Fish || 0, len: a.d2Len || 0 }))
+                            .sort((a,b) => (b.fish - a.fish) || (b.len - a.len));
+
+                        let maxClimb = 0;
+                        let topClimber = "";
+
+                        anglers.forEach(a => {
+                            let aName = a.anglerName || a.name;
+                            let r1 = d1List.findIndex(x => x.name === aName) + 1;
+                            let r2 = d2List.findIndex(x => x.name === aName) + 1;
+
+                            if (r1 > 0 && r2 > 0) {
+                                let climb = r1 - r2;
+                                if (climb > maxClimb) {
+                                    maxClimb = climb;
+                                    topClimber = aName;
+                                }
+                            }
+                        });
+
+                        if (maxClimb > 0 && topClimber !== "") {
+                            highlightBannerHtml = `
+                                <div style="background: rgba(74, 222, 128, 0.15); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: #4ade80;">
+                                    🚀 BIGGEST MOVER: ${topClimber.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)
+                                </div>
+                            `;
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Pre-computation failed gracefully:", err);
+                }
+
+                /* CARD 1: Compact Executive Summary Tile (Flex Container Fix) */
                 let fieldPerfStrip = '';
                 let d1Rate = typeof d1CatchingRate !== 'undefined' ? d1CatchingRate : 0;
                 let d2Rate = typeof d2CatchingRate !== 'undefined' ? d2CatchingRate : 0;
@@ -2111,7 +2151,7 @@
                 }
 
                 htmlMarkup += `
-                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; overflow: hidden; margin-bottom: 12px;">
+                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; display: flex; flex-direction: column; margin-bottom: 12px;">
                         ${fieldPerfStrip}
                         ${highlightBannerHtml}
                         <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
