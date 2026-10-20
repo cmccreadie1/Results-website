@@ -2047,7 +2047,7 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
 
-/* CARD 1: Compact Executive Summary Tile with Positive Telemetry Highlights */
+/* CARD 1: Compact Executive Summary Tile with Guaranteed Positive Highlight */
                 let fieldPerfStrip = '';
                 let highlightStripHtml = '';
 
@@ -2066,61 +2066,49 @@
 
                     let highlightMessage = "";
 
-                    // 1. Calculate Individual Biggest Mover
-                    let maxIndivClimb = 0;
-                    let indivMoverName = "";
-                    let d1Ranks = [...anglers].filter(a => (a.d1Fish || 0) > 0 || (a.d1Pts || 0) > 0)
-                        .sort((a, b) => ((a.d1Pts || 99) - (b.d1Pts || 99)) || ((b.d1Len || 0) - (a.d1Len || 0)));
-                    let d2Ranks = [...anglers].filter(a => (a.d2Fish || 0) > 0 || (a.d2Pts || 0) > 0)
-                        .sort((a, b) => ((a.d2Pts || 99) - (b.d2Pts || 99)) || ((b.d2Len || 0) - (a.d2Len || 0)));
-
-                    anglers.forEach(a => {
-                        let r1 = d1Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
-                        let r2 = d2Ranks.findIndex(x => x.anglerName === a.anglerName) + 1;
-                        if (r1 > 0 && r2 > 0) {
-                            let climb = r1 - r2;
-                            if (climb > maxIndivClimb) {
-                                maxIndivClimb = climb;
-                                indivMoverName = a.anglerName;
+                    // 1. Try Biggest Individual Mover
+                    let maxClimb = 0;
+                    let moverName = "";
+                    if (Array.isArray(anglers)) {
+                        anglers.forEach(a => {
+                            let climb = a.rankDiff || 0;
+                            if (climb > maxClimb) {
+                                maxClimb = climb;
+                                moverName = a.anglerName || a.name || "";
                             }
-                        }
-                    });
+                        });
+                    }
 
-                    // 2. Calculate Session Hotshot (Most Fish in a Single Session)
-                    let maxSessionFish = 0;
-                    let hotshotName = "";
-                    let hotshotSession = "";
-                    anglers.forEach(a => {
-                        let d1F = a.d1Fish || 0;
-                        let d2F = a.d2Fish || 0;
-                        if (d1F > maxSessionFish) { maxSessionFish = d1F; hotshotName = a.anglerName; hotshotSession = "SESSION 1"; }
-                        if (d2F > maxSessionFish) { maxSessionFish = d2F; hotshotName = a.anglerName; hotshotSession = "SESSION 2"; }
-                    });
-
-                    // 3. Calculate Highest Team Catch Count & Team Climber
-                    let teamFishMap = {};
-                    anglers.forEach(a => {
-                        let team = (a.team && a.team !== "Solo") ? a.team : null;
-                        if (team) {
-                            teamFishMap[team] = (teamFishMap[team] || 0) + (a.totalFish || 0);
+                    if (maxClimb > 0 && moverName !== "") {
+                        highlightMessage = `🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)`;
+                    } else {
+                        // 2. Fallback to Most Team Catches
+                        let teamFishMap = {};
+                        if (Array.isArray(anglers)) {
+                            anglers.forEach(a => {
+                                let tName = a.team || a.teamName || "";
+                                if (tName && tName.toUpperCase() !== "SOLO" && tName.trim() !== "") {
+                                    teamFishMap[tName] = (teamFishMap[tName] || 0) + (a.totalFish || a.fishCount || 0);
+                                }
+                            });
                         }
-                    });
-                    let topTeamName = "";
-                    let topTeamFish = 0;
-                    Object.keys(teamFishMap).forEach(t => {
-                        if (teamFishMap[t] > topTeamFish) {
-                            topTeamFish = teamFishMap[t];
-                            topTeamName = t;
-                        }
-                    });
+                        
+                        let topTeam = "";
+                        let topTeamCatches = 0;
+                        Object.keys(teamFishMap).forEach(t => {
+                            if (teamFishMap[t] > topTeamCatches) {
+                                topTeamCatches = teamFishMap[t];
+                                topTeam = t;
+                            }
+                        });
 
-                    // Select best highlight to display
-                    if (maxIndivClimb > 0 && indivMoverName !== "") {
-                        highlightMessage = `🚀 BIGGEST MOVER: ${indivMoverName.toUpperCase()} (CLIMBED +${maxIndivClimb} PLACES IN D2)`;
-                    } else if (topTeamFish > 0 && topTeamName !== "") {
-                        highlightMessage = `⚡ MOST TEAM CATCHES: ${topTeamName.toUpperCase()} (${topTeamFish} TOTAL FISH)`;
-                    } else if (maxSessionFish > 0 && hotshotName !== "") {
-                        highlightMessage = `🔥 SESSION HOTSHOT: ${hotshotName.toUpperCase()} (${maxSessionFish} FISH IN ${hotshotSession})`;
+                        if (topTeamCatches > 0 && topTeam !== "") {
+                            highlightMessage = `⚡ MOST TEAM CATCHES: ${topTeam.toUpperCase()} (${topTeamCatches} TOTAL FISH)`;
+                        } else if (typeof top5Fish !== 'undefined' && Array.isArray(top5Fish) && top5Fish.length > 0) {
+                            // 3. Fallback to Top Specimen Catch
+                            let spec = top5Fish[0];
+                            highlightMessage = `👑 TOP SPECIMEN: ${spec.name.toUpperCase()} (${spec.size}CM ${spec.speciesName ? spec.speciesName.toUpperCase() : ''})`;
+                        }
                     }
 
                     if (highlightMessage !== "") {
@@ -2166,6 +2154,7 @@
                         </div>
                     </div>
                 `;
+                
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
                     <div class="stat-card" style="border-top: 3px solid var(--pixel-gold); text-align: left;">
