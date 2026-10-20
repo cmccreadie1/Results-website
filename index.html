@@ -2047,7 +2047,7 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
 
-/* CARD 1: Compact Executive Summary Tile with Guaranteed Positive Highlight */
+/* CARD 1: Compact Executive Summary Tile with Self-Contained Telemetry Highlight */
                 let fieldPerfStrip = '';
                 let highlightStripHtml = '';
 
@@ -2066,15 +2066,24 @@
 
                     let highlightMessage = "";
 
-                    // 1. Try Biggest Individual Mover
+                    // Calculate Day 1 vs Day 2 position shifts directly from session fish/length
                     let maxClimb = 0;
                     let moverName = "";
-                    if (Array.isArray(anglers)) {
+
+                    if (Array.isArray(anglers) && anglers.length > 0) {
+                        let d1Sorted = [...anglers].sort((a,b) => ((b.d1Fish || 0) - (a.d1Fish || 0)) || ((b.d1Len || 0) - (a.d1Len || 0)));
+                        let d2Sorted = [...anglers].sort((a,b) => ((b.d2Fish || 0) - (a.d2Fish || 0)) || ((b.d2Len || 0) - (a.d2Len || 0)));
+
                         anglers.forEach(a => {
-                            let climb = a.rankDiff || 0;
-                            if (climb > maxClimb) {
-                                maxClimb = climb;
-                                moverName = a.anglerName || a.name || "";
+                            let name = a.anglerName || a.name;
+                            let r1 = d1Sorted.findIndex(x => (x.anglerName || x.name) === name) + 1;
+                            let r2 = d2Sorted.findIndex(x => (x.anglerName || x.name) === name) + 1;
+                            if (r1 > 0 && r2 > 0) {
+                                let climb = r1 - r2;
+                                if (climb > maxClimb) {
+                                    maxClimb = climb;
+                                    moverName = name;
+                                }
                             }
                         });
                     }
@@ -2082,42 +2091,21 @@
                     if (maxClimb > 0 && moverName !== "") {
                         highlightMessage = `🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)`;
                     } else {
-                        // 2. Fallback to Most Team Catches
-                        let teamFishMap = {};
-                        if (Array.isArray(anglers)) {
-                            anglers.forEach(a => {
-                                let tName = a.team || a.teamName || "";
-                                if (tName && tName.toUpperCase() !== "SOLO" && tName.trim() !== "") {
-                                    teamFishMap[tName] = (teamFishMap[tName] || 0) + (a.totalFish || a.fishCount || 0);
-                                }
-                            });
-                        }
-                        
-                        let topTeam = "";
-                        let topTeamCatches = 0;
-                        Object.keys(teamFishMap).forEach(t => {
-                            if (teamFishMap[t] > topTeamCatches) {
-                                topTeamCatches = teamFishMap[t];
-                                topTeam = t;
-                            }
-                        });
-
-                        if (topTeamCatches > 0 && topTeam !== "") {
-                            highlightMessage = `⚡ MOST TEAM CATCHES: ${topTeam.toUpperCase()} (${topTeamCatches} TOTAL FISH)`;
-                        } else if (typeof top5Fish !== 'undefined' && Array.isArray(top5Fish) && top5Fish.length > 0) {
-                            // 3. Fallback to Top Specimen Catch
+                        // Guaranteed Fallback: Top Specimen Catch
+                        if (typeof top5Fish !== 'undefined' && Array.isArray(top5Fish) && top5Fish.length > 0) {
                             let spec = top5Fish[0];
-                            highlightMessage = `👑 TOP SPECIMEN: ${spec.name.toUpperCase()} (${spec.size}CM ${spec.speciesName ? spec.speciesName.toUpperCase() : ''})`;
+                            let spName = spec.speciesName ? ` (${spec.speciesName.toUpperCase()})` : '';
+                            highlightMessage = `👑 TOP SPECIMEN: ${spec.name.toUpperCase()} - ${spec.size}CM${spName}`;
+                        } else {
+                            highlightMessage = `⚡ TOURNAMENT CATCH TOTAL: ${totalFish} FISH LANDED OVERALL`;
                         }
                     }
 
-                    if (highlightMessage !== "") {
-                        highlightStripHtml = `
-                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
-                                ${highlightMessage}
-                            </div>
-                        `;
-                    }
+                    highlightStripHtml = `
+                        <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
+                            ${highlightMessage}
+                        </div>
+                    `;
                 } else {
                     fieldPerfStrip = `
                         <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
