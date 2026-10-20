@@ -1202,7 +1202,7 @@
     </div>
 
     <footer class="footer">
-        <div>TOURNAMENT BROADCAST TELEMETRY • v3.3.0</div>
+        <div>TOURNAMENT BROADCAST TELEMETRY • v3.3.6</div>
         <div class="live-status-badge">
             <div class="pulse-dot"></div>
             <span id="sync-time-text">Live Broadcast Connected</span>
@@ -1315,7 +1315,7 @@
         });
 
         function initMatchMetadata() {
-            document.title = MATCH_CONFIG.competitionName + " | Pixel Glass Edition v3.3.0";
+            document.title = MATCH_CONFIG.competitionName + " | Pixel Glass Edition v3.3.6";
             document.getElementById('meta-title-inject').innerText = MATCH_CONFIG.competitionName;
             document.getElementById('meta-venue-inject').innerText = MATCH_CONFIG.venue.toUpperCase();
             document.getElementById('meta-dates-inject').innerText = MATCH_CONFIG.dates.toUpperCase();
@@ -2837,7 +2837,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('v3.3.0 broadcast active'))
+                    .then(reg => console.log('v3.3.6 broadcast active'))
                     .catch(err => console.error('SW Error:', err));
             });
         }
