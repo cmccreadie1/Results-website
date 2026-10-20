@@ -2047,7 +2047,7 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
 
-/* CARD 1: Executive Summary Tile with Stacked Telemetry Highlights */
+/* CARD 1: Executive Summary Tile with Single-Line Movers Highlight */
                 let fieldPerfStrip = '';
                 let highlightStripHtml = '';
 
@@ -2064,96 +2064,99 @@
                         </div>
                     `;
 
-                    let highlightMessages = [];
+                    let indivMoverText = "";
+                    let teamMoverText = "";
 
-                    // 1. Calculate Individual Biggest Upwards Mover
+                    // 1. Calculate Biggest Individual Mover
                     try {
-                        let d1Sorted = [...anglers].filter(a => a.day1 && a.day1.zone).sort((a,b) => {
+                        let d1IndSorted = [...anglers].filter(a => a.day1 && a.day1.zone).sort((a,b) => {
                             if ((a.day1.zonePoints || 999) !== (b.day1.zonePoints || 999)) return (a.day1.zonePoints || 999) - (b.day1.zonePoints || 999);
                             return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
                         });
 
-                        let d2Sorted = [...anglers].filter(a => a.day2 && a.day2.zone).sort((a,b) => {
+                        let d2IndSorted = [...anglers].filter(a => a.day2 && a.day2.zone).sort((a,b) => {
                             if ((a.day2.zonePoints || 999) !== (b.day2.zonePoints || 999)) return (a.day2.zonePoints || 999) - (b.day2.zonePoints || 999);
                             return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
                         });
 
-                        let maxClimb = 0;
-                        let moverName = "";
+                        let maxIndivClimb = 0;
+                        let topIndivName = "";
 
                         anglers.forEach(a => {
-                            let r1 = d1Sorted.findIndex(x => x.anglerName === a.anglerName) + 1;
-                            let r2 = d2Sorted.findIndex(x => x.anglerName === a.anglerName) + 1;
+                            let r1 = d1IndSorted.findIndex(x => x.anglerName === a.anglerName) + 1;
+                            let r2 = d2IndSorted.findIndex(x => x.anglerName === a.anglerName) + 1;
 
                             if (r1 > 0 && r2 > 0) {
                                 let climb = r1 - r2;
-                                if (climb > maxClimb) {
-                                    maxClimb = climb;
-                                    moverName = a.anglerName;
+                                if (climb > maxIndivClimb) {
+                                    maxIndivClimb = climb;
+                                    topIndivName = a.anglerName;
                                 }
                             }
                         });
 
-                        if (maxClimb > 0 && moverName !== "") {
-                            highlightMessages.push(`🚀 BIGGEST MOVER: ${moverName.toUpperCase()} (CLIMBED +${maxClimb} PLACES IN D2)`);
+                        if (maxIndivClimb > 0 && topIndivName !== "") {
+                            indivMoverText = `🚀 BIGGEST INDIVIDUAL MOVER: ${topIndivName.toUpperCase()} (+${maxIndivClimb})`;
                         }
                     } catch (e) {
-                        console.warn("Mover calculation error:", e);
+                        console.warn("Individual mover error:", e);
                     }
 
-                    // 2. Calculate Highest Team Catch Count
+                    // 2. Calculate Biggest Team Mover
                     try {
-                        let teamFishMap = {};
+                        let d1Teams = {}, d2Teams = {};
                         anglers.forEach(a => {
-                            let tName = (a.teamName && a.teamName.toUpperCase() !== "SOLO") ? a.teamName : null;
-                            if (tName) {
-                                teamFishMap[tName] = (teamFishMap[tName] || 0) + (a.totals?.cumulativeFish || 0);
+                            let t = (a.teamName && a.teamName.toUpperCase() !== "SOLO") ? a.teamName.trim() : null;
+                            if (t) {
+                                if (!d1Teams[t]) d1Teams[t] = { name: t, pts: 0, len: 0 };
+                                if (!d2Teams[t]) d2Teams[t] = { name: t, pts: 0, len: 0 };
+                                if (a.day1) { d1Teams[t].pts += (a.day1.zonePoints || 0); d1Teams[t].len += (a.day1.totalLengthCm || 0); }
+                                if (a.day2) { d2Teams[t].pts += (a.day2.zonePoints || 0); d2Teams[t].len += (a.day2.totalLengthCm || 0); }
                             }
                         });
 
-                        let topTeam = "";
-                        let topTeamCatches = 0;
-                        Object.keys(teamFishMap).forEach(t => {
-                            if (teamFishMap[t] > topTeamCatches) {
-                                topTeamCatches = teamFishMap[t];
-                                topTeam = t;
+                        let d1TeamSorted = Object.values(d1Teams).sort((a,b) => (a.pts - b.pts) || (b.len - a.len));
+                        let d2TeamSorted = Object.values(d2Teams).sort((a,b) => (a.pts - b.pts) || (b.len - a.len));
+
+                        let maxTeamClimb = 0;
+                        let topTeamName = "";
+
+                        Object.keys(d1Teams).forEach(tName => {
+                            let r1 = d1TeamSorted.findIndex(x => x.name === tName) + 1;
+                            let r2 = d2TeamSorted.findIndex(x => x.name === tName) + 1;
+
+                            if (r1 > 0 && r2 > 0) {
+                                let climb = r1 - r2;
+                                if (climb > maxTeamClimb) {
+                                    maxTeamClimb = climb;
+                                    topTeamName = tName;
+                                }
                             }
                         });
 
-                        if (topTeamCatches > 0 && topTeam !== "") {
-                            highlightMessages.push(`⚡ MOST TEAM CATCHES: ${topTeam.toUpperCase()} (${topTeamCatches} TOTAL FISH)`);
+                        if (maxTeamClimb > 0 && topTeamName !== "") {
+                            teamMoverText = `⚡ BIGGEST TEAM MOVER: ${topTeamName.toUpperCase()} (+${maxTeamClimb})`;
                         }
                     } catch (e) {
-                        console.warn("Team fish calculation error:", e);
+                        console.warn("Team mover error:", e);
                     }
 
-                    // 3. Calculate Session Hotshot (Highest Fish Count in a Single Session)
-                    try {
-                        let maxSessionFish = 0;
-                        let hotshotName = "";
-                        let hotshotSession = "";
-
-                        anglers.forEach(a => {
-                            let d1F = a.day1?.fishCount || 0;
-                            let d2F = a.day2?.fishCount || 0;
-
-                            if (d1F > maxSessionFish) { maxSessionFish = d1F; hotshotName = a.anglerName; hotshotSession = "SESSION 1"; }
-                            if (d2F > maxSessionFish) { maxSessionFish = d2F; hotshotName = a.anglerName; hotshotSession = "SESSION 2"; }
-                        });
-
-                        if (maxSessionFish > 0 && hotshotName !== "") {
-                            highlightMessages.push(`🔥 SESSION HOTSHOT: ${hotshotName.toUpperCase()} (${maxSessionFish} FISH IN ${hotshotSession})`);
-                        }
-                    } catch (e) {
-                        console.warn("Hotshot calculation error:", e);
+                    // Build Single-Line Banner
+                    let combinedMessage = "";
+                    if (indivMoverText !== "" && teamMoverText !== "") {
+                        combinedMessage = `<span>${indivMoverText}</span> <span style="color: var(--glass-border); margin: 0 6px;">|</span> <span>${teamMoverText}</span>`;
+                    } else if (indivMoverText !== "") {
+                        combinedMessage = `<span>${indivMoverText}</span>`;
+                    } else if (teamMoverText !== "") {
+                        combinedMessage = `<span>${teamMoverText}</span>`;
                     }
 
-                    if (highlightMessages.length > 0) {
-                        highlightStripHtml = highlightMessages.map(msg => `
-                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 800; color: var(--pixel-emerald);">
-                                ${msg}
+                    if (combinedMessage !== "") {
+                        highlightStripHtml = `
+                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 10px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 800; color: var(--pixel-emerald); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                ${combinedMessage}
                             </div>
-                        `).join('');
+                        `;
                     }
                 } else {
                     fieldPerfStrip = `
