@@ -1646,22 +1646,18 @@
                     `;
                 }
 
-                htmlMarkup += `
-                    <div class="stat-card" style="text-align: left;">
-                        <div class="stat-title" style="text-align: center; margin-bottom: 2px;">📊 Core Telemetry Metrics</div>
-                        
-                        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; text-align: center; font-size: 0.78rem; color: var(--text-muted); line-height: 1.35; font-family:'Google Sans', sans-serif; font-weight:500;">
-                            Each metric displays your official field ranking out of <strong>${rPts.total} anglers</strong>.
-                        </div>
+              htmlMarkup += `
+    <div class="stat-card" style="text-align: left;">
+        <div class="stat-title" style="text-align: center; margin-bottom: 12px;">📊 Match Performance Rankings</div>
 
-                        ${renderSvgRingCard("1. Total Zone Points", `${uPts} Points`, rPts, "#fde047", "Overall championship standing based on cumulative zone points.")}
-                        ${renderSvgRingCard("2. Total Overall Length", `${(uLen/100).toFixed(2)}m`, rLen, "#e2e8f0", "Cumulative length of all verified fish landed.")}
-                        ${renderSvgRingCard("3. Total Fish Count", `${uFish} Fish`, rFish, "#38bdf8", "Total fish volume across all match sessions.")}
-                        ${renderSvgRingCard("4. Biggest Fish", `${uMaxFish}cm`, rSpec, "#4ade80", "Longest single specimen landed during the competition.")}
-                        ${renderSvgRingCard("5. Average Fish Size", `${uAvgSize.toFixed(1)}cm / Fish`, rAvgSize, "#0ea5e9", "Average catch size per individual landed specimen.")}
+        ${renderSvgRingCard("1. Total Zone Points", `${uPts} Points`, rPts, "#fde047", "")}
+        ${renderSvgRingCard("2. Total Overall Length", `${Math.floor(uLen/100)}m`, rLen, "#e2e8f0", "")}
+        ${renderSvgRingCard("3. Total Fish Count", `${uFish} Fish`, rFish, "#38bdf8", "")}
+        ${renderSvgRingCard("4. Biggest Fish", `${uMaxFish}cm`, rSpec, "#4ade80", "")}
+        ${renderSvgRingCard("5. Average Fish Size", `${uAvgSize.toFixed(1)}cm / Fish`, rAvgSize, "#0ea5e9", "")}
 
-                    </div>
-                `;
+    </div>
+`;
 
                 const rivals = anglers.filter(a => a.anglerName !== user.anglerName).sort((a,b) => a.anglerName.localeCompare(b.anglerName));
 
