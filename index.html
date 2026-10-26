@@ -2064,63 +2064,7 @@
                         </div>
                     `;
 
-                    let indivMoverText = "";
-                    let teamMoverText = "";
-
-                   
-
-                    // 2. Calculate Biggest Team Mover
-                    try {
-                        let d1Teams = {}, d2Teams = {};
-                        anglers.forEach(a => {
-                            let t = (a.teamName && a.teamName.toUpperCase() !== "SOLO") ? a.teamName.trim() : null;
-                            if (t) {
-                                if (!d1Teams[t]) d1Teams[t] = { name: t, pts: 0, len: 0 };
-                                if (!d2Teams[t]) d2Teams[t] = { name: t, pts: 0, len: 0 };
-                                if (a.day1) { d1Teams[t].pts += (a.day1.zonePoints || 0); d1Teams[t].len += (a.day1.totalLengthCm || 0); }
-                                if (a.day2) { d2Teams[t].pts += (a.day2.zonePoints || 0); d2Teams[t].len += (a.day2.totalLengthCm || 0); }
-                            }
-                        });
-
-                        let d1TeamSorted = Object.values(d1Teams).sort((a,b) => (a.pts - b.pts) || (b.len - a.len));
-                        let d2TeamSorted = Object.values(d2Teams).sort((a,b) => (a.pts - b.pts) || (b.len - a.len));
-
-                        let maxTeamClimb = 0;
-                        let topTeamName = "";
-
-                        Object.keys(d1Teams).forEach(tName => {
-                            let r1 = d1TeamSorted.findIndex(x => x.name === tName) + 1;
-                            let r2 = d2TeamSorted.findIndex(x => x.name === tName) + 1;
-
-                            if (r1 > 0 && r2 > 0) {
-                                let climb = r1 - r2;
-                                if (climb > maxTeamClimb) {
-                                    maxTeamClimb = climb;
-                                    topTeamName = tName;
-                                }
-                            }
-                        });
-
-                        if (maxTeamClimb > 0 && topTeamName !== "") {
-                            teamMoverText = `⚡ BIGGEST TEAM MOVER: ${topTeamName.toUpperCase()} (+${maxTeamClimb})`;
-                        }
-                    } catch (e) {
-                        console.warn("Team mover error:", e);
-                    }
-
-                    // Build Single-Line Banner
-                    let combinedMessage = "";
-                    if (teamMoverText !== "") {
-                        combinedMessage = `<span>${teamMoverText}</span>`;
-                    }
-
-                    if (combinedMessage !== "") {
-                        highlightStripHtml = `
-                            <div style="background: rgba(74, 222, 128, 0.12); border-bottom: 1px solid var(--glass-border); padding: 6px 10px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 800; color: var(--pixel-emerald); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                ${combinedMessage}
-                            </div>
-                        `;
-                    }
+                    
                 } else {
                     fieldPerfStrip = `
                         <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
