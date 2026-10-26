@@ -2047,60 +2047,56 @@
                 let htmlMarkup = '<div class="stat-grid">';
                 
 
-/* CARD 1: Executive Summary Tile with Single-Line Movers Highlight */
-                let fieldPerfStrip = '';
-                let highlightStripHtml = '';
+/* CARD 1: Executive Summary Tile */
+let fieldPerfStrip = '';
 
-                let d1Rate = typeof d1CatchingRate !== 'undefined' ? d1CatchingRate : 0;
-                let d2Rate = typeof d2CatchingRate !== 'undefined' ? d2CatchingRate : 0;
-                let singleRate = typeof singleCompCatchingRate !== 'undefined' ? singleCompCatchingRate : 0;
+let d1Rate = typeof d1CatchingRate !== 'undefined' ? d1CatchingRate : 0;
+let d2Rate = typeof d2CatchingRate !== 'undefined' ? d2CatchingRate : 0;
+let singleRate = typeof singleCompCatchingRate !== 'undefined' ? singleCompCatchingRate : 0;
 
-                if (isTwoDayComp) {
-                    fieldPerfStrip = `
-                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; display: flex; justify-content: space-around; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800;">
-                            <span style="color: var(--pixel-gold);">D1 NIGHT: <span style="color: var(--pixel-emerald);">${d1Rate}% SESSION CATCH RATE</span></span>
-                            <span style="color: var(--glass-border);">|</span>
-                            <span style="color: var(--pixel-cyan);">D2 DAY: <span style="color: var(--pixel-emerald);">${d2Rate}% SESSION CATCH RATE</span></span>
-                        </div>
-                    `;
+if (isTwoDayComp) {
+    fieldPerfStrip = `
+        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; display: flex; justify-content: center; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800;">
+            <span style="color: var(--pixel-emerald);">D1: ${d1Rate}% CATCH RATE</span>
+            <span style="color: var(--glass-border);">|</span>
+            <span style="color: var(--pixel-emerald);">D2: ${d2Rate}% CATCH RATE</span>
+        </div>
+    `;
+} else {
+    fieldPerfStrip = `
+        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
+            SESSION CATCH RATE: ${singleRate}%
+        </div>
+    `;
+}
 
-                    
-                } else {
-                    fieldPerfStrip = `
-                        <div style="background: rgba(15, 23, 42, 0.7); border-bottom: 1px solid var(--glass-border); padding: 8px 12px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 800; color: var(--pixel-emerald);">
-                            SESSION CATCH RATE: ${singleRate}%
-                        </div>
-                    `;
-                }
-
-                htmlMarkup += `
-                    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; margin-bottom: 12px; height: auto; min-height: max-content; overflow: visible;">
-                        ${fieldPerfStrip}
-                        ${highlightStripHtml}
-                        <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
-                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">ANG</div>
-                            </div>
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
-                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">FISH</div>
-                            </div>
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
-                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">LEN</div>
-                            </div>
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-gold);">${avgCatchPerAngler}</div>
-                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG/ANG</div>
-                            </div>
-                            <div>
-                                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-cyan);">${avgFishLength}cm</div>
-                                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG SIZE</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+htmlMarkup += `
+    <div class="stat-card" style="border-top: 3px solid var(--pixel-cyan); text-align: left; padding: 0; margin-bottom: 12px; height: auto; min-height: max-content; overflow: visible;">
+        ${fieldPerfStrip}
+        <div style="padding: 10px 8px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: rgba(15, 23, 42, 0.4); text-align: center;">
+            <div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalAnglers}</div>
+                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">ANG</div>
+            </div>
+            <div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalFish}</div>
+                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">FISH</div>
+            </div>
+            <div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--text-main);">${totalMeters}m</div>
+                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">LEN</div>
+            </div>
+            <div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-gold);">${avgCatchPerAngler}</div>
+                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG/ANG</div>
+            </div>
+            <div>
+                <div style="font-family: 'JetBrains Mono'; font-size: 0.95rem; font-weight: 900; color: var(--pixel-cyan);">${avgFishLength}cm</div>
+                <div style="font-size: 0.58rem; color: var(--text-muted); font-weight: 900; font-family:'Barlow Condensed'; text-transform:uppercase;">AVG SIZE</div>
+            </div>
+        </div>
+    </div>
+`;
                 
                 /* CARD 2: Fish Caught By Zone */
                 htmlMarkup += `
