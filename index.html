@@ -1651,7 +1651,7 @@
         <div class="stat-title" style="text-align: center; margin-bottom: 12px;">📊 Match Performance Rankings</div>
 
         ${renderSvgRingCard("1. Total Zone Points", `${uPts} Points`, rPts, "#fde047", "")}
-        ${renderSvgRingCard("2. Total Overall Length", `${Math.floor(uLen/100)}m`, rLen, "#e2e8f0", "")}
+        ${renderSvgRingCard("2. Total Overall Length", `${(uLen/100).toFixed(2)}m`, rLen, "#e2e8f0", "")}
         ${renderSvgRingCard("3. Total Fish Count", `${uFish} Fish`, rFish, "#38bdf8", "")}
         ${renderSvgRingCard("4. Biggest Fish", `${uMaxFish}cm`, rSpec, "#4ade80", "")}
         ${renderSvgRingCard("5. Average Fish Size", `${uAvgSize.toFixed(1)}cm / Fish`, rAvgSize, "#0ea5e9", "")}
