@@ -2067,40 +2067,7 @@
                     let indivMoverText = "";
                     let teamMoverText = "";
 
-                    // 1. Calculate Biggest Individual Mover
-                    try {
-                        let d1IndSorted = [...anglers].filter(a => a.day1 && a.day1.zone).sort((a,b) => {
-                            if ((a.day1.zonePoints || 999) !== (b.day1.zonePoints || 999)) return (a.day1.zonePoints || 999) - (b.day1.zonePoints || 999);
-                            return (b.day1.totalLengthCm || 0) - (a.day1.totalLengthCm || 0);
-                        });
-
-                        let d2IndSorted = [...anglers].filter(a => a.day2 && a.day2.zone).sort((a,b) => {
-                            if ((a.day2.zonePoints || 999) !== (b.day2.zonePoints || 999)) return (a.day2.zonePoints || 999) - (b.day2.zonePoints || 999);
-                            return (b.day2.totalLengthCm || 0) - (a.day2.totalLengthCm || 0);
-                        });
-
-                        let maxIndivClimb = 0;
-                        let topIndivName = "";
-
-                        anglers.forEach(a => {
-                            let r1 = d1IndSorted.findIndex(x => x.anglerName === a.anglerName) + 1;
-                            let r2 = d2IndSorted.findIndex(x => x.anglerName === a.anglerName) + 1;
-
-                            if (r1 > 0 && r2 > 0) {
-                                let climb = r1 - r2;
-                                if (climb > maxIndivClimb) {
-                                    maxIndivClimb = climb;
-                                    topIndivName = a.anglerName;
-                                }
-                            }
-                        });
-
-                        if (maxIndivClimb > 0 && topIndivName !== "") {
-                            indivMoverText = `🚀 BIGGEST INDIVIDUAL MOVER: ${topIndivName.toUpperCase()} (+${maxIndivClimb})`;
-                        }
-                    } catch (e) {
-                        console.warn("Individual mover error:", e);
-                    }
+                   
 
                     // 2. Calculate Biggest Team Mover
                     try {
@@ -2143,11 +2110,7 @@
 
                     // Build Single-Line Banner
                     let combinedMessage = "";
-                    if (indivMoverText !== "" && teamMoverText !== "") {
-                        combinedMessage = `<span>${indivMoverText}</span> <span style="color: var(--glass-border); margin: 0 6px;">|</span> <span>${teamMoverText}</span>`;
-                    } else if (indivMoverText !== "") {
-                        combinedMessage = `<span>${indivMoverText}</span>`;
-                    } else if (teamMoverText !== "") {
+                    if (teamMoverText !== "") {
                         combinedMessage = `<span>${teamMoverText}</span>`;
                     }
 
