@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#090d16" />
+  <meta name="theme-color" content="#ffffff" />
   <title>SPRA Scottish Shore Championship 2027 | Results Portal</title>
   <link rel="manifest" href="manifest.json" />
   <style>
     :root {
-      --bg-base: #090d16;
-      --bg-surface: rgba(17, 25, 40, 0.76);
-      --bg-card: rgba(23, 33, 54, 0.68);
-      --bg-card-hover: rgba(30, 44, 72, 0.85);
-      --border-glass: rgba(255, 255, 255, 0.09);
-      --border-glow: rgba(56, 189, 248, 0.38);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
+      --bg-base: #ffffff;
+      --bg-surface: rgba(15, 23, 42, 0.94);
+      --bg-card: rgba(23, 33, 54, 0.92);
+      --bg-card-hover: rgba(30, 44, 72, 0.98);
+      --border-glass: rgba(148, 163, 184, 0.22);
+      --border-glow: rgba(56, 189, 248, 0.55);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
       --accent-cyan: #38bdf8;
       --accent-indigo: #818cf8;
       --accent-emerald: #34d399;
@@ -25,20 +25,20 @@
 
       /* Zone Colors */
       --zone-red: #ef4444;
-      --zone-red-bg: rgba(239, 68, 68, 0.14);
-      --zone-red-border: rgba(239, 68, 68, 0.40);
+      --zone-red-bg: rgba(239, 68, 68, 0.16);
+      --zone-red-border: rgba(239, 68, 68, 0.52);
 
       --zone-yellow: #eab308;
-      --zone-yellow-bg: rgba(234, 179, 8, 0.14);
-      --zone-yellow-border: rgba(234, 179, 8, 0.40);
+      --zone-yellow-bg: rgba(234, 179, 8, 0.16);
+      --zone-yellow-border: rgba(234, 179, 8, 0.52);
 
       --zone-green: #22c55e;
-      --zone-green-bg: rgba(34, 197, 94, 0.14);
-      --zone-green-border: rgba(34, 197, 94, 0.40);
+      --zone-green-bg: rgba(34, 197, 94, 0.16);
+      --zone-green-border: rgba(34, 197, 94, 0.52);
 
       --zone-blue: #3b82f6;
-      --zone-blue-bg: rgba(59, 130, 246, 0.14);
-      --zone-blue-border: rgba(59, 130, 246, 0.40);
+      --zone-blue-bg: rgba(59, 130, 246, 0.16);
+      --zone-blue-border: rgba(59, 130, 246, 0.52);
 
       /* Session Colors */
       --d1-dark: #6366f1;
@@ -48,7 +48,7 @@
       --radius-lg: 18px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-glass: 0 14px 36px -6px rgba(0, 0, 0, 0.6);
+      --shadow-card: 0 12px 28px -6px rgba(15, 23, 42, 0.22);
     }
 
     * {
@@ -61,15 +61,10 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
       background-color: var(--bg-base);
-      background-image:
-        radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.14), transparent 36%),
-        radial-gradient(circle at 88% 18%, rgba(129, 140, 248, 0.12), transparent 40%),
-        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.09), transparent 45%);
-      background-attachment: fixed;
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.5;
-      padding-bottom: 3rem;
+      padding-bottom: 4.5rem;
     }
 
     .container {
@@ -81,13 +76,11 @@
     /* Front-Page-Only Clean Header */
     .app-header {
       background: var(--bg-surface);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 1.45rem 1.6rem;
+      padding: 1.5rem 1.6rem;
       margin-bottom: 1.25rem;
-      box-shadow: var(--shadow-glass);
+      box-shadow: var(--shadow-card);
       text-align: center;
     }
 
@@ -96,10 +89,10 @@
     }
 
     .brand-block h1 {
-      font-size: 1.42rem;
+      font-size: 1.44rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #f8fafc 0%, #38bdf8 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -111,7 +104,7 @@
       justify-content: center;
       gap: 0.6rem;
       margin-top: 0.4rem;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-secondary);
     }
@@ -124,12 +117,12 @@
       border-radius: 999px;
       font-size: 0.72rem;
       font-weight: 600;
-      background: rgba(56, 189, 248, 0.14);
+      background: rgba(56, 189, 248, 0.16);
       color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.28);
+      border: 1px solid rgba(56, 189, 248, 0.32);
     }
 
-    /* Views & Section Navigation */
+    /* Views & Floating Bottom-Left Back Button */
     .view-section {
       display: none;
       animation: fadeIn 0.25s ease;
@@ -144,61 +137,36 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .back-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-back {
-      display: inline-flex;
+    .floating-back-btn {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      z-index: 999;
+      display: none;
       align-items: center;
       gap: 0.45rem;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-glow);
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.45);
       color: #ffffff;
-      padding: 0.55rem 1.05rem;
+      padding: 0.62rem 1.15rem;
       border-radius: 999px;
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
-      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.38);
       transition: all 0.2s ease;
     }
 
-    .btn-back:hover {
-      background: rgba(56, 189, 248, 0.2);
-      transform: translateX(-2px);
+    .floating-back-btn.visible {
+      display: inline-flex;
     }
 
-    .quick-nav-strip {
-      display: flex;
-      gap: 0.45rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .quick-nav-strip::-webkit-scrollbar { display: none; }
-
-    .quick-pill {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      color: var(--text-secondary);
-      padding: 0.42rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-    }
-
-    .quick-pill:hover, .quick-pill.active {
-      color: #fff;
-      border-color: var(--border-glow);
-      background: rgba(56, 189, 248, 0.18);
+    .floating-back-btn:hover {
+      background: rgba(15, 23, 42, 0.96);
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
     }
 
     /* Front Landing Button Grid (Clean Icon + Title Cards) */
@@ -210,8 +178,6 @@
 
     .hub-btn-card {
       background: var(--bg-surface);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
       padding: 1.4rem 1.35rem;
@@ -222,7 +188,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      box-shadow: var(--shadow-glass);
+      box-shadow: var(--shadow-card);
       transition: all 0.22s ease;
     }
 
@@ -246,8 +212,8 @@
       align-items: center;
       justify-content: center;
       font-size: 1.45rem;
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.34);
       flex-shrink: 0;
     }
 
@@ -265,15 +231,13 @@
       flex-shrink: 0;
     }
 
-    /* Glass Cards */
+    /* Dark Cards on White Background */
     .glass-card {
       background: var(--bg-surface);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
       padding: 1.25rem;
-      box-shadow: var(--shadow-glass);
+      box-shadow: var(--shadow-card);
       margin-bottom: 1.25rem;
     }
 
@@ -287,7 +251,7 @@
     }
 
     .card-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 800;
       color: var(--text-primary);
       display: flex;
@@ -309,12 +273,13 @@
     }
 
     .kpi-tile {
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
       padding: 0.95rem 1rem;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-card);
     }
 
     .kpi-tile::before {
@@ -323,9 +288,8 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 2px;
+      height: 3px;
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
-      opacity: 0.75;
     }
 
     .kpi-label {
@@ -358,7 +322,7 @@
 
     .zone-telemetry-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-glass);
+      border: 1.5px solid var(--border-glass);
       border-radius: var(--radius-lg);
       padding: 1.15rem;
       display: flex;
@@ -375,19 +339,19 @@
 
     .zone-telemetry-card[data-zone="Red Zone"] {
       border-color: var(--zone-red-border);
-      background: linear-gradient(165deg, rgba(239, 68, 68, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
+      background: linear-gradient(165deg, rgba(239, 68, 68, 0.18) 0%, rgba(15, 23, 42, 0.96) 52%);
     }
     .zone-telemetry-card[data-zone="Yellow Zone"] {
       border-color: var(--zone-yellow-border);
-      background: linear-gradient(165deg, rgba(234, 179, 8, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
+      background: linear-gradient(165deg, rgba(234, 179, 8, 0.18) 0%, rgba(15, 23, 42, 0.96) 52%);
     }
     .zone-telemetry-card[data-zone="Green Zone"] {
       border-color: var(--zone-green-border);
-      background: linear-gradient(165deg, rgba(34, 197, 94, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
+      background: linear-gradient(165deg, rgba(34, 197, 94, 0.18) 0%, rgba(15, 23, 42, 0.96) 52%);
     }
     .zone-telemetry-card[data-zone="Blue Zone"] {
       border-color: var(--zone-blue-border);
-      background: linear-gradient(165deg, rgba(59, 130, 246, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
+      background: linear-gradient(165deg, rgba(59, 130, 246, 0.18) 0%, rgba(15, 23, 42, 0.96) 52%);
     }
 
     .zt-top-row {
@@ -417,16 +381,41 @@
       letter-spacing: -0.01em;
     }
 
+    .zt-badges-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .zt-rank-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: rgba(56, 189, 248, 0.18);
+      border: 1px solid rgba(56, 189, 248, 0.42);
+      color: #7dd3fc;
+    }
+
+    .zt-rank-pill.rank-top {
+      background: rgba(251, 191, 36, 0.2);
+      border-color: rgba(251, 191, 36, 0.5);
+      color: #fde68a;
+    }
+
     .zt-share-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.25rem 0.65rem;
+      gap: 0.32rem;
+      padding: 0.22rem 0.6rem;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 700;
-      background: rgba(15, 23, 42, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(9, 13, 22, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       color: var(--text-primary);
     }
 
@@ -442,13 +431,16 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.42rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     /* Block 1: Overall Zone Summary Container */
     .zt-overall-panel {
-      background: rgba(9, 13, 22, 0.48);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(9, 13, 22, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
       padding: 0.75rem 0.85rem;
     }
@@ -475,7 +467,7 @@
 
     .zt-ring-bg {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.1);
+      stroke: rgba(255, 255, 255, 0.12);
       stroke-width: 4.5;
     }
 
@@ -499,7 +491,7 @@
     }
 
     .zt-ring-lbl {
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.03em;
@@ -507,7 +499,7 @@
 
     .zt-stat-col {
       text-align: right;
-      border-left: 1px solid rgba(255, 255, 255, 0.07);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
       padding-left: 0.65rem;
     }
 
@@ -519,7 +511,7 @@
     }
 
     .zt-stat-lbl {
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.03em;
@@ -527,8 +519,8 @@
 
     /* Block 2: Session Breakdown Container (🌙 vs ☀️) */
     .zt-sessions-panel {
-      background: rgba(15, 23, 42, 0.52);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
       padding: 0.75rem 0.85rem;
       display: flex;
@@ -588,7 +580,7 @@
       transition: width 0.45s ease;
     }
 
-    /* Individual Catch (Lowest to Highest Fish per Day) */
+    /* Individual Catch + Daily Zone Rank */
     .zt-spread-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -596,8 +588,8 @@
     }
 
     .zt-spread-box {
-      background: rgba(9, 13, 22, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(9, 13, 22, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: var(--radius-sm);
       padding: 0.55rem 0.65rem;
       display: flex;
@@ -609,9 +601,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.67rem;
+      font-size: 0.66rem;
       color: var(--text-secondary);
       font-weight: 700;
+      gap: 0.25rem;
+    }
+
+    .zt-day-rank-tag {
+      padding: 0.08rem 0.4rem;
+      border-radius: 999px;
+      font-size: 0.63rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.09);
+      color: #f8fafc;
+      white-space: nowrap;
+    }
+
+    .zt-day-rank-tag.top {
+      background: rgba(251, 191, 36, 0.22);
+      color: #fde68a;
     }
 
     .zt-spread-val {
@@ -623,7 +631,7 @@
     .zt-spread-track {
       height: 5px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 999px;
       position: relative;
       overflow: hidden;
@@ -662,9 +670,9 @@
       gap: 0.85rem;
     }
 
-    .team-card.podium-1 { border-color: rgba(251, 191, 36, 0.45); }
-    .team-card.podium-2 { border-color: rgba(203, 213, 225, 0.38); }
-    .team-card.podium-3 { border-color: rgba(217, 119, 6, 0.42); }
+    .team-card.podium-1 { border-color: rgba(251, 191, 36, 0.55); }
+    .team-card.podium-2 { border-color: rgba(203, 213, 225, 0.45); }
+    .team-card.podium-3 { border-color: rgba(217, 119, 6, 0.5); }
 
     .team-card-header {
       display: flex;
@@ -672,7 +680,7 @@
       justify-content: space-between;
       gap: 0.75rem;
       padding-bottom: 0.65rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .team-rank-badge {
@@ -701,8 +709,8 @@
     }
 
     .team-member-row {
-      background: rgba(9, 13, 22, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(9, 13, 22, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: var(--radius-sm);
       padding: 0.55rem 0.7rem;
       display: flex;
@@ -737,7 +745,7 @@
     }
 
     .glass-select, .glass-input {
-      background: rgba(15, 23, 42, 0.88);
+      background: rgba(9, 13, 22, 0.85);
       border: 1px solid var(--border-glass);
       color: var(--text-primary);
       padding: 0.6rem 0.9rem;
@@ -787,7 +795,7 @@
 
     .gauge-track {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.08);
+      stroke: rgba(255, 255, 255, 0.1);
       stroke-width: 7.5;
     }
 
@@ -850,7 +858,7 @@
     }
 
     th {
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(9, 13, 22, 0.92);
       color: var(--text-secondary);
       font-weight: 700;
       font-size: 0.73rem;
@@ -863,13 +871,13 @@
 
     td {
       padding: 0.72rem 0.85rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       color: var(--text-primary);
       white-space: nowrap;
     }
 
     tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+    tbody tr:hover { background: rgba(255, 255, 255, 0.04); }
 
     .zone-chip {
       display: inline-block;
@@ -996,28 +1004,14 @@
     </main>
 
     <!-- =========================================================
-         VIEW 1: MATCH OVERVIEW (UNIFIED ZONE TELEMETRY)
+         VIEW 1: MATCH OVERVIEW (MERGED OVERALL STATS + ZONE COMPARISON)
          ========================================================= -->
     <section id="view-overview" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill active" data-nav="overview">Match Overview</button>
-          <button class="quick-pill" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
-      <!-- Merged Overall Championship KPIs -->
       <div class="kpi-grid" id="overviewKpis"></div>
 
-      <!-- Unified Zone Performance & Session Breakdown (4 Separate Color-Coded Cards) -->
       <div class="glass-card">
         <div class="card-header">
-          <div class="card-title">Zone Performance & Session Telemetry</div>
+          <div class="card-title">Overall Performance</div>
           <div style="display:flex; gap:0.75rem; font-size:0.82rem; font-weight:700;">
             <span class="zt-lbl-d1">🌙 Day 1</span>
             <span class="zt-lbl-d2">☀️ Day 2</span>
@@ -1031,18 +1025,6 @@
          VIEW 2: INDIVIDUAL LEADERBOARD
          ========================================================= -->
     <section id="view-individual" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill" data-nav="overview">Match Overview</button>
-          <button class="quick-pill active" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
       <div class="glass-card">
         <div class="card-header">
           <div>
@@ -1090,18 +1072,6 @@
          VIEW 3: TEAM LEADERBOARD (WITH FULL ANGLER CONTRIBUTIONS)
          ========================================================= -->
     <section id="view-teams" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill" data-nav="overview">Match Overview</button>
-          <button class="quick-pill" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill active" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
       <div class="glass-card">
         <div class="card-header">
           <div>
@@ -1117,18 +1087,6 @@
          VIEW 4: BIGGEST FISH
          ========================================================= -->
     <section id="view-biggest" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill" data-nav="overview">Match Overview</button>
-          <button class="quick-pill" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill active" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
       <div class="glass-card">
         <div class="card-header">
           <div>
@@ -1161,18 +1119,6 @@
          VIEW 5: MYSTERY PAIRS
          ========================================================= -->
     <section id="view-secret" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill" data-nav="overview">Match Overview</button>
-          <button class="quick-pill" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill active" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
       <div class="glass-card">
         <div class="card-header">
           <div>
@@ -1189,18 +1135,6 @@
          VIEW 6: MY MATCH REPORT ("NTH OUT OF 28TH" METRIC ICONS)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
-      <div class="back-bar">
-        <button class="btn-back" data-nav="home">← Back to Home</button>
-        <div class="quick-nav-strip">
-          <button class="quick-pill" data-nav="overview">Match Overview</button>
-          <button class="quick-pill" data-nav="individual">Individual Leaderboard</button>
-          <button class="quick-pill" data-nav="teams">Team Leaderboard</button>
-          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
-          <button class="quick-pill" data-nav="secret">Mystery Pairs</button>
-          <button class="quick-pill active" data-nav="myreport">My Match Report</button>
-        </div>
-      </div>
-
       <div class="glass-card">
         <div class="card-header">
           <div>
@@ -1226,9 +1160,14 @@
     </section>
   </div>
 
+  <!-- Floating Bottom-Left Back Button (Visible on all sub-pages) -->
+  <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
+    ← Back
+  </button>
+
   <script>
     const MATCH_CONFIG = {
-      version: "v3.3.8",
+      version: "v3.3.9",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1248,7 +1187,6 @@
       specimensAll: []
     };
 
-    // Ordinal formatter: 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 5 -> 5th, 28 -> 28th
     function getOrdinal(n) {
       const s = ["th", "st", "nd", "rd"];
       const v = n % 100;
@@ -1387,19 +1325,20 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      // Show main header ONLY on the front splash screen
       const splashHeader = document.getElementById("mainSplashHeader");
-      if (splashHeader) {
-        if (viewName === "home") {
-          splashHeader.classList.remove("hidden");
-        } else {
-          splashHeader.classList.add("hidden");
-        }
+      const floatingBackBtn = document.getElementById("floatingBackBtn");
+
+      if (viewName === "home") {
+        if (splashHeader) splashHeader.classList.remove("hidden");
+        if (floatingBackBtn) floatingBackBtn.classList.remove("visible");
+      } else {
+        if (splashHeader) splashHeader.classList.add("hidden");
+        if (floatingBackBtn) floatingBackBtn.classList.add("visible");
       }
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 1: MATCH OVERVIEW (MERGED OVERALL STATS + UNIFIED ZONE TELEMETRY)
+       RENDER VIEW 1: MATCH OVERVIEW (OVERALL LENGTH IN METERS + INTER-ZONE RANKINGS)
        --------------------------------------------------------- */
     function renderOverview() {
       const anglers = STATE.anglers;
@@ -1410,7 +1349,8 @@
       const totalD1Fish = anglers.reduce((s, a) => s + (a.d1.fishCount || 0), 0);
       const totalD2Fish = anglers.reduce((s, a) => s + (a.d2.fishCount || 0), 0);
       const totalFish = totalD1Fish + totalD2Fish;
-      const totalLength = anglers.reduce((s, a) => s + (a.totals.cumulativeLengthCm || 0), 0);
+      const totalLengthCm = anglers.reduce((s, a) => s + (a.totals.cumulativeLengthCm || 0), 0);
+      const totalLengthMeters = (totalLengthCm / 100).toFixed(2);
 
       const totalRodSessions = totalAnglers * 2;
       const activeRodSessions =
@@ -1420,7 +1360,6 @@
 
       const biggestOverall = STATE.specimensAll[0];
 
-      // Merged overall stats (combining former front-page stats with Match Overview KPIs, excluding Leading Angler/Team)
       document.getElementById("overviewKpis").innerHTML = `
         <div class="kpi-tile">
           <div class="kpi-label">Field Entered</div>
@@ -1434,8 +1373,8 @@
         </div>
         <div class="kpi-tile">
           <div class="kpi-label">Total Length</div>
-          <div class="kpi-value">${totalLength.toLocaleString()}<span style="font-size:0.9rem; font-weight:600;">cm</span></div>
-          <div class="kpi-sub">Avg ${(totalLength / Math.max(1, totalFish)).toFixed(1)} cm / fish</div>
+          <div class="kpi-value">${totalLengthMeters}<span style="font-size:0.95rem; font-weight:600;">m</span></div>
+          <div class="kpi-sub">Avg ${(totalLengthCm / Math.max(1, totalFish)).toFixed(1)} cm / fish</div>
         </div>
         <div class="kpi-tile">
           <div class="kpi-label">Anglers Caught</div>
@@ -1449,13 +1388,8 @@
         </div>
       `;
 
-      // Global max single-session catch for scaling Individual Catch range bars
-      const globalMaxBag = Math.max(
-        1,
-        ...anglers.map(a => Math.max(a.d1.fishCount || 0, a.d2.fishCount || 0))
-      );
-
-      const cardsHtml = MATCH_CONFIG.zones.map(zoneName => {
+      // Pre-compute zone summaries so we can rank zones against each other Overall, on Day 1, and on Day 2
+      const zoneStats = MATCH_CONFIG.zones.map(zoneName => {
         const d1Rows = anglers.filter(a => a.d1.zone === zoneName);
         const d2Rows = anglers.filter(a => a.d2.zone === zoneName);
 
@@ -1466,6 +1400,36 @@
         const d1Len = d1Rows.reduce((s, a) => s + (a.d1.totalLengthCm || 0), 0);
         const d2Len = d2Rows.reduce((s, a) => s + (a.d2.totalLengthCm || 0), 0);
         const zoneLen = d1Len + d2Len;
+
+        return {
+          zoneName,
+          d1Rows,
+          d2Rows,
+          d1Fish,
+          d2Fish,
+          zoneFish,
+          d1Len,
+          d2Len,
+          zoneLen
+        };
+      });
+
+      const overallRankedZones = [...zoneStats].sort((a, b) => b.zoneFish - a.zoneFish || b.zoneLen - a.zoneLen);
+      const d1RankedZones = [...zoneStats].sort((a, b) => b.d1Fish - a.d1Fish || b.d1Len - a.d1Len);
+      const d2RankedZones = [...zoneStats].sort((a, b) => b.d2Fish - a.d2Fish || b.d2Len - a.d2Len);
+
+      const zoneCount = MATCH_CONFIG.zones.length;
+      const globalMaxBag = Math.max(
+        1,
+        ...anglers.map(a => Math.max(a.d1.fishCount || 0, a.d2.fishCount || 0))
+      );
+
+      const cardsHtml = zoneStats.map(zs => {
+        const { zoneName, d1Rows, d2Rows, d1Fish, d2Fish, zoneFish, zoneLen } = zs;
+
+        const overallZoneRank = overallRankedZones.findIndex(x => x.zoneName === zoneName) + 1;
+        const d1ZoneRank = d1RankedZones.findIndex(x => x.zoneName === zoneName) + 1;
+        const d2ZoneRank = d2RankedZones.findIndex(x => x.zoneName === zoneName) + 1;
 
         const matchSharePct = totalFish > 0 ? Math.round((zoneFish / totalFish) * 100) : 0;
 
@@ -1511,20 +1475,26 @@
 
         return `
           <div class="zone-telemetry-card" data-zone="${zoneName}">
-            <!-- Zone Card Header -->
+            <!-- Zone Card Header with Overall Zone Standing -->
             <div class="zt-top-row">
               <div class="zt-zone-identity">
                 <span class="zt-dot" style="background:${zoneColor}; box-shadow:0 0 10px ${zoneColor};"></span>
                 <span class="zt-zone-name">${zoneName}</span>
               </div>
-              <div class="zt-share-pill">
-                ${zoneFish} fish <span>(${matchSharePct}% • ${zoneLen.toLocaleString()}cm)</span>
+              <div class="zt-badges-right">
+                <span class="zt-rank-pill ${overallZoneRank === 1 ? "rank-top" : ""}">${getOrdinal(overallZoneRank)} of ${zoneCount}</span>
+                <div class="zt-share-pill">
+                  ${zoneFish} fish <span>(${matchSharePct}%)</span>
+                </div>
               </div>
             </div>
 
             <!-- SECTION 1: OVERALL ZONE METRICS -->
             <div class="zt-overall-panel">
-              <div class="zt-section-tag">Overall Zone Summary</div>
+              <div class="zt-section-tag">
+                <span>Overall Zone Summary</span>
+                <span>${(zoneLen / 100).toFixed(2)}m total</span>
+              </div>
               <div class="zt-overall-grid">
                 <div class="zt-ring-wrap">
                   <svg class="zt-ring-svg" viewBox="0 0 44 44">
@@ -1552,9 +1522,9 @@
               </div>
             </div>
 
-            <!-- SECTION 2: SESSION SPLIT (🌙 DAY 1 vs ☀️ DAY 2) -->
+            <!-- SECTION 2: SESSION SPLIT & DAILY ZONE RANKINGS (🌙 DAY 1 vs ☀️ DAY 2) -->
             <div class="zt-sessions-panel">
-              <div class="zt-section-tag">Session Split (🌙 vs ☀️)</div>
+              <div class="zt-section-tag">Session Comparison (🌙 vs ☀️)</div>
 
               <div class="zt-session-block">
                 <div class="zt-session-labels">
@@ -1571,6 +1541,7 @@
                 <div class="zt-spread-box">
                   <div class="zt-spread-head">
                     <span>🌙 Individual Catch</span>
+                    <span class="zt-day-rank-tag ${d1ZoneRank === 1 ? "top" : ""}">${getOrdinal(d1ZoneRank)} of ${zoneCount}</span>
                   </div>
                   <div class="zt-spread-val">${d1Min} – ${d1Max} <span style="font-size:0.7rem; font-weight:600; color:var(--text-secondary);">fish</span></div>
                   <div class="zt-spread-track">
@@ -1582,6 +1553,7 @@
                 <div class="zt-spread-box">
                   <div class="zt-spread-head">
                     <span>☀️ Individual Catch</span>
+                    <span class="zt-day-rank-tag ${d2ZoneRank === 1 ? "top" : ""}">${getOrdinal(d2ZoneRank)} of ${zoneCount}</span>
                   </div>
                   <div class="zt-spread-val">${d2Min} – ${d2Max} <span style="font-size:0.7rem; font-weight:600; color:var(--text-secondary);">fish</span></div>
                   <div class="zt-spread-track">
@@ -1754,7 +1726,7 @@
 
       if (!winners.length && !others.length) {
         bodyEl.innerHTML = `
-          <div style="padding:1.5rem; text-align:center; background:rgba(9,13,22,0.45); border-radius:var(--radius-md); border:1px dashed rgba(255,255,255,0.12); color:var(--text-secondary);">
+          <div style="padding:1.5rem; text-align:center; background:rgba(9,13,22,0.55); border-radius:var(--radius-md); border:1px dashed rgba(255,255,255,0.16); color:var(--text-secondary);">
             <div style="font-size:1.4rem; margin-bottom:0.35rem;">🎲</div>
             <div style="font-weight:700; color:var(--text-primary);">Mystery Pairs Draw Pending</div>
             <div style="font-size:0.82rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
