@@ -9,11 +9,11 @@
   <style>
     :root {
       --bg-base: #090d16;
-      --bg-surface: rgba(17, 25, 40, 0.72);
-      --bg-card: rgba(23, 33, 54, 0.65);
-      --bg-card-hover: rgba(30, 43, 70, 0.8);
+      --bg-surface: rgba(17, 25, 40, 0.76);
+      --bg-card: rgba(23, 33, 54, 0.68);
+      --bg-card-hover: rgba(30, 44, 72, 0.85);
       --border-glass: rgba(255, 255, 255, 0.09);
-      --border-glow: rgba(56, 189, 248, 0.35);
+      --border-glow: rgba(56, 189, 248, 0.38);
       --text-primary: #f1f5f9;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
@@ -26,30 +26,29 @@
       /* Zone Colors */
       --zone-red: #ef4444;
       --zone-red-bg: rgba(239, 68, 68, 0.14);
-      --zone-red-border: rgba(239, 68, 68, 0.38);
+      --zone-red-border: rgba(239, 68, 68, 0.40);
 
       --zone-yellow: #eab308;
       --zone-yellow-bg: rgba(234, 179, 8, 0.14);
-      --zone-yellow-border: rgba(234, 179, 8, 0.38);
+      --zone-yellow-border: rgba(234, 179, 8, 0.40);
 
       --zone-green: #22c55e;
       --zone-green-bg: rgba(34, 197, 94, 0.14);
-      --zone-green-border: rgba(34, 197, 94, 0.38);
+      --zone-green-border: rgba(34, 197, 94, 0.40);
 
       --zone-blue: #3b82f6;
       --zone-blue-bg: rgba(59, 130, 246, 0.14);
-      --zone-blue-border: rgba(59, 130, 246, 0.38);
+      --zone-blue-border: rgba(59, 130, 246, 0.40);
 
       /* Session Colors */
       --d1-dark: #6366f1;
-      --d1-dark-soft: rgba(99, 102, 241, 0.2);
       --d2-day: #f59e0b;
-      --d2-day-soft: rgba(245, 158, 11, 0.2);
 
+      --radius-xl: 22px;
       --radius-lg: 18px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-glass: 0 12px 32px -4px rgba(0, 0, 0, 0.55);
+      --shadow-glass: 0 14px 36px -6px rgba(0, 0, 0, 0.6);
     }
 
     * {
@@ -63,9 +62,9 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
       background-color: var(--bg-base);
       background-image:
-        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.12), transparent 35%),
-        radial-gradient(circle at 85% 20%, rgba(129, 140, 248, 0.10), transparent 40%),
-        radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.08), transparent 45%);
+        radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.14), transparent 36%),
+        radial-gradient(circle at 88% 18%, rgba(129, 140, 248, 0.12), transparent 40%),
+        radial-gradient(circle at 50% 92%, rgba(16, 185, 129, 0.09), transparent 45%);
       background-attachment: fixed;
       color: var(--text-primary);
       min-height: 100vh;
@@ -74,7 +73,7 @@
     }
 
     .container {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 1rem;
     }
@@ -97,7 +96,7 @@
     }
 
     .brand-block h1 {
-      font-size: 1.25rem;
+      font-size: 1.28rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       background: linear-gradient(135deg, #f8fafc 0%, #38bdf8 100%);
@@ -109,7 +108,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.55rem;
       margin-top: 0.35rem;
       font-size: 0.8rem;
       color: var(--text-secondary);
@@ -135,56 +134,244 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
-    /* Navigation Tabs */
-    .nav-tabs {
+    .header-actions {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
-      overflow-x: auto;
-      padding-bottom: 0.35rem;
-      margin-bottom: 1.25rem;
-      scrollbar-width: none;
-    }
-    .nav-tabs::-webkit-scrollbar {
-      display: none;
+      flex-wrap: wrap;
     }
 
-    .tab-btn {
-      flex: 0 0 auto;
-      background: var(--bg-surface);
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.7);
       border: 1px solid var(--border-glass);
-      color: var(--text-secondary);
-      padding: 0.6rem 1.05rem;
+      color: var(--text-primary);
+      padding: 0.45rem 0.85rem;
       border-radius: 999px;
-      font-size: 0.84rem;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
-      backdrop-filter: blur(12px);
     }
 
-    .tab-btn:hover {
-      color: var(--text-primary);
-      border-color: rgba(255, 255, 255, 0.2);
+    .btn-ghost:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.14);
     }
 
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.24), rgba(99, 102, 241, 0.24));
-      color: #ffffff;
-      border-color: var(--border-glow);
-      box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
-    }
-
-    .tab-panel {
+    /* Views & Section Navigation */
+    .view-section {
       display: none;
       animation: fadeIn 0.25s ease;
     }
-    .tab-panel.active {
+
+    .view-section.active {
       display: block;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glow);
+      color: #ffffff;
+      padding: 0.55rem 1.05rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      background: rgba(56, 189, 248, 0.2);
+      transform: translateX(-2px);
+    }
+
+    .quick-nav-strip {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .quick-nav-strip::-webkit-scrollbar { display: none; }
+
+    .quick-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .quick-pill:hover, .quick-pill.active {
+      color: #fff;
+      border-color: var(--border-glow);
+      background: rgba(56, 189, 248, 0.18);
+    }
+
+    /* Front Landing Hub */
+    .home-hero {
+      background: linear-gradient(145deg, rgba(23, 33, 54, 0.84), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow-glass);
+    }
+
+    .home-hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .home-hero h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .home-hero p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .home-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .home-mini-stat {
+      background: rgba(9, 13, 22, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.9rem;
+    }
+
+    .home-mini-stat .lbl {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .home-mini-stat .val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-top: 0.15rem;
+    }
+
+    .home-mini-stat .sub {
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+    }
+
+    .hub-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+    }
+
+    .hub-btn-card {
+      background: var(--bg-surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem;
+      text-align: left;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.85rem;
+      box-shadow: var(--shadow-glass);
+      transition: all 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hub-btn-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+    }
+
+    .hub-btn-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .hub-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .hub-arrow {
+      font-size: 1.1rem;
+      color: var(--accent-cyan);
+      font-weight: 800;
+    }
+
+    .hub-btn-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .hub-btn-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .hub-btn-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent-cyan);
     }
 
     /* Glass Cards */
@@ -194,7 +381,7 @@
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 1.2rem;
+      padding: 1.25rem;
       box-shadow: var(--shadow-glass);
       margin-bottom: 1.25rem;
     }
@@ -209,8 +396,8 @@
     }
 
     .card-title {
-      font-size: 1rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--text-primary);
       display: flex;
       align-items: center;
@@ -218,14 +405,14 @@
     }
 
     .card-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.79rem;
       color: var(--text-secondary);
     }
 
     /* KPI Telemetry Grid */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
       gap: 0.85rem;
       margin-bottom: 1.25rem;
     }
@@ -247,7 +434,7 @@
       right: 0;
       height: 2px;
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
-      opacity: 0.7;
+      opacity: 0.75;
     }
 
     .kpi-label {
@@ -274,7 +461,7 @@
     /* Unified Zone Telemetry Grid (4 Separate Cards) */
     .zones-telemetry-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
       gap: 1rem;
     }
 
@@ -282,7 +469,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 1.1rem;
+      padding: 1.15rem;
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
@@ -295,21 +482,21 @@
       transform: translateY(-2px);
     }
 
-    .zone-telemetry-card[data-zone="Red"] {
+    .zone-telemetry-card[data-zone="Red Zone"] {
       border-color: var(--zone-red-border);
-      background: linear-gradient(165deg, rgba(239, 68, 68, 0.11) 0%, rgba(17, 25, 40, 0.82) 55%);
+      background: linear-gradient(165deg, rgba(239, 68, 68, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
     }
-    .zone-telemetry-card[data-zone="Yellow"] {
+    .zone-telemetry-card[data-zone="Yellow Zone"] {
       border-color: var(--zone-yellow-border);
-      background: linear-gradient(165deg, rgba(234, 179, 8, 0.11) 0%, rgba(17, 25, 40, 0.82) 55%);
+      background: linear-gradient(165deg, rgba(234, 179, 8, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
     }
-    .zone-telemetry-card[data-zone="Green"] {
+    .zone-telemetry-card[data-zone="Green Zone"] {
       border-color: var(--zone-green-border);
-      background: linear-gradient(165deg, rgba(34, 197, 94, 0.11) 0%, rgba(17, 25, 40, 0.82) 55%);
+      background: linear-gradient(165deg, rgba(34, 197, 94, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
     }
-    .zone-telemetry-card[data-zone="Blue"] {
+    .zone-telemetry-card[data-zone="Blue Zone"] {
       border-color: var(--zone-blue-border);
-      background: linear-gradient(165deg, rgba(59, 130, 246, 0.11) 0%, rgba(17, 25, 40, 0.82) 55%);
+      background: linear-gradient(165deg, rgba(59, 130, 246, 0.12) 0%, rgba(17, 25, 40, 0.84) 55%);
     }
 
     .zt-top-row {
@@ -317,6 +504,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .zt-zone-identity {
@@ -346,7 +534,7 @@
       border-radius: 999px;
       font-size: 0.75rem;
       font-weight: 700;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.72);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: var(--text-primary);
     }
@@ -356,13 +544,12 @@
       font-weight: 600;
     }
 
-    /* Active Rod Ring + Catch Share Mini Bar Row */
     .zt-metrics-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
-      background: rgba(9, 13, 22, 0.45);
+      background: rgba(9, 13, 22, 0.48);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-md);
       padding: 0.65rem 0.8rem;
@@ -435,7 +622,7 @@
     .zt-session-block {
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.42rem;
     }
 
     .zt-session-labels {
@@ -492,7 +679,7 @@
     }
 
     .zt-spread-box {
-      background: rgba(9, 13, 22, 0.42);
+      background: rgba(9, 13, 22, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-sm);
       padding: 0.55rem 0.65rem;
@@ -532,13 +719,8 @@
       border-radius: 999px;
     }
 
-    .zt-spread-fill.d1 {
-      background: #818cf8;
-    }
-
-    .zt-spread-fill.d2 {
-      background: #fbbf24;
-    }
+    .zt-spread-fill.d1 { background: #818cf8; }
+    .zt-spread-fill.d2 { background: #fbbf24; }
 
     .zt-spread-sub {
       font-size: 0.67rem;
@@ -550,7 +732,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      padding-top: 0.25rem;
+      padding-top: 0.35rem;
       border-top: 1px solid rgba(255, 255, 255, 0.07);
     }
 
@@ -579,50 +761,99 @@
       font-style: italic;
     }
 
-    /* Species Breakdown Bars */
-    .species-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
+    /* Team Championship Cards with Full Angler Breakdown */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1rem;
     }
 
-    .species-row {
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.85rem;
     }
 
-    .species-meta {
+    .team-card.podium-1 { border-color: rgba(251, 191, 36, 0.45); }
+    .team-card.podium-2 { border-color: rgba(203, 213, 225, 0.38); }
+    .team-card.podium-3 { border-color: rgba(217, 119, 6, 0.42); }
+
+    .team-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .team-rank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .team-totals-pill {
+      text-align: right;
+      font-size: 0.78rem;
+    }
+
+    .team-totals-pill .pts {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .team-members-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .team-member-row {
+      background: rgba(9, 13, 22, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tm-top {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
-      font-weight: 600;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
     }
 
-    .species-bar-bg {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      border-radius: 999px;
-      overflow: hidden;
+    .tm-sessions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      color: var(--text-secondary);
     }
 
-    .species-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
-      border-radius: 999px;
-    }
-
-    /* My Match Report Card */
+    /* My Match Report Card with "Nth out of 28th" Ring Gauges */
     .angler-select-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
+      gap: 0.85rem;
+      align-items: flex-end;
       margin-bottom: 1.25rem;
     }
 
     .glass-select, .glass-input {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       border: 1px solid var(--border-glass);
       color: var(--text-primary);
       padding: 0.6rem 0.9rem;
@@ -638,7 +869,7 @@
 
     .gauges-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
       gap: 1rem;
       margin-bottom: 1.25rem;
     }
@@ -647,41 +878,77 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 1rem;
+      padding: 1.1rem 0.9rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      position: relative;
+    }
+
+    .gauge-ring-container {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .gauge-svg {
-      width: 84px;
-      height: 84px;
+      width: 96px;
+      height: 96px;
       transform: rotate(-90deg);
     }
 
     .gauge-track {
       fill: none;
       stroke: rgba(255, 255, 255, 0.08);
-      stroke-width: 7;
+      stroke-width: 7.5;
     }
 
     .gauge-progress {
       fill: none;
-      stroke-width: 7;
+      stroke-width: 7.5;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.6s ease;
     }
 
-    .gauge-center-val {
-      font-size: 1.15rem;
+    .gauge-inside-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .gauge-ordinal {
+      font-size: 1.05rem;
       font-weight: 800;
-      margin-top: 0.5rem;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .gauge-out-of {
+      font-size: 0.64rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 2px;
     }
 
     .gauge-label {
-      font-size: 0.74rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 0.6rem;
+    }
+
+    .gauge-sub {
+      font-size: 0.72rem;
       color: var(--text-secondary);
+      margin-top: 0.15rem;
     }
 
     /* Tables */
@@ -699,10 +966,10 @@
     }
 
     th {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.9);
       color: var(--text-secondary);
       font-weight: 700;
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       padding: 0.75rem 0.85rem;
@@ -717,17 +984,12 @@
       white-space: nowrap;
     }
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tbody tr:hover {
-      background: rgba(255, 255, 255, 0.03);
-    }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
 
     .zone-chip {
       display: inline-block;
-      padding: 0.15rem 0.5rem;
+      padding: 0.16rem 0.52rem;
       border-radius: 6px;
       font-size: 0.72rem;
       font-weight: 700;
@@ -737,9 +999,7 @@
     .zone-chip.Green { background: var(--zone-green-bg); color: #86efac; border: 1px solid var(--zone-green-border); }
     .zone-chip.Blue { background: var(--zone-blue-bg); color: #93c5fd; border: 1px solid var(--zone-blue-border); }
 
-    .rank-medal {
-      font-weight: 800;
-    }
+    .rank-medal { font-weight: 800; }
     .rank-1 { color: #fbbf24; }
     .rank-2 { color: #cbd5e1; }
     .rank-3 { color: #d97706; }
@@ -756,65 +1016,165 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 0.9rem;
+      padding: 1rem;
     }
 
     .h2h-vs {
       font-weight: 800;
       color: var(--accent-cyan);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       text-align: center;
     }
 
+    .species-summary-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
     @media (max-width: 640px) {
-      .h2h-grid {
-        grid-template-columns: 1fr;
-      }
-      .app-header {
-        padding: 1rem;
-      }
+      .h2h-grid { grid-template-columns: 1fr; }
+      .app-header { padding: 1rem; }
+      .teams-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
+    <!-- Persistent Header -->
     <header class="app-header">
       <div class="brand-block">
         <h1 id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
         <div class="brand-meta">
-          <span id="matchVenue">📍 Arbroath & Elliot Beach</span>
+          <span id="matchVenue">📍 Scottish Shore Open</span>
           <span>•</span>
-          <span id="matchDates">2-Day Open Shore</span>
+          <span id="matchDates">Day 1 (Darkness) & Day 2 (Daylight)</span>
           <span class="badge-pill">Pixel Glass Edition</span>
           <span class="badge-pill badge-version" id="appVersionBadge">v3.3.7</span>
         </div>
       </div>
-      <div class="brand-meta">
-        <span class="badge-pill" id="liveStatusPill">● Live Standings Synced</span>
+      <div class="header-actions">
+        <span class="badge-pill" id="liveStatusPill">⏳ Loading scores.json...</span>
+        <button class="btn-ghost" id="reloadScoresBtn" title="Reload scores.json">↻ Sync Scores</button>
       </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="nav-tabs" role="tablist">
-      <button class="tab-btn active" data-tab="overview">Match Overview</button>
-      <button class="tab-btn" data-tab="individual">Individual Leaderboard</button>
-      <button class="tab-btn" data-tab="teams">Teams</button>
-      <button class="tab-btn" data-tab="biggest">Biggest Fish</button>
-      <button class="tab-btn" data-tab="myreport">My Match Report</button>
-    </nav>
+    <!-- =========================================================
+         VIEW 0: FRONT LANDING SCREEN (HOME HUB WITH SECTION BUTTONS)
+         ========================================================= -->
+    <main id="view-home" class="view-section active">
+      <div class="home-hero">
+        <div class="home-hero-top">
+          <div>
+            <h2>Championship Results Hub</h2>
+            <p>Select a section below to inspect zone telemetry, individual rankings, team contributions, or your personal match report.</p>
+          </div>
+          <span class="badge-pill" id="homeLeaderBadge">Leader: —</span>
+        </div>
+        <div class="home-stats-strip" id="homeSummaryStrip"></div>
+      </div>
 
-    <!-- TAB 1: MATCH OVERVIEW -->
-    <section id="tab-overview" class="tab-panel active">
+      <div class="hub-buttons-grid">
+        <button class="hub-btn-card" data-nav="overview">
+          <div class="hub-btn-top">
+            <div class="hub-icon">📊</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">Match Overview & Zone Telemetry</div>
+            <div class="hub-btn-desc">Unified Red, Yellow, Green & Blue Zone cards with Day 1 Darkness vs. Day 2 Daylight splits, catch spreads, and daily Top 3 specimen badges.</div>
+          </div>
+          <span class="hub-btn-tag" id="hubTagZones">4 Zones • Unified Telemetry</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="individual">
+          <div class="hub-btn-top">
+            <div class="hub-icon">🏆</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">Individual Leaderboard</div>
+            <div class="hub-btn-desc">Full 28-angler standings ranked by lowest combined zone points across Day 1 and Day 2 with zone filtering and angler search.</div>
+          </div>
+          <span class="hub-btn-tag" id="hubTagAnglers">28 Competitors</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="teams">
+          <div class="hub-btn-top">
+            <div class="hub-icon">👥</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">Team Championship</div>
+            <div class="hub-btn-desc">Complete team rankings detailing every individual angler's Day 1 & Day 2 zone, peg, fish count, length, and points contribution.</div>
+          </div>
+          <span class="hub-btn-tag" id="hubTagTeams">7 Teams • Full Roster Breakdown</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="biggest">
+          <div class="hub-btn-top">
+            <div class="hub-icon">🐟</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">Biggest Fish & Specimens</div>
+            <div class="hub-btn-desc">Longest fish recorded across Day 1 (Darkness) and Day 2 (Daylight) alongside the official daily specimen species summary.</div>
+          </div>
+          <span class="hub-btn-tag" id="hubTagBiggest">Specimen Leaderboard</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="myreport">
+          <div class="hub-btn-top">
+            <div class="hub-icon">🎯</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">My Match Report & H2H</div>
+            <div class="hub-btn-desc">Personal SVG telemetry gauges with ordinal rank badges (e.g. 5th out of 28th) and direct Head-to-Head rival comparison.</div>
+          </div>
+          <span class="hub-btn-tag">Personal Telemetry</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="secret">
+          <div class="hub-btn-top">
+            <div class="hub-icon">🎲</div>
+            <span class="hub-arrow">→</span>
+          </div>
+          <div>
+            <div class="hub-btn-title">Secret Pairs</div>
+            <div class="hub-btn-desc">Wildcard mystery pairing target length calculations and live pair standings from scores.json.</div>
+          </div>
+          <span class="hub-btn-tag" id="hubTagSecret">Target Length: 0cm</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- =========================================================
+         VIEW 1: MATCH OVERVIEW (UNIFIED ZONE TELEMETRY)
+         ========================================================= -->
+    <section id="view-overview" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill active" data-nav="overview">Overview</button>
+          <button class="quick-pill" data-nav="individual">Individual</button>
+          <button class="quick-pill" data-nav="teams">Teams</button>
+          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill" data-nav="myreport">My Report</button>
+          <button class="quick-pill" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
       <!-- Top Telemetry KPIs -->
       <div class="kpi-grid" id="overviewKpis"></div>
 
-      <!-- Unified Zone Performance & Session Breakdown (Replaces separate Fish Caught by Zone + 4 old Zone cards) -->
+      <!-- Unified Zone Performance & Session Breakdown (4 Separate Color-Coded Cards) -->
       <div class="glass-card">
         <div class="card-header">
           <div>
             <div class="card-title">Zone Performance & Session Telemetry</div>
-            <div class="card-subtitle">Catch share, Day 1 (Darkness) vs. Day 2 (Daylight) split, catch spread (min–max), and daily Top 3 specimen zones</div>
+            <div class="card-subtitle">Catch share, Day 1 (Darkness) vs. Day 2 (Daylight) split, daily catch spread (min–max), and Top 3 specimen zone badges</div>
           </div>
           <div style="display:flex; gap:0.65rem; font-size:0.74rem; font-weight:700;">
             <span class="zt-lbl-d1">🌙 Day 1 Darkness</span>
@@ -823,35 +1183,38 @@
         </div>
         <div class="zones-telemetry-grid" id="unifiedZonesGrid"></div>
       </div>
-
-      <!-- Species Breakdown -->
-      <div class="glass-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Species Breakdown</div>
-            <div class="card-subtitle">Total landed across both sessions</div>
-          </div>
-        </div>
-        <div class="species-list" id="speciesList"></div>
-      </div>
     </section>
 
-    <!-- TAB 2: INDIVIDUAL LEADERBOARD -->
-    <section id="tab-individual" class="tab-panel">
+    <!-- =========================================================
+         VIEW 2: INDIVIDUAL LEADERBOARD
+         ========================================================= -->
+    <section id="view-individual" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill" data-nav="overview">Overview</button>
+          <button class="quick-pill active" data-nav="individual">Individual</button>
+          <button class="quick-pill" data-nav="teams">Teams</button>
+          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill" data-nav="myreport">My Report</button>
+          <button class="quick-pill" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
       <div class="glass-card">
         <div class="card-header">
           <div>
-            <div class="card-title">Overall Individual Standings</div>
-            <div class="card-subtitle">Ranked by lowest combined zone points across Day 1 & Day 2</div>
+            <div class="card-title">Individual Championship Standings</div>
+            <div class="card-subtitle">Ranked by lowest cumulative zone points across Day 1 & Day 2</div>
           </div>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler..." style="min-width:170px;" />
-            <select id="filterZone" class="glass-select" style="min-width:140px;">
+            <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:185px;" />
+            <select id="filterZone" class="glass-select" style="min-width:155px;">
               <option value="ALL">All Zones</option>
-              <option value="Red">Red Zone</option>
-              <option value="Yellow">Yellow Zone</option>
-              <option value="Green">Green Zone</option>
-              <option value="Blue">Blue Zone</option>
+              <option value="Red Zone">Red Zone</option>
+              <option value="Yellow Zone">Yellow Zone</option>
+              <option value="Green Zone">Green Zone</option>
+              <option value="Blue Zone">Blue Zone</option>
             </select>
           </div>
         </div>
@@ -864,11 +1227,14 @@
                 <th>Team</th>
                 <th>D1 Zone / Peg</th>
                 <th>D1 Fish</th>
+                <th>D1 Length</th>
                 <th>D1 Pts</th>
                 <th>D2 Zone / Peg</th>
                 <th>D2 Fish</th>
+                <th>D2 Length</th>
                 <th>D2 Pts</th>
                 <th>Total Fish</th>
+                <th>Total Length</th>
                 <th>Total Pts</th>
               </tr>
             </thead>
@@ -878,43 +1244,57 @@
       </div>
     </section>
 
-    <!-- TAB 3: TEAMS -->
-    <section id="tab-teams" class="tab-panel">
+    <!-- =========================================================
+         VIEW 3: TEAMS (WITH FULL ANGLER-BY-ANGLER CONTRIBUTIONS)
+         ========================================================= -->
+    <section id="view-teams" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill" data-nav="overview">Overview</button>
+          <button class="quick-pill" data-nav="individual">Individual</button>
+          <button class="quick-pill active" data-nav="teams">Teams</button>
+          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill" data-nav="myreport">My Report</button>
+          <button class="quick-pill" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
       <div class="glass-card">
         <div class="card-header">
           <div>
-            <div class="card-title">Team Championship Standings</div>
-            <div class="card-subtitle">Combined 4-angler team zone points (lowest wins)</div>
+            <div class="card-title">Team Championship Standings & Roster Contributions</div>
+            <div class="card-subtitle">Ranked by lowest combined team zone points — showing every angler's Day 1 & Day 2 contribution</div>
           </div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Team Name</th>
-                <th>Anglers</th>
-                <th>D1 Team Pts</th>
-                <th>D2 Team Pts</th>
-                <th>Total Fish</th>
-                <th>Combined Pts</th>
-              </tr>
-            </thead>
-            <tbody id="teamsTableBody"></tbody>
-          </table>
-        </div>
+        <div class="teams-grid" id="teamsContributionGrid"></div>
       </div>
     </section>
 
-    <!-- TAB 4: BIGGEST FISH -->
-    <section id="tab-biggest" class="tab-panel">
+    <!-- =========================================================
+         VIEW 4: BIGGEST FISH & SPECIMENS
+         ========================================================= -->
+    <section id="view-biggest" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill" data-nav="overview">Overview</button>
+          <button class="quick-pill" data-nav="individual">Individual</button>
+          <button class="quick-pill" data-nav="teams">Teams</button>
+          <button class="quick-pill active" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill" data-nav="myreport">My Report</button>
+          <button class="quick-pill" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
       <div class="glass-card">
         <div class="card-header">
           <div>
             <div class="card-title">Specimen & Biggest Fish Leaderboard</div>
-            <div class="card-subtitle">Longest single fish recorded across Day 1 (Darkness) and Day 2 (Daylight)</div>
+            <div class="card-subtitle">Longest individual fish recorded in Day 1 (Darkness) and Day 2 (Daylight)</div>
           </div>
         </div>
+        <div class="species-summary-pills" id="biggestSpeciesSummary"></div>
         <div class="table-wrap">
           <table>
             <thead>
@@ -926,6 +1306,7 @@
                 <th>Species</th>
                 <th>Length (cm)</th>
                 <th>Angler</th>
+                <th>Team</th>
               </tr>
             </thead>
             <tbody id="biggestFishTableBody"></tbody>
@@ -934,13 +1315,27 @@
       </div>
     </section>
 
-    <!-- TAB 5: MY MATCH REPORT -->
-    <section id="tab-myreport" class="tab-panel">
+    <!-- =========================================================
+         VIEW 5: MY MATCH REPORT ("NTH OUT OF 28TH" METRIC ICONS)
+         ========================================================= -->
+    <section id="view-myreport" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill" data-nav="overview">Overview</button>
+          <button class="quick-pill" data-nav="individual">Individual</button>
+          <button class="quick-pill" data-nav="teams">Teams</button>
+          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill active" data-nav="myreport">My Report</button>
+          <button class="quick-pill" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
       <div class="glass-card">
         <div class="card-header">
           <div>
             <div class="card-title">My Match Report & Head-to-Head</div>
-            <div class="card-subtitle">Select your name to view personal telemetry gauges and compare against another competitor</div>
+            <div class="card-subtitle">Personal telemetry gauges showing exact field standing (e.g. 5th out of 28th) and rival comparison</div>
           </div>
         </div>
 
@@ -956,8 +1351,35 @@
         </div>
 
         <div class="gauges-row" id="myGaugesRow"></div>
-
         <div class="h2h-grid" id="h2hContainer"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 6: SECRET PAIRS
+         ========================================================= -->
+    <section id="view-secret" class="view-section">
+      <div class="back-bar">
+        <button class="btn-back" data-nav="home">← Back to Home</button>
+        <div class="quick-nav-strip">
+          <button class="quick-pill" data-nav="overview">Overview</button>
+          <button class="quick-pill" data-nav="individual">Individual</button>
+          <button class="quick-pill" data-nav="teams">Teams</button>
+          <button class="quick-pill" data-nav="biggest">Biggest Fish</button>
+          <button class="quick-pill" data-nav="myreport">My Report</button>
+          <button class="quick-pill active" data-nav="secret">Secret Pairs</button>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Secret Pairs Mystery Draw</div>
+            <div class="card-subtitle" id="secretPairsDesc">Target Length calculated for wildcard mystery pairing.</div>
+          </div>
+          <span class="badge-pill" id="secretTargetBadge">Target Length: 0cm</span>
+        </div>
+        <div id="secretPairsBody"></div>
       </div>
     </section>
   </div>
@@ -966,222 +1388,373 @@
     const MATCH_CONFIG = {
       version: "v3.3.7",
       title: "SPRA Scottish Shore Championship 2027",
-      venue: "Arbroath & Elliot Beach",
+      venue: "Scottish Shore Championship",
       dates: "Day 1 (Darkness) & Day 2 (Daylight)",
-      zones: ["Red", "Yellow", "Green", "Blue"],
+      zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
       zoneColors: {
-        Red: "#ef4444",
-        Yellow: "#eab308",
-        Green: "#22c55e",
-        Blue: "#3b82f6"
+        "Red Zone": "#ef4444",
+        "Yellow Zone": "#eab308",
+        "Green Zone": "#22c55e",
+        "Blue Zone": "#3b82f6"
       }
     };
 
-    // Match dataset (Day 1 = Darkness, Day 2 = Daylight)
-    const MATCH_DATA = {
-      anglers: [
-        { id: 1, name: "Chris McCreadie", team: "East Coast Rods", d1Zone: "Red", d1Peg: "R4", d1Fish: 9, d1Pts: 2, d2Zone: "Blue", d2Peg: "B7", d2Fish: 7, d2Pts: 3, species: { Whiting: 8, Dab: 5, Flounder: 3 } },
-        { id: 2, name: "Callum Stewart", team: "Tay Estuary SAC", d1Zone: "Red", d1Peg: "R1", d1Fish: 11, d1Pts: 1, d2Zone: "Green", d2Peg: "G3", d2Fish: 6, d2Pts: 4, species: { Whiting: 9, Codling: 3, Dab: 5 } },
-        { id: 3, name: "graeme Henderson", team: "Firth Anglers", d1Zone: "Yellow", d1Peg: "Y6", d1Fish: 8, d1Pts: 1, d2Zone: "Red", d2Peg: "R9", d2Fish: 10, d2Pts: 1, species: { Whiting: 11, Flounder: 4, Rockling: 3 } },
-        { id: 4, name: "Steven MacLeod", team: "East Coast Rods", d1Zone: "Green", d1Peg: "G2", d1Fish: 7, d1Pts: 1, d2Zone: "Yellow", d2Peg: "Y5", d2Fish: 8, d2Pts: 2, species: { Dab: 7, Whiting: 6, Coalfish: 2 } },
-        { id: 5, name: "David Kerr", team: "Tay Estuary SAC", d1Zone: "Blue", d1Peg: "B3", d1Fish: 6, d1Pts: 1, d2Zone: "Red", d2Peg: "R2", d2Fish: 9, d2Pts: 2, species: { Whiting: 8, Flounder: 5, Dab: 2 } },
-        { id: 6, name: "Fraser Campbell", team: "Firth Anglers", d1Zone: "Yellow", d1Peg: "Y2", d1Fish: 5, d1Pts: 2, d2Zone: "Blue", d2Peg: "B1", d2Fish: 11, d2Pts: 1, species: { Dab: 8, Whiting: 6, Codling: 2 } },
-        { id: 7, name: "Stuart Reid", team: "North Sea Cast", d1Zone: "Green", d1Peg: "G8", d1Fish: 6, d1Pts: 2, d2Zone: "Yellow", d2Peg: "Y1", d2Fish: 9, d2Pts: 1, species: { Whiting: 7, Dab: 6, Flounder: 2 } },
-        { id: 8, name: "Alan Murray", team: "North Sea Cast", d1Zone: "Blue", d1Peg: "B8", d1Fish: 4, d1Pts: 2, d2Zone: "Green", d2Peg: "G6", d2Fish: 8, d2Pts: 1, species: { Flounder: 5, Dab: 4, Whiting: 3 } },
-        { id: 9, name: "Ross Sinclair", team: "East Coast Rods", d1Zone: "Red", d1Peg: "R7", d1Fish: 4, d1Pts: 3, d2Zone: "Yellow", d2Peg: "Y8", d2Fish: 5, d2Pts: 3, species: { Whiting: 5, Dab: 4 } },
-        { id: 10, name: "Kevin Watt", team: "Tay Estuary SAC", d1Zone: "Yellow", d1Peg: "Y4", d1Fish: 3, d1Pts: 3, d2Zone: "Blue", d2Peg: "B4", d2Fish: 6, d2Pts: 2, species: { Dab: 5, Flounder: 4 } },
-        { id: 11, name: "Iain Thomson", team: "Firth Anglers", d1Zone: "Green", d1Peg: "G5", d1Fish: 3, d1Pts: 3, d2Zone: "Red", d2Peg: "R5", d2Fish: 5, d2Pts: 3, species: { Whiting: 5, Rockling: 3 } },
-        { id: 12, name: "Gary Robertson", team: "North Sea Cast", d1Zone: "Blue", d1Peg: "B5", d1Fish: 2, d1Pts: 3, d2Zone: "Green", d2Peg: "G1", d2Fish: 7, d2Pts: 2, species: { Dab: 6, Flounder: 3 } },
-        { id: 13, name: "Mark Paterson", team: "East Coast Rods", d1Zone: "Red", d1Peg: "R10", d1Fish: 1, d1Pts: 4, d2Zone: "Blue", d2Peg: "B9", d2Fish: 3, d2Pts: 4, species: { Whiting: 3, Dab: 1 } },
-        { id: 14, name: "Craig Milne", team: "Tay Estuary SAC", d1Zone: "Yellow", d1Peg: "Y9", d1Fish: 0, d1Pts: 5, d2Zone: "Green", d2Peg: "G9", d2Fish: 4, d2Pts: 3, species: { Dab: 3, Flounder: 1 } },
-        { id: 15, name: "Scott Bell", team: "Firth Anglers", d1Zone: "Green", d1Peg: "G10", d1Fish: 0, d1Pts: 5, d2Zone: "Blue", d2Peg: "B10", d2Fish: 2, d2Pts: 5, species: { Flounder: 2 } },
-        { id: 16, name: "Neil Grant", team: "North Sea Cast", d1Zone: "Blue", d1Peg: "B2", d1Fish: 0, d1Pts: 5, d2Zone: "Red", d2Peg: "R8", d2Fish: 3, d2Pts: 4, species: { Whiting: 2, Dab: 1 } }
-      ],
-      specimens: [
-        { day: "D1", sessionLabel: "Day 1 (Darkness)", zone: "Red", peg: "R1", species: "Codling", lengthCm: 44, angler: "Callum Stewart" },
-        { day: "D1", sessionLabel: "Day 1 (Darkness)", zone: "Yellow", peg: "Y6", species: "Whiting", lengthCm: 39, angler: "Graeme Henderson" },
-        { day: "D1", sessionLabel: "Day 1 (Darkness)", zone: "Red", peg: "R4", species: "Flounder", lengthCm: 37, angler: "Chris McCreadie" },
-        { day: "D1", sessionLabel: "Day 1 (Darkness)", zone: "Green", peg: "G2", species: "Codling", lengthCm: 36, angler: "Steven MacLeod" },
-        { day: "D2", sessionLabel: "Day 2 (Daylight)", zone: "Blue", peg: "B1", species: "Codling", lengthCm: 46, angler: "Fraser Campbell" },
-        { day: "D2", sessionLabel: "Day 2 (Daylight)", zone: "Red", peg: "R9", species: "Flounder", lengthCm: 41, angler: "Graeme Henderson" },
-        { day: "D2", sessionLabel: "Day 2 (Daylight)", zone: "Green", peg: "G6", species: "Flounder", lengthCm: 38, angler: "Alan Murray" },
-        { day: "D2", sessionLabel: "Day 2 (Daylight)", zone: "Yellow", peg: "Y1", species: "Dab", lengthCm: 34, angler: "Stuart Reid" }
-      ]
+    let STATE = {
+      raw: null,
+      anglers: [],
+      teams: [],
+      specimensAll: [],
+      top3D1: [],
+      top3D2: []
     };
 
-    // Format helper
-    function capName(str) {
-      return str.replace(/\b\w/g, c => c.toUpperCase());
+    // Ordinal formatter: 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 5 -> 5th, 28 -> 28th
+    function getOrdinal(n) {
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
 
-    // Enrich angler records
-    const enrichedAnglers = MATCH_DATA.anglers.map(a => ({
-      ...a,
-      displayName: capName(a.name),
-      totalFish: a.d1Fish + a.d2Fish,
-      totalPts: a.d1Pts + a.d2Pts
-    })).sort((a, b) => a.totalPts - b.totalPts || b.totalFish - a.totalFish);
+    // Format zone short name for chips
+    function shortZone(zoneStr) {
+      return (zoneStr || "").replace(" Zone", "").trim();
+    }
 
-    function initApp() {
-      document.getElementById("matchTitle").textContent = MATCH_CONFIG.title;
-      document.getElementById("matchVenue").textContent = "📍 " + MATCH_CONFIG.venue;
-      document.getElementById("matchDates").textContent = MATCH_CONFIG.dates;
-      document.getElementById("appVersionBadge").textContent = MATCH_CONFIG.version;
+    // Load data from scores.json
+    async function loadScoresJson() {
+      const statusPill = document.getElementById("liveStatusPill");
+      try {
+        statusPill.textContent = "⏳ Syncing scores.json...";
+        const response = await fetch("./scores.json?t=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const data = await response.json();
+        processMatchData(data);
+        statusPill.textContent = "● scores.json Live";
+        statusPill.style.color = "#34d399";
+        statusPill.style.borderColor = "rgba(52, 211, 153, 0.35)";
+      } catch (err) {
+        console.error("Error loading scores.json:", err);
+        statusPill.textContent = "⚠ Check scores.json path";
+        statusPill.style.color = "#fb7185";
+      }
+    }
 
-      setupTabs();
+    function processMatchData(data) {
+      STATE.raw = data;
+      const list = Array.isArray(data.anglers) ? data.anglers : [];
+
+      // Normalize & sort anglers by overallRank (or cumulativePoints asc, cumulativeFish desc)
+      const sorted = [...list].sort((a, b) => {
+        const rA = a.totals?.overallRank ?? 999;
+        const rB = b.totals?.overallRank ?? 999;
+        if (rA !== rB) return rA - rB;
+        return (a.totals?.cumulativePoints ?? 999) - (b.totals?.cumulativePoints ?? 999);
+      });
+
+      const totalCount = sorted.length;
+
+      // Compute Fish Rank and Length Rank across the 28-angler field for "Nth out of 28th" gauges
+      const byFish = [...sorted].sort((a, b) => (b.totals?.cumulativeFish || 0) - (a.totals?.cumulativeFish || 0));
+      const byLength = [...sorted].sort((a, b) => (b.totals?.cumulativeLengthCm || 0) - (a.totals?.cumulativeLengthCm || 0));
+
+      STATE.anglers = sorted.map((a, idx) => {
+        const rank = a.totals?.overallRank || (idx + 1);
+        const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
+        return {
+          ...a,
+          rank,
+          fishRank,
+          lengthRank,
+          totalField: totalCount,
+          d1: a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 },
+          d2: a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 },
+          totals: a.totals || { cumulativePoints: 0, cumulativeFish: 0, cumulativeLengthCm: 0, overallRank: rank }
+        };
+      });
+
+      // Build Teams with full angler-by-angler roster
+      const teamMap = {};
+      STATE.anglers.forEach(a => {
+        const tName = a.teamName || "Independent";
+        if (!teamMap[tName]) {
+          teamMap[tName] = {
+            teamName: tName,
+            members: [],
+            d1Pts: 0,
+            d2Pts: 0,
+            totalPts: 0,
+            totalFish: 0,
+            totalLengthCm: 0
+          };
+        }
+        teamMap[tName].members.push(a);
+        teamMap[tName].d1Pts += a.d1.zonePoints || 0;
+        teamMap[tName].d2Pts += a.d2.zonePoints || 0;
+        teamMap[tName].totalPts += a.totals.cumulativePoints || 0;
+        teamMap[tName].totalFish += a.totals.cumulativeFish || 0;
+        teamMap[tName].totalLengthCm += a.totals.cumulativeLengthCm || 0;
+      });
+
+      STATE.teams = Object.values(teamMap).sort(
+        (a, b) => a.totalPts - b.totalPts || b.totalFish - a.totalFish || b.totalLengthCm - a.totalLengthCm
+      );
+
+      // Extract all biggest fish entries per session
+      const d1Specimens = [];
+      const d2Specimens = [];
+      STATE.anglers.forEach(a => {
+        if ((a.d1.biggestFishCm || 0) > 0) {
+          d1Specimens.push({
+            day: "D1",
+            sessionLabel: "Day 1 (Darkness)",
+            zone: a.d1.zone,
+            peg: a.d1.peg,
+            species: a.d1.biggestFishSpecies || "Unspecified",
+            lengthCm: a.d1.biggestFishCm,
+            anglerName: a.anglerName,
+            teamName: a.teamName
+          });
+        }
+        if ((a.d2.biggestFishCm || 0) > 0) {
+          d2Specimens.push({
+            day: "D2",
+            sessionLabel: "Day 2 (Daylight)",
+            zone: a.d2.zone,
+            peg: a.d2.peg,
+            species: a.d2.biggestFishSpecies || "Unspecified",
+            lengthCm: a.d2.biggestFishCm,
+            anglerName: a.anglerName,
+            teamName: a.teamName
+          });
+        }
+      });
+
+      d1Specimens.sort((a, b) => b.lengthCm - a.lengthCm);
+      d2Specimens.sort((a, b) => b.lengthCm - a.lengthCm);
+
+      STATE.top3D1 = d1Specimens.slice(0, 3).map((s, i) => ({ ...s, dayRank: i + 1 }));
+      STATE.top3D2 = d2Specimens.slice(0, 3).map((s, i) => ({ ...s, dayRank: i + 1 }));
+      STATE.specimensAll = [...d1Specimens, ...d2Specimens].sort((a, b) => b.lengthCm - a.lengthCm);
+
+      renderAllViews();
+    }
+
+    function renderAllViews() {
+      renderHomeHub();
       renderOverview();
       renderIndividualTable();
-      renderTeamsTable();
-      renderBiggestFishTable();
-      setupMyReport();
+      renderTeamsContributions();
+      renderBiggestFish();
+      renderMyReport();
+      renderSecretPairs();
     }
 
-    function setupTabs() {
-      const buttons = document.querySelectorAll(".tab-btn");
-      const panels = document.querySelectorAll(".tab-panel");
-
-      buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          buttons.forEach(b => b.classList.remove("active"));
-          panels.forEach(p => p.classList.remove("active"));
-          btn.classList.add("active");
-          const target = document.getElementById("tab-" + btn.dataset.tab);
-          if (target) target.classList.add("active");
-        });
+    function setupNavigation() {
+      document.addEventListener("click", e => {
+        const trigger = e.target.closest("[data-nav]");
+        if (!trigger) return;
+        const targetView = trigger.getAttribute("data-nav");
+        switchView(targetView);
       });
+
+      document.getElementById("reloadScoresBtn").addEventListener("click", loadScoresJson);
     }
 
-    function renderOverview() {
-      const totalAnglers = enrichedAnglers.length;
-      const totalD1Fish = enrichedAnglers.reduce((sum, a) => sum + a.d1Fish, 0);
-      const totalD2Fish = enrichedAnglers.reduce((sum, a) => sum + a.d2Fish, 0);
-      const totalFish = totalD1Fish + totalD2Fish;
-      const activeOverall = enrichedAnglers.filter(a => a.totalFish > 0).length;
-      const rodSuccessPct = Math.round((activeOverall / totalAnglers) * 100);
-      const topSpecimen = [...MATCH_DATA.specimens].sort((a, b) => b.lengthCm - a.lengthCm)[0];
+    function switchView(viewName) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+      const target = document.getElementById("view-" + viewName);
+      if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
 
-      // Top KPIs
-      const kpiHtml = `
+    /* ---------------------------------------------------------
+       RENDER VIEW 0: FRONT LANDING SCREEN
+       --------------------------------------------------------- */
+    function renderHomeHub() {
+      const anglers = STATE.anglers;
+      if (!anglers.length) return;
+
+      const totalFish = anglers.reduce((s, a) => s + a.totals.cumulativeFish, 0);
+      const totalLength = anglers.reduce((s, a) => s + a.totals.cumulativeLengthCm, 0);
+      const leader = anglers[0];
+      const topTeam = STATE.teams[0];
+      const biggestOverall = STATE.specimensAll[0];
+
+      document.getElementById("homeLeaderBadge").textContent =
+        `🥇 Leader: ${leader.anglerName} (${leader.totals.cumulativePoints} pts)`;
+
+      document.getElementById("homeSummaryStrip").innerHTML = `
+        <div class="home-mini-stat">
+          <div class="lbl">Competitors</div>
+          <div class="val">${anglers.length}</div>
+          <div class="sub">${STATE.teams.length} Teams Entered</div>
+        </div>
+        <div class="home-mini-stat">
+          <div class="lbl">Total Fish Caught</div>
+          <div class="val">${totalFish}</div>
+          <div class="sub">${totalLength.toLocaleString()} cm total length</div>
+        </div>
+        <div class="home-mini-stat">
+          <div class="lbl">Leading Team</div>
+          <div class="val" style="font-size:1.05rem; margin-top:0.35rem;">${topTeam ? topTeam.teamName : "—"}</div>
+          <div class="sub">${topTeam ? topTeam.totalPts + " pts (" + topTeam.totalFish + " fish)" : ""}</div>
+        </div>
+        <div class="home-mini-stat">
+          <div class="lbl">Biggest Specimen</div>
+          <div class="val">${biggestOverall ? biggestOverall.lengthCm + "cm" : "—"}</div>
+          <div class="sub">${biggestOverall ? biggestOverall.species + " • " + shortZone(biggestOverall.zone) : ""}</div>
+        </div>
+      `;
+
+      document.getElementById("hubTagAnglers").textContent = `${anglers.length} Competitors Ranked`;
+      document.getElementById("hubTagTeams").textContent = `${STATE.teams.length} Teams • Full Roster Breakdown`;
+      document.getElementById("hubTagBiggest").textContent = biggestOverall
+        ? `Top Fish: ${biggestOverall.lengthCm}cm ${biggestOverall.species}`
+        : "Specimen Leaderboard";
+      document.getElementById("hubTagSecret").textContent =
+        `Target Length: ${STATE.raw?.secretPairs?.targetLength || "0cm"}`;
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 1: MATCH OVERVIEW (UNIFIED ZONE TELEMETRY)
+       --------------------------------------------------------- */
+    function renderOverview() {
+      const anglers = STATE.anglers;
+      if (!anglers.length) return;
+
+      const totalAnglers = anglers.length;
+      const totalD1Fish = anglers.reduce((s, a) => s + (a.d1.fishCount || 0), 0);
+      const totalD2Fish = anglers.reduce((s, a) => s + (a.d2.fishCount || 0), 0);
+      const totalFish = totalD1Fish + totalD2Fish;
+      const totalLength = anglers.reduce((s, a) => s + (a.totals.cumulativeLengthCm || 0), 0);
+
+      const totalRodSessions = totalAnglers * 2;
+      const activeRodSessions =
+        anglers.filter(a => (a.d1.fishCount || 0) > 0).length +
+        anglers.filter(a => (a.d2.fishCount || 0) > 0).length;
+      const rodActivityPct = Math.round((activeRodSessions / totalRodSessions) * 100);
+
+      const biggestOverall = STATE.specimensAll[0];
+
+      document.getElementById("overviewKpis").innerHTML = `
         <div class="kpi-tile">
           <div class="kpi-label">Total Fish Landed</div>
           <div class="kpi-value">${totalFish}</div>
           <div class="kpi-sub">🌙 ${totalD1Fish} Dark • ☀️ ${totalD2Fish} Day</div>
         </div>
         <div class="kpi-tile">
-          <div class="kpi-label">Match Rod Activity</div>
-          <div class="kpi-value">${rodSuccessPct}%</div>
-          <div class="kpi-sub">${activeOverall} of ${totalAnglers} anglers weighed in</div>
+          <div class="kpi-label">Total Measured Length</div>
+          <div class="kpi-value">${totalLength.toLocaleString()}<span style="font-size:0.9rem; font-weight:600;">cm</span></div>
+          <div class="kpi-sub">Avg ${(totalLength / Math.max(1, totalFish)).toFixed(1)} cm per fish</div>
         </div>
         <div class="kpi-tile">
-          <div class="kpi-label">Avg Catch / Angler</div>
-          <div class="kpi-value">${(totalFish / totalAnglers).toFixed(1)}</div>
-          <div class="kpi-sub">Across 2 competitive sessions</div>
+          <div class="kpi-label">Session Rod Activity</div>
+          <div class="kpi-value">${rodActivityPct}%</div>
+          <div class="kpi-sub">${activeRodSessions} of ${totalRodSessions} rod sessions scored</div>
         </div>
         <div class="kpi-tile">
-          <div class="kpi-label">Match Specimen</div>
-          <div class="kpi-value">${topSpecimen ? topSpecimen.lengthCm + "cm" : "—"}</div>
-          <div class="kpi-sub">${topSpecimen ? `${topSpecimen.species} (${topSpecimen.zone} Zone)` : "No specimen recorded"}</div>
+          <div class="kpi-label">Championship Specimen</div>
+          <div class="kpi-value">${biggestOverall ? biggestOverall.lengthCm + "cm" : "—"}</div>
+          <div class="kpi-sub">${biggestOverall ? `${biggestOverall.species} (${shortZone(biggestOverall.zone)})` : "—"}</div>
         </div>
       `;
-      document.getElementById("overviewKpis").innerHTML = kpiHtml;
 
-      // Calculate Top 3 Biggest Fish for Day 1 (Darkness) and Day 2 (Daylight)
-      const top3D1 = MATCH_DATA.specimens
-        .filter(s => s.day === "D1")
-        .sort((a, b) => b.lengthCm - a.lengthCm)
-        .slice(0, 3)
-        .map((s, idx) => ({ ...s, rank: idx + 1 }));
-
-      const top3D2 = MATCH_DATA.specimens
-        .filter(s => s.day === "D2")
-        .sort((a, b) => b.lengthCm - a.lengthCm)
-        .slice(0, 3)
-        .map((s, idx) => ({ ...s, rank: idx + 1 }));
-
-      // Global max catch in a single session (used to scale the Catch Spread min-max visual bars consistently across zones)
-      const globalMaxSessionCatch = Math.max(
+      // Global max single-session catch for scaling Catch Spread bars consistently
+      const globalMaxBag = Math.max(
         1,
-        ...enrichedAnglers.map(a => Math.max(a.d1Fish, a.d2Fish))
+        ...anglers.map(a => Math.max(a.d1.fishCount || 0, a.d2.fishCount || 0))
       );
 
-      // Build Unified 4 Zone Telemetry Cards
-      const zoneCardsHtml = MATCH_CONFIG.zones.map(zone => {
-        const d1Entries = enrichedAnglers.filter(a => a.d1Zone === zone);
-        const d2Entries = enrichedAnglers.filter(a => a.d2Zone === zone);
+      const rankIcons = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
-        const d1Fish = d1Entries.reduce((s, a) => s + a.d1Fish, 0);
-        const d2Fish = d2Entries.reduce((s, a) => s + a.d2Fish, 0);
-        const zoneTotalFish = d1Fish + d2Fish;
-        const tournamentSharePct = totalFish > 0 ? Math.round((zoneTotalFish / totalFish) * 100) : 0;
+      const cardsHtml = MATCH_CONFIG.zones.map(zoneName => {
+        const d1Rows = anglers.filter(a => a.d1.zone === zoneName);
+        const d2Rows = anglers.filter(a => a.d2.zone === zoneName);
 
-        // Day 1 (Darkness) vs Day 2 (Daylight) percentage split within this zone
-        const d1SharePct = zoneTotalFish > 0 ? Math.round((d1Fish / zoneTotalFish) * 100) : 50;
-        const d2SharePct = zoneTotalFish > 0 ? 100 - d1SharePct : 50;
+        const d1Fish = d1Rows.reduce((s, a) => s + (a.d1.fishCount || 0), 0);
+        const d2Fish = d2Rows.reduce((s, a) => s + (a.d2.fishCount || 0), 0);
+        const zoneFish = d1Fish + d2Fish;
 
-        // Catch Spread (Lowest to Highest fish caught per angler on each day)
-        const d1Counts = d1Entries.map(a => a.d1Fish);
-        const d2Counts = d2Entries.map(a => a.d2Fish);
+        const d1Len = d1Rows.reduce((s, a) => s + (a.d1.totalLengthCm || 0), 0);
+        const d2Len = d2Rows.reduce((s, a) => s + (a.d2.totalLengthCm || 0), 0);
+        const zoneLen = d1Len + d2Len;
 
-        const d1Min = d1Counts.length ? Math.min(...d1Counts) : 0;
-        const d1Max = d1Counts.length ? Math.max(...d1Counts) : 0;
-        const d2Min = d2Counts.length ? Math.min(...d2Counts) : 0;
-        const d2Max = d2Counts.length ? Math.max(...d2Counts) : 0;
+        const matchSharePct = totalFish > 0 ? Math.round((zoneFish / totalFish) * 100) : 0;
 
-        const d1Avg = d1Entries.length ? (d1Fish / d1Entries.length).toFixed(1) : "0.0";
-        const d2Avg = d2Entries.length ? (d2Fish / d2Entries.length).toFixed(1) : "0.0";
-        const overallZoneAvg = (d1Entries.length + d2Entries.length) > 0
-          ? (zoneTotalFish / (d1Entries.length + d2Entries.length)).toFixed(1)
+        // Day 1 (Darkness) vs Day 2 (Daylight) split
+        const d1Pct = zoneFish > 0 ? Math.round((d1Fish / zoneFish) * 100) : 50;
+        const d2Pct = zoneFish > 0 ? 100 - d1Pct : 50;
+
+        // Catch Spread (Lowest to Highest fish caught per angler on each day — no angler names)
+        const d1Bags = d1Rows.map(a => a.d1.fishCount || 0);
+        const d2Bags = d2Rows.map(a => a.d2.fishCount || 0);
+
+        const d1Min = d1Bags.length ? Math.min(...d1Bags) : 0;
+        const d1Max = d1Bags.length ? Math.max(...d1Bags) : 0;
+        const d2Min = d2Bags.length ? Math.min(...d2Bags) : 0;
+        const d2Max = d2Bags.length ? Math.max(...d2Bags) : 0;
+
+        const d1Avg = d1Rows.length ? (d1Fish / d1Rows.length).toFixed(1) : "0.0";
+        const d2Avg = d2Rows.length ? (d2Fish / d2Rows.length).toFixed(1) : "0.0";
+        const overallAvg = (d1Rows.length + d2Rows.length) > 0
+          ? (zoneFish / (d1Rows.length + d2Rows.length)).toFixed(1)
           : "0.0";
 
-        // Spread bar positioning (% of globalMaxSessionCatch)
-        const d1LeftPct = Math.round((d1Min / globalMaxSessionCatch) * 100);
-        const d1WidthPct = Math.max(8, Math.round(((d1Max - d1Min) / globalMaxSessionCatch) * 100));
-        const d2LeftPct = Math.round((d2Min / globalMaxSessionCatch) * 100);
-        const d2WidthPct = Math.max(8, Math.round(((d2Max - d2Min) / globalMaxSessionCatch) * 100));
+        const d1Left = Math.round((d1Min / globalMaxBag) * 100);
+        const d1Width = Math.max(8, Math.round(((d1Max - d1Min) / globalMaxBag) * 100));
+        const d2Left = Math.round((d2Min / globalMaxBag) * 100);
+        const d2Width = Math.max(8, Math.round(((d2Max - d2Min) / globalMaxBag) * 100));
 
-        // Active Rod % across both sessions in this zone
-        const totalZoneRods = d1Entries.length + d2Entries.length;
-        const activeZoneRods = d1Entries.filter(a => a.d1Fish > 0).length + d2Entries.filter(a => a.d2Fish > 0).length;
-        const activePct = totalZoneRods > 0 ? Math.round((activeZoneRods / totalZoneRods) * 100) : 0;
+        // Active Rod % in this zone
+        const totalZoneSessions = d1Rows.length + d2Rows.length;
+        const activeZoneSessions =
+          d1Rows.filter(a => (a.d1.fishCount || 0) > 0).length +
+          d2Rows.filter(a => (a.d2.fishCount || 0) > 0).length;
+        const activePct = totalZoneSessions > 0 ? Math.round((activeZoneSessions / totalZoneSessions) * 100) : 0;
 
-        // SVG Mini-Ring Math (r = 17, circumference = 2 * PI * 17 ≈ 106.8)
-        const radius = 17;
-        const circumference = 2 * Math.PI * radius;
-        const strokeOffset = circumference - (activePct / 100) * circumference;
-        const zoneHex = MATCH_CONFIG.zoneColors[zone];
+        const r = 17;
+        const c = 2 * Math.PI * r;
+        const offset = c - (activePct / 100) * c;
+        const zoneColor = MATCH_CONFIG.zoneColors[zoneName] || "#38bdf8";
 
-        // Top 3 Biggest Fish of Each Day located in this zone (no angler names)
-        const zoneD1Medals = top3D1.filter(s => s.zone === zone);
-        const zoneD2Medals = top3D2.filter(s => s.zone === zone);
-        const rankIcons = { 1: "🥇", 2: "🥈", 3: "🥉" };
+        // Daily Top 3 Biggest Fish located in this zone (no angler names)
+        const zoneD1Top3 = STATE.top3D1.filter(s => s.zone === zoneName);
+        const zoneD2Top3 = STATE.top3D2.filter(s => s.zone === zoneName);
 
-        const medalPills = [
-          ...zoneD1Medals.map(m => `<span class="specimen-pill d1">${rankIcons[m.rank]} D1 #${m.rank} • ${m.lengthCm}cm ${m.species}</span>`),
-          ...zoneD2Medals.map(m => `<span class="specimen-pill">${rankIcons[m.rank]} D2 #${m.rank} • ${m.lengthCm}cm ${m.species}</span>`)
+        const specimenBadges = [
+          ...zoneD1Top3.map(s => {
+            const spLabel = s.species && s.species !== "Unspecified" ? ` ${s.species}` : "";
+            return `<span class="specimen-pill d1">${rankIcons[s.dayRank]} D1 #${s.dayRank} • ${s.lengthCm}cm${spLabel}</span>`;
+          }),
+          ...zoneD2Top3.map(s => {
+            const spLabel = s.species && s.species !== "Unspecified" ? ` ${s.species}` : "";
+            return `<span class="specimen-pill">${rankIcons[s.dayRank]} D2 #${s.dayRank} • ${s.lengthCm}cm${spLabel}</span>`;
+          })
         ];
 
         return `
-          <div class="zone-telemetry-card" data-zone="${zone}">
-            <!-- Header: Zone Name + Combined Catch Share Pill -->
+          <div class="zone-telemetry-card" data-zone="${zoneName}">
             <div class="zt-top-row">
               <div class="zt-zone-identity">
-                <span class="zt-dot" style="background:${zoneHex}; box-shadow:0 0 10px ${zoneHex};"></span>
-                <span class="zt-zone-name">${zone} Zone</span>
+                <span class="zt-dot" style="background:${zoneColor}; box-shadow:0 0 10px ${zoneColor};"></span>
+                <span class="zt-zone-name">${zoneName}</span>
               </div>
               <div class="zt-share-pill">
-                ${zoneTotalFish} fish <span>(${tournamentSharePct}% share)</span>
+                ${zoneFish} fish <span>(${matchSharePct}% • ${zoneLen.toLocaleString()}cm)</span>
               </div>
             </div>
 
-            <!-- Active Rod % SVG Mini-Ring + Avg Fish / Rod -->
             <div class="zt-metrics-strip">
               <div class="zt-ring-wrap">
                 <svg class="zt-ring-svg" viewBox="0 0 44 44">
-                  <circle class="zt-ring-bg" cx="22" cy="22" r="${radius}"></circle>
-                  <circle class="zt-ring-fg" cx="22" cy="22" r="${radius}"
-                    stroke="${zoneHex}"
-                    stroke-dasharray="${circumference.toFixed(1)}"
-                    stroke-dashoffset="${strokeOffset.toFixed(1)}"></circle>
+                  <circle class="zt-ring-bg" cx="22" cy="22" r="${r}"></circle>
+                  <circle class="zt-ring-fg" cx="22" cy="22" r="${r}"
+                    stroke="${zoneColor}"
+                    stroke-dasharray="${c.toFixed(1)}"
+                    stroke-dashoffset="${offset.toFixed(1)}"></circle>
                 </svg>
                 <div class="zt-ring-meta">
                   <span class="zt-ring-val">${activePct}%</span>
@@ -1189,24 +1762,22 @@
                 </div>
               </div>
               <div class="zt-avg-box">
-                <div class="zt-avg-val">${overallZoneAvg}</div>
-                <div class="zt-avg-lbl">Avg Fish / Rod</div>
+                <div class="zt-avg-val">${overallAvg} <span style="font-size:0.72rem; font-weight:600; color:var(--text-secondary);">fish</span></div>
+                <div class="zt-avg-lbl">Avg Catch / Rod</div>
               </div>
             </div>
 
-            <!-- Day 1 (Darkness) vs Day 2 (Daylight) Split Bar -->
             <div class="zt-session-block">
               <div class="zt-session-labels">
-                <span class="zt-lbl-d1">🌙 Dark: ${d1SharePct}% (${d1Fish})</span>
-                <span class="zt-lbl-d2">☀️ Day: ${d2SharePct}% (${d2Fish})</span>
+                <span class="zt-lbl-d1">🌙 Dark: ${d1Pct}% (${d1Fish})</span>
+                <span class="zt-lbl-d2">☀️ Day: ${d2Pct}% (${d2Fish})</span>
               </div>
-              <div class="zt-split-bar" title="Day 1 Darkness ${d1SharePct}% vs Day 2 Daylight ${d2SharePct}%">
-                <div class="zt-split-d1" style="width:${d1SharePct}%;"></div>
-                <div class="zt-split-d2" style="width:${d2SharePct}%;"></div>
+              <div class="zt-split-bar" title="Day 1 Darkness ${d1Pct}% vs Day 2 Daylight ${d2Pct}%">
+                <div class="zt-split-d1" style="width:${d1Pct}%;"></div>
+                <div class="zt-split-d2" style="width:${d2Pct}%;"></div>
               </div>
             </div>
 
-            <!-- Catch Spread (Min - Max Fish per Day, No Angler Names) -->
             <div class="zt-spread-grid">
               <div class="zt-spread-box">
                 <div class="zt-spread-head">
@@ -1215,7 +1786,7 @@
                 </div>
                 <div class="zt-spread-val">${d1Min} – ${d1Max} <span style="font-size:0.7rem; font-weight:600; color:var(--text-secondary);">fish</span></div>
                 <div class="zt-spread-track">
-                  <div class="zt-spread-fill d1" style="left:${d1LeftPct}%; width:${d1WidthPct}%;"></div>
+                  <div class="zt-spread-fill d1" style="left:${d1Left}%; width:${d1Width}%;"></div>
                 </div>
                 <div class="zt-spread-sub">Lowest to highest bag</div>
               </div>
@@ -1227,238 +1798,378 @@
                 </div>
                 <div class="zt-spread-val">${d2Min} – ${d2Max} <span style="font-size:0.7rem; font-weight:600; color:var(--text-secondary);">fish</span></div>
                 <div class="zt-spread-track">
-                  <div class="zt-spread-fill d2" style="left:${d2LeftPct}%; width:${d2WidthPct}%;"></div>
+                  <div class="zt-spread-fill d2" style="left:${d2Left}%; width:${d2Width}%;"></div>
                 </div>
                 <div class="zt-spread-sub">Lowest to highest bag</div>
               </div>
             </div>
 
-            <!-- Daily Top 3 Biggest Fish Zone Indicators -->
             <div class="zt-specimens">
-              ${medalPills.length > 0 ? medalPills.join("") : `<span class="specimen-none">No daily Top 3 specimen landed in ${zone}</span>`}
+              ${specimenBadges.length ? specimenBadges.join("") : `<span class="specimen-none">No daily Top 3 specimen in ${zoneName}</span>`}
             </div>
           </div>
         `;
       }).join("");
 
-      document.getElementById("unifiedZonesGrid").innerHTML = zoneCardsHtml;
-
-      // Species Breakdown
-      const speciesTotals = {};
-      enrichedAnglers.forEach(a => {
-        Object.entries(a.species).forEach(([sp, count]) => {
-          speciesTotals[sp] = (speciesTotals[sp] || 0) + count;
-        });
-      });
-
-      const sortedSpecies = Object.entries(speciesTotals).sort((a, b) => b[1] - a[1]);
-      const maxSpeciesCount = sortedSpecies.length ? sortedSpecies[0][1] : 1;
-
-      document.getElementById("speciesList").innerHTML = sortedSpecies.map(([sp, count]) => {
-        const pct = Math.round((count / maxSpeciesCount) * 100);
-        const share = totalFish > 0 ? Math.round((count / totalFish) * 100) : 0;
-        return `
-          <div class="species-row">
-            <div class="species-meta">
-              <span>${sp}</span>
-              <span style="color:var(--text-secondary);">${count} fish (${share}%)</span>
-            </div>
-            <div class="species-bar-bg">
-              <div class="species-bar-fill" style="width:${pct}%;"></div>
-            </div>
-          </div>
-        `;
-      }).join("");
+      document.getElementById("unifiedZonesGrid").innerHTML = cardsHtml;
     }
 
+    /* ---------------------------------------------------------
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD
+       --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
       const zoneSelect = document.getElementById("filterZone");
 
-      function updateRows() {
+      function update() {
         const q = searchInput.value.trim().toLowerCase();
         const z = zoneSelect.value;
 
-        const filtered = enrichedAnglers.filter(a => {
-          const matchesName = a.displayName.toLowerCase().includes(q) || a.team.toLowerCase().includes(q);
-          const matchesZone = z === "ALL" || a.d1Zone === z || a.d2Zone === z;
-          return matchesName && matchesZone;
+        const filtered = STATE.anglers.filter(a => {
+          const matchText = a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q);
+          const matchZone = z === "ALL" || a.d1.zone === z || a.d2.zone === z;
+          return matchText && matchZone;
         });
 
         document.getElementById("individualTableBody").innerHTML = filtered.map(a => {
-          const overallRank = enrichedAnglers.findIndex(x => x.id === a.id) + 1;
-          const rankClass = overallRank <= 3 ? `rank-medal rank-${overallRank}` : "";
+          const rankClass = a.rank <= 3 ? `rank-medal rank-${a.rank}` : "";
+          const z1Short = shortZone(a.d1.zone);
+          const z2Short = shortZone(a.d2.zone);
           return `
             <tr>
-              <td class="${rankClass}">#${overallRank}</td>
-              <td><strong>${a.displayName}</strong></td>
-              <td style="color:var(--text-secondary);">${a.team}</td>
-              <td><span class="zone-chip ${a.d1Zone}">${a.d1Peg}</span></td>
-              <td>${a.d1Fish}</td>
-              <td>${a.d1Pts}</td>
-              <td><span class="zone-chip ${a.d2Zone}">${a.d2Peg}</span></td>
-              <td>${a.d2Fish}</td>
-              <td>${a.d2Pts}</td>
-              <td><strong>${a.totalFish}</strong></td>
-              <td><strong style="color:var(--accent-cyan);">${a.totalPts}</strong></td>
+              <td class="${rankClass}">${getOrdinal(a.rank)}</td>
+              <td><strong>${a.anglerName}</strong></td>
+              <td style="color:var(--text-secondary);">${a.teamName}</td>
+              <td><span class="zone-chip ${z1Short}">${z1Short} #${a.d1.peg}</span></td>
+              <td>${a.d1.fishCount}</td>
+              <td>${a.d1.totalLengthCm}cm</td>
+              <td>${a.d1.zonePoints}</td>
+              <td><span class="zone-chip ${z2Short}">${z2Short} #${a.d2.peg}</span></td>
+              <td>${a.d2.fishCount}</td>
+              <td>${a.d2.totalLengthCm}cm</td>
+              <td>${a.d2.zonePoints}</td>
+              <td><strong>${a.totals.cumulativeFish}</strong></td>
+              <td>${a.totals.cumulativeLengthCm}cm</td>
+              <td><strong style="color:var(--accent-cyan);">${a.totals.cumulativePoints}</strong></td>
             </tr>
           `;
         }).join("");
       }
 
-      searchInput.addEventListener("input", updateRows);
-      zoneSelect.addEventListener("change", updateRows);
-      updateRows();
+      searchInput.oninput = update;
+      zoneSelect.onchange = update;
+      update();
     }
 
-    function renderTeamsTable() {
-      const teamsMap = {};
-      enrichedAnglers.forEach(a => {
-        if (!teamsMap[a.team]) {
-          teamsMap[a.team] = { name: a.team, anglers: 0, d1Pts: 0, d2Pts: 0, totalFish: 0, totalPts: 0 };
-        }
-        teamsMap[a.team].anglers += 1;
-        teamsMap[a.team].d1Pts += a.d1Pts;
-        teamsMap[a.team].d2Pts += a.d2Pts;
-        teamsMap[a.team].totalFish += a.totalFish;
-        teamsMap[a.team].totalPts += a.totalPts;
-      });
+    /* ---------------------------------------------------------
+       RENDER VIEW 3: TEAMS (WITH EVERY ANGLER'S CONTRIBUTION)
+       --------------------------------------------------------- */
+    function renderTeamsContributions() {
+      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
 
-      const sortedTeams = Object.values(teamsMap).sort((a, b) => a.totalPts - b.totalPts || b.totalFish - a.totalFish);
+      document.getElementById("teamsContributionGrid").innerHTML = STATE.teams.map((team, idx) => {
+        const teamRank = idx + 1;
+        const podiumClass = teamRank <= 3 ? `podium-${teamRank}` : "";
+        const prefix = rankIcons[teamRank] || "";
 
-      document.getElementById("teamsTableBody").innerHTML = sortedTeams.map((t, idx) => {
-        const rank = idx + 1;
-        const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
+        // Sort members inside each team by their individual cumulative points (best contributor first)
+        const sortedMembers = [...team.members].sort(
+          (a, b) => a.totals.cumulativePoints - b.totals.cumulativePoints || b.totals.cumulativeFish - a.totals.cumulativeFish
+        );
+
+        const membersHtml = sortedMembers.map(m => {
+          const z1 = shortZone(m.d1.zone);
+          const z2 = shortZone(m.d2.zone);
+          return `
+            <div class="team-member-row">
+              <div class="tm-top">
+                <span>${m.anglerName} <span style="font-size:0.72rem; font-weight:600; color:var(--text-secondary);">(${getOrdinal(m.rank)} overall)</span></span>
+                <span style="color:var(--accent-cyan);">${m.totals.cumulativePoints} pts <span style="color:var(--text-secondary); font-weight:600;">(${m.totals.cumulativeFish} fish • ${m.totals.cumulativeLengthCm}cm)</span></span>
+              </div>
+              <div class="tm-sessions">
+                <span>🌙 D1: <span class="zone-chip ${z1}">${z1} #${m.d1.peg}</span> ${m.d1.fishCount} fish (${m.d1.zonePoints} pts)</span>
+                <span>☀️ D2: <span class="zone-chip ${z2}">${z2} #${m.d2.peg}</span> ${m.d2.fishCount} fish (${m.d2.zonePoints} pts)</span>
+              </div>
+            </div>
+          `;
+        }).join("");
+
         return `
-          <tr>
-            <td class="${rankClass}">#${rank}</td>
-            <td><strong>${t.name}</strong></td>
-            <td>${t.anglers}</td>
-            <td>${t.d1Pts}</td>
-            <td>${t.d2Pts}</td>
-            <td>${t.totalFish}</td>
-            <td><strong style="color:var(--accent-cyan);">${t.totalPts}</strong></td>
-          </tr>
+          <div class="team-card ${podiumClass}">
+            <div class="team-card-header">
+              <div>
+                <div class="team-rank-badge">${prefix}${getOrdinal(teamRank)} • ${team.teamName}</div>
+                <div style="font-size:0.76rem; color:var(--text-secondary); margin-top:0.15rem;">
+                  ${team.members.length} Anglers • D1: ${team.d1Pts} pts | D2: ${team.d2Pts} pts
+                </div>
+              </div>
+              <div class="team-totals-pill">
+                <div class="pts">${team.totalPts} pts</div>
+                <div style="color:var(--text-secondary);">${team.totalFish} fish • ${team.totalLengthCm}cm</div>
+              </div>
+            </div>
+            <div class="team-members-list">
+              ${membersHtml}
+            </div>
+          </div>
         `;
       }).join("");
     }
 
-    function renderBiggestFishTable() {
-      const sorted = [...MATCH_DATA.specimens].sort((a, b) => b.lengthCm - a.lengthCm);
-      document.getElementById("biggestFishTableBody").innerHTML = sorted.map((s, idx) => {
+    /* ---------------------------------------------------------
+       RENDER VIEW 4: BIGGEST FISH & SPECIMENS
+       --------------------------------------------------------- */
+    function renderBiggestFish() {
+      const spSummary = STATE.raw?.biggestFishSpecies;
+      const summaryEl = document.getElementById("biggestSpeciesSummary");
+
+      if (spSummary) {
+        const d1List = (spSummary.day1 || []).join(", ") || "None";
+        const d2List = (spSummary.day2 || []).join(", ") || "None";
+        summaryEl.innerHTML = `
+          <span class="badge-pill" style="background:rgba(99,102,241,0.16); color:#c7d2fe; border-color:rgba(99,102,241,0.35);">
+            🌙 Day 1 Top Species: ${d1List}
+          </span>
+          <span class="badge-pill" style="background:rgba(245,158,11,0.16); color:#fde68a; border-color:rgba(245,158,11,0.35);">
+            ☀️ Day 2 Top Species: ${d2List}
+          </span>
+        `;
+      }
+
+      document.getElementById("biggestFishTableBody").innerHTML = STATE.specimensAll.map((s, idx) => {
         const rank = idx + 1;
         const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
+        const zShort = shortZone(s.zone);
         return `
           <tr>
-            <td class="${rankClass}">#${rank}</td>
+            <td class="${rankClass}">${getOrdinal(rank)}</td>
             <td>${s.sessionLabel}</td>
-            <td><span class="zone-chip ${s.zone}">${s.zone}</span></td>
-            <td>${s.peg}</td>
+            <td><span class="zone-chip ${zShort}">${s.zone}</span></td>
+            <td>#${s.peg}</td>
             <td><strong>${s.species}</strong></td>
             <td><strong style="color:var(--accent-amber);">${s.lengthCm} cm</strong></td>
-            <td>${capName(s.angler)}</td>
+            <td>${s.anglerName}</td>
+            <td style="color:var(--text-secondary);">${s.teamName}</td>
           </tr>
         `;
       }).join("");
     }
 
-    function setupMyReport() {
+    /* ---------------------------------------------------------
+       RENDER VIEW 5: MY MATCH REPORT ("NTH OUT OF 28TH" GAUGES)
+       --------------------------------------------------------- */
+    function renderMyReport() {
+      const anglers = STATE.anglers;
+      if (!anglers.length) return;
+
       const mySelect = document.getElementById("myAnglerSelect");
       const rivalSelect = document.getElementById("compareAnglerSelect");
 
-      enrichedAnglers.forEach((a, idx) => {
+      const prevMe = mySelect.value;
+      const prevRival = rivalSelect.value;
+
+      mySelect.innerHTML = "";
+      rivalSelect.innerHTML = "";
+
+      anglers.forEach(a => {
         const opt1 = document.createElement("option");
-        opt1.value = a.id;
-        opt1.textContent = `${a.displayName} (#${idx + 1})`;
+        opt1.value = a.anglerName;
+        opt1.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
         mySelect.appendChild(opt1);
 
         const opt2 = document.createElement("option");
-        opt2.value = a.id;
-        opt2.textContent = `${a.displayName} (#${idx + 1})`;
+        opt2.value = a.anglerName;
+        opt2.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
         rivalSelect.appendChild(opt2);
       });
 
-      if (enrichedAnglers.length > 1) {
-        rivalSelect.value = enrichedAnglers[1].id;
+      if (prevMe && anglers.some(a => a.anglerName === prevMe)) {
+        mySelect.value = prevMe;
+      }
+      if (prevRival && anglers.some(a => a.anglerName === prevRival)) {
+        rivalSelect.value = prevRival;
+      } else if (anglers.length > 1) {
+        rivalSelect.value = anglers[1].anglerName;
       }
 
-      function renderPersonalTelemetry() {
-        const me = enrichedAnglers.find(a => a.id === Number(mySelect.value)) || enrichedAnglers[0];
-        const rival = enrichedAnglers.find(a => a.id === Number(rivalSelect.value)) || enrichedAnglers[1];
+      function updateReport() {
+        const me = anglers.find(a => a.anglerName === mySelect.value) || anglers[0];
+        const rival = anglers.find(a => a.anglerName === rivalSelect.value) || anglers[1] || anglers[0];
+        const fieldSize = anglers.length;
+        const fieldOrdinal = getOrdinal(fieldSize);
 
-        const myRank = enrichedAnglers.findIndex(a => a.id === me.id) + 1;
-        const rivalRank = enrichedAnglers.findIndex(a => a.id === rival.id) + 1;
-        const maxFish = Math.max(...enrichedAnglers.map(a => a.totalFish), 1);
+        // Ring progress % based on standing out of 28
+        const overallPct = Math.max(6, Math.round(((fieldSize - me.rank + 1) / fieldSize) * 100));
+        const fishRankPct = Math.max(6, Math.round(((fieldSize - me.fishRank + 1) / fieldSize) * 100));
+        const lengthRankPct = Math.max(6, Math.round(((fieldSize - me.lengthRank + 1) / fieldSize) * 100));
+        const d1SharePct = me.totals.cumulativeFish > 0
+          ? Math.round((me.d1.fishCount / me.totals.cumulativeFish) * 100)
+          : 0;
 
-        const percentile = Math.round(((enrichedAnglers.length - myRank + 1) / enrichedAnglers.length) * 100);
-        const catchPower = Math.round((me.totalFish / maxFish) * 100);
-        const d1Share = me.totalFish > 0 ? Math.round((me.d1Fish / me.totalFish) * 100) : 0;
-
-        const r = 34;
+        const r = 38;
         const c = 2 * Math.PI * r;
 
-        function buildGauge(label, displayVal, pct, color) {
+        function buildOrdinalGauge(title, ordinalVal, subOutOf, detailSub, pct, color) {
           const offset = c - (pct / 100) * c;
           return `
             <div class="gauge-card">
-              <svg class="gauge-svg" viewBox="0 0 84 84">
-                <circle class="gauge-track" cx="42" cy="42" r="${r}"></circle>
-                <circle class="gauge-progress" cx="42" cy="42" r="${r}"
-                  stroke="${color}"
-                  stroke-dasharray="${c.toFixed(1)}"
-                  stroke-dashoffset="${offset.toFixed(1)}"></circle>
-              </svg>
-              <div class="gauge-center-val">${displayVal}</div>
-              <div class="gauge-label">${label}</div>
+              <div class="gauge-ring-container">
+                <svg class="gauge-svg" viewBox="0 0 96 96">
+                  <circle class="gauge-track" cx="48" cy="48" r="${r}"></circle>
+                  <circle class="gauge-progress" cx="48" cy="48" r="${r}"
+                    stroke="${color}"
+                    stroke-dasharray="${c.toFixed(1)}"
+                    stroke-dashoffset="${offset.toFixed(1)}"></circle>
+                </svg>
+                <div class="gauge-inside-text">
+                  <span class="gauge-ordinal">${ordinalVal}</span>
+                  <span class="gauge-out-of">${subOutOf}</span>
+                </div>
+              </div>
+              <div class="gauge-label">${title}</div>
+              <div class="gauge-sub">${detailSub}</div>
             </div>
           `;
         }
 
         document.getElementById("myGaugesRow").innerHTML = `
-          ${buildGauge("Overall Rank", "#" + myRank, percentile, "#38bdf8")}
-          ${buildGauge("Total Fish", me.totalFish, catchPower, "#34d399")}
-          ${buildGauge("Zone Points", me.totalPts, percentile, "#818cf8")}
-          ${buildGauge("Darkness Catch %", d1Share + "%", d1Share, "#fbbf24")}
+          ${buildOrdinalGauge(
+            "Overall Standing",
+            getOrdinal(me.rank),
+            `out of ${fieldOrdinal}`,
+            `${me.totals.cumulativePoints} cumulative zone pts`,
+            overallPct,
+            "#38bdf8"
+          )}
+          ${buildOrdinalGauge(
+            "Total Fish Rank",
+            getOrdinal(me.fishRank),
+            `out of ${fieldOrdinal}`,
+            `${me.totals.cumulativeFish} total fish landed`,
+            fishRankPct,
+            "#34d399"
+          )}
+          ${buildOrdinalGauge(
+            "Total Length Rank",
+            getOrdinal(me.lengthRank),
+            `out of ${fieldOrdinal}`,
+            `${me.totals.cumulativeLengthCm} cm measured`,
+            lengthRankPct,
+            "#818cf8"
+          )}
+          ${buildOrdinalGauge(
+            "Darkness vs Daylight",
+            `${d1SharePct}%`,
+            "D1 Dark Share",
+            `🌙 ${me.d1.fishCount} Dark • ☀️ ${me.d2.fishCount} Day`,
+            Math.max(6, d1SharePct),
+            "#fbbf24"
+          )}
         `;
+
+        const meBest = Math.max(me.d1.biggestFishCm || 0, me.d2.biggestFishCm || 0);
+        const rivalBest = Math.max(rival.d1.biggestFishCm || 0, rival.d2.biggestFishCm || 0);
 
         document.getElementById("h2hContainer").innerHTML = `
           <div class="h2h-box">
-            <div style="font-weight:800; font-size:1rem; margin-bottom:0.35rem;">${me.displayName} <span style="color:var(--accent-cyan);">#${myRank}</span></div>
-            <div style="font-size:0.8rem; color:var(--text-secondary);">Team: ${me.team}</div>
-            <div style="margin-top:0.6rem; font-size:0.84rem;">
-              <div>🌙 Day 1 (${me.d1Peg}): <strong>${me.d1Fish} fish</strong> (${me.d1Pts} pts)</div>
-              <div>☀️ Day 2 (${me.d2Peg}): <strong>${me.d2Fish} fish</strong> (${me.d2Pts} pts)</div>
-              <div style="margin-top:0.35rem; color:var(--accent-emerald);">Total: <strong>${me.totalFish} fish • ${me.totalPts} pts</strong></div>
+            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem;">
+              ${me.anglerName} <span style="color:var(--accent-cyan);">(${getOrdinal(me.rank)} out of ${fieldOrdinal})</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${me.teamName}</div>
+            <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.84rem;">
+              <div>🌙 Day 1 (${shortZone(me.d1.zone)} #${me.d1.peg}): <strong>${me.d1.fishCount} fish</strong> • ${me.d1.totalLengthCm}cm (${me.d1.zonePoints} pts)</div>
+              <div>☀️ Day 2 (${shortZone(me.d2.zone)} #${me.d2.peg}): <strong>${me.d2.fishCount} fish</strong> • ${me.d2.totalLengthCm}cm (${me.d2.zonePoints} pts)</div>
+              <div>📏 Biggest Fish: <strong>${meBest} cm</strong></div>
+              <div style="margin-top:0.25rem; color:var(--accent-emerald);">Combined: <strong>${me.totals.cumulativePoints} pts • ${me.totals.cumulativeFish} fish • ${me.totals.cumulativeLengthCm}cm</strong></div>
             </div>
           </div>
 
           <div class="h2h-vs">VS</div>
 
           <div class="h2h-box">
-            <div style="font-weight:800; font-size:1rem; margin-bottom:0.35rem;">${rival.displayName} <span style="color:var(--accent-indigo);">#${rivalRank}</span></div>
-            <div style="font-size:0.8rem; color:var(--text-secondary);">Team: ${rival.team}</div>
-            <div style="margin-top:0.6rem; font-size:0.84rem;">
-              <div>🌙 Day 1 (${rival.d1Peg}): <strong>${rival.d1Fish} fish</strong> (${rival.d1Pts} pts)</div>
-              <div>☀️ Day 2 (${rival.d2Peg}): <strong>${rival.d2Fish} fish</strong> (${rival.d2Pts} pts)</div>
-              <div style="margin-top:0.35rem; color:var(--accent-emerald);">Total: <strong>${rival.totalFish} fish • ${rival.totalPts} pts</strong></div>
+            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem;">
+              ${rival.anglerName} <span style="color:var(--accent-indigo);">(${getOrdinal(rival.rank)} out of ${fieldOrdinal})</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${rival.teamName}</div>
+            <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.84rem;">
+              <div>🌙 Day 1 (${shortZone(rival.d1.zone)} #${rival.d1.peg}): <strong>${rival.d1.fishCount} fish</strong> • ${rival.d1.totalLengthCm}cm (${rival.d1.zonePoints} pts)</div>
+              <div>☀️ Day 2 (${shortZone(rival.d2.zone)} #${rival.d2.peg}): <strong>${rival.d2.fishCount} fish</strong> • ${rival.d2.totalLengthCm}cm (${rival.d2.zonePoints} pts)</div>
+              <div>📏 Biggest Fish: <strong>${rivalBest} cm</strong></div>
+              <div style="margin-top:0.25rem; color:var(--accent-emerald);">Combined: <strong>${rival.totals.cumulativePoints} pts • ${rival.totals.cumulativeFish} fish • ${rival.totals.cumulativeLengthCm}cm</strong></div>
             </div>
           </div>
         `;
       }
 
-      mySelect.addEventListener("change", renderPersonalTelemetry);
-      rivalSelect.addEventListener("change", renderPersonalTelemetry);
-      renderPersonalTelemetry();
+      mySelect.onchange = updateReport;
+      rivalSelect.onchange = updateReport;
+      updateReport();
     }
 
-    // Register Service Worker
+    /* ---------------------------------------------------------
+       RENDER VIEW 6: SECRET PAIRS
+       --------------------------------------------------------- */
+    function renderSecretPairs() {
+      const sp = STATE.raw?.secretPairs || {};
+      document.getElementById("secretPairsDesc").textContent =
+        sp.description || "Target Length calculated for wildcard mystery pairing.";
+      document.getElementById("secretTargetBadge").textContent =
+        `Target Length: ${sp.targetLength || "0cm"}`;
+
+      const winners = Array.isArray(sp.winners) ? sp.winners : [];
+      const others = Array.isArray(sp.otherPairs) ? sp.otherPairs : [];
+      const bodyEl = document.getElementById("secretPairsBody");
+
+      if (!winners.length && !others.length) {
+        bodyEl.innerHTML = `
+          <div style="padding:1.5rem; text-align:center; background:rgba(9,13,22,0.45); border-radius:var(--radius-md); border:1px dashed rgba(255,255,255,0.12); color:var(--text-secondary);">
+            <div style="font-size:1.4rem; margin-bottom:0.35rem;">🎲</div>
+            <div style="font-weight:700; color:var(--text-primary);">Mystery Pairs Draw Pending</div>
+            <div style="font-size:0.82rem; margin-top:0.2rem;">Once Secret Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
+          </div>
+        `;
+        return;
+      }
+
+      const allPairs = [...winners, ...others];
+      bodyEl.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th>Angler 1</th>
+                <th>Angler 2</th>
+                <th>Combined Length</th>
+                <th>Target Diff</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allPairs.map((p, i) => `
+                <tr>
+                  <td><strong>#${i + 1}</strong></td>
+                  <td>${p.angler1 || "—"}</td>
+                  <td>${p.angler2 || "—"}</td>
+                  <td>${p.combinedLength || "—"}</td>
+                  <td>${p.diff || "—"}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // Service Worker Registration
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
 
-    initApp();
+    // Boot
+    setupNavigation();
+    loadScoresJson();
   </script>
 </body>
 </html>
