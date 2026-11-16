@@ -333,12 +333,12 @@
       text-overflow: ellipsis;
     }
 
-    /* Paired Length & Fish Count Donut Comparison Strip */
+    /* Mobile-First Paired Session Donut Strip (Length & Fish Count Side-by-Side per Session) */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 0.9rem 1rem;
+      padding: 0.9rem 0.95rem;
       box-shadow: var(--shadow-card);
       margin-bottom: 0.85rem;
       width: 100%;
@@ -348,48 +348,63 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.65rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .rings-strip-title {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.01em;
     }
 
-    .rings-group-label {
-      font-size: 0.71rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent-cyan);
-      margin: 0.35rem 0 0.45rem 0;
-    }
-
-    .rings-three-col {
+    .session-donuts-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.8rem;
-      align-items: center;
     }
 
-    .ring-diagram-unit {
-      background: rgba(9, 13, 22, 0.58);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .session-donut-card {
+      background: rgba(9, 13, 22, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.09);
       border-radius: var(--radius-md);
-      padding: 0.6rem 0.8rem;
+      padding: 0.7rem 0.65rem 0.8rem;
       display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .session-donut-card-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-align: center;
+      letter-spacing: -0.01em;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .donut-pair-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem;
+      align-items: start;
+    }
+
+    .donut-slot {
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 0.85rem;
+      text-align: center;
+      min-width: 0;
     }
 
     .ring-donut-svg {
-      width: 124px;
-      height: 124px;
+      width: 116px;
+      height: 116px;
+      max-width: 100%;
       flex-shrink: 0;
       overflow: visible;
     }
@@ -401,28 +416,24 @@
       text-anchor: middle;
       dominant-baseline: central;
       paint-order: stroke fill;
-      stroke: rgba(15, 23, 42, 0.8);
+      stroke: rgba(15, 23, 42, 0.82);
       stroke-width: 2.3px;
       stroke-linejoin: round;
     }
 
-    .ring-unit-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.18rem;
-    }
-
-    .ring-unit-title {
-      font-size: 0.94rem;
+    .donut-slot-title {
+      font-size: 0.8rem;
       font-weight: 800;
       color: var(--text-primary);
+      margin-top: 0.3rem;
       line-height: 1.2;
     }
 
-    .ring-unit-sub {
-      font-size: 0.72rem;
+    .donut-slot-sub {
+      font-size: 0.68rem;
       color: var(--text-secondary);
-      line-height: 1.25;
+      line-height: 1.2;
+      margin-top: 0.1rem;
     }
 
     /* Extrapolated Session & Zone Shift Bar */
@@ -430,7 +441,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0.7rem;
-      margin-top: 0.8rem;
+      margin-top: 0.85rem;
       padding-top: 0.75rem;
       border-top: 1px solid rgba(255, 255, 255, 0.09);
     }
@@ -1023,6 +1034,9 @@
       .zone-winners-grid {
         grid-template-columns: 1fr;
       }
+      .session-donuts-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 960px) {
@@ -1039,9 +1053,6 @@
       }
       .kpi-cell:nth-child(n+4) {
         border-bottom: none;
-      }
-      .rings-three-col {
-        grid-template-columns: 1fr;
       }
       .extrapolated-bar {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1144,12 +1155,7 @@
         <div class="rings-strip-header">
           <div class="rings-strip-title">Zone Length & Fish Count Breakdown</div>
         </div>
-        <div class="rings-group-label">Total Length by Zone (m)</div>
-        <div class="rings-three-col" id="zoneLengthRingsRow"></div>
-
-        <div class="rings-group-label" style="margin-top:0.85rem;">Total Fish Count by Zone</div>
-        <div class="rings-three-col" id="zoneFishRingsRow"></div>
-
+        <div class="session-donuts-grid" id="sessionDonutsGrid"></div>
         <div class="extrapolated-bar" id="extrapolatedInsightsRow"></div>
       </div>
 
@@ -1339,7 +1345,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.9",
+      version: "v3.5.0",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1370,10 +1376,10 @@
     }
 
     function buildZoneDonutSvg(rawValues, formattedLabels, centerTopText, centerBotText) {
-      const cx = 62;
-      const cy = 62;
-      const r = 44;
-      const strokeW = 20;
+      const cx = 58;
+      const cy = 58;
+      const r = 42;
+      const strokeW = 19;
       const circ = 2 * Math.PI * r;
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
       const total = rawValues.reduce((s, v) => s + v, 0);
@@ -1422,12 +1428,12 @@
       }
 
       return `
-        <svg class="ring-donut-svg" viewBox="0 0 124 124">
+        <svg class="ring-donut-svg" viewBox="0 0 116 116">
           <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="${strokeW}" />
           ${arcsHtml}
           ${labelsHtml}
-          <text x="${cx}" y="${cy - 3}" fill="#f8fafc" font-size="12.5" font-weight="800" text-anchor="middle">${centerTopText}</text>
-          <text x="${cx}" y="${cy + 10}" fill="#94a3b8" font-size="7.5" font-weight="700" text-anchor="middle">${centerBotText}</text>
+          <text x="${cx}" y="${cy - 3}" fill="#f8fafc" font-size="12" font-weight="800" text-anchor="middle">${centerTopText}</text>
+          <text x="${cx}" y="${cy + 10}" fill="#94a3b8" font-size="7.2" font-weight="700" text-anchor="middle">${centerBotText}</text>
         </svg>
       `;
     }
@@ -1740,86 +1746,84 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
-      // Length Donuts (exact meters inside each coloured segment)
-      document.getElementById("zoneLengthRingsRow").innerHTML = `
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.zoneLen),
-            zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}m`),
-            `${totalLengthMeters}m`,
-            "TOTAL"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">2 Day Total</div>
-            <div class="ring-unit-sub">${totalLengthCm} cm measured</div>
+      // Mobile-first Paired Session Donuts:
+      // Each session card shows Length Donut + Fish Count Donut side-by-side on the same line
+      document.getElementById("sessionDonutsGrid").innerHTML = `
+        <div class="session-donut-card">
+          <div class="session-donut-card-title">2 Day Total</div>
+          <div class="donut-pair-row">
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.zoneLen),
+                zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}m`),
+                `${totalLengthMeters}m`,
+                "TOTAL"
+              )}
+              <div class="donut-slot-title">Length</div>
+              <div class="donut-slot-sub">${totalLengthCm} cm</div>
+            </div>
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.zoneFish),
+                zoneStats.map(z => `${z.zoneFish}`),
+                `${totalFish}`,
+                "FISH"
+              )}
+              <div class="donut-slot-title">Fish Count</div>
+              <div class="donut-slot-sub">${totalFish} landed</div>
+            </div>
           </div>
         </div>
 
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.d1Len),
-            zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}m`),
-            `${totalD1Meters}m`,
-            "DAY 1"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">🌙 Day 1</div>
-            <div class="ring-unit-sub">${totalD1LenCm} cm measured</div>
+        <div class="session-donut-card">
+          <div class="session-donut-card-title">🌙 Day 1</div>
+          <div class="donut-pair-row">
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.d1Len),
+                zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}m`),
+                `${totalD1Meters}m`,
+                "DAY 1"
+              )}
+              <div class="donut-slot-title">Length</div>
+              <div class="donut-slot-sub">${totalD1LenCm} cm</div>
+            </div>
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.d1Fish),
+                zoneStats.map(z => `${z.d1Fish}`),
+                `${totalD1Fish}`,
+                "DAY 1"
+              )}
+              <div class="donut-slot-title">Fish Count</div>
+              <div class="donut-slot-sub">${totalD1Fish} landed</div>
+            </div>
           </div>
         </div>
 
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.d2Len),
-            zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}m`),
-            `${totalD2Meters}m`,
-            "DAY 2"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">☀️ Day 2</div>
-            <div class="ring-unit-sub">${totalD2LenCm} cm measured</div>
-          </div>
-        </div>
-      `;
-
-      // Fish Count Donuts (exact fish count inside each coloured segment)
-      document.getElementById("zoneFishRingsRow").innerHTML = `
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.zoneFish),
-            zoneStats.map(z => `${z.zoneFish}`),
-            `${totalFish}`,
-            "FISH"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">2 Day Total</div>
-            <div class="ring-unit-sub">${totalFish} fish weighed in</div>
-          </div>
-        </div>
-
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.d1Fish),
-            zoneStats.map(z => `${z.d1Fish}`),
-            `${totalD1Fish}`,
-            "DAY 1"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">🌙 Day 1</div>
-            <div class="ring-unit-sub">${totalD1Fish} fish weighed in</div>
-          </div>
-        </div>
-
-        <div class="ring-diagram-unit">
-          ${buildZoneDonutSvg(
-            zoneStats.map(z => z.d2Fish),
-            zoneStats.map(z => `${z.d2Fish}`),
-            `${totalD2Fish}`,
-            "DAY 2"
-          )}
-          <div class="ring-unit-meta">
-            <div class="ring-unit-title">☀️ Day 2</div>
-            <div class="ring-unit-sub">${totalD2Fish} fish weighed in</div>
+        <div class="session-donut-card">
+          <div class="session-donut-card-title">☀️ Day 2</div>
+          <div class="donut-pair-row">
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.d2Len),
+                zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}m`),
+                `${totalD2Meters}m`,
+                "DAY 2"
+              )}
+              <div class="donut-slot-title">Length</div>
+              <div class="donut-slot-sub">${totalD2LenCm} cm</div>
+            </div>
+            <div class="donut-slot">
+              ${buildZoneDonutSvg(
+                zoneStats.map(z => z.d2Fish),
+                zoneStats.map(z => `${z.d2Fish}`),
+                `${totalD2Fish}`,
+                "DAY 2"
+              )}
+              <div class="donut-slot-title">Fish Count</div>
+              <div class="donut-slot-sub">${totalD2Fish} landed</div>
+            </div>
           </div>
         </div>
       `;
@@ -1841,7 +1845,6 @@
         ? `☀️ Day 2 ahead by +${lenDiffMeters}m`
         : `🌙 Day 1 ahead by +${Math.abs(Number(lenDiffMeters)).toFixed(2)}m`;
 
-      // Zone with biggest Day 1 -> Day 2 fish swing
       const biggestZoneSwing = [...zoneStats]
         .map(z => ({ zoneName: z.zoneName, deltaFish: z.d2Fish - z.d1Fish, d1Fish: z.d1Fish, d2Fish: z.d2Fish }))
         .sort((a, b) => Math.abs(b.deltaFish) - Math.abs(a.deltaFish))[0];
