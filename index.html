@@ -172,18 +172,19 @@
       transform: translateY(-2px);
     }
 
-    /* Front Landing Button Grid */
+    /* Sleek Financial-Style Front Landing Navigation Buttons (No Icons) */
     .hub-buttons-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 0.9rem;
     }
 
     .hub-btn-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem 1.35rem;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.97) 0%, rgba(23, 33, 54, 0.95) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-left: 3.5px solid rgba(56, 189, 248, 0.65);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.35rem;
       text-align: left;
       color: var(--text-primary);
       cursor: pointer;
@@ -191,47 +192,42 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      box-shadow: var(--shadow-card);
-      transition: all 0.22s ease;
+      box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.26);
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
     }
 
     .hub-btn-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--border-glow);
-      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.45);
+      border-left-color: var(--accent-cyan);
+      background: linear-gradient(145deg, rgba(20, 31, 54, 0.99) 0%, rgba(30, 44, 72, 0.98) 100%);
+      box-shadow: 0 14px 30px -6px rgba(15, 23, 42, 0.34);
     }
 
-    .hub-btn-left {
-      display: flex;
-      align-items: center;
-      gap: 0.95rem;
-    }
-
-    .hub-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.45rem;
-      background: rgba(56, 189, 248, 0.16);
-      border: 1px solid rgba(56, 189, 248, 0.34);
-      flex-shrink: 0;
+    .hub-btn-card:active {
+      transform: translateY(0);
     }
 
     .hub-btn-title {
-      font-size: 1.08rem;
-      font-weight: 800;
+      font-size: 1.02rem;
+      font-weight: 700;
       color: var(--text-primary);
       letter-spacing: -0.01em;
     }
 
     .hub-arrow {
-      font-size: 1.15rem;
-      color: var(--accent-cyan);
-      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 600;
       flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .hub-btn-card:hover .hub-arrow {
+      color: var(--accent-cyan);
+      transform: translateX(4px);
     }
 
     /* Dark Cards on Soft Slate Mist Background */
@@ -521,68 +517,200 @@
       gap: 0.25rem;
     }
 
-    /* One-Team-Per-Row Horizontal Team Leaderboard Table */
-    .one-line-teams-wrap {
+    /* =========================================================================
+       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM ACROSS ALL VIEWS
+       ========================================================================= */
+    .table-wrap {
       overflow-x: auto;
+      position: relative;
     }
 
-    table.one-line-team-table {
+    .table-wrap.tight-scores-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Subtle Horizontal Bounce Hint for Overflowing Tables */
+    @keyframes tableHorizontalPeek {
+      0% { transform: translateX(0); }
+      30% { transform: translateX(-28px); }
+      65% { transform: translateX(4px); }
+      100% { transform: translateX(0); }
+    }
+
+    .table-peek-bounce {
+      animation: tableHorizontalPeek 0.95s cubic-bezier(0.25, 1, 0.5, 1) 1;
+    }
+
+    table.card-row-table {
       width: 100%;
       border-collapse: separate;
-      border-spacing: 0 7px;
-      font-size: 0.8rem;
+      border-spacing: 0 6px;
+      font-size: 0.82rem;
       font-variant-numeric: tabular-nums;
+      text-align: left;
     }
 
-    table.one-line-team-table thead th {
+    table.card-row-table thead th {
       background: rgba(9, 13, 22, 0.94);
       color: var(--text-secondary);
       font-weight: 700;
-      font-size: 0.68rem;
+      font-size: 0.69rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      padding: 0.5rem 0.65rem;
+      padding: 0.55rem 0.7rem;
       border-top: 1px solid var(--border-glass);
       border-bottom: 1px solid var(--border-glass);
       white-space: nowrap;
     }
 
-    table.one-line-team-table thead th:first-child {
+    table.card-row-table thead tr:first-child th:first-child {
       border-left: 1px solid var(--border-glass);
-      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      border-top-left-radius: var(--radius-sm);
     }
 
-    table.one-line-team-table thead th:last-child {
+    table.card-row-table thead tr:first-child th:last-child {
       border-right: 1px solid var(--border-glass);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      border-top-right-radius: var(--radius-sm);
     }
 
-    table.one-line-team-table tbody tr.team-strip-row td {
+    table.card-row-table thead tr:last-child th:first-child {
+      border-left: 1px solid var(--border-glass);
+      border-bottom-left-radius: var(--radius-sm);
+    }
+
+    table.card-row-table thead tr:last-child th:last-child {
+      border-right: 1px solid var(--border-glass);
+      border-bottom-right-radius: var(--radius-sm);
+    }
+
+    table.card-row-table tbody tr td {
       background: rgba(23, 33, 54, 0.92);
       border-top: 1px solid rgba(148, 163, 184, 0.22);
       border-bottom: 1px solid rgba(148, 163, 184, 0.22);
-      padding: 0.55rem 0.65rem;
+      padding: 0.55rem 0.7rem;
+      color: var(--text-primary);
       vertical-align: middle;
       white-space: nowrap;
     }
 
-    table.one-line-team-table tbody tr.team-strip-row:hover td {
+    table.card-row-table tbody tr:hover td {
       background: rgba(30, 44, 72, 0.98);
     }
 
-    table.one-line-team-table tbody tr.team-strip-row td:first-child {
+    table.card-row-table tbody tr td:first-child {
       border-left: 1px solid rgba(148, 163, 184, 0.22);
-      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+
+    table.card-row-table tbody tr td:last-child {
+      border-right: 1px solid rgba(148, 163, 184, 0.22);
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    /* Individual Leaderboard Compact Overrides within Card-Row Table */
+    table.tight-ind-table {
+      font-size: 0.78rem;
+      border-spacing: 0 4px;
+    }
+
+    table.tight-ind-table th.group-th {
+      text-align: center;
+      padding: 0.4rem 0.35rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    table.tight-ind-table th.group-th.overall-grp {
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.09);
+    }
+
+    table.tight-ind-table th.group-th.d1-grp {
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.09);
+    }
+
+    table.tight-ind-table th.group-th.d2-grp {
+      color: #fcd34d;
+      background: rgba(245, 158, 11, 0.09);
+    }
+
+    table.tight-ind-table th.sub-th {
+      padding: 0.36rem 0.34rem;
+      font-size: 0.66rem;
+      text-align: center;
+    }
+
+    table.tight-ind-table th.sub-th.left-align {
+      text-align: left;
+    }
+
+    table.tight-ind-table tbody tr td {
+      padding: 0.42rem 0.34rem;
+      text-align: center;
+    }
+
+    table.tight-ind-table td.pos-cell {
+      width: 40px;
+      padding-left: 0.5rem;
+      padding-right: 0.25rem;
+      text-align: left;
+    }
+
+    table.tight-ind-table td.angler-cell {
+      text-align: left;
+      padding-left: 0.35rem;
+      padding-right: 0.55rem;
+      max-width: 175px;
+    }
+
+    .ind-angler-name {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ind-team-sub {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.15;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sec-sep-left {
+      border-left: 2px solid rgba(148, 163, 184, 0.38) !important;
+    }
+
+    /* Tied Overall Points Block Grouping */
+    table.tight-ind-table tbody tr.pts-group-odd td {
+      background: rgba(28, 41, 68, 0.94);
+    }
+
+    table.tight-ind-table tbody tr.pts-group-start td:first-child {
+      border-left: 3px solid rgba(56, 189, 248, 0.65);
+    }
+
+    /* Team Leaderboard Specific Cells within Card-Row Table */
+    table.one-line-team-table {
+      border-spacing: 0 7px;
+    }
+
+    table.one-line-team-table tbody tr.team-strip-row td:first-child {
       width: 58px;
       text-align: center;
     }
 
-    table.one-line-team-table tbody tr.team-strip-row td:last-child {
-      border-right: 1px solid rgba(148, 163, 184, 0.22);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    }
-
-    /* Podium Subtle Left Accent on Team Row */
     table.one-line-team-table tbody tr.team-strip-row.podium-1 td:first-child {
       border-left: 3.5px solid #fbbf24;
     }
@@ -746,148 +874,6 @@
       margin-top: 0.15rem;
     }
 
-    /* Tables (Standard + Ultra-Tight Individual Leaderboard) */
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-glass);
-    }
-
-    .table-wrap.tight-scores-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-      text-align: left;
-    }
-
-    th {
-      background: rgba(9, 13, 22, 0.92);
-      color: var(--text-secondary);
-      font-weight: 700;
-      font-size: 0.73rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 0.75rem 0.85rem;
-      border-bottom: 1px solid var(--border-glass);
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 0.72rem 0.85rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-primary);
-      white-space: nowrap;
-    }
-
-    tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
-
-    /* Ultra-Tight Individual Leaderboard Specific Styling */
-    table.tight-ind-table {
-      font-size: 0.78rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    table.tight-ind-table th.group-th {
-      text-align: center;
-      padding: 0.42rem 0.35rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    table.tight-ind-table th.group-th.overall-grp {
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.08);
-    }
-
-    table.tight-ind-table th.group-th.d1-grp {
-      color: #a5b4fc;
-      background: rgba(99, 102, 241, 0.08);
-    }
-
-    table.tight-ind-table th.group-th.d2-grp {
-      color: #fcd34d;
-      background: rgba(245, 158, 11, 0.08);
-    }
-
-    table.tight-ind-table th.sub-th {
-      padding: 0.38rem 0.34rem;
-      font-size: 0.66rem;
-      text-align: center;
-    }
-
-    table.tight-ind-table th.sub-th.left-align {
-      text-align: left;
-    }
-
-    table.tight-ind-table td {
-      padding: 0.42rem 0.34rem;
-      text-align: center;
-    }
-
-    table.tight-ind-table td.pos-cell {
-      width: 38px;
-      padding-left: 0.45rem;
-      padding-right: 0.25rem;
-      text-align: left;
-    }
-
-    table.tight-ind-table td.angler-cell {
-      text-align: left;
-      padding-left: 0.35rem;
-      padding-right: 0.55rem;
-      max-width: 175px;
-    }
-
-    .ind-angler-name {
-      font-weight: 800;
-      font-size: 0.8rem;
-      color: var(--text-primary);
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .ind-team-sub {
-      font-size: 0.66rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      line-height: 1.15;
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Crisp Vertical Group Separators */
-    .sec-sep-left {
-      border-left: 2px solid rgba(148, 163, 184, 0.38) !important;
-    }
-
-    /* Tied Overall Points Block Grouping */
-    tr.pts-group-even {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    tr.pts-group-odd {
-      background: rgba(56, 189, 248, 0.045);
-    }
-
-    tr.pts-group-start td {
-      border-top: 2px solid rgba(56, 189, 248, 0.34);
-    }
-
-    tbody tr.pts-group-start:first-child td {
-      border-top: none;
-    }
-
     .zone-chip {
       display: inline-block;
       padding: 0.16rem 0.52rem;
@@ -931,7 +917,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
 
     @media (max-width: 1120px) {
@@ -999,55 +985,37 @@
     </header>
 
     <!-- =========================================================
-         VIEW 0: FRONT SPLASH SCREEN (CLEAN SECTION BUTTON HUB)
+         VIEW 0: FRONT SPLASH SCREEN (SLEEK FINANCIAL-STYLE BUTTONS)
          ========================================================= -->
     <main id="view-home" class="view-section active">
       <div class="hub-buttons-grid">
         <button class="hub-btn-card" data-nav="overview">
-          <div class="hub-btn-left">
-            <div class="hub-icon">📊</div>
-            <div class="hub-btn-title">Match Overview</div>
-          </div>
+          <span class="hub-btn-title">Match Overview</span>
           <span class="hub-arrow">→</span>
         </button>
 
         <button class="hub-btn-card" data-nav="individual">
-          <div class="hub-btn-left">
-            <div class="hub-icon">🏆</div>
-            <div class="hub-btn-title">Individual Leaderboard</div>
-          </div>
+          <span class="hub-btn-title">Individual Leaderboard</span>
           <span class="hub-arrow">→</span>
         </button>
 
         <button class="hub-btn-card" data-nav="teams">
-          <div class="hub-btn-left">
-            <div class="hub-icon">👥</div>
-            <div class="hub-btn-title">Team Leaderboard</div>
-          </div>
+          <span class="hub-btn-title">Team Leaderboard</span>
           <span class="hub-arrow">→</span>
         </button>
 
         <button class="hub-btn-card" data-nav="biggest">
-          <div class="hub-btn-left">
-            <div class="hub-icon">🐟</div>
-            <div class="hub-btn-title">Biggest Fish</div>
-          </div>
+          <span class="hub-btn-title">Biggest Fish</span>
           <span class="hub-arrow">→</span>
         </button>
 
         <button class="hub-btn-card" data-nav="secret">
-          <div class="hub-btn-left">
-            <div class="hub-icon">🎲</div>
-            <div class="hub-btn-title">Mystery Pairs</div>
-          </div>
+          <span class="hub-btn-title">Mystery Pairs</span>
           <span class="hub-arrow">→</span>
         </button>
 
         <button class="hub-btn-card" data-nav="myreport">
-          <div class="hub-btn-left">
-            <div class="hub-icon">🎯</div>
-            <div class="hub-btn-title">My Match Report</div>
-          </div>
+          <span class="hub-btn-title">My Match Report</span>
           <span class="hub-arrow">→</span>
         </button>
       </div>
@@ -1093,7 +1061,7 @@
           </div>
         </div>
         <div class="table-wrap tight-scores-wrap">
-          <table class="tight-ind-table">
+          <table class="card-row-table tight-ind-table">
             <thead>
               <tr>
                 <th colspan="2" class="group-th"></th>
@@ -1125,18 +1093,12 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (SINGLE-LINE PER TEAM)
+         VIEW 3: TEAM LEADERBOARD (CLEAN HEADERLESS TABLE)
          ========================================================= -->
     <section id="view-teams" class="view-section">
       <div class="glass-card" style="max-width: 1220px; margin-left: auto; margin-right: auto;">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Team Leaderboard</div>
-            <div class="card-subtitle">One team per line • Anglers ordered best-performing first (Points • Length • Fish)</div>
-          </div>
-        </div>
-        <div class="one-line-teams-wrap">
-          <table class="one-line-team-table">
+        <div class="table-wrap">
+          <table class="card-row-table one-line-team-table">
             <thead id="teamsTableHead"></thead>
             <tbody id="teamsTableBody"></tbody>
           </table>
@@ -1157,7 +1119,7 @@
         </div>
         <div class="species-summary-pills" id="biggestSpeciesSummary"></div>
         <div class="table-wrap">
-          <table>
+          <table class="card-row-table">
             <thead>
               <tr>
                 <th>Rank</th>
@@ -1228,7 +1190,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.5",
+      version: "v3.4.6",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1336,6 +1298,32 @@
           <text x="${cx}" y="${cy + 10}" fill="#94a3b8" font-size="7.5" font-weight="700" text-anchor="middle">${centerBotText}</text>
         </svg>
       `;
+    }
+
+    // Horizontal bounce hint for any table that overflows horizontally on narrow screens
+    function triggerTableBounceHints(containerEl) {
+      const root = containerEl || document;
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          root.querySelectorAll(".table-wrap").forEach(wrap => {
+            if (wrap.scrollWidth > wrap.clientWidth + 4) {
+              const tbl = wrap.querySelector("table");
+              if (!tbl) return;
+              tbl.classList.remove("table-peek-bounce");
+              void tbl.offsetWidth; // trigger reflow
+              tbl.classList.add("table-peek-bounce");
+
+              const stopBounce = () => {
+                tbl.classList.remove("table-peek-bounce");
+              };
+              wrap.addEventListener("touchstart", stopBounce, { once: true, passive: true });
+              wrap.addEventListener("pointerdown", stopBounce, { once: true, passive: true });
+              wrap.addEventListener("scroll", stopBounce, { once: true, passive: true });
+              tbl.addEventListener("animationend", stopBounce, { once: true });
+            }
+          });
+        }, 120);
+      });
     }
 
     async function loadScoresJson() {
@@ -1469,6 +1457,7 @@
       if (target) {
         target.classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
+        triggerTableBounceHints(target);
       }
 
       const splashHeader = document.getElementById("mainSplashHeader");
@@ -1753,7 +1742,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (SINGLE-LINE PER TEAM)
+       RENDER VIEW 3: TEAM LEADERBOARD (CLEAN HEADERLESS TABLE)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -1768,7 +1757,7 @@
       document.getElementById("teamsTableHead").innerHTML = `
         <tr>
           <th style="text-align:center;">Pos</th>
-          <th style="text-align:left;">Team (Pts • Len • Fish)</th>
+          <th style="text-align:left;">Team</th>
           ${anglerHeaders}
         </tr>
       `;
@@ -1883,7 +1872,7 @@
       const allPairs = [...winners, ...others];
       bodyEl.innerHTML = `
         <div class="table-wrap">
-          <table>
+          <table class="card-row-table">
             <thead>
               <tr>
                 <th>Pair</th>
