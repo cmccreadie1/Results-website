@@ -521,137 +521,122 @@
       gap: 0.25rem;
     }
 
-    /* Compact Horizontal Team Leaderboard Table */
-    table.tight-team-table {
-      font-size: 0.78rem;
+    /* One-Team-Per-Row Horizontal Team Leaderboard Table */
+    .one-line-teams-wrap {
+      overflow-x: auto;
+    }
+
+    table.one-line-team-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 7px;
+      font-size: 0.8rem;
       font-variant-numeric: tabular-nums;
     }
 
-    table.tight-team-table th.group-th {
-      text-align: center;
-      padding: 0.42rem 0.35rem;
+    table.one-line-team-table thead th {
+      background: rgba(9, 13, 22, 0.94);
+      color: var(--text-secondary);
+      font-weight: 700;
       font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 0.65rem;
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+      white-space: nowrap;
     }
 
-    table.tight-team-table th.group-th.overall-grp {
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.08);
+    table.one-line-team-table thead th:first-child {
+      border-left: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
     }
 
-    table.tight-team-table th.group-th.d1-grp {
-      color: #a5b4fc;
-      background: rgba(99, 102, 241, 0.08);
+    table.one-line-team-table thead th:last-child {
+      border-right: 1px solid var(--border-glass);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
 
-    table.tight-team-table th.group-th.d2-grp {
-      color: #fcd34d;
-      background: rgba(245, 158, 11, 0.08);
+    table.one-line-team-table tbody tr.team-strip-row td {
+      background: rgba(23, 33, 54, 0.92);
+      border-top: 1px solid rgba(148, 163, 184, 0.22);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 0.55rem 0.65rem;
+      vertical-align: middle;
+      white-space: nowrap;
     }
 
-    table.tight-team-table th.sub-th {
-      padding: 0.38rem 0.34rem;
-      font-size: 0.66rem;
+    table.one-line-team-table tbody tr.team-strip-row:hover td {
+      background: rgba(30, 44, 72, 0.98);
+    }
+
+    table.one-line-team-table tbody tr.team-strip-row td:first-child {
+      border-left: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      width: 58px;
       text-align: center;
     }
 
-    table.tight-team-table th.sub-th.left-align {
+    table.one-line-team-table tbody tr.team-strip-row td:last-child {
+      border-right: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    /* Podium Subtle Left Accent on Team Row */
+    table.one-line-team-table tbody tr.team-strip-row.podium-1 td:first-child {
+      border-left: 3.5px solid #fbbf24;
+    }
+    table.one-line-team-table tbody tr.team-strip-row.podium-2 td:first-child {
+      border-left: 3.5px solid #cbd5e1;
+    }
+    table.one-line-team-table tbody tr.team-strip-row.podium-3 td:first-child {
+      border-left: 3.5px solid #d97706;
+    }
+
+    .team-main-cell {
+      min-width: 175px;
       text-align: left;
     }
 
-    table.tight-team-table td {
-      padding: 0.38rem 0.34rem;
-      text-align: center;
-    }
-
-    /* Team Block Header Row inside Horizontal Team Table */
-    tr.team-banner-row {
-      background: rgba(15, 23, 42, 0.94);
-    }
-
-    tr.team-banner-row.podium-1 {
-      background: linear-gradient(90deg, rgba(251, 191, 36, 0.16) 0%, rgba(15, 23, 42, 0.96) 55%);
-    }
-
-    tr.team-banner-row.podium-2 {
-      background: linear-gradient(90deg, rgba(203, 213, 225, 0.13) 0%, rgba(15, 23, 42, 0.96) 55%);
-    }
-
-    tr.team-banner-row.podium-3 {
-      background: linear-gradient(90deg, rgba(217, 119, 6, 0.15) 0%, rgba(15, 23, 42, 0.96) 55%);
-    }
-
-    tr.team-banner-row td {
-      border-top: 2px solid rgba(56, 189, 248, 0.42);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 0.48rem 0.5rem;
-    }
-
-    tbody tr.team-banner-row:first-child td {
-      border-top: none;
-    }
-
-    .team-banner-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      text-align: left;
-    }
-
-    .team-banner-left {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .team-banner-title {
-      font-size: 0.92rem;
+    .team-name-line {
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--text-primary);
+      line-height: 1.2;
     }
 
-    .team-banner-right {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.76rem;
-      color: var(--text-secondary);
-      flex-wrap: wrap;
-    }
-
-    .team-banner-pts {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--accent-cyan);
-    }
-
-    tr.team-angler-even {
-      background: rgba(255, 255, 255, 0.015);
-    }
-
-    tr.team-angler-odd {
-      background: rgba(56, 189, 248, 0.035);
-    }
-
-    td.team-angler-cell {
-      text-align: left !important;
-      padding-left: 0.65rem !important;
-    }
-
-    .mini-zone-chip {
-      display: inline-block;
-      padding: 0.1rem 0.38rem;
-      border-radius: 5px;
-      font-size: 0.67rem;
+    .team-totals-line {
+      font-size: 0.71rem;
       font-weight: 700;
+      color: var(--accent-cyan);
+      line-height: 1.2;
+      margin-top: 2px;
     }
-    .mini-zone-chip.Red { background: var(--zone-red-bg); color: #fca5a5; border: 1px solid var(--zone-red-border); }
-    .mini-zone-chip.Yellow { background: var(--zone-yellow-bg); color: #fde047; border: 1px solid var(--zone-yellow-border); }
-    .mini-zone-chip.Green { background: var(--zone-green-bg); color: #86efac; border: 1px solid var(--zone-green-border); }
-    .mini-zone-chip.Blue { background: var(--zone-blue-bg); color: #93c5fd; border: 1px solid var(--zone-blue-border); }
+
+    .team-contrib-cell {
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      min-width: 152px;
+    }
+
+    .team-contrib-cell.first-angler-sep {
+      border-left: 2px solid rgba(56, 189, 248, 0.45);
+    }
+
+    .contrib-angler-line {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .contrib-stats-line {
+      font-size: 0.69rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
 
     /* My Match Report Card with "Nth out of 28th" Ring Gauges */
     .angler-select-bar {
@@ -770,11 +755,6 @@
 
     .table-wrap.tight-scores-wrap {
       max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .table-wrap.tight-teams-wrap {
-      max-width: 1120px;
       margin: 0 auto;
     }
 
@@ -1145,41 +1125,19 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (COMPACT HORIZONTAL TABLE)
+         VIEW 3: TEAM LEADERBOARD (SINGLE-LINE PER TEAM)
          ========================================================= -->
     <section id="view-teams" class="view-section">
-      <div class="glass-card" style="max-width: 1160px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1220px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Team Leaderboard</div>
-            <div class="card-subtitle">Ranked by lowest combined team points • Anglers ordered best-performing first (lengths in cm)</div>
+            <div class="card-subtitle">One team per line • Anglers ordered best-performing first (Points • Length • Fish)</div>
           </div>
         </div>
-        <div class="table-wrap tight-teams-wrap">
-          <table class="tight-team-table">
-            <thead>
-              <tr>
-                <th class="group-th"></th>
-                <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
-                <th colspan="4" class="group-th d1-grp sec-sep-left">🌙 Day 1</th>
-                <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
-              </tr>
-              <tr>
-                <th class="sub-th left-align" style="padding-left:0.65rem;">Team / Angler</th>
-                <th class="sub-th sec-sep-left">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-                <th class="sub-th">Big</th>
-                <th class="sub-th sec-sep-left">Zone / Peg</th>
-                <th class="sub-th">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-                <th class="sub-th sec-sep-left">Zone / Peg</th>
-                <th class="sub-th">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-              </tr>
-            </thead>
+        <div class="one-line-teams-wrap">
+          <table class="one-line-team-table">
+            <thead id="teamsTableHead"></thead>
             <tbody id="teamsTableBody"></tbody>
           </table>
         </div>
@@ -1270,7 +1228,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.4",
+      version: "v3.4.5",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1795,14 +1753,30 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (COMPACT HORIZONTAL TABLE)
+       RENDER VIEW 3: TEAM LEADERBOARD (SINGLE-LINE PER TEAM)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
+      const maxMembers = Math.max(4, ...STATE.teams.map(t => t.members.length));
+
+      let anglerHeaders = "";
+      for (let i = 1; i <= maxMembers; i++) {
+        const sepClass = i === 1 ? "first-angler-sep" : "";
+        anglerHeaders += `<th class="${sepClass}" style="text-align:left;">Angler ${i}</th>`;
+      }
+
+      document.getElementById("teamsTableHead").innerHTML = `
+        <tr>
+          <th style="text-align:center;">Pos</th>
+          <th style="text-align:left;">Team (Pts • Len • Fish)</th>
+          ${anglerHeaders}
+        </tr>
+      `;
 
       document.getElementById("teamsTableBody").innerHTML = STATE.teams.map((team, idx) => {
         const teamRank = idx + 1;
         const podiumClass = teamRank <= 3 ? `podium-${teamRank}` : "";
+        const rankClass = teamRank <= 3 ? `rank-medal rank-${teamRank}` : "";
         const prefix = rankIcons[teamRank] || "";
 
         // Sort anglers best-performing first (lowest points -> highest fish -> highest length)
@@ -1813,57 +1787,32 @@
             b.totals.cumulativeLengthCm - a.totals.cumulativeLengthCm
         );
 
-        const bannerRow = `
-          <tr class="team-banner-row ${podiumClass}">
-            <td colspan="13">
-              <div class="team-banner-flex">
-                <div class="team-banner-left">
-                  <span class="team-banner-title">${prefix}${getOrdinal(teamRank)} • ${team.teamName}</span>
-                  <span style="font-size:0.72rem; color:var(--text-muted);">(${team.members.length} Anglers)</span>
-                </div>
-                <div class="team-banner-right">
-                  <span>🌙 D1: <strong>${team.d1Pts} pts</strong></span>
-                  <span>☀️ D2: <strong>${team.d2Pts} pts</strong></span>
-                  <span>Total: <strong>${team.totalFish} fish</strong> • <strong>${team.totalLengthCm}cm</strong></span>
-                  <span class="team-banner-pts">${team.totalPts} pts</span>
-                </div>
-              </div>
+        let memberCells = "";
+        for (let i = 0; i < maxMembers; i++) {
+          const m = sortedMembers[i];
+          const sepClass = i === 0 ? "first-angler-sep" : "";
+          if (m) {
+            memberCells += `
+              <td class="team-contrib-cell ${sepClass}">
+                <div class="contrib-angler-line">${m.anglerName}</div>
+                <div class="contrib-stats-line">${m.totals.cumulativePoints} pts • ${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
+              </td>
+            `;
+          } else {
+            memberCells += `<td class="team-contrib-cell ${sepClass}" style="color:var(--text-muted);">—</td>`;
+          }
+        }
+
+        return `
+          <tr class="team-strip-row ${podiumClass}">
+            <td class="${rankClass}">${prefix}${getOrdinal(teamRank)}</td>
+            <td class="team-main-cell">
+              <div class="team-name-line">${team.teamName}</div>
+              <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
             </td>
+            ${memberCells}
           </tr>
         `;
-
-        const memberRows = sortedMembers.map((m, mIdx) => {
-          const z1 = shortZone(m.d1.zone);
-          const z2 = shortZone(m.d2.zone);
-          const rowShade = mIdx % 2 === 0 ? "team-angler-even" : "team-angler-odd";
-          const ovBig = m.overallBiggestCm > 0 ? m.overallBiggestCm : "—";
-
-          return `
-            <tr class="${rowShade}">
-              <td class="team-angler-cell">
-                <span style="font-weight:800; color:var(--text-primary);">${m.anglerName}</span>
-                <span style="font-size:0.68rem; font-weight:600; color:var(--text-muted); margin-left:0.35rem;">(${getOrdinal(m.rank)} ind)</span>
-              </td>
-              <!-- Overall: Pts - Len - Fish - Big -->
-              <td class="sec-sep-left"><strong style="color:var(--accent-cyan);">${m.totals.cumulativePoints}</strong></td>
-              <td>${m.totals.cumulativeLengthCm}</td>
-              <td><strong>${m.totals.cumulativeFish}</strong></td>
-              <td>${ovBig}</td>
-              <!-- Day 1: Zone/Peg - Pts - Len - Fish -->
-              <td class="sec-sep-left"><span class="mini-zone-chip ${z1}">${z1} #${m.d1.peg}</span></td>
-              <td>${m.d1.zonePoints}</td>
-              <td>${m.d1.totalLengthCm}</td>
-              <td>${m.d1.fishCount}</td>
-              <!-- Day 2: Zone/Peg - Pts - Len - Fish -->
-              <td class="sec-sep-left"><span class="mini-zone-chip ${z2}">${z2} #${m.d2.peg}</span></td>
-              <td>${m.d2.zonePoints}</td>
-              <td>${m.d2.totalLengthCm}</td>
-              <td>${m.d2.fishCount}</td>
-            </tr>
-          `;
-        }).join("");
-
-        return bannerRow + memberRows;
       }).join("");
     }
 
