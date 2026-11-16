@@ -239,7 +239,7 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 1rem 1.1rem;
+      padding: 1rem 1.05rem;
       box-shadow: var(--shadow-card);
       margin-bottom: 0.85rem;
       width: 100%;
@@ -268,12 +268,12 @@
       color: var(--text-secondary);
     }
 
-    /* Unified Single-Card Top KPI Strip */
+    /* Balanced Multi-Column Unified Top KPI Card */
     .kpi-unified-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 0.65rem 0.5rem;
+      padding: 0.55rem 0.4rem;
       margin-bottom: 0.85rem;
       box-shadow: var(--shadow-card);
       position: relative;
@@ -294,11 +294,11 @@
     .kpi-unified-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      align-items: center;
+      align-items: stretch;
     }
 
     .kpi-cell {
-      padding: 0.25rem 0.85rem;
+      padding: 0.35rem 0.75rem;
       border-right: 1px solid rgba(255, 255, 255, 0.09);
       display: flex;
       flex-direction: column;
@@ -311,7 +311,7 @@
     }
 
     .kpi-label {
-      font-size: 0.64rem;
+      font-size: 0.63rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-secondary);
@@ -320,16 +320,16 @@
     }
 
     .kpi-value {
-      font-size: 1.22rem;
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--text-primary);
-      margin: 0.1rem 0;
+      margin: 0.08rem 0;
       letter-spacing: -0.02em;
       line-height: 1.15;
     }
 
     .kpi-sub {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       color: var(--text-muted);
       line-height: 1.2;
       white-space: nowrap;
@@ -337,7 +337,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Compact Horizontal 3-Ring Zone Comparison Strip (Larger Rings, White Text, No Legend) */
+    /* Compact Horizontal 3-Ring Zone Comparison Strip */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -418,7 +418,7 @@
       line-height: 1.25;
     }
 
-    /* Centered 4-Card Coloured Zone Grid (Clean Text-Focused Rows, +15% Tint) */
+    /* Centered 4-Card Coloured Zone Grid */
     .zones-telemetry-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -445,7 +445,6 @@
       transform: translateY(-2px);
     }
 
-    /* Boosted +15% Zone Color Tints */
     .zone-telemetry-card[data-zone="Red Zone"] {
       border-color: var(--zone-red-border);
       background: linear-gradient(165deg, rgba(239, 68, 68, 0.33) 0%, rgba(239, 68, 68, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
@@ -617,11 +616,11 @@
       background: rgba(9, 13, 22, 0.85);
       border: 1px solid var(--border-glass);
       color: var(--text-primary);
-      padding: 0.6rem 0.9rem;
+      padding: 0.55rem 0.85rem;
       border-radius: var(--radius-md);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       outline: none;
-      min-width: 220px;
+      min-width: 210px;
     }
 
     .glass-select:focus, .glass-input:focus {
@@ -712,11 +711,16 @@
       margin-top: 0.15rem;
     }
 
-    /* Tables */
+    /* Tables (Standard + Ultra-Tight Individual Leaderboard) */
     .table-wrap {
       overflow-x: auto;
       border-radius: var(--radius-md);
       border: 1px solid var(--border-glass);
+    }
+
+    .table-wrap.tight-scores-wrap {
+      max-width: 980px;
+      margin: 0 auto;
     }
 
     table {
@@ -746,7 +750,108 @@
     }
 
     tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: rgba(255, 255, 255, 0.04); }
+    tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
+
+    /* Ultra-Tight Individual Leaderboard Specific Styling */
+    table.tight-ind-table {
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    table.tight-ind-table th.group-th {
+      text-align: center;
+      padding: 0.42rem 0.35rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    table.tight-ind-table th.group-th.overall-grp {
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    table.tight-ind-table th.group-th.d1-grp {
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    table.tight-ind-table th.group-th.d2-grp {
+      color: #fcd34d;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    table.tight-ind-table th.sub-th {
+      padding: 0.38rem 0.34rem;
+      font-size: 0.66rem;
+      text-align: center;
+    }
+
+    table.tight-ind-table th.sub-th.left-align {
+      text-align: left;
+    }
+
+    table.tight-ind-table td {
+      padding: 0.42rem 0.34rem;
+      text-align: center;
+    }
+
+    table.tight-ind-table td.pos-cell {
+      width: 38px;
+      padding-left: 0.45rem;
+      padding-right: 0.25rem;
+      text-align: left;
+    }
+
+    table.tight-ind-table td.angler-cell {
+      text-align: left;
+      padding-left: 0.35rem;
+      padding-right: 0.55rem;
+      max-width: 175px;
+    }
+
+    .ind-angler-name {
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ind-team-sub {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.15;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Crisp Vertical Group Separators */
+    .sec-sep-left {
+      border-left: 2px solid rgba(148, 163, 184, 0.38) !important;
+    }
+
+    /* Tied Overall Points Block Grouping */
+    tr.pts-group-even {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    tr.pts-group-odd {
+      background: rgba(56, 189, 248, 0.045);
+    }
+
+    tr.pts-group-start td {
+      border-top: 2px solid rgba(56, 189, 248, 0.34);
+    }
+
+    tbody tr.pts-group-start:first-child td {
+      border-top: none;
+    }
 
     .zone-chip {
       display: inline-block;
@@ -801,13 +906,20 @@
     }
 
     @media (max-width: 900px) {
+      /* Balanced 2-3 column layout on smaller screens instead of a 5-row single column */
       .kpi-unified-grid {
-        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .kpi-cell {
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 0.42rem 0.65rem;
+      }
+      .kpi-cell:nth-child(3n) {
         border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        padding: 0.45rem 0.7rem;
+      }
+      .kpi-cell:nth-child(n+4) {
+        border-bottom: none;
       }
       .rings-three-col {
         grid-template-columns: 1fr;
@@ -815,6 +927,23 @@
     }
 
     @media (max-width: 640px) {
+      .kpi-unified-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .kpi-cell:nth-child(3n) {
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .kpi-cell:nth-child(2n) {
+        border-right: none;
+      }
+      .kpi-cell:nth-child(n+4) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .kpi-cell:last-child {
+        grid-column: span 2;
+        border-right: none;
+        border-bottom: none;
+      }
       .h2h-grid { grid-template-columns: 1fr; }
       .app-header { padding: 1.1rem; }
       .teams-grid { grid-template-columns: 1fr; }
@@ -892,13 +1021,11 @@
     </main>
 
     <!-- =========================================================
-         VIEW 1: MATCH OVERVIEW (UNIFIED KPI CARD + 3-RING STRIP + TEXT ZONE CARDS)
+         VIEW 1: MATCH OVERVIEW (BALANCED KPI CARD + 3-RING STRIP + TEXT ZONE CARDS)
          ========================================================= -->
     <section id="view-overview" class="view-section">
-      <!-- Single Unified KPI Card -->
       <div class="kpi-unified-card" id="overviewKpis"></div>
 
-      <!-- Compact Horizontal 3-Ring Zone Length Share Diagram Card (No Legend, White Text) -->
       <div class="rings-strip-card">
         <div class="rings-strip-header">
           <div class="rings-strip-title">Zone Length Share (% of Total Length)</div>
@@ -906,7 +1033,6 @@
         <div class="rings-three-col" id="zoneRingsRow"></div>
       </div>
 
-      <!-- 4 Clean Centered Tinted Zone Cards (Text-Focused Non-Duplicated Stats) -->
       <div class="glass-card">
         <div class="card-header">
           <div class="card-title">Overall Performance</div>
@@ -920,44 +1046,43 @@
     </section>
 
     <!-- =========================================================
-         VIEW 2: INDIVIDUAL LEADERBOARD
+         VIEW 2: INDIVIDUAL LEADERBOARD (TIGHT WIDTH, GROUPED BY TIED PTS)
          ========================================================= -->
     <section id="view-individual" class="view-section">
-      <div class="glass-card">
+      <div class="glass-card" style="max-width: 1020px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Individual Leaderboard</div>
-            <div class="card-subtitle">Ranked by lowest cumulative zone points across Day 1 & Day 2</div>
+            <div class="card-subtitle">All lengths & biggest fish in cm • Grouped by Overall Points</div>
           </div>
-          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:185px;" />
-            <select id="filterZone" class="glass-select" style="min-width:155px;">
-              <option value="ALL">All Zones</option>
-              <option value="Red Zone">Red Zone</option>
-              <option value="Yellow Zone">Yellow Zone</option>
-              <option value="Green Zone">Green Zone</option>
-              <option value="Blue Zone">Blue Zone</option>
-            </select>
+          <div>
+            <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
           </div>
         </div>
-        <div class="table-wrap">
-          <table>
+        <div class="table-wrap tight-scores-wrap">
+          <table class="tight-ind-table">
             <thead>
               <tr>
-                <th>Pos</th>
-                <th>Angler</th>
-                <th>Team</th>
-                <th>D1 Zone / Peg</th>
-                <th>D1 Fish</th>
-                <th>D1 Length</th>
-                <th>D1 Pts</th>
-                <th>D2 Zone / Peg</th>
-                <th>D2 Fish</th>
-                <th>D2 Length</th>
-                <th>D2 Pts</th>
-                <th>Total Fish</th>
-                <th>Total Length</th>
-                <th>Total Pts</th>
+                <th colspan="2" class="group-th"></th>
+                <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
+                <th colspan="4" class="group-th d1-grp sec-sep-left">🌙 Day 1</th>
+                <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
+              </tr>
+              <tr>
+                <th class="sub-th left-align">Pos</th>
+                <th class="sub-th left-align">Angler</th>
+                <th class="sub-th sec-sep-left">Pts</th>
+                <th class="sub-th">Len</th>
+                <th class="sub-th">Fish</th>
+                <th class="sub-th">Big</th>
+                <th class="sub-th sec-sep-left">Pts</th>
+                <th class="sub-th">Len</th>
+                <th class="sub-th">Fish</th>
+                <th class="sub-th">Big</th>
+                <th class="sub-th sec-sep-left">Pts</th>
+                <th class="sub-th">Len</th>
+                <th class="sub-th">Fish</th>
+                <th class="sub-th">Big</th>
               </tr>
             </thead>
             <tbody id="individualTableBody"></tbody>
@@ -1065,7 +1190,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.2",
+      version: "v3.4.3",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1095,7 +1220,6 @@
       return (zoneStr || "").replace(" Zone", "").trim();
     }
 
-    // Largest-remainder rounding so an array of numbers always sums cleanly to 100%
     function calculateExactPercentages(values) {
       const total = values.reduce((sum, v) => sum + v, 0);
       if (total <= 0) return values.map(() => 0);
@@ -1119,7 +1243,6 @@
       return result;
     }
 
-    // Build larger SVG Donut Ring (116x116) with crisp white percentage labels inside each arc
     function buildZoneDonutSvg(percentages, centerTopText, centerBotText) {
       const cx = 58;
       const cy = 58;
@@ -1150,7 +1273,6 @@
           />
         `;
 
-        // Mid-angle in radians (starting from top -90deg)
         const midPct = cumulativePct + pct / 2;
         const angleRad = ((midPct / 100) * 360 - 90) * (Math.PI / 180);
         const lx = cx + r * Math.cos(angleRad);
@@ -1208,14 +1330,19 @@
         const rank = a.totals?.overallRank || (idx + 1);
         const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
         const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const d1Obj = a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const d2Obj = a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const overallBiggestCm = Math.max(d1Obj.biggestFishCm || 0, d2Obj.biggestFishCm || 0);
+
         return {
           ...a,
           rank,
           fishRank,
           lengthRank,
           totalField: totalCount,
-          d1: a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 },
-          d2: a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 },
+          overallBiggestCm,
+          d1: d1Obj,
+          d2: d2Obj,
           totals: a.totals || { cumulativePoints: 0, cumulativeFish: 0, cumulativeLengthCm: 0, overallRank: rank }
         };
       });
@@ -1319,7 +1446,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 1: MATCH OVERVIEW (UNIFIED KPI CARD + 3-RING STRIP + TEXT CARDS)
+       RENDER VIEW 1: MATCH OVERVIEW
        --------------------------------------------------------- */
     function renderOverview() {
       const anglers = STATE.anglers;
@@ -1383,7 +1510,6 @@
         </div>
       `;
 
-      // Pre-compute zone summaries
       const zoneStats = MATCH_CONFIG.zones.map(zoneName => {
         const d1Rows = anglers.filter(a => a.d1.zone === zoneName);
         const d2Rows = anglers.filter(a => a.d2.zone === zoneName);
@@ -1442,7 +1568,6 @@
         </div>
       `;
 
-      // Render 4 clean, centered, text-focused coloured zone cards (non-duplicated stretch metrics)
       const cardsHtml = zoneStats.map(zs => {
         const { zoneName, d1Rows, d2Rows, d1Fish, d2Fish, zoneFish, zoneLen } = zs;
 
@@ -1454,7 +1579,6 @@
 
         const avgFishSizeCm = zoneFish > 0 ? (zoneLen / zoneFish).toFixed(1) : "0.0";
 
-        // Find biggest fish & species in this zone
         let zoneBiggestCm = 0;
         let zoneBiggestSpecies = "No specimen";
         d1Rows.forEach(a => {
@@ -1526,49 +1650,67 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 2: INDIVIDUAL LEADERBOARD
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD (GROUPED BY OVERALL PTS)
        --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
-      const zoneSelect = document.getElementById("filterZone");
 
       function update() {
         const q = searchInput.value.trim().toLowerCase();
-        const z = zoneSelect.value;
 
         const filtered = STATE.anglers.filter(a => {
-          const matchText = a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q);
-          const matchZone = z === "ALL" || a.d1.zone === z || a.d2.zone === z;
-          return matchText && matchZone;
+          return a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q);
         });
 
-        document.getElementById("individualTableBody").innerHTML = filtered.map(a => {
+        let lastPts = null;
+        let groupToggle = 0;
+
+        document.getElementById("individualTableBody").innerHTML = filtered.map((a, idx) => {
+          const pts = a.totals.cumulativePoints;
+          const isNewGroup = idx === 0 || pts !== lastPts;
+          if (isNewGroup && idx > 0) {
+            groupToggle = 1 - groupToggle;
+          }
+          lastPts = pts;
+
+          const rowClasses = [
+            groupToggle === 0 ? "pts-group-even" : "pts-group-odd",
+            isNewGroup ? "pts-group-start" : ""
+          ].filter(Boolean).join(" ");
+
           const rankClass = a.rank <= 3 ? `rank-medal rank-${a.rank}` : "";
-          const z1Short = shortZone(a.d1.zone);
-          const z2Short = shortZone(a.d2.zone);
+          const ovBig = a.overallBiggestCm > 0 ? a.overallBiggestCm : "—";
+          const d1Big = (a.d1.biggestFishCm || 0) > 0 ? a.d1.biggestFishCm : "—";
+          const d2Big = (a.d2.biggestFishCm || 0) > 0 ? a.d2.biggestFishCm : "—";
+
           return `
-            <tr>
-              <td class="${rankClass}">${getOrdinal(a.rank)}</td>
-              <td><strong>${a.anglerName}</strong></td>
-              <td style="color:var(--text-secondary);">${a.teamName}</td>
-              <td><span class="zone-chip ${z1Short}">${z1Short} #${a.d1.peg}</span></td>
-              <td>${a.d1.fishCount}</td>
-              <td>${a.d1.totalLengthCm}cm</td>
-              <td>${a.d1.zonePoints}</td>
-              <td><span class="zone-chip ${z2Short}">${z2Short} #${a.d2.peg}</span></td>
-              <td>${a.d2.fishCount}</td>
-              <td>${a.d2.totalLengthCm}cm</td>
-              <td>${a.d2.zonePoints}</td>
+            <tr class="${rowClasses}">
+              <td class="pos-cell ${rankClass}">${getOrdinal(a.rank)}</td>
+              <td class="angler-cell">
+                <div class="ind-angler-name">${a.anglerName}</div>
+                <div class="ind-team-sub">${a.teamName}</div>
+              </td>
+              <!-- Overall: Pts - Len - Fish - Big -->
+              <td class="sec-sep-left"><strong style="color:var(--accent-cyan);">${pts}</strong></td>
+              <td>${a.totals.cumulativeLengthCm}</td>
               <td><strong>${a.totals.cumulativeFish}</strong></td>
-              <td>${a.totals.cumulativeLengthCm}cm</td>
-              <td><strong style="color:var(--accent-cyan);">${a.totals.cumulativePoints}</strong></td>
+              <td>${ovBig}</td>
+              <!-- Day 1: Pts - Len - Fish - Big -->
+              <td class="sec-sep-left">${a.d1.zonePoints}</td>
+              <td>${a.d1.totalLengthCm}</td>
+              <td>${a.d1.fishCount}</td>
+              <td>${d1Big}</td>
+              <!-- Day 2: Pts - Len - Fish - Big -->
+              <td class="sec-sep-left">${a.d2.zonePoints}</td>
+              <td>${a.d2.totalLengthCm}</td>
+              <td>${a.d2.fishCount}</td>
+              <td>${d2Big}</td>
             </tr>
           `;
         }).join("");
       }
 
       searchInput.oninput = update;
-      zoneSelect.onchange = update;
       update();
     }
 
