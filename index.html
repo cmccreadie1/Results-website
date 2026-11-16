@@ -1190,7 +1190,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.6",
+      version: "v3.4.7",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1341,11 +1341,32 @@
       STATE.raw = data;
       const list = Array.isArray(data.anglers) ? data.anglers : [];
 
-      const sorted = [...list].sort((a, b) => {
+      // Sort individuals using exact rule:
+      // 1. Lowest Points -> 2. Highest Length -> 3. Highest Fish -> 4. Biggest Single Fish
+      const enriched = list.map(a => {
+        const d1Obj = a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const d2Obj = a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const overallBiggestCm = Math.max(d1Obj.biggestFishCm || 0, d2Obj.biggestFishCm || 0);
+        const totals = a.totals || { cumulativePoints: 0, cumulativeFish: 0, cumulativeLengthCm: 0 };
+        return {
+          ...a,
+          d1: d1Obj,
+          d2: d2Obj,
+          overallBiggestCm,
+          totals
+        };
+      });
+
+      const sorted = [...enriched].sort((a, b) => {
         const rA = a.totals?.overallRank ?? 999;
         const rB = b.totals?.overallRank ?? 999;
         if (rA !== rB) return rA - rB;
-        return (a.totals?.cumulativePoints ?? 999) - (b.totals?.cumulativePoints ?? 999);
+        return (
+          (a.totals.cumulativePoints ?? 999) - (b.totals.cumulativePoints ?? 999) ||
+          (b.totals.cumulativeLengthCm ?? 0) - (a.totals.cumulativeLengthCm ?? 0) ||
+          (b.totals.cumulativeFish ?? 0) - (a.totals.cumulativeFish ?? 0) ||
+          (b.overallBiggestCm ?? 0) - (a.overallBiggestCm ?? 0)
+        );
       });
 
       const totalCount = sorted.length;
@@ -1356,9 +1377,6 @@
         const rank = a.totals?.overallRank || (idx + 1);
         const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
         const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
-        const d1Obj = a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
-        const d2Obj = a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
-        const overallBiggestCm = Math.max(d1Obj.biggestFishCm || 0, d2Obj.biggestFishCm || 0);
 
         return {
           ...a,
@@ -1366,10 +1384,10 @@
           fishRank,
           lengthRank,
           totalField: totalCount,
-          overallBiggestCm,
-          d1: d1Obj,
-          d2: d2Obj,
-          totals: a.totals || { cumulativePoints: 0, cumulativeFish: 0, cumulativeLengthCm: 0, overallRank: rank }
+          totals: {
+            ...a.totals,
+            overallRank: rank
+          }
         };
       });
 
@@ -1384,7 +1402,8 @@
             d2Pts: 0,
             totalPts: 0,
             totalFish: 0,
-            totalLengthCm: 0
+            totalLengthCm: 0,
+            biggestFishCm: 0
           };
         }
         teamMap[tName].members.push(a);
@@ -1393,10 +1412,19 @@
         teamMap[tName].totalPts += a.totals.cumulativePoints || 0;
         teamMap[tName].totalFish += a.totals.cumulativeFish || 0;
         teamMap[tName].totalLengthCm += a.totals.cumulativeLengthCm || 0;
+        if (a.overallBiggestCm > teamMap[tName].biggestFishCm) {
+          teamMap[tName].biggestFishCm = a.overallBiggestCm;
+        }
       });
 
+      // Team ranking rule:
+      // 1. Lowest Points -> 2. Highest Total Length -> 3. Highest Total Fish -> 4. Biggest Single Fish
       STATE.teams = Object.values(teamMap).sort(
-        (a, b) => a.totalPts - b.totalPts || b.totalFish - a.totalFish || b.totalLengthCm - a.totalLengthCm
+        (a, b) =>
+          a.totalPts - b.totalPts ||
+          b.totalLengthCm - a.totalLengthCm ||
+          b.totalFish - a.totalFish ||
+          b.biggestFishCm - a.biggestFishCm
       );
 
       const d1Specimens = [];
@@ -1768,12 +1796,14 @@
         const rankClass = teamRank <= 3 ? `rank-medal rank-${teamRank}` : "";
         const prefix = rankIcons[teamRank] || "";
 
-        // Sort anglers best-performing first (lowest points -> highest fish -> highest length)
+        // Sort anglers best-performing first:
+        // 1. Lowest Points -> 2. Highest Length -> 3. Highest Fish -> 4. Biggest Single Fish
         const sortedMembers = [...team.members].sort(
           (a, b) =>
             a.totals.cumulativePoints - b.totals.cumulativePoints ||
+            b.totals.cumulativeLengthCm - a.totals.cumulativeLengthCm ||
             b.totals.cumulativeFish - a.totals.cumulativeFish ||
-            b.totals.cumulativeLengthCm - a.totals.cumulativeLengthCm
+            b.overallBiggestCm - a.overallBiggestCm
         );
 
         let memberCells = "";
