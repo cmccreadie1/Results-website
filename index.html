@@ -610,6 +610,17 @@
       border-bottom-right-radius: var(--radius-md);
     }
 
+    /* Podium Left Accent on Zone Winner / Team Rows */
+    table.card-row-table tbody tr.podium-1 td:first-child {
+      border-left: 3.5px solid #fbbf24;
+    }
+    table.card-row-table tbody tr.podium-2 td:first-child {
+      border-left: 3.5px solid #cbd5e1;
+    }
+    table.card-row-table tbody tr.podium-3 td:first-child {
+      border-left: 3.5px solid #d97706;
+    }
+
     /* Individual Leaderboard Compact Overrides within Card-Row Table */
     table.tight-ind-table {
       font-size: 0.78rem;
@@ -711,16 +722,6 @@
       text-align: center;
     }
 
-    table.one-line-team-table tbody tr.team-strip-row.podium-1 td:first-child {
-      border-left: 3.5px solid #fbbf24;
-    }
-    table.one-line-team-table tbody tr.team-strip-row.podium-2 td:first-child {
-      border-left: 3.5px solid #cbd5e1;
-    }
-    table.one-line-team-table tbody tr.team-strip-row.podium-3 td:first-child {
-      border-left: 3.5px solid #d97706;
-    }
-
     .team-main-cell {
       min-width: 175px;
       text-align: left;
@@ -764,6 +765,45 @@
       color: var(--text-secondary);
       line-height: 1.2;
       margin-top: 2px;
+    }
+
+    /* Zone Winners Grid */
+    .zone-winners-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.95rem;
+    }
+
+    .zone-winner-panel {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .zone-winner-panel[data-zone="Red Zone"] { border-color: var(--zone-red-border); }
+    .zone-winner-panel[data-zone="Yellow Zone"] { border-color: var(--zone-yellow-border); }
+    .zone-winner-panel[data-zone="Green Zone"] { border-color: var(--zone-green-border); }
+    .zone-winner-panel[data-zone="Blue Zone"] { border-color: var(--zone-blue-border); }
+
+    .zw-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .zw-winner-callout {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
     }
 
     /* My Match Report Card with "Nth out of 28th" Ring Gauges */
@@ -924,6 +964,9 @@
       .zones-telemetry-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .zone-winners-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 900px) {
@@ -1001,6 +1044,16 @@
 
         <button class="hub-btn-card" data-nav="teams">
           <span class="hub-btn-title">Team Leaderboard</span>
+          <span class="hub-arrow">→</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="day1zones">
+          <span class="hub-btn-title">Day 1 Zone Winners</span>
+          <span class="hub-arrow">→</span>
+        </button>
+
+        <button class="hub-btn-card" data-nav="day2zones">
+          <span class="hub-btn-title">Day 2 Zone Winners</span>
           <span class="hub-arrow">→</span>
         </button>
 
@@ -1107,6 +1160,36 @@
     </section>
 
     <!-- =========================================================
+         VIEW 3B: DAY 1 ZONE WINNERS
+         ========================================================= -->
+    <section id="view-day1zones" class="view-section">
+      <div class="glass-card" style="margin-bottom: 0.9rem;">
+        <div class="card-header" style="margin-bottom:0;">
+          <div>
+            <div class="card-title">🌙 Day 1 Zone Winners</div>
+            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+          </div>
+        </div>
+      </div>
+      <div class="zone-winners-grid" id="day1ZonesGrid"></div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 3C: DAY 2 ZONE WINNERS
+         ========================================================= -->
+    <section id="view-day2zones" class="view-section">
+      <div class="glass-card" style="margin-bottom: 0.9rem;">
+        <div class="card-header" style="margin-bottom:0;">
+          <div>
+            <div class="card-title">☀️ Day 2 Zone Winners</div>
+            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+          </div>
+        </div>
+      </div>
+      <div class="zone-winners-grid" id="day2ZonesGrid"></div>
+    </section>
+
+    <!-- =========================================================
          VIEW 4: BIGGEST FISH
          ========================================================= -->
     <section id="view-biggest" class="view-section">
@@ -1190,7 +1273,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.4.7",
+      version: "v3.4.8",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1465,6 +1548,8 @@
       renderOverview();
       renderIndividualTable();
       renderTeamsContributions();
+      renderDayZoneWinners("d1", "day1ZonesGrid");
+      renderDayZoneWinners("d2", "day2ZonesGrid");
       renderBiggestFish();
       renderMyReport();
       renderSecretPairs();
@@ -1831,6 +1916,85 @@
             </td>
             ${memberCells}
           </tr>
+        `;
+      }).join("");
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (NO PEG)
+       --------------------------------------------------------- */
+    function renderDayZoneWinners(dayKey, gridElementId) {
+      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
+      const gridEl = document.getElementById(gridElementId);
+      if (!gridEl) return;
+
+      gridEl.innerHTML = MATCH_CONFIG.zones.map(zoneName => {
+        const zShort = shortZone(zoneName);
+        const zoneAnglers = STATE.anglers
+          .filter(a => a[dayKey]?.zone === zoneName)
+          .sort((a, b) => {
+            const sA = a[dayKey];
+            const sB = b[dayKey];
+            return (
+              (sA.zonePoints ?? 999) - (sB.zonePoints ?? 999) ||
+              (sB.totalLengthCm ?? 0) - (sA.totalLengthCm ?? 0) ||
+              (sB.fishCount ?? 0) - (sA.fishCount ?? 0) ||
+              (sB.biggestFishCm ?? 0) - (sA.biggestFishCm ?? 0)
+            );
+          });
+
+        const winner = zoneAnglers[0];
+        const winnerBadge = winner
+          ? `<span class="zw-winner-callout">🥇 ${winner.anglerName} (${winner[dayKey].zonePoints} pts • ${winner[dayKey].totalLengthCm}cm)</span>`
+          : `<span class="zw-winner-callout">No anglers recorded</span>`;
+
+        const rowsHtml = zoneAnglers.map((a, idx) => {
+          const pos = idx + 1;
+          const podiumClass = pos <= 3 ? `podium-${pos}` : "";
+          const rankClass = pos <= 3 ? `rank-medal rank-${pos}` : "";
+          const prefix = rankIcons[pos] || "";
+          const sess = a[dayKey];
+          const bigDisplay = (sess.biggestFishCm || 0) > 0
+            ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.68rem;">(${sess.biggestFishSpecies})</span>` : ""}`
+            : "—";
+
+          return `
+            <tr class="${podiumClass}">
+              <td class="${rankClass}" style="text-align:center; width:54px;">${prefix}${getOrdinal(pos)}</td>
+              <td>
+                <div class="ind-angler-name">${a.anglerName}</div>
+                <div class="ind-team-sub">${a.teamName}</div>
+              </td>
+              <td style="text-align:center;"><strong style="color:var(--accent-cyan);">${sess.zonePoints}</strong></td>
+              <td style="text-align:center;">${sess.totalLengthCm}</td>
+              <td style="text-align:center;"><strong>${sess.fishCount}</strong></td>
+              <td style="text-align:center;">${bigDisplay}</td>
+            </tr>
+          `;
+        }).join("");
+
+        return `
+          <div class="zone-winner-panel" data-zone="${zoneName}">
+            <div class="zw-panel-header">
+              <span class="zone-chip ${zShort}" style="font-size:0.8rem; padding:0.24rem 0.65rem;">${zoneName}</span>
+              ${winnerBadge}
+            </div>
+            <div class="table-wrap">
+              <table class="card-row-table">
+                <thead>
+                  <tr>
+                    <th style="text-align:center;">Pos</th>
+                    <th>Angler</th>
+                    <th style="text-align:center;">Pts</th>
+                    <th style="text-align:center;">Len</th>
+                    <th style="text-align:center;">Fish</th>
+                    <th style="text-align:center;">Big</th>
+                  </tr>
+                </thead>
+                <tbody>${rowsHtml}</tbody>
+              </table>
+            </div>
+          </div>
         `;
       }).join("");
     }
