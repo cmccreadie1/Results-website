@@ -78,14 +78,14 @@
       padding: 0.85rem 0.65rem;
     }
 
-    /* Clean Fintech Front-Page Header */
+    /* Streamlined Fintech Front-Page Header */
     .app-header {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-top: 4px solid var(--brand-navy);
       border-radius: var(--radius-lg);
-      padding: 1.5rem 1.6rem;
-      margin-bottom: 1.15rem;
+      padding: 1.05rem 1.4rem;
+      margin-bottom: 1rem;
       box-shadow: var(--shadow-card);
       text-align: center;
     }
@@ -94,25 +94,12 @@
       display: none;
     }
 
-    .brand-eyebrow {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--brand-cobalt);
-      background: var(--brand-tint);
-      border: 1px solid var(--brand-tint-border);
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      margin-bottom: 0.5rem;
-    }
-
     .brand-block h1 {
-      font-size: 1.48rem;
+      font-size: 1.42rem;
       font-weight: 800;
       letter-spacing: -0.025em;
       color: var(--brand-navy);
+      line-height: 1.25;
     }
 
     .brand-meta {
@@ -120,8 +107,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      margin-top: 0.38rem;
+      margin-top: 0.22rem;
       font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-secondary);
@@ -186,20 +172,37 @@
       box-shadow: 0 12px 26px rgba(0, 68, 129, 0.42);
     }
 
-    /* Modern Banking "Spaces" Front Landing Cards */
+    /* Two-Group Bordered Navigation Panels */
+    .hub-group-panel {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.05rem;
+      margin-bottom: 0.95rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .hub-group-panel.insights-group {
+      border-color: var(--brand-tint-border);
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    }
+
     .hub-section-label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--text-secondary);
-      margin: 0 0 0.65rem 0.2rem;
+      color: var(--brand-navy);
+      margin: 0 0 0.7rem 0.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .hub-buttons-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 0.8rem;
+      gap: 0.75rem;
     }
 
     .hub-btn-card {
@@ -207,7 +210,7 @@
       border: 1px solid var(--border-glass);
       border-left: 4px solid var(--brand-navy);
       border-radius: var(--radius-md);
-      padding: 1.15rem 1.25rem;
+      padding: 1.05rem 1.15rem;
       text-align: left;
       color: var(--text-primary);
       cursor: pointer;
@@ -215,8 +218,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      box-shadow: var(--shadow-card);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
       transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hub-btn-card.insight-card {
+      border-left-color: var(--brand-cobalt);
     }
 
     .hub-btn-card:hover {
@@ -238,7 +245,7 @@
     }
 
     .hub-btn-title {
-      font-size: 1.02rem;
+      font-size: 1.01rem;
       font-weight: 700;
       color: var(--brand-navy);
       letter-spacing: -0.01em;
@@ -355,7 +362,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Mobile-First Paired Vertical Bar Chart Strip */
+    /* Clean Solid-Bar Vertical Chart Strip (No Background Column Shadows) */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -475,7 +482,7 @@
       width: 100%;
       max-width: 26px;
       height: 100%;
-      border-radius: 5px 5px 0 0;
+      background: transparent;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -735,7 +742,7 @@
       text-align: left;
     }
 
-    /* Sticky Floating Table Headers */
+    /* Single-tier Sticky Floating Table Headers (Biggest Fish, etc.) */
     table.sticky-header-table thead th {
       position: sticky;
       top: 0;
@@ -743,8 +750,8 @@
       box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
     }
 
-    /* Two-tier header row offset for Individual Leaderboard */
-    table.tight-ind-table thead tr:nth-child(1) th {
+    /* Two-tier Sticky Header Row Offset for Individual & Team Leaderboards */
+    table.two-tier-sticky-table thead tr:nth-child(1) th {
       position: sticky;
       top: 0;
       z-index: 30;
@@ -752,7 +759,7 @@
       box-shadow: none;
     }
 
-    table.tight-ind-table thead tr:nth-child(2) th {
+    table.two-tier-sticky-table thead tr:nth-child(2) th {
       position: sticky;
       top: 30px;
       z-index: 29;
@@ -830,66 +837,65 @@
     }
 
     /* =========================================================================
-       INDIVIDUAL LEADERBOARD: TWO-CARD SPLIT (OVERALL CARD vs SESSION CARD)
-       + HORIZONTAL GAP BETWEEN POINTS BRACKETS
+       SHARED TWO-CARD SPLIT STYLING (INDIVIDUAL & TEAM LEADERBOARDS)
        ========================================================================= */
     table.tight-ind-table {
       font-size: 0.78rem;
       border-spacing: 0 5px;
     }
 
-    table.tight-ind-table th.group-th {
+    table.two-tier-sticky-table th.group-th {
       text-align: center;
-      padding: 0.38rem 0.35rem;
+      padding: 0.38rem 0.45rem;
       font-size: 0.68rem;
       letter-spacing: 0.06em;
     }
 
-    table.tight-ind-table th.group-th.overall-grp {
+    table.two-tier-sticky-table th.group-th.overall-grp {
       color: #ffffff;
       background: var(--brand-navy);
       border-right: 1px solid var(--brand-navy);
       border-top-right-radius: var(--radius-sm);
     }
 
-    table.tight-ind-table th.group-th.d1-grp {
+    table.two-tier-sticky-table th.group-th.d1-grp {
       color: #e0e7ff;
       background: #1e3a8a;
       border-left: 1px solid #1e3a8a;
       border-top-left-radius: var(--radius-sm);
     }
 
-    table.tight-ind-table th.group-th.d2-grp {
+    table.two-tier-sticky-table th.group-th.d2-grp {
       color: #fef3c7;
       background: #1e40af;
     }
 
-    table.tight-ind-table th.sub-th {
-      padding: 0.38rem 0.36rem;
+    table.two-tier-sticky-table th.sub-th {
+      padding: 0.38rem 0.45rem;
       font-size: 0.66rem;
       text-align: center;
       background: #003566;
     }
 
-    table.tight-ind-table th.sub-th.left-align {
+    table.two-tier-sticky-table th.sub-th.left-align {
       text-align: left;
     }
 
     /* Right edge of Left Overall Card Header */
-    table.tight-ind-table th.overall-card-end {
+    table.two-tier-sticky-table th.overall-card-end {
       border-right: 1px solid #003566 !important;
       border-bottom-right-radius: var(--radius-sm);
     }
 
-    /* Left edge of Right Session Card Header */
-    table.tight-ind-table th.session-card-start {
+    /* Left edge of Right Session / Angler Card Header */
+    table.two-tier-sticky-table th.session-card-start {
       border-left: 1px solid #003566 !important;
       border-bottom-left-radius: var(--radius-sm);
     }
 
-    /* Transparent Vertical Gap Column Between Overall Card & Day 1/Day 2 Card */
-    table.tight-ind-table th.col-gap-spacer,
-    table.tight-ind-table td.col-gap-spacer {
+    /* Transparent Vertical Gap Column Between Left Overall Card & Right Card */
+    table.two-tier-sticky-table th.col-gap-spacer,
+    table.two-tier-sticky-table td.col-gap-spacer {
       background: var(--bg-surface) !important;
       border: none !important;
       box-shadow: none !important;
@@ -905,37 +911,36 @@
       text-align: center;
     }
 
-    /* Left Card (Pos + Angler + Overall Stats) Rounded Right Cap */
-    table.tight-ind-table tbody tr.ind-data-row td.overall-card-end {
+    /* Left Card Rounded Right Cap & Subtle Banking Blue Tint */
+    table.two-tier-sticky-table tbody tr td.overall-card-end {
       border-right: 1px solid var(--brand-tint-border) !important;
       border-top-right-radius: var(--radius-md);
       border-bottom-right-radius: var(--radius-md);
     }
 
-    /* Emphasize Overall Card Border & Subtle Banking Blue Tint */
-    table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell {
+    table.two-tier-sticky-table tbody tr td.overall-card-cell {
       background: #f8fbff;
       border-top-color: var(--brand-tint-border);
       border-bottom-color: var(--brand-tint-border);
     }
 
-    table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell:first-child {
+    table.two-tier-sticky-table tbody tr td.overall-card-cell:first-child {
       border-left-color: var(--brand-tint-border);
     }
 
-    /* Right Card (Day 1 + Day 2 Session Stats) Rounded Left Cap */
-    table.tight-ind-table tbody tr.ind-data-row td.session-card-start {
+    /* Right Card Rounded Left Cap */
+    table.two-tier-sticky-table tbody tr td.session-card-start {
       border-left: 1px solid var(--border-glass) !important;
       border-top-left-radius: var(--radius-md);
       border-bottom-left-radius: var(--radius-md);
     }
 
-    table.tight-ind-table tbody tr.ind-data-row td.session-card-cell {
+    table.two-tier-sticky-table tbody tr td.session-card-cell {
       background: #ffffff;
     }
 
-    table.tight-ind-table tbody tr.ind-data-row:hover td.overall-card-cell,
-    table.tight-ind-table tbody tr.ind-data-row:hover td.session-card-cell {
+    table.two-tier-sticky-table tbody tr:hover td.overall-card-cell,
+    table.two-tier-sticky-table tbody tr:hover td.session-card-cell {
       background: var(--brand-tint);
     }
 
@@ -987,7 +992,7 @@
       border-left: 1.5px solid #cbd5e1 !important;
     }
 
-    /* Team Leaderboard Specific Cells within Card-Row Table */
+    /* Team Leaderboard Specific Cells within Two-Card Split Table */
     table.one-line-team-table {
       border-spacing: 0 7px;
     }
@@ -998,7 +1003,7 @@
     }
 
     .team-main-cell {
-      min-width: 175px;
+      min-width: 185px;
       text-align: left;
     }
 
@@ -1020,11 +1025,7 @@
     .team-contrib-cell {
       border-left: 1px solid var(--border-glass);
       text-align: left;
-      min-width: 152px;
-    }
-
-    .team-contrib-cell.first-angler-sep {
-      border-left: 2px solid var(--brand-tint-border);
+      min-width: 156px;
     }
 
     .contrib-angler-line {
@@ -1289,7 +1290,7 @@
         grid-template-columns: 1fr;
       }
       .h2h-grid { grid-template-columns: 1fr; }
-      .app-header { padding: 1.15rem; }
+      .app-header { padding: 0.95rem 1rem; }
       .sticky-scroll-wrap {
         max-height: calc(100vh - 185px);
       }
@@ -1298,88 +1299,94 @@
 </head>
 <body>
   <div class="container">
-    <!-- Clean Fintech Header (Shown ONLY on the Front Splash Page) -->
+    <!-- Streamlined Fintech Header (Shown ONLY on the Front Splash Page) -->
     <header class="app-header" id="mainSplashHeader">
       <div class="brand-block">
-        <span class="brand-eyebrow">Official Championship Results</span>
         <h1 id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
         <div class="brand-meta">
-          <span id="matchVenue">📍 Arbroath & Elliot Beach</span>
-          <span>•</span>
-          <span id="matchDates">2027 Open Shore</span>
+          <span id="matchVenue">Arbroath & Elliot Beach</span>
         </div>
       </div>
     </header>
 
     <!-- =========================================================
-         VIEW 0: FRONT SPLASH SCREEN (MODERN BANKING "SPACES" CARDS)
+         VIEW 0: FRONT SPLASH SCREEN (TWO BORDERED NAVIGATION PANELS)
          ========================================================= -->
     <main id="view-home" class="view-section active">
-      <div class="hub-section-label">Match Centre</div>
-      <div class="hub-buttons-grid">
-        <button class="hub-btn-card" data-nav="overview">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Match Overview</span>
-            <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+      <!-- PANEL 1: GENERAL MATCH STATS & PERSONAL REPORT -->
+      <div class="hub-group-panel insights-group">
+        <div class="hub-section-label">Match Insights & Reports</div>
+        <div class="hub-buttons-grid">
+          <button class="hub-btn-card insight-card" data-nav="overview">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Match Overview</span>
+              <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="individual">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Individual Leaderboard</span>
-            <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card insight-card" data-nav="myreport">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">My Match Report</span>
+              <span class="hub-btn-sub">Personal rank gauges & head-to-head rival comparison</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+        </div>
+      </div>
 
-        <button class="hub-btn-card" data-nav="teams">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Team Leaderboard</span>
-            <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+      <!-- PANEL 2: ACTUAL CHAMPIONSHIP STANDINGS & RESULTS -->
+      <div class="hub-group-panel">
+        <div class="hub-section-label">Championship Standings & Results</div>
+        <div class="hub-buttons-grid">
+          <button class="hub-btn-card" data-nav="individual">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Individual Leaderboard</span>
+              <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="day1zones">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Day 1 Zone Winners</span>
-            <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card" data-nav="teams">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Team Leaderboard</span>
+              <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="day2zones">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Day 2 Zone Winners</span>
-            <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card" data-nav="day1zones">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Day 1 Zone Winners</span>
+              <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="biggest">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Biggest Fish</span>
-            <span class="hub-btn-sub">Longest individual specimens & top 5 recorded species</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card" data-nav="day2zones">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Day 2 Zone Winners</span>
+              <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="secret">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">Mystery Pairs</span>
-            <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card" data-nav="biggest">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Biggest Fish</span>
+              <span class="hub-btn-sub">Longest individual specimens & top 5 recorded species</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
 
-        <button class="hub-btn-card" data-nav="myreport">
-          <div class="hub-btn-text-wrap">
-            <span class="hub-btn-title">My Match Report</span>
-            <span class="hub-btn-sub">Personal rank gauges & head-to-head rival comparison</span>
-          </div>
-          <span class="hub-arrow">›</span>
-        </button>
+          <button class="hub-btn-card" data-nav="secret">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Mystery Pairs</span>
+              <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+        </div>
       </div>
     </main>
 
@@ -1425,7 +1432,7 @@
           </div>
         </div>
         <div class="table-wrap sticky-scroll-wrap tight-scores-wrap">
-          <table class="card-row-table tight-ind-table">
+          <table class="card-row-table tight-ind-table two-tier-sticky-table">
             <thead>
               <tr>
                 <th colspan="2" class="group-th"></th>
@@ -1459,12 +1466,18 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (STICKY HEADERS)
+         VIEW 3: TEAM LEADERBOARD (STICKY TWO-TIER HEADERS + TWO-CARD SPLIT)
          ========================================================= -->
     <section id="view-teams" class="view-section">
-      <div class="glass-card" style="max-width: 1220px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1240px; margin-left: auto; margin-right: auto;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Team Leaderboard</div>
+            <div class="card-subtitle">Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
+          </div>
+        </div>
         <div class="table-wrap sticky-scroll-wrap">
-          <table class="card-row-table one-line-team-table sticky-header-table">
+          <table class="card-row-table one-line-team-table two-tier-sticky-table">
             <thead id="teamsTableHead"></thead>
             <tbody id="teamsTableBody"></tbody>
           </table>
@@ -1586,10 +1599,9 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.6.0",
+      version: "v3.7.0",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
-      dates: "2027 Open Shore",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
       zoneColors: {
         "Red Zone": "#ef4444",
@@ -1616,15 +1628,9 @@
       return (zoneStr || "").replace(" Zone", "").trim();
     }
 
-    // Build 4-zone colour-coded vertical bar chart for a metric slot (Length or Fish Count)
+    // Build 4-zone solid colour vertical bar chart (no background shadow tracks)
     function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
-      const trackTints = [
-        "rgba(239, 68, 68, 0.10)",
-        "rgba(234, 179, 8, 0.12)",
-        "rgba(34, 197, 94, 0.10)",
-        "rgba(59, 130, 246, 0.10)"
-      ];
       const axisLetters = ["R", "Y", "G", "B"];
       const axisTextColors = ["#dc2626", "#b45309", "#15803d", "#1d4ed8"];
       const maxVal = Math.max(...rawValues, 1);
@@ -1633,7 +1639,7 @@
         const pctHeight = val > 0 ? Math.max(8, Math.round((val / maxVal) * 100)) : 2;
         return `
           <div class="vbar-col">
-            <div class="vbar-track" style="background:${trackTints[idx]};">
+            <div class="vbar-track">
               <div class="vbar-fill" style="height:${pctHeight}%; background:${colors[idx]};">
                 <span class="vbar-val-tag">${formattedLabels[idx]}</span>
               </div>
@@ -1983,7 +1989,7 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
-      // Mobile-First Paired Vertical Bar Charts
+      // Mobile-First Paired Vertical Bar Charts (Solid Coloured Columns Only)
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card">
           <div class="session-donut-card-title">Competition Total</div>
@@ -2313,7 +2319,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (STICKY HEADERS)
+       RENDER VIEW 3: TEAM LEADERBOARD (TWO-CARD SPLIT + STICKY TWO-TIER HEADERS)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -2321,14 +2327,20 @@
 
       let anglerHeaders = "";
       for (let i = 1; i <= maxMembers; i++) {
-        const sepClass = i === 1 ? "first-angler-sep" : "";
-        anglerHeaders += `<th class="${sepClass}" style="text-align:left;">Angler ${i}</th>`;
+        const startClass = i === 1 ? "session-card-start" : "";
+        anglerHeaders += `<th class="sub-th left-align ${startClass}">Angler ${i}</th>`;
       }
 
       document.getElementById("teamsTableHead").innerHTML = `
         <tr>
-          <th style="text-align:center;">Pos</th>
-          <th style="text-align:left;">Team</th>
+          <th colspan="2" class="group-th overall-grp">Team Overall</th>
+          <th class="col-gap-spacer" aria-hidden="true"></th>
+          <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
+        </tr>
+        <tr>
+          <th class="sub-th" style="text-align:center;">Pos</th>
+          <th class="sub-th left-align overall-card-end">Team & Totals</th>
+          <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
       `;
@@ -2352,26 +2364,27 @@
         let memberCells = "";
         for (let i = 0; i < maxMembers; i++) {
           const m = sortedMembers[i];
-          const sepClass = i === 0 ? "first-angler-sep" : "";
+          const startClass = i === 0 ? "session-card-start" : "";
           if (m) {
             memberCells += `
-              <td class="team-contrib-cell ${sepClass}">
+              <td class="team-contrib-cell session-card-cell ${startClass}">
                 <div class="contrib-angler-line">${m.anglerName}</div>
                 <div class="contrib-stats-line">${m.totals.cumulativePoints} pts • ${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
               </td>
             `;
           } else {
-            memberCells += `<td class="team-contrib-cell ${sepClass}" style="color:var(--text-muted);">—</td>`;
+            memberCells += `<td class="team-contrib-cell session-card-cell ${startClass}" style="color:var(--text-muted);">—</td>`;
           }
         }
 
         return `
           <tr class="team-strip-row ${podiumClass}">
-            <td class="${rankClass}">${prefix}${getOrdinal(teamRank)}</td>
-            <td class="team-main-cell">
+            <td class="overall-card-cell ${rankClass}">${prefix}${getOrdinal(teamRank)}</td>
+            <td class="team-main-cell overall-card-cell overall-card-end">
               <div class="team-name-line">${team.teamName}</div>
               <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
             </td>
+            <td class="col-gap-spacer" aria-hidden="true"></td>
             ${memberCells}
           </tr>
         `;
