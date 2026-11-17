@@ -264,7 +264,7 @@
       color: var(--text-secondary);
     }
 
-    /* Balanced 6-Column Unified Top KPI Card (No Empty Slot) */
+    /* Balanced 6-Column Unified Top KPI Card */
     .kpi-unified-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -340,7 +340,7 @@
       border-radius: var(--radius-lg);
       padding: 0.9rem 0.95rem;
       box-shadow: var(--shadow-card);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.95rem;
       width: 100%;
     }
 
@@ -358,28 +358,6 @@
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.01em;
-    }
-
-    .zone-legend-mini {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-
-    .zone-dot-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .zone-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
     }
 
     .session-donuts-grid {
@@ -519,83 +497,60 @@
       letter-spacing: 0.02em;
     }
 
-    /* Extrapolated Session & Zone Shift Bar */
-    .extrapolated-bar {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.7rem;
-      margin-top: 0.85rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.09);
-    }
-
-    .extrap-pill-card {
-      background: rgba(9, 13, 22, 0.58);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.68rem;
+    /* Segmented Day 1 (Night) vs Day 2 (Day) Performance Cards */
+    .session-section-banner {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 0.8rem 1rem;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 0.75rem;
       display: flex;
-      flex-direction: column;
-      gap: 0.12rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .extrap-label {
-      font-size: 0.64rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-
-    .extrap-val {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--text-primary);
-    }
-
-    .extrap-sub {
-      font-size: 0.68rem;
-      color: var(--text-secondary);
-    }
-
-    /* Cohesive Day 1 (Night) vs Day 2 (Day) Performance Comparison Grid */
     .session-h2h-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
+      gap: 0.85rem;
       width: 100%;
+      margin-bottom: 0.85rem;
     }
 
     .sh2h-metric-card {
-      background: rgba(9, 13, 22, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 0.85rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 0.9rem 0.95rem;
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     .sh2h-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
 
     .sh2h-title {
-      font-size: 0.72rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-weight: 800;
-      color: var(--text-secondary);
+      color: var(--text-primary);
     }
 
     .sh2h-edge-badge {
-      font-size: 0.66rem;
+      font-size: 0.67rem;
       font-weight: 800;
-      padding: 0.14rem 0.48rem;
+      padding: 0.16rem 0.52rem;
       border-radius: 999px;
       white-space: nowrap;
     }
@@ -621,44 +576,44 @@
     .sh2h-split-cols {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 0.45rem;
+      align-items: stretch;
+      gap: 0.5rem;
     }
 
     .sh2h-side {
-      background: rgba(23, 33, 54, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius-sm);
-      padding: 0.45rem 0.55rem;
+      background: rgba(23, 33, 54, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 0.55rem 0.62rem;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .sh2h-side.winner-side {
-      border-color: rgba(56, 189, 248, 0.45);
-      background: rgba(30, 44, 72, 0.95);
+      border-color: rgba(56, 189, 248, 0.5);
+      background: rgba(30, 44, 72, 0.98);
     }
 
     .sh2h-side-lbl {
-      font-size: 0.64rem;
+      font-size: 0.66rem;
       font-weight: 700;
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.14rem;
     }
 
     .sh2h-side-val {
-      font-size: 0.96rem;
+      font-size: 1.02rem;
       font-weight: 800;
       color: var(--text-primary);
       line-height: 1.2;
     }
 
     .sh2h-side-sub {
-      font-size: 0.66rem;
-      color: var(--text-muted);
-      line-height: 1.2;
-      margin-top: 0.1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin-top: 0.16rem;
     }
 
     .sh2h-vs-sep {
@@ -666,13 +621,16 @@
       font-weight: 800;
       color: var(--text-muted);
       text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .sh2h-footer-note {
-      font-size: 0.69rem;
+      font-size: 0.71rem;
       color: var(--text-secondary);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 0.35rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.42rem;
     }
 
     /* Zone Winners Panels (Uniform Zone-Coloured Panels Matching Zone Colours) */
@@ -1179,9 +1137,6 @@
       .kpi-cell:nth-child(n+4) {
         border-bottom: none;
       }
-      .extrapolated-bar {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
 
     @media (max-width: 640px) {
@@ -1201,9 +1156,6 @@
         border-bottom: none;
       }
       .session-h2h-grid {
-        grid-template-columns: 1fr;
-      }
-      .extrapolated-bar {
         grid-template-columns: 1fr;
       }
       .h2h-grid { grid-template-columns: 1fr; }
@@ -1281,30 +1233,22 @@
       <div class="rings-strip-card">
         <div class="rings-strip-header">
           <div class="rings-strip-title">Fish Length & Fish Count Breakdown</div>
-          <div class="zone-legend-mini">
-            <span class="zone-dot-item"><span class="zone-dot" style="background:#ef4444;"></span>Red</span>
-            <span class="zone-dot-item"><span class="zone-dot" style="background:#eab308;"></span>Yellow</span>
-            <span class="zone-dot-item"><span class="zone-dot" style="background:#22c55e;"></span>Green</span>
-            <span class="zone-dot-item"><span class="zone-dot" style="background:#3b82f6;"></span>Blue</span>
-          </div>
         </div>
         <div class="session-donuts-grid" id="sessionDonutsGrid"></div>
-        <div class="extrapolated-bar" id="extrapolatedInsightsRow"></div>
       </div>
 
-      <div class="glass-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">🌙 Day 1 (Night) vs. ☀️ Day 2 (Day) Performance</div>
-            <div class="card-subtitle">Head-to-head session comparison across catch volume, length, strike rate & top zones</div>
-          </div>
-          <div style="display:flex; gap:0.75rem; font-size:0.8rem; font-weight:700;">
-            <span class="zt-lbl-d1">🌙 Night (D1)</span>
-            <span class="zt-lbl-d2">☀️ Day (D2)</span>
-          </div>
+      <div class="session-section-banner">
+        <div>
+          <div class="card-title">🌙 Day 1 (Night) vs. ☀️ Day 2 (Day) Performance</div>
+          <div class="card-subtitle">Head-to-head session breakdown across catch volume, length, blank rate & top zones</div>
         </div>
-        <div class="session-h2h-grid" id="sessionComparisonGrid"></div>
+        <div style="display:flex; gap:0.75rem; font-size:0.8rem; font-weight:700;">
+          <span class="zt-lbl-d1">🌙 Night (D1)</span>
+          <span class="zt-lbl-d2">☀️ Day (D2)</span>
+        </div>
       </div>
+
+      <div class="session-h2h-grid" id="sessionComparisonGrid"></div>
     </section>
 
     <!-- =========================================================
@@ -1481,7 +1425,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.5.1",
+      version: "v3.5.2",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1777,6 +1721,8 @@
       const totalRodSessions = totalAnglers * 2;
       const d1CatchingAnglers = anglers.filter(a => (a.d1.fishCount || 0) > 0).length;
       const d2CatchingAnglers = anglers.filter(a => (a.d2.fishCount || 0) > 0).length;
+      const d1BlankingAnglers = totalAnglers - d1CatchingAnglers;
+      const d2BlankingAnglers = totalAnglers - d2CatchingAnglers;
       const activeRodSessions = d1CatchingAnglers + d2CatchingAnglers;
       const anglersCaughtPct = Math.round((activeRodSessions / totalRodSessions) * 100);
 
@@ -1879,7 +1825,7 @@
       // Length (left) & Fish Count (right) side-by-side per session card
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card">
-          <div class="session-donut-card-title">2 Day Total</div>
+          <div class="session-donut-card-title">Competition Total</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
               "Length",
@@ -1933,65 +1879,14 @@
         </div>
       `;
 
-      // Extrapolated Day 1 vs Day 2 Shift & Zone Volume Insights
-      const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
-      const topFishZone = [...zoneStats].sort((a, b) => b.zoneFish - a.zoneFish)[0];
-
-      const fishDiff = totalD2Fish - totalD1Fish;
-      const fishPctShift = totalD1Fish > 0 ? Math.round((fishDiff / totalD1Fish) * 100) : 0;
-      const fishShiftLabel = fishDiff === 0
-        ? "Even across both days"
-        : fishDiff > 0
-          ? `☀️ Day 2 +${fishDiff} fish (+${fishPctShift}%)`
-          : `🌙 Day 1 +${Math.abs(fishDiff)} fish (+${Math.abs(fishPctShift)}%)`;
-
-      const lenDiffMeters = ((totalD2LenCm - totalD1LenCm) / 100).toFixed(2);
-      const lenShiftSub = totalD2LenCm >= totalD1LenCm
-        ? `☀️ Day 2 ahead by +${lenDiffMeters}m`
-        : `🌙 Day 1 ahead by +${Math.abs(Number(lenDiffMeters)).toFixed(2)}m`;
-
-      const biggestZoneSwing = [...zoneStats]
-        .map(z => ({ zoneName: z.zoneName, deltaFish: z.d2Fish - z.d1Fish, d1Fish: z.d1Fish, d2Fish: z.d2Fish }))
-        .sort((a, b) => Math.abs(b.deltaFish) - Math.abs(a.deltaFish))[0];
-
-      const swingValText = biggestZoneSwing
-        ? `${shortZone(biggestZoneSwing.zoneName)} (${biggestZoneSwing.deltaFish >= 0 ? "+" : ""}${biggestZoneSwing.deltaFish} fish)`
-        : "—";
-      const swingSubText = biggestZoneSwing
-        ? `🌙 ${biggestZoneSwing.d1Fish} fish → ☀️ ${biggestZoneSwing.d2Fish} fish`
-        : "";
-
-      document.getElementById("extrapolatedInsightsRow").innerHTML = `
-        <div class="extrap-pill-card">
-          <div class="extrap-label">🌙 vs ☀️ Session Catch Shift</div>
-          <div class="extrap-val">${fishShiftLabel}</div>
-          <div class="extrap-sub">${lenShiftSub}</div>
-        </div>
-        <div class="extrap-pill-card">
-          <div class="extrap-label">Biggest Zone Session Swing</div>
-          <div class="extrap-val">${swingValText}</div>
-          <div class="extrap-sub">${swingSubText}</div>
-        </div>
-        <div class="extrap-pill-card">
-          <div class="extrap-label">Top Length Zone</div>
-          <div class="extrap-val">${topLengthZone.zoneName} (${(topLengthZone.zoneLen / 100).toFixed(2)}m)</div>
-          <div class="extrap-sub">${Math.round((topLengthZone.zoneLen / Math.max(1, totalLengthCm)) * 100)}% of total championship length</div>
-        </div>
-        <div class="extrap-pill-card">
-          <div class="extrap-label">Top Fish Volume Zone</div>
-          <div class="extrap-val">${topFishZone.zoneName} (${topFishZone.zoneFish} fish)</div>
-          <div class="extrap-sub">${Math.round((topFishZone.zoneFish / Math.max(1, totalFish)) * 100)}% of total fish landed</div>
-        </div>
-      `;
-
-      // Cohesive Day 1 (Night) vs Day 2 (Day) Performance Comparison Card
+      // Segmented Day 1 (Night) vs Day 2 (Day) Performance Comparison Cards
       const d1AvgFishSize = totalD1Fish > 0 ? (totalD1LenCm / totalD1Fish).toFixed(1) : "0.0";
       const d2AvgFishSize = totalD2Fish > 0 ? (totalD2LenCm / totalD2Fish).toFixed(1) : "0.0";
       const d1AvgPerRod = (totalD1Fish / Math.max(1, totalAnglers)).toFixed(1);
       const d2AvgPerRod = (totalD2Fish / Math.max(1, totalAnglers)).toFixed(1);
 
-      const d1WeighInPct = Math.round((d1CatchingAnglers / Math.max(1, totalAnglers)) * 100);
-      const d2WeighInPct = Math.round((d2CatchingAnglers / Math.max(1, totalAnglers)) * 100);
+      const d1CatchPct = Math.round((d1CatchingAnglers / Math.max(1, totalAnglers)) * 100);
+      const d2CatchPct = Math.round((d2CatchingAnglers / Math.max(1, totalAnglers)) * 100);
 
       // Session longest individual fish (only display species if recorded in Top 5)
       const d1TopSpec = STATE.specimensAll.find(s => s.day === "D1");
@@ -2004,6 +1899,7 @@
         : "No specimen";
 
       // Best zone per session by length (and fish count)
+      const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
       const d1TopZone = [...zoneStats].sort((a, b) => b.d1Len - a.d1Len || b.d1Fish - a.d1Fish)[0];
       const d2TopZone = [...zoneStats].sort((a, b) => b.d2Len - a.d2Len || b.d2Fish - a.d2Fish)[0];
 
@@ -2014,10 +1910,10 @@
       }
 
       document.getElementById("sessionComparisonGrid").innerHTML = `
-        <!-- 1. Total Fish Landed -->
+        <!-- 1. Total Fish Caught -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
-            <span class="sh2h-title">Total Fish Landed</span>
+            <span class="sh2h-title">Total Fish Caught</span>
             ${buildEdgeBadge(
               totalD1Fish,
               totalD2Fish,
@@ -2043,7 +1939,7 @@
           </div>
         </div>
 
-        <!-- 2. Total Measured Length -->
+        <!-- 2. Total Fish Length -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Total Fish Length</span>
@@ -2068,7 +1964,7 @@
             </div>
           </div>
           <div class="sh2h-footer-note">
-            Combined championship length: ${totalLengthMeters}m (${totalLengthCm} cm)
+            Competition total length: ${totalLengthMeters}m (${totalLengthCm} cm)
           </div>
         </div>
 
@@ -2087,58 +1983,58 @@
             <div class="sh2h-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
-              <div class="sh2h-side-sub">Per fish landed</div>
+              <div class="sh2h-side-sub">Per fish caught</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
-              <div class="sh2h-side-sub">Per fish landed</div>
+              <div class="sh2h-side-sub">Per fish caught</div>
             </div>
           </div>
           <div class="sh2h-footer-note">
-            Compares specimen stamp between darkness & daylight sessions
+            Compares average fish stamp between darkness & daylight sessions
           </div>
         </div>
 
-        <!-- 4. Angler Weigh-In Rate -->
+        <!-- 4. Anglers Catching vs Blanking -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
-            <span class="sh2h-title">Angler Weigh-In Rate</span>
+            <span class="sh2h-title">Anglers Catching vs Blanking</span>
             ${buildEdgeBadge(
               d1CatchingAnglers,
               d2CatchingAnglers,
-              `🌙 +${d1CatchingAnglers - d2CatchingAnglers} rods catching`,
-              `☀️ +${d2CatchingAnglers - d1CatchingAnglers} rods catching`
+              `🌙 +${d1CatchingAnglers - d2CatchingAnglers} more catching`,
+              `☀️ +${d2CatchingAnglers - d1CatchingAnglers} more catching`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
-              <div class="sh2h-side-val">${d1WeighInPct}%</div>
-              <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers</div>
+              <div class="sh2h-side-val">${d1CatchPct}% Caught</div>
+              <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers caught (${d1BlankingAnglers} blanked)</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
-              <div class="sh2h-side-val">${d2WeighInPct}%</div>
-              <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers</div>
+              <div class="sh2h-side-val">${d2CatchPct}% Caught</div>
+              <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers caught (${d2BlankingAnglers} blanked)</div>
             </div>
           </div>
           <div class="sh2h-footer-note">
-            ${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers weighed in on both Day 1 & Day 2
+            ${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers caught in both sessions • ${anglers.filter(a => (a.d1.fishCount || 0) === 0 && (a.d2.fishCount || 0) === 0).length} blanked both
           </div>
         </div>
 
-        <!-- 5. Best Session Bag & Biggest Fish -->
+        <!-- 5. Top Individual Catch -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
-            <span class="sh2h-title">Peak Session Bag</span>
+            <span class="sh2h-title">Top Individual Catch</span>
             ${buildEdgeBadge(
               d1BestBag.fish,
               d2BestBag.fish,
-              `🌙 Top bag (${d1BestBag.fish})`,
-              `☀️ Top bag (${d2BestBag.fish})`
+              `🌙 Top catch (${d1BestBag.fish})`,
+              `☀️ Top catch (${d2BestBag.fish})`
             )}
           </div>
           <div class="sh2h-split-cols">
@@ -2159,11 +2055,11 @@
           </div>
         </div>
 
-        <!-- 6. Best Performing Zones by Session -->
+        <!-- 6. Top Performing Zone -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Top Performing Zone</span>
-            <span class="sh2h-edge-badge even">2-Day: ${shortZone(topLengthZone.zoneName)}</span>
+            <span class="sh2h-edge-badge even">Overall: ${shortZone(topLengthZone.zoneName)}</span>
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side">
@@ -2181,7 +2077,7 @@
           <div class="sh2h-footer-note">
             ${d1TopZone.zoneName === d2TopZone.zoneName
               ? `${d1TopZone.zoneName} led both sessions across the championship`
-              : `Hot zone shifted from ${shortZone(d1TopZone.zoneName)} (Night) to ${shortZone(d2TopZone.zoneName)} (Day)`}
+              : `Top zone shifted from ${shortZone(d1TopZone.zoneName)} (Night) to ${shortZone(d2TopZone.zoneName)} (Day)`}
           </div>
         </div>
       `;
