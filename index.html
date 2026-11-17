@@ -674,7 +674,7 @@
     }
 
     .table-wrap.tight-scores-wrap {
-      max-width: 980px;
+      max-width: 1020px;
       margin: 0 auto;
     }
 
@@ -769,10 +769,13 @@
       border-left: 3.5px solid #d97706;
     }
 
-    /* Individual Leaderboard Compact Overrides within Card-Row Table */
+    /* =========================================================================
+       INDIVIDUAL LEADERBOARD: TWO-CARD SPLIT (OVERALL CARD vs SESSION CARD)
+       + HORIZONTAL GAP BETWEEN POINTS BRACKETS
+       ========================================================================= */
     table.tight-ind-table {
       font-size: 0.78rem;
-      border-spacing: 0 4px;
+      border-spacing: 0 5px;
     }
 
     table.tight-ind-table th.group-th {
@@ -784,21 +787,25 @@
 
     table.tight-ind-table th.group-th.overall-grp {
       color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.09);
+      background: rgba(56, 189, 248, 0.11);
+      border-right: 1px solid var(--border-glass);
+      border-top-right-radius: var(--radius-sm);
     }
 
     table.tight-ind-table th.group-th.d1-grp {
       color: #a5b4fc;
-      background: rgba(99, 102, 241, 0.09);
+      background: rgba(99, 102, 241, 0.11);
+      border-left: 1px solid var(--border-glass);
+      border-top-left-radius: var(--radius-sm);
     }
 
     table.tight-ind-table th.group-th.d2-grp {
       color: #fcd34d;
-      background: rgba(245, 158, 11, 0.09);
+      background: rgba(245, 158, 11, 0.11);
     }
 
     table.tight-ind-table th.sub-th {
-      padding: 0.36rem 0.34rem;
+      padding: 0.38rem 0.36rem;
       font-size: 0.66rem;
       text-align: center;
     }
@@ -807,14 +814,81 @@
       text-align: left;
     }
 
-    table.tight-ind-table tbody tr td {
-      padding: 0.42rem 0.34rem;
+    /* Right edge of Left Overall Card Header */
+    table.tight-ind-table th.overall-card-end {
+      border-right: 1px solid var(--border-glass) !important;
+      border-bottom-right-radius: var(--radius-sm);
+    }
+
+    /* Left edge of Right Session Card Header */
+    table.tight-ind-table th.session-card-start {
+      border-left: 1px solid var(--border-glass) !important;
+      border-bottom-left-radius: var(--radius-sm);
+    }
+
+    /* Transparent Vertical Gap Column Between Overall Card & Day 1/Day 2 Card */
+    table.tight-ind-table th.col-gap-spacer,
+    table.tight-ind-table td.col-gap-spacer {
+      background: transparent !important;
+      border: none !important;
+      width: 11px;
+      min-width: 11px;
+      max-width: 11px;
+      padding: 0 !important;
+      pointer-events: none;
+    }
+
+    table.tight-ind-table tbody tr.ind-data-row td {
+      padding: 0.46rem 0.36rem;
       text-align: center;
     }
 
+    /* Left Card (Pos + Angler + Overall Stats) Rounded Right Cap */
+    table.tight-ind-table tbody tr.ind-data-row td.overall-card-end {
+      border-right: 1px solid rgba(56, 189, 248, 0.32) !important;
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    /* Emphasize Overall Card Border & Tint */
+    table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell {
+      background: rgba(20, 30, 52, 0.96);
+      border-top-color: rgba(56, 189, 248, 0.28);
+      border-bottom-color: rgba(56, 189, 248, 0.28);
+    }
+
+    table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell:first-child {
+      border-left-color: rgba(56, 189, 248, 0.32);
+    }
+
+    /* Right Card (Day 1 + Day 2 Session Stats) Rounded Left Cap */
+    table.tight-ind-table tbody tr.ind-data-row td.session-card-start {
+      border-left: 1px solid rgba(148, 163, 184, 0.25) !important;
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+
+    table.tight-ind-table tbody tr.ind-data-row td.session-card-cell {
+      background: rgba(25, 36, 58, 0.90);
+    }
+
+    table.tight-ind-table tbody tr.ind-data-row:hover td.overall-card-cell,
+    table.tight-ind-table tbody tr.ind-data-row:hover td.session-card-cell {
+      background: rgba(33, 49, 80, 0.99);
+    }
+
+    /* Horizontal Spacer Row Between Different Overall Points Totals */
+    table.tight-ind-table tbody tr.pts-bracket-gap td {
+      background: transparent !important;
+      border: none !important;
+      height: 11px;
+      padding: 0 !important;
+      pointer-events: none;
+    }
+
     table.tight-ind-table td.pos-cell {
-      width: 40px;
-      padding-left: 0.5rem;
+      width: 42px;
+      padding-left: 0.55rem;
       padding-right: 0.25rem;
       text-align: left;
     }
@@ -848,16 +922,7 @@
     }
 
     .sec-sep-left {
-      border-left: 2px solid rgba(148, 163, 184, 0.38) !important;
-    }
-
-    /* Tied Overall Points Block Grouping */
-    table.tight-ind-table tbody tr.pts-group-odd td {
-      background: rgba(28, 41, 68, 0.94);
-    }
-
-    table.tight-ind-table tbody tr.pts-group-start td:first-child {
-      border-left: 3px solid rgba(56, 189, 248, 0.65);
+      border-left: 1.5px solid rgba(148, 163, 184, 0.28) !important;
     }
 
     /* Team Leaderboard Specific Cells within Card-Row Table */
@@ -1255,11 +1320,11 @@
          VIEW 2: INDIVIDUAL LEADERBOARD
          ========================================================= -->
     <section id="view-individual" class="view-section">
-      <div class="glass-card" style="max-width: 1020px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Individual Leaderboard</div>
-            <div class="card-subtitle">All lengths & biggest fish in cm • Grouped by Overall Points</div>
+            <div class="card-subtitle">All lengths & biggest fish in cm • Separated by Overall Points tiers</div>
           </div>
           <div>
             <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
@@ -1271,7 +1336,8 @@
               <tr>
                 <th colspan="2" class="group-th"></th>
                 <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
-                <th colspan="4" class="group-th d1-grp sec-sep-left">🌙 Day 1</th>
+                <th class="col-gap-spacer" aria-hidden="true"></th>
+                <th colspan="4" class="group-th d1-grp">🌙 Day 1</th>
                 <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
               </tr>
               <tr>
@@ -1280,8 +1346,9 @@
                 <th class="sub-th sec-sep-left">Pts</th>
                 <th class="sub-th">Len</th>
                 <th class="sub-th">Fish</th>
-                <th class="sub-th">Big</th>
-                <th class="sub-th sec-sep-left">Pts</th>
+                <th class="sub-th overall-card-end">Big</th>
+                <th class="col-gap-spacer" aria-hidden="true"></th>
+                <th class="sub-th session-card-start">Pts</th>
                 <th class="sub-th">Len</th>
                 <th class="sub-th">Fish</th>
                 <th class="sub-th">Big</th>
@@ -1425,7 +1492,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.5.2",
+      version: "v3.5.3",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -2084,7 +2151,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 2: INDIVIDUAL LEADERBOARD (GROUPED BY OVERALL PTS)
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD (TWO-CARD SPLIT + POINTS BRACKET GAPS)
        --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
@@ -2097,51 +2164,54 @@
         });
 
         let lastPts = null;
-        let groupToggle = 0;
+        const rowsHtml = [];
 
-        document.getElementById("individualTableBody").innerHTML = filtered.map((a, idx) => {
+        filtered.forEach((a, idx) => {
           const pts = a.totals.cumulativePoints;
-          const isNewGroup = idx === 0 || pts !== lastPts;
-          if (isNewGroup && idx > 0) {
-            groupToggle = 1 - groupToggle;
+          if (idx > 0 && pts !== lastPts) {
+            rowsHtml.push(`
+              <tr class="pts-bracket-gap" aria-hidden="true">
+                <td colspan="15"></td>
+              </tr>
+            `);
           }
           lastPts = pts;
-
-          const rowClasses = [
-            groupToggle === 0 ? "pts-group-even" : "pts-group-odd",
-            isNewGroup ? "pts-group-start" : ""
-          ].filter(Boolean).join(" ");
 
           const rankClass = a.rank <= 3 ? `rank-medal rank-${a.rank}` : "";
           const ovBig = a.overallBiggestCm > 0 ? a.overallBiggestCm : "—";
           const d1Big = (a.d1.biggestFishCm || 0) > 0 ? a.d1.biggestFishCm : "—";
           const d2Big = (a.d2.biggestFishCm || 0) > 0 ? a.d2.biggestFishCm : "—";
 
-          return `
-            <tr class="${rowClasses}">
-              <td class="pos-cell ${rankClass}">${getOrdinal(a.rank)}</td>
-              <td class="angler-cell">
+          rowsHtml.push(`
+            <tr class="ind-data-row">
+              <!-- LEFT CARD: Primary Final Overall Result -->
+              <td class="pos-cell overall-card-cell ${rankClass}">${getOrdinal(a.rank)}</td>
+              <td class="angler-cell overall-card-cell">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <!-- Overall: Pts - Len - Fish - Big -->
-              <td class="sec-sep-left"><strong style="color:var(--accent-cyan);">${pts}</strong></td>
-              <td>${a.totals.cumulativeLengthCm}</td>
-              <td><strong>${a.totals.cumulativeFish}</strong></td>
-              <td>${ovBig}</td>
-              <!-- Day 1: Pts - Len - Fish - Big -->
-              <td class="sec-sep-left">${a.d1.zonePoints}</td>
-              <td>${a.d1.totalLengthCm}</td>
-              <td>${a.d1.fishCount}</td>
-              <td>${d1Big}</td>
-              <!-- Day 2: Pts - Len - Fish - Big -->
-              <td class="sec-sep-left">${a.d2.zonePoints}</td>
-              <td>${a.d2.totalLengthCm}</td>
-              <td>${a.d2.fishCount}</td>
-              <td>${d2Big}</td>
+              <td class="overall-card-cell sec-sep-left"><strong style="color:var(--accent-cyan);">${pts}</strong></td>
+              <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
+              <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
+              <td class="overall-card-cell overall-card-end">${ovBig}</td>
+
+              <!-- VERTICAL GAP BETWEEN OVERALL CARD & SESSION CARD -->
+              <td class="col-gap-spacer" aria-hidden="true"></td>
+
+              <!-- RIGHT CARD: Day 1 & Day 2 Session Breakdown -->
+              <td class="session-card-cell session-card-start">${a.d1.zonePoints}</td>
+              <td class="session-card-cell">${a.d1.totalLengthCm}</td>
+              <td class="session-card-cell">${a.d1.fishCount}</td>
+              <td class="session-card-cell">${d1Big}</td>
+              <td class="session-card-cell sec-sep-left">${a.d2.zonePoints}</td>
+              <td class="session-card-cell">${a.d2.totalLengthCm}</td>
+              <td class="session-card-cell">${a.d2.fishCount}</td>
+              <td class="session-card-cell">${d2Big}</td>
             </tr>
-          `;
-        }).join("");
+          `);
+        });
+
+        document.getElementById("individualTableBody").innerHTML = rowsHtml.join("");
       }
 
       searchInput.oninput = update;
