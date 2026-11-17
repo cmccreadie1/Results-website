@@ -1727,7 +1727,7 @@
       <div class="hub-group-panel insights-group">
         <div class="hub-section-label">Match Insights & Reports</div>
         <div class="hub-buttons-grid">
-          <button class="hub-btn-card insight-card" data-nav="overview">
+          <button type="button" class="hub-btn-card insight-card" data-nav="overview" onclick="switchView('overview')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Match Overview</span>
               <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
@@ -1735,7 +1735,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card insight-card" data-nav="myreport">
+          <button type="button" class="hub-btn-card insight-card" data-nav="myreport" onclick="switchView('myreport')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">My Match Report</span>
               <span class="hub-btn-sub">Personal rank motifs, momentum & head-to-head comparison</span>
@@ -1749,7 +1749,7 @@
       <div class="hub-group-panel">
         <div class="hub-section-label">Championship Standings & Results</div>
         <div class="hub-buttons-grid">
-          <button class="hub-btn-card" data-nav="individual">
+          <button type="button" class="hub-btn-card" data-nav="individual" onclick="switchView('individual')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Individual Leaderboard</span>
               <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
@@ -1757,7 +1757,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card" data-nav="teams">
+          <button type="button" class="hub-btn-card" data-nav="teams" onclick="switchView('teams')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Team Leaderboard</span>
               <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
@@ -1765,7 +1765,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card" data-nav="day1zones">
+          <button type="button" class="hub-btn-card" data-nav="day1zones" onclick="switchView('day1zones')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Day 1 Zone Winners</span>
               <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
@@ -1773,7 +1773,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card" data-nav="day2zones">
+          <button type="button" class="hub-btn-card" data-nav="day2zones" onclick="switchView('day2zones')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Day 2 Zone Winners</span>
               <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
@@ -1781,7 +1781,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card" data-nav="biggest">
+          <button type="button" class="hub-btn-card" data-nav="biggest" onclick="switchView('biggest')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Biggest Fish</span>
               <span class="hub-btn-sub">Top 5 longest individual specimens recorded across the match</span>
@@ -1789,7 +1789,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card" data-nav="secret">
+          <button type="button" class="hub-btn-card" data-nav="secret" onclick="switchView('secret')">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Mystery Pairs</span>
               <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
@@ -2038,13 +2038,13 @@
   </div>
 
   <!-- High-Contrast Floating Bottom-Left Back Button (Visible on all sub-pages) -->
-  <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
+  <button type="button" class="floating-back-btn" id="floatingBackBtn" data-nav="home" onclick="switchView('home')" aria-label="Back to Home">
     ← Back
   </button>
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.9.0",
+      version: "v3.9.1",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2318,15 +2318,23 @@
       renderAllViews();
     }
 
+    function safeRun(fn, label) {
+      try {
+        fn();
+      } catch (err) {
+        console.error(`Error rendering ${label}:`, err);
+      }
+    }
+
     function renderAllViews() {
-      renderOverview();
-      renderIndividualTable();
-      renderTeamsContributions();
-      renderDayZoneWinners("d1", "day1ZonesGrid");
-      renderDayZoneWinners("d2", "day2ZonesGrid");
-      renderBiggestFish();
-      renderMyReport();
-      renderSecretPairs();
+      safeRun(renderOverview, "overview");
+      safeRun(renderIndividualTable, "individual");
+      safeRun(renderTeamsContributions, "teams");
+      safeRun(() => renderDayZoneWinners("d1", "day1ZonesGrid"), "day1zones");
+      safeRun(() => renderDayZoneWinners("d2", "day2ZonesGrid"), "day2zones");
+      safeRun(renderBiggestFish, "biggest");
+      safeRun(renderMyReport, "myreport");
+      safeRun(renderSecretPairs, "secret");
     }
 
     function setupNavigation() {
@@ -3083,7 +3091,6 @@
       }
 
       function openMenu(showAll) {
-        // Close any other open alpha pickers first
         document.querySelectorAll(".alpha-picker-wrap.open").forEach(other => {
           if (other !== wrap) other.classList.remove("open");
         });
@@ -3179,7 +3186,6 @@
 
         const me = anglers.find(a => a.anglerName === STATE.selectedAnglerName);
 
-        // If no angler has been chosen yet, keep report cards tucked away cleanly
         if (!me) {
           momentumEl.innerHTML = "";
           gaugesEl.innerHTML = "";
