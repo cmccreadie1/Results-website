@@ -3,52 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#e2e8f0" />
+  <meta name="theme-color" content="#004481" />
   <title>SPRA Scottish Shore Championship 2027 | Results Portal</title>
   <link rel="manifest" href="manifest.json" />
   <style>
     :root {
-      --bg-base: #e2e8f0;
-      --bg-surface: rgba(15, 23, 42, 0.95);
-      --bg-card: rgba(23, 33, 54, 0.94);
-      --bg-card-hover: rgba(30, 44, 72, 0.98);
-      --border-glass: rgba(148, 163, 184, 0.24);
-      --border-glow: rgba(56, 189, 248, 0.55);
-      --text-primary: #f8fafc;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
-      --accent-cyan: #38bdf8;
-      --accent-indigo: #818cf8;
-      --accent-emerald: #34d399;
-      --accent-amber: #fbbf24;
-      --accent-rose: #fb7185;
+      /* Modern Fintech / Bank of Scotland Light Palette */
+      --bg-base: #f3f5f8;
+      --bg-surface: #ffffff;
+      --bg-card: #f8fafc;
+      --bg-card-hover: #f1f5f9;
+      --border-glass: #dce3ec;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --brand-navy: #004481;
+      --brand-navy-dark: #00315c;
+      --brand-cobalt: #005eb8;
+      --brand-tint: #eef5fc;
+      --brand-tint-border: #bfd9f2;
+
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-indigo: #4338ca;
 
       /* Zone Colors */
       --zone-red: #ef4444;
-      --zone-red-bg: rgba(239, 68, 68, 0.16);
-      --zone-red-border: rgba(239, 68, 68, 0.65);
+      --zone-red-bg: #fef2f2;
+      --zone-red-border: #fca5a5;
 
       --zone-yellow: #eab308;
-      --zone-yellow-bg: rgba(234, 179, 8, 0.16);
-      --zone-yellow-border: rgba(234, 179, 8, 0.65);
+      --zone-yellow-bg: #fefce8;
+      --zone-yellow-border: #fde047;
 
       --zone-green: #22c55e;
-      --zone-green-bg: rgba(34, 197, 94, 0.16);
-      --zone-green-border: rgba(34, 197, 94, 0.65);
+      --zone-green-bg: #f0fdf4;
+      --zone-green-border: #86efac;
 
       --zone-blue: #3b82f6;
-      --zone-blue-bg: rgba(59, 130, 246, 0.16);
-      --zone-blue-border: rgba(59, 130, 246, 0.65);
+      --zone-blue-bg: #eff6ff;
+      --zone-blue-border: #93c5fd;
 
-      /* Session Colors */
-      --d1-dark: #6366f1;
-      --d2-day: #f59e0b;
-
-      --radius-xl: 22px;
-      --radius-lg: 18px;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-card: 0 12px 28px -6px rgba(15, 23, 42, 0.24);
+      --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
+      --shadow-elevated: 0 8px 24px rgba(0, 68, 129, 0.10);
     }
 
     * {
@@ -61,8 +65,6 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
       background-color: var(--bg-base);
-      background-image: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
-      background-attachment: fixed;
       color: var(--text-primary);
       min-height: 100vh;
       line-height: 1.5;
@@ -73,16 +75,17 @@
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
-      padding: 0.75rem 0.5rem;
+      padding: 0.85rem 0.65rem;
     }
 
-    /* Front-Page-Only Clean Header */
+    /* Clean Fintech Front-Page Header */
     .app-header {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
+      border-top: 4px solid var(--brand-navy);
       border-radius: var(--radius-lg);
       padding: 1.5rem 1.6rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
       box-shadow: var(--shadow-card);
       text-align: center;
     }
@@ -91,13 +94,25 @@
       display: none;
     }
 
-    .brand-block h1 {
-      font-size: 1.44rem;
+    .brand-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-cobalt);
+      background: var(--brand-tint);
+      border: 1px solid var(--brand-tint-border);
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+    }
+
+    .brand-block h1 {
+      font-size: 1.48rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--brand-navy);
     }
 
     .brand-meta {
@@ -105,8 +120,8 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
-      margin-top: 0.4rem;
+      gap: 0.55rem;
+      margin-top: 0.38rem;
       font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-secondary);
@@ -116,19 +131,19 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.22rem 0.65rem;
+      padding: 0.24rem 0.7rem;
       border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      background: rgba(56, 189, 248, 0.16);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.32);
+      font-size: 0.73rem;
+      font-weight: 700;
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
     }
 
     /* Views & High-Contrast Floating Bottom-Left Back Button */
     .view-section {
       display: none;
-      animation: fadeIn 0.25s ease;
+      animation: fadeIn 0.22s ease;
     }
 
     .view-section.active {
@@ -136,7 +151,7 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -148,17 +163,17 @@
       display: none;
       align-items: center;
       gap: 0.45rem;
-      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
-      border: 1.5px solid rgba(255, 255, 255, 0.65);
+      background: var(--brand-navy);
+      border: 1.5px solid #ffffff;
       color: #ffffff;
       padding: 0.65rem 1.25rem;
       border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 800;
+      font-size: 0.86rem;
+      font-weight: 700;
       letter-spacing: 0.01em;
       cursor: pointer;
-      box-shadow: 0 10px 26px rgba(2, 132, 199, 0.48), 0 4px 12px rgba(15, 23, 42, 0.32);
-      transition: all 0.2s ease;
+      box-shadow: 0 8px 22px rgba(0, 68, 129, 0.34), 0 3px 8px rgba(15, 23, 42, 0.16);
+      transition: all 0.18s ease;
     }
 
     .floating-back-btn.visible {
@@ -166,25 +181,33 @@
     }
 
     .floating-back-btn:hover {
-      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
-      border-color: #ffffff;
+      background: var(--brand-cobalt);
       transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(2, 132, 199, 0.58), 0 6px 14px rgba(15, 23, 42, 0.38);
+      box-shadow: 0 12px 26px rgba(0, 68, 129, 0.42);
     }
 
-    /* Sleek Financial-Style Front Landing Navigation Buttons (No Icons) */
+    /* Modern Banking "Spaces" Front Landing Cards */
+    .hub-section-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin: 0 0 0.65rem 0.2rem;
+    }
+
     .hub-buttons-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 0.9rem;
+      gap: 0.8rem;
     }
 
     .hub-btn-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.97) 0%, rgba(23, 33, 54, 0.95) 100%);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      border-left: 3.5px solid rgba(56, 189, 248, 0.65);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-left: 4px solid var(--brand-navy);
       border-radius: var(--radius-md);
-      padding: 1.25rem 1.35rem;
+      padding: 1.15rem 1.25rem;
       text-align: left;
       color: var(--text-primary);
       cursor: pointer;
@@ -192,45 +215,54 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.26);
-      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .hub-btn-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(56, 189, 248, 0.45);
-      border-left-color: var(--accent-cyan);
-      background: linear-gradient(145deg, rgba(20, 31, 54, 0.99) 0%, rgba(30, 44, 72, 0.98) 100%);
-      box-shadow: 0 14px 30px -6px rgba(15, 23, 42, 0.34);
+      border-color: var(--brand-tint-border);
+      border-left-color: var(--brand-cobalt);
+      background: #ffffff;
+      box-shadow: var(--shadow-elevated);
     }
 
     .hub-btn-card:active {
       transform: translateY(0);
     }
 
+    .hub-btn-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
     .hub-btn-title {
       font-size: 1.02rem;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       letter-spacing: -0.01em;
     }
 
+    .hub-btn-sub {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
     .hub-arrow {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--brand-cobalt);
+      font-weight: 700;
       flex-shrink: 0;
-      transition: transform 0.2s ease, color 0.2s ease;
+      transition: transform 0.18s ease;
     }
 
     .hub-btn-card:hover .hub-arrow {
-      color: var(--accent-cyan);
       transform: translateX(4px);
     }
 
-    /* Dark Cards on Soft Slate Mist Background */
+    /* Clean White Elevated Cards */
     .glass-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -251,12 +283,13 @@
     }
 
     .card-title {
-      font-size: 1.02rem;
+      font-size: 1.04rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      letter-spacing: -0.01em;
     }
 
     .card-subtitle {
@@ -268,23 +301,12 @@
     .kpi-unified-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
+      border-top: 3.5px solid var(--brand-navy);
       border-radius: var(--radius-lg);
-      padding: 0.55rem 0.4rem;
+      padding: 0.65rem 0.45rem;
       margin-bottom: 0.85rem;
       box-shadow: var(--shadow-card);
-      position: relative;
-      overflow: hidden;
       width: 100%;
-    }
-
-    .kpi-unified-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2.5px;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
     }
 
     .kpi-unified-grid {
@@ -294,8 +316,8 @@
     }
 
     .kpi-cell {
-      padding: 0.35rem 0.7rem;
-      border-right: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 0.35rem 0.75rem;
+      border-right: 1px solid var(--border-glass);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -307,7 +329,7 @@
     }
 
     .kpi-label {
-      font-size: 0.63rem;
+      font-size: 0.64rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-secondary);
@@ -316,16 +338,16 @@
     }
 
     .kpi-value {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
-      color: var(--text-primary);
-      margin: 0.08rem 0;
+      color: var(--brand-navy);
+      margin: 0.1rem 0;
       letter-spacing: -0.02em;
       line-height: 1.15;
     }
 
     .kpi-sub {
-      font-size: 0.67rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       line-height: 1.2;
       white-space: nowrap;
@@ -333,12 +355,12 @@
       text-overflow: ellipsis;
     }
 
-    /* Mobile-First Paired Vertical Bar Chart Strip (Length & Fish Count Side-by-Side per Session) */
+    /* Mobile-First Paired Vertical Bar Chart Strip */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 0.9rem 0.95rem;
+      padding: 0.95rem 1rem;
       box-shadow: var(--shadow-card);
       margin-bottom: 0.95rem;
       width: 100%;
@@ -348,15 +370,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.7rem;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
 
     .rings-strip-title {
-      font-size: 0.92rem;
+      font-size: 0.96rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       letter-spacing: -0.01em;
     }
 
@@ -367,10 +389,10 @@
     }
 
     .session-donut-card {
-      background: rgba(9, 13, 22, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 0.7rem 0.6rem 0.75rem;
+      padding: 0.7rem 0.65rem 0.75rem;
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
@@ -379,11 +401,11 @@
     .session-donut-card-title {
       font-size: 0.86rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       text-align: center;
       letter-spacing: -0.01em;
       padding-bottom: 0.35rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      border-bottom: 1px solid var(--border-glass);
     }
 
     .donut-pair-row {
@@ -394,10 +416,10 @@
     }
 
     .bar-chart-slot {
-      background: rgba(15, 23, 42, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #ffffff;
+      border: 1px solid var(--border-glass);
       border-radius: var(--radius-sm);
-      padding: 0.5rem 0.38rem 0.45rem;
+      padding: 0.5rem 0.4rem 0.45rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -415,7 +437,7 @@
     }
 
     .bar-chart-metric-name {
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
@@ -423,20 +445,20 @@
     }
 
     .bar-chart-total-badge {
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: var(--accent-cyan);
+      color: var(--brand-cobalt);
     }
 
     .vbar-plot-area {
       width: 100%;
-      height: 108px;
+      height: 110px;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0.28rem;
       align-items: end;
-      padding-top: 1.05rem;
-      border-bottom: 1.5px solid rgba(148, 163, 184, 0.28);
+      padding-top: 1.1rem;
+      border-bottom: 1.5px solid #cbd5e1;
     }
 
     .vbar-col {
@@ -476,7 +498,7 @@
       transform: translateX(-50%);
       font-size: 0.62rem;
       font-weight: 800;
-      color: #f8fafc;
+      color: var(--text-primary);
       white-space: nowrap;
       letter-spacing: -0.02em;
       pointer-events: none;
@@ -487,12 +509,12 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0.28rem;
-      margin-top: 0.22rem;
+      margin-top: 0.24rem;
       text-align: center;
     }
 
     .vbar-axis-lbl {
-      font-size: 0.64rem;
+      font-size: 0.65rem;
       font-weight: 800;
       letter-spacing: 0.02em;
     }
@@ -501,6 +523,7 @@
     .session-section-banner {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
+      border-left: 4px solid var(--brand-navy);
       border-radius: var(--radius-lg);
       padding: 0.8rem 1rem;
       box-shadow: var(--shadow-card);
@@ -544,33 +567,33 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
     }
 
     .sh2h-edge-badge {
       font-size: 0.67rem;
-      font-weight: 800;
-      padding: 0.16rem 0.52rem;
+      font-weight: 700;
+      padding: 0.16rem 0.55rem;
       border-radius: 999px;
       white-space: nowrap;
     }
 
     .sh2h-edge-badge.d1 {
-      background: rgba(99, 102, 241, 0.22);
-      color: #c7d2fe;
-      border: 1px solid rgba(99, 102, 241, 0.45);
+      background: #eef2ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
     }
 
     .sh2h-edge-badge.d2 {
-      background: rgba(245, 158, 11, 0.22);
-      color: #fde68a;
-      border: 1px solid rgba(245, 158, 11, 0.45);
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
     }
 
     .sh2h-edge-badge.even {
-      background: rgba(56, 189, 248, 0.16);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
     }
 
     .sh2h-split-cols {
@@ -581,8 +604,8 @@
     }
 
     .sh2h-side {
-      background: rgba(23, 33, 54, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
       padding: 0.55rem 0.62rem;
       min-width: 0;
@@ -592,8 +615,8 @@
     }
 
     .sh2h-side.winner-side {
-      border-color: rgba(56, 189, 248, 0.5);
-      background: rgba(30, 44, 72, 0.98);
+      border-color: var(--brand-cobalt);
+      background: var(--brand-tint);
     }
 
     .sh2h-side-lbl {
@@ -629,48 +652,61 @@
     .sh2h-footer-note {
       font-size: 0.71rem;
       color: var(--text-secondary);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--border-glass);
       padding-top: 0.42rem;
     }
 
-    /* Zone Winners Panels (Uniform Zone-Coloured Panels Matching Zone Colours) */
+    /* Zone Winners Panels (Light Fintech Tinted Panels Matching Zone Colours) */
     .zone-winner-panel[data-zone="Red Zone"] {
-      border-color: var(--zone-red-border);
-      background: linear-gradient(165deg, rgba(239, 68, 68, 0.33) 0%, rgba(239, 68, 68, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+      border-color: #f87171;
+      border-top: 4px solid #ef4444;
+      background: linear-gradient(180deg, #fef2f2 0%, #ffffff 42%);
     }
     .zone-winner-panel[data-zone="Yellow Zone"] {
-      border-color: var(--zone-yellow-border);
-      background: linear-gradient(165deg, rgba(234, 179, 8, 0.33) 0%, rgba(234, 179, 8, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+      border-color: #facc15;
+      border-top: 4px solid #eab308;
+      background: linear-gradient(180deg, #fefce8 0%, #ffffff 42%);
     }
     .zone-winner-panel[data-zone="Green Zone"] {
-      border-color: var(--zone-green-border);
-      background: linear-gradient(165deg, rgba(34, 197, 94, 0.33) 0%, rgba(34, 197, 94, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+      border-color: #4ade80;
+      border-top: 4px solid #22c55e;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%);
     }
     .zone-winner-panel[data-zone="Blue Zone"] {
-      border-color: var(--zone-blue-border);
-      background: linear-gradient(165deg, rgba(59, 130, 246, 0.33) 0%, rgba(59, 130, 246, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+      border-color: #60a5fa;
+      border-top: 4px solid #3b82f6;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%);
     }
 
     .zt-lbl-d1 {
-      color: #a5b4fc;
+      color: #4338ca;
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
     }
 
     .zt-lbl-d2 {
-      color: #fcd34d;
+      color: #b45309;
       display: inline-flex;
       align-items: center;
       gap: 0.25rem;
     }
 
     /* =========================================================================
-       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM ACROSS ALL VIEWS
+       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM + STICKY HEADERS
        ========================================================================= */
     .table-wrap {
       overflow-x: auto;
       position: relative;
+    }
+
+    /* Viewport-capped scroll wrapper so sticky thead stays locked at the top for 120+ anglers */
+    .sticky-scroll-wrap {
+      overflow: auto;
+      max-height: calc(100vh - 150px);
+      border-radius: var(--radius-md);
+      padding-right: 2px;
+      padding-bottom: 4px;
     }
 
     .table-wrap.tight-scores-wrap {
@@ -699,43 +735,67 @@
       text-align: left;
     }
 
+    /* Sticky Floating Table Headers */
+    table.sticky-header-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Two-tier header row offset for Individual Leaderboard */
+    table.tight-ind-table thead tr:nth-child(1) th {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 30px;
+      box-shadow: none;
+    }
+
+    table.tight-ind-table thead tr:nth-child(2) th {
+      position: sticky;
+      top: 30px;
+      z-index: 29;
+      box-shadow: 0 3px 6px rgba(15, 23, 42, 0.09);
+    }
+
     table.card-row-table thead th {
-      background: rgba(9, 13, 22, 0.94);
-      color: var(--text-secondary);
+      background: var(--brand-navy);
+      color: #ffffff;
       font-weight: 700;
       font-size: 0.69rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding: 0.55rem 0.7rem;
-      border-top: 1px solid var(--border-glass);
-      border-bottom: 1px solid var(--border-glass);
+      border-top: 1px solid var(--brand-navy);
+      border-bottom: 1px solid var(--brand-navy);
       white-space: nowrap;
     }
 
     table.card-row-table thead tr:first-child th:first-child {
-      border-left: 1px solid var(--border-glass);
+      border-left: 1px solid var(--brand-navy);
       border-top-left-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:first-child th:last-child {
-      border-right: 1px solid var(--border-glass);
+      border-right: 1px solid var(--brand-navy);
       border-top-right-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:last-child th:first-child {
-      border-left: 1px solid var(--border-glass);
+      border-left: 1px solid var(--brand-navy);
       border-bottom-left-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:last-child th:last-child {
-      border-right: 1px solid var(--border-glass);
+      border-right: 1px solid var(--brand-navy);
       border-bottom-right-radius: var(--radius-sm);
     }
 
     table.card-row-table tbody tr td {
-      background: rgba(23, 33, 54, 0.92);
-      border-top: 1px solid rgba(148, 163, 184, 0.22);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+      background: #ffffff;
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
       padding: 0.55rem 0.7rem;
       color: var(--text-primary);
       vertical-align: middle;
@@ -743,30 +803,30 @@
     }
 
     table.card-row-table tbody tr:hover td {
-      background: rgba(30, 44, 72, 0.98);
+      background: #f8fbff;
     }
 
     table.card-row-table tbody tr td:first-child {
-      border-left: 1px solid rgba(148, 163, 184, 0.22);
+      border-left: 1px solid var(--border-glass);
       border-top-left-radius: var(--radius-md);
       border-bottom-left-radius: var(--radius-md);
     }
 
     table.card-row-table tbody tr td:last-child {
-      border-right: 1px solid rgba(148, 163, 184, 0.22);
+      border-right: 1px solid var(--border-glass);
       border-top-right-radius: var(--radius-md);
       border-bottom-right-radius: var(--radius-md);
     }
 
     /* Podium Left Accent on Zone Winner / Team Rows */
     table.card-row-table tbody tr.podium-1 td:first-child {
-      border-left: 3.5px solid #fbbf24;
+      border-left: 4px solid #eab308;
     }
     table.card-row-table tbody tr.podium-2 td:first-child {
-      border-left: 3.5px solid #cbd5e1;
+      border-left: 4px solid #94a3b8;
     }
     table.card-row-table tbody tr.podium-3 td:first-child {
-      border-left: 3.5px solid #d97706;
+      border-left: 4px solid #d97706;
     }
 
     /* =========================================================================
@@ -780,34 +840,35 @@
 
     table.tight-ind-table th.group-th {
       text-align: center;
-      padding: 0.4rem 0.35rem;
+      padding: 0.38rem 0.35rem;
       font-size: 0.68rem;
       letter-spacing: 0.06em;
     }
 
     table.tight-ind-table th.group-th.overall-grp {
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.11);
-      border-right: 1px solid var(--border-glass);
+      color: #ffffff;
+      background: var(--brand-navy);
+      border-right: 1px solid var(--brand-navy);
       border-top-right-radius: var(--radius-sm);
     }
 
     table.tight-ind-table th.group-th.d1-grp {
-      color: #a5b4fc;
-      background: rgba(99, 102, 241, 0.11);
-      border-left: 1px solid var(--border-glass);
+      color: #e0e7ff;
+      background: #1e3a8a;
+      border-left: 1px solid #1e3a8a;
       border-top-left-radius: var(--radius-sm);
     }
 
     table.tight-ind-table th.group-th.d2-grp {
-      color: #fcd34d;
-      background: rgba(245, 158, 11, 0.11);
+      color: #fef3c7;
+      background: #1e40af;
     }
 
     table.tight-ind-table th.sub-th {
       padding: 0.38rem 0.36rem;
       font-size: 0.66rem;
       text-align: center;
+      background: #003566;
     }
 
     table.tight-ind-table th.sub-th.left-align {
@@ -816,21 +877,22 @@
 
     /* Right edge of Left Overall Card Header */
     table.tight-ind-table th.overall-card-end {
-      border-right: 1px solid var(--border-glass) !important;
+      border-right: 1px solid #003566 !important;
       border-bottom-right-radius: var(--radius-sm);
     }
 
     /* Left edge of Right Session Card Header */
     table.tight-ind-table th.session-card-start {
-      border-left: 1px solid var(--border-glass) !important;
+      border-left: 1px solid #003566 !important;
       border-bottom-left-radius: var(--radius-sm);
     }
 
     /* Transparent Vertical Gap Column Between Overall Card & Day 1/Day 2 Card */
     table.tight-ind-table th.col-gap-spacer,
     table.tight-ind-table td.col-gap-spacer {
-      background: transparent !important;
+      background: var(--bg-surface) !important;
       border: none !important;
+      box-shadow: none !important;
       width: 11px;
       min-width: 11px;
       max-width: 11px;
@@ -845,36 +907,36 @@
 
     /* Left Card (Pos + Angler + Overall Stats) Rounded Right Cap */
     table.tight-ind-table tbody tr.ind-data-row td.overall-card-end {
-      border-right: 1px solid rgba(56, 189, 248, 0.32) !important;
+      border-right: 1px solid var(--brand-tint-border) !important;
       border-top-right-radius: var(--radius-md);
       border-bottom-right-radius: var(--radius-md);
     }
 
-    /* Emphasize Overall Card Border & Tint */
+    /* Emphasize Overall Card Border & Subtle Banking Blue Tint */
     table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell {
-      background: rgba(20, 30, 52, 0.96);
-      border-top-color: rgba(56, 189, 248, 0.28);
-      border-bottom-color: rgba(56, 189, 248, 0.28);
+      background: #f8fbff;
+      border-top-color: var(--brand-tint-border);
+      border-bottom-color: var(--brand-tint-border);
     }
 
     table.tight-ind-table tbody tr.ind-data-row td.overall-card-cell:first-child {
-      border-left-color: rgba(56, 189, 248, 0.32);
+      border-left-color: var(--brand-tint-border);
     }
 
     /* Right Card (Day 1 + Day 2 Session Stats) Rounded Left Cap */
     table.tight-ind-table tbody tr.ind-data-row td.session-card-start {
-      border-left: 1px solid rgba(148, 163, 184, 0.25) !important;
+      border-left: 1px solid var(--border-glass) !important;
       border-top-left-radius: var(--radius-md);
       border-bottom-left-radius: var(--radius-md);
     }
 
     table.tight-ind-table tbody tr.ind-data-row td.session-card-cell {
-      background: rgba(25, 36, 58, 0.90);
+      background: #ffffff;
     }
 
     table.tight-ind-table tbody tr.ind-data-row:hover td.overall-card-cell,
     table.tight-ind-table tbody tr.ind-data-row:hover td.session-card-cell {
-      background: rgba(33, 49, 80, 0.99);
+      background: var(--brand-tint);
     }
 
     /* Horizontal Spacer Row Between Different Overall Points Totals */
@@ -902,7 +964,7 @@
 
     .ind-angler-name {
       font-weight: 800;
-      font-size: 0.8rem;
+      font-size: 0.81rem;
       color: var(--text-primary);
       line-height: 1.2;
       white-space: nowrap;
@@ -911,7 +973,7 @@
     }
 
     .ind-team-sub {
-      font-size: 0.66rem;
+      font-size: 0.67rem;
       font-weight: 600;
       color: var(--text-muted);
       line-height: 1.15;
@@ -922,7 +984,7 @@
     }
 
     .sec-sep-left {
-      border-left: 1.5px solid rgba(148, 163, 184, 0.28) !important;
+      border-left: 1.5px solid #cbd5e1 !important;
     }
 
     /* Team Leaderboard Specific Cells within Card-Row Table */
@@ -943,26 +1005,26 @@
     .team-name-line {
       font-size: 0.88rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       line-height: 1.2;
     }
 
     .team-totals-line {
-      font-size: 0.71rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      color: var(--accent-cyan);
+      color: var(--brand-cobalt);
       line-height: 1.2;
       margin-top: 2px;
     }
 
     .team-contrib-cell {
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 1px solid var(--border-glass);
       text-align: left;
       min-width: 152px;
     }
 
     .team-contrib-cell.first-angler-sep {
-      border-left: 2px solid rgba(56, 189, 248, 0.45);
+      border-left: 2px solid var(--brand-tint-border);
     }
 
     .contrib-angler-line {
@@ -1005,18 +1067,18 @@
     }
 
     .zw-zone-title {
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--brand-navy);
       letter-spacing: -0.01em;
     }
 
     .zw-winner-callout {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 700;
-      color: #fef08a;
-      background: rgba(9, 13, 22, 0.65);
-      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #78350f;
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
       padding: 0.24rem 0.68rem;
       border-radius: 999px;
     }
@@ -1031,18 +1093,21 @@
     }
 
     .glass-select, .glass-input {
-      background: rgba(9, 13, 22, 0.85);
-      border: 1px solid var(--border-glass);
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
       color: var(--text-primary);
       padding: 0.55rem 0.85rem;
       border-radius: var(--radius-md);
       font-size: 0.86rem;
+      font-weight: 600;
       outline: none;
       min-width: 210px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
     .glass-select:focus, .glass-input:focus {
-      border-color: var(--accent-cyan);
+      border-color: var(--brand-cobalt);
+      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
     }
 
     .gauges-row {
@@ -1081,7 +1146,7 @@
 
     .gauge-track {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.1);
+      stroke: #e2e8f0;
       stroke-width: 7.5;
     }
 
@@ -1105,7 +1170,7 @@
     .gauge-ordinal {
       font-size: 1.05rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--brand-navy);
       line-height: 1.1;
     }
 
@@ -1131,20 +1196,20 @@
 
     .zone-chip {
       display: inline-block;
-      padding: 0.16rem 0.52rem;
+      padding: 0.16rem 0.55rem;
       border-radius: 6px;
       font-size: 0.72rem;
       font-weight: 700;
     }
-    .zone-chip.Red { background: var(--zone-red-bg); color: #fca5a5; border: 1px solid var(--zone-red-border); }
-    .zone-chip.Yellow { background: var(--zone-yellow-bg); color: #fde047; border: 1px solid var(--zone-yellow-border); }
-    .zone-chip.Green { background: var(--zone-green-bg); color: #86efac; border: 1px solid var(--zone-green-border); }
-    .zone-chip.Blue { background: var(--zone-blue-bg); color: #93c5fd; border: 1px solid var(--zone-blue-border); }
+    .zone-chip.Red { background: var(--zone-red-bg); color: #b91c1c; border: 1px solid var(--zone-red-border); }
+    .zone-chip.Yellow { background: var(--zone-yellow-bg); color: #a16207; border: 1px solid var(--zone-yellow-border); }
+    .zone-chip.Green { background: var(--zone-green-bg); color: #15803d; border: 1px solid var(--zone-green-border); }
+    .zone-chip.Blue { background: var(--zone-blue-bg); color: #1d4ed8; border: 1px solid var(--zone-blue-border); }
 
     .rank-medal { font-weight: 800; }
-    .rank-1 { color: #fbbf24; }
-    .rank-2 { color: #cbd5e1; }
-    .rank-3 { color: #d97706; }
+    .rank-1 { color: #b45309; }
+    .rank-2 { color: #475569; }
+    .rank-3 { color: #9a3412; }
 
     .h2h-grid {
       display: grid;
@@ -1163,7 +1228,7 @@
 
     .h2h-vs {
       font-weight: 800;
-      color: var(--accent-cyan);
+      color: var(--brand-navy);
       font-size: 0.95rem;
       text-align: center;
     }
@@ -1192,8 +1257,8 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .kpi-cell {
-        border-right: 1px solid rgba(255, 255, 255, 0.08);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: 1px solid var(--border-glass);
+        border-bottom: 1px solid var(--border-glass);
         padding: 0.42rem 0.65rem;
       }
       .kpi-cell:nth-child(3n) {
@@ -1209,13 +1274,13 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .kpi-cell:nth-child(3n) {
-        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: 1px solid var(--border-glass);
       }
       .kpi-cell:nth-child(2n) {
         border-right: none;
       }
       .kpi-cell:nth-child(n+3) {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid var(--border-glass);
       }
       .kpi-cell:nth-child(n+5) {
         border-bottom: none;
@@ -1224,15 +1289,19 @@
         grid-template-columns: 1fr;
       }
       .h2h-grid { grid-template-columns: 1fr; }
-      .app-header { padding: 1.1rem; }
+      .app-header { padding: 1.15rem; }
+      .sticky-scroll-wrap {
+        max-height: calc(100vh - 185px);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Clean Header (Shown ONLY on the Front Splash Page) -->
+    <!-- Clean Fintech Header (Shown ONLY on the Front Splash Page) -->
     <header class="app-header" id="mainSplashHeader">
       <div class="brand-block">
+        <span class="brand-eyebrow">Official Championship Results</span>
         <h1 id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
         <div class="brand-meta">
           <span id="matchVenue">📍 Arbroath & Elliot Beach</span>
@@ -1243,48 +1312,73 @@
     </header>
 
     <!-- =========================================================
-         VIEW 0: FRONT SPLASH SCREEN (SLEEK FINANCIAL-STYLE BUTTONS)
+         VIEW 0: FRONT SPLASH SCREEN (MODERN BANKING "SPACES" CARDS)
          ========================================================= -->
     <main id="view-home" class="view-section active">
+      <div class="hub-section-label">Match Centre</div>
       <div class="hub-buttons-grid">
         <button class="hub-btn-card" data-nav="overview">
-          <span class="hub-btn-title">Match Overview</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Match Overview</span>
+            <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="individual">
-          <span class="hub-btn-title">Individual Leaderboard</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Individual Leaderboard</span>
+            <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="teams">
-          <span class="hub-btn-title">Team Leaderboard</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Team Leaderboard</span>
+            <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="day1zones">
-          <span class="hub-btn-title">Day 1 Zone Winners</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Day 1 Zone Winners</span>
+            <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="day2zones">
-          <span class="hub-btn-title">Day 2 Zone Winners</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Day 2 Zone Winners</span>
+            <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="biggest">
-          <span class="hub-btn-title">Biggest Fish</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Biggest Fish</span>
+            <span class="hub-btn-sub">Longest individual specimens & top 5 recorded species</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="secret">
-          <span class="hub-btn-title">Mystery Pairs</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">Mystery Pairs</span>
+            <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
 
         <button class="hub-btn-card" data-nav="myreport">
-          <span class="hub-btn-title">My Match Report</span>
-          <span class="hub-arrow">→</span>
+          <div class="hub-btn-text-wrap">
+            <span class="hub-btn-title">My Match Report</span>
+            <span class="hub-btn-sub">Personal rank gauges & head-to-head rival comparison</span>
+          </div>
+          <span class="hub-arrow">›</span>
         </button>
       </div>
     </main>
@@ -1317,7 +1411,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 2: INDIVIDUAL LEADERBOARD
+         VIEW 2: INDIVIDUAL LEADERBOARD (STICKY HEADERS + TWO-CARD SPLIT)
          ========================================================= -->
     <section id="view-individual" class="view-section">
       <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
@@ -1330,7 +1424,7 @@
             <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
           </div>
         </div>
-        <div class="table-wrap tight-scores-wrap">
+        <div class="table-wrap sticky-scroll-wrap tight-scores-wrap">
           <table class="card-row-table tight-ind-table">
             <thead>
               <tr>
@@ -1365,12 +1459,12 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (CLEAN HEADERLESS TABLE)
+         VIEW 3: TEAM LEADERBOARD (STICKY HEADERS)
          ========================================================= -->
     <section id="view-teams" class="view-section">
       <div class="glass-card" style="max-width: 1220px; margin-left: auto; margin-right: auto;">
-        <div class="table-wrap">
-          <table class="card-row-table one-line-team-table">
+        <div class="table-wrap sticky-scroll-wrap">
+          <table class="card-row-table one-line-team-table sticky-header-table">
             <thead id="teamsTableHead"></thead>
             <tbody id="teamsTableBody"></tbody>
           </table>
@@ -1409,7 +1503,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 4: BIGGEST FISH
+         VIEW 4: BIGGEST FISH (STICKY HEADERS)
          ========================================================= -->
     <section id="view-biggest" class="view-section">
       <div class="glass-card">
@@ -1420,8 +1514,8 @@
           </div>
         </div>
         <div class="species-summary-pills" id="biggestSpeciesSummary"></div>
-        <div class="table-wrap">
-          <table class="card-row-table">
+        <div class="table-wrap sticky-scroll-wrap">
+          <table class="card-row-table sticky-header-table">
             <thead>
               <tr>
                 <th>Rank</th>
@@ -1464,7 +1558,7 @@
         <div class="card-header">
           <div>
             <div class="card-title">My Match Report</div>
-            <div class="card-subtitle">Personal telemetry gauges showing exact field standing (e.g. 5th out of 28th) and rival comparison</div>
+            <div class="card-subtitle">Personal telemetry gauges showing exact field standing and rival comparison</div>
           </div>
         </div>
 
@@ -1492,7 +1586,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.5.3",
+      version: "v3.6.0",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1526,12 +1620,13 @@
     function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
       const trackTints = [
-        "rgba(239, 68, 68, 0.12)",
+        "rgba(239, 68, 68, 0.10)",
         "rgba(234, 179, 8, 0.12)",
-        "rgba(34, 197, 94, 0.12)",
-        "rgba(59, 130, 246, 0.12)"
+        "rgba(34, 197, 94, 0.10)",
+        "rgba(59, 130, 246, 0.10)"
       ];
       const axisLetters = ["R", "Y", "G", "B"];
+      const axisTextColors = ["#dc2626", "#b45309", "#15803d", "#1d4ed8"];
       const maxVal = Math.max(...rawValues, 1);
 
       const barsHtml = rawValues.map((val, idx) => {
@@ -1548,7 +1643,7 @@
       }).join("");
 
       const axisHtml = axisLetters.map((letter, idx) => `
-        <span class="vbar-axis-lbl" style="color:${colors[idx]};">${letter}</span>
+        <span class="vbar-axis-lbl" style="color:${axisTextColors[idx]};">${letter}</span>
       `).join("");
 
       return `
@@ -1577,7 +1672,7 @@
               const tbl = wrap.querySelector("table");
               if (!tbl) return;
               tbl.classList.remove("table-peek-bounce");
-              void tbl.offsetWidth; // trigger reflow
+              void tbl.offsetWidth;
               tbl.classList.add("table-peek-bounce");
 
               const stopBounce = () => {
@@ -1888,8 +1983,7 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
-      // Mobile-First Paired Vertical Bar Charts:
-      // Length (left) & Fish Count (right) side-by-side per session card
+      // Mobile-First Paired Vertical Bar Charts
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card">
           <div class="session-donut-card-title">Competition Total</div>
@@ -2190,7 +2284,7 @@
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <td class="overall-card-cell sec-sep-left"><strong style="color:var(--accent-cyan);">${pts}</strong></td>
+              <td class="overall-card-cell sec-sep-left"><strong style="color:var(--brand-navy);">${pts}</strong></td>
               <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
               <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
               <td class="overall-card-cell overall-card-end">${ovBig}</td>
@@ -2219,7 +2313,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (CLEAN HEADERLESS TABLE)
+       RENDER VIEW 3: TEAM LEADERBOARD (STICKY HEADERS)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -2285,7 +2379,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (UNIFORM COLOURED CARDS)
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (TINTED FINTECH CARDS)
        --------------------------------------------------------- */
     function renderDayZoneWinners(dayKey, gridElementId) {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -2328,7 +2422,7 @@
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <td style="text-align:center;"><strong style="color:var(--accent-cyan);">${sess.zonePoints}</strong></td>
+              <td style="text-align:center;"><strong style="color:var(--brand-navy);">${sess.zonePoints}</strong></td>
               <td style="text-align:center;">${sess.totalLengthCm}</td>
               <td style="text-align:center;"><strong>${sess.fishCount}</strong></td>
               <td style="text-align:center;">${bigDisplay}</td>
@@ -2373,10 +2467,10 @@
         const d1List = (spSummary.day1 || []).join(", ") || "None";
         const d2List = (spSummary.day2 || []).join(", ") || "None";
         summaryEl.innerHTML = `
-          <span class="badge-pill" style="background:rgba(99,102,241,0.16); color:#c7d2fe; border-color:rgba(99,102,241,0.35);">
+          <span class="badge-pill" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe;">
             🌙 Day 1 Top Species: ${d1List}
           </span>
-          <span class="badge-pill" style="background:rgba(245,158,11,0.16); color:#fde68a; border-color:rgba(245,158,11,0.35);">
+          <span class="badge-pill" style="background:#fffbeb; color:#b45309; border-color:#fde68a;">
             ☀️ Day 2 Top Species: ${d2List}
           </span>
         `;
@@ -2417,9 +2511,9 @@
 
       if (!winners.length && !others.length) {
         bodyEl.innerHTML = `
-          <div style="padding:1.5rem; text-align:center; background:rgba(9,13,22,0.55); border-radius:var(--radius-md); border:1px dashed rgba(255,255,255,0.16); color:var(--text-secondary);">
+          <div style="padding:1.5rem; text-align:center; background:var(--bg-card); border-radius:var(--radius-md); border:1px dashed var(--border-strong); color:var(--text-secondary);">
             <div style="font-size:1.4rem; margin-bottom:0.35rem;">🎲</div>
-            <div style="font-weight:700; color:var(--text-primary);">Mystery Pairs Draw Pending</div>
+            <div style="font-weight:700; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
             <div style="font-size:0.82rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
           </div>
         `;
@@ -2538,7 +2632,7 @@
             `out of ${fieldOrdinal}`,
             `${me.totals.cumulativePoints} cumulative zone pts`,
             overallPct,
-            "#38bdf8"
+            "#004481"
           )}
           ${buildOrdinalGauge(
             "Total Fish Rank",
@@ -2546,7 +2640,7 @@
             `out of ${fieldOrdinal}`,
             `${me.totals.cumulativeFish} total fish landed`,
             fishRankPct,
-            "#34d399"
+            "#059669"
           )}
           ${buildOrdinalGauge(
             "Total Length Rank",
@@ -2554,7 +2648,7 @@
             `out of ${fieldOrdinal}`,
             `${me.totals.cumulativeLengthCm} cm measured`,
             lengthRankPct,
-            "#818cf8"
+            "#005eb8"
           )}
           ${buildOrdinalGauge(
             "Session Share",
@@ -2562,7 +2656,7 @@
             "🌙 Day 1 Share",
             `🌙 ${me.d1.fishCount} • ☀️ ${me.d2.fishCount}`,
             Math.max(6, d1SharePct),
-            "#fbbf24"
+            "#d97706"
           )}
         `;
 
@@ -2571,8 +2665,8 @@
 
         document.getElementById("h2hContainer").innerHTML = `
           <div class="h2h-box">
-            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem;">
-              ${me.anglerName} <span style="color:var(--accent-cyan);">(${getOrdinal(me.rank)} out of ${fieldOrdinal})</span>
+            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem; color:var(--brand-navy);">
+              ${me.anglerName} <span style="color:var(--brand-cobalt);">(${getOrdinal(me.rank)} out of ${fieldOrdinal})</span>
             </div>
             <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${me.teamName}</div>
             <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.84rem;">
@@ -2586,7 +2680,7 @@
           <div class="h2h-vs">VS</div>
 
           <div class="h2h-box">
-            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem;">
+            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem; color:var(--brand-navy);">
               ${rival.anglerName} <span style="color:var(--accent-indigo);">(${getOrdinal(rival.rank)} out of ${fieldOrdinal})</span>
             </div>
             <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${rival.teamName}</div>
