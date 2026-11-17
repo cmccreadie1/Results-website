@@ -333,7 +333,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Mobile-First Paired Session Donut Strip (Length & Fish Count Side-by-Side per Session) */
+    /* Mobile-First Paired Vertical Bar Chart Strip (Length & Fish Count Side-by-Side per Session) */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -354,10 +354,32 @@
     }
 
     .rings-strip-title {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.01em;
+    }
+
+    .zone-legend-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .zone-dot-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .zone-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
     }
 
     .session-donuts-grid {
@@ -370,7 +392,7 @@
       background: rgba(9, 13, 22, 0.62);
       border: 1px solid rgba(255, 255, 255, 0.09);
       border-radius: var(--radius-md);
-      padding: 0.7rem 0.65rem 0.8rem;
+      padding: 0.7rem 0.6rem 0.75rem;
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
@@ -389,51 +411,112 @@
     .donut-pair-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.45rem;
-      align-items: start;
+      gap: 0.5rem;
+      align-items: stretch;
     }
 
-    .donut-slot {
+    .bar-chart-slot {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.38rem 0.45rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-align: center;
       min-width: 0;
     }
 
-    .ring-donut-svg {
-      width: 116px;
-      height: 116px;
-      max-width: 100%;
-      flex-shrink: 0;
-      overflow: visible;
+    .bar-chart-header {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem;
+      margin-bottom: 0.35rem;
+      padding: 0 0.15rem;
     }
 
-    .ring-val-label {
-      fill: #ffffff;
-      font-size: 8.2px;
+    .bar-chart-metric-name {
+      font-size: 0.72rem;
       font-weight: 800;
-      text-anchor: middle;
-      dominant-baseline: central;
-      paint-order: stroke fill;
-      stroke: rgba(15, 23, 42, 0.82);
-      stroke-width: 2.3px;
-      stroke-linejoin: round;
-    }
-
-    .donut-slot-title {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-top: 0.3rem;
-      line-height: 1.2;
-    }
-
-    .donut-slot-sub {
-      font-size: 0.68rem;
       color: var(--text-secondary);
-      line-height: 1.2;
-      margin-top: 0.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .bar-chart-total-badge {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .vbar-plot-area {
+      width: 100%;
+      height: 108px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.28rem;
+      align-items: end;
+      padding-top: 1.05rem;
+      border-bottom: 1.5px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .vbar-col {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      min-width: 0;
+    }
+
+    .vbar-track {
+      width: 100%;
+      max-width: 26px;
+      height: 100%;
+      border-radius: 5px 5px 0 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+    }
+
+    .vbar-fill {
+      width: 100%;
+      border-radius: 5px 5px 0 0;
+      transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      min-height: 3px;
+    }
+
+    .vbar-val-tag {
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: #f8fafc;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      pointer-events: none;
+    }
+
+    .vbar-axis-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.28rem;
+      margin-top: 0.22rem;
+      text-align: center;
+    }
+
+    .vbar-axis-lbl {
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
 
     /* Extrapolated Session & Zone Shift Bar */
@@ -475,97 +558,139 @@
       color: var(--text-secondary);
     }
 
-    /* Centered 4-Card Coloured Zone Grid */
-    .zones-telemetry-grid {
+    /* Cohesive Day 1 (Night) vs Day 2 (Day) Performance Comparison Grid */
+    .session-h2h-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.85rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
       width: 100%;
     }
 
-    .zone-telemetry-card {
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 0.9rem 0.95rem;
+    .sh2h-metric-card {
+      background: rgba(9, 13, 22, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.85rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 0.45rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-      width: 100%;
-    }
-
-    .zone-telemetry-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .zone-telemetry-card[data-zone="Red Zone"],
-    .zone-winner-panel[data-zone="Red Zone"] {
-      border-color: var(--zone-red-border);
-      background: linear-gradient(165deg, rgba(239, 68, 68, 0.33) 0%, rgba(239, 68, 68, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
-    }
-    .zone-telemetry-card[data-zone="Yellow Zone"],
-    .zone-winner-panel[data-zone="Yellow Zone"] {
-      border-color: var(--zone-yellow-border);
-      background: linear-gradient(165deg, rgba(234, 179, 8, 0.33) 0%, rgba(234, 179, 8, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
-    }
-    .zone-telemetry-card[data-zone="Green Zone"],
-    .zone-winner-panel[data-zone="Green Zone"] {
-      border-color: var(--zone-green-border);
-      background: linear-gradient(165deg, rgba(34, 197, 94, 0.33) 0%, rgba(34, 197, 94, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
-    }
-    .zone-telemetry-card[data-zone="Blue Zone"],
-    .zone-winner-panel[data-zone="Blue Zone"] {
-      border-color: var(--zone-blue-border);
-      background: linear-gradient(165deg, rgba(59, 130, 246, 0.33) 0%, rgba(59, 130, 246, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
-    }
-
-    .zt-text-row {
-      background: rgba(9, 13, 22, 0.58);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.68rem;
-      display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
     }
 
-    .zt-row-left {
+    .sh2h-top-row {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .sh2h-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 800;
+      color: var(--text-secondary);
+    }
+
+    .sh2h-edge-badge {
+      font-size: 0.66rem;
+      font-weight: 800;
+      padding: 0.14rem 0.48rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .sh2h-edge-badge.d1 {
+      background: rgba(99, 102, 241, 0.22);
+      color: #c7d2fe;
+      border: 1px solid rgba(99, 102, 241, 0.45);
+    }
+
+    .sh2h-edge-badge.d2 {
+      background: rgba(245, 158, 11, 0.22);
+      color: #fde68a;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+    }
+
+    .sh2h-edge-badge.even {
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .sh2h-split-cols {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .sh2h-side {
+      background: rgba(23, 33, 54, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.55rem;
       min-width: 0;
     }
 
-    .zt-row-label {
-      font-size: 0.66rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-secondary);
+    .sh2h-side.winner-side {
+      border-color: rgba(56, 189, 248, 0.45);
+      background: rgba(30, 44, 72, 0.95);
+    }
+
+    .sh2h-side-lbl {
+      font-size: 0.64rem;
       font-weight: 700;
+      margin-bottom: 0.1rem;
+    }
+
+    .sh2h-side-val {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--text-primary);
       line-height: 1.2;
     }
 
-    .zt-row-sub {
-      font-size: 0.7rem;
+    .sh2h-side-sub {
+      font-size: 0.66rem;
       color: var(--text-muted);
-      line-height: 1.25;
+      line-height: 1.2;
       margin-top: 0.1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .zt-row-value {
-      font-size: 0.94rem;
+    .sh2h-vs-sep {
+      font-size: 0.66rem;
       font-weight: 800;
-      color: var(--text-primary);
-      text-align: right;
-      white-space: nowrap;
-      flex-shrink: 0;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .sh2h-footer-note {
+      font-size: 0.69rem;
+      color: var(--text-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 0.35rem;
+    }
+
+    /* Zone Winners Panels (Uniform Zone-Coloured Panels Matching Zone Colours) */
+    .zone-winner-panel[data-zone="Red Zone"] {
+      border-color: var(--zone-red-border);
+      background: linear-gradient(165deg, rgba(239, 68, 68, 0.33) 0%, rgba(239, 68, 68, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+    }
+    .zone-winner-panel[data-zone="Yellow Zone"] {
+      border-color: var(--zone-yellow-border);
+      background: linear-gradient(165deg, rgba(234, 179, 8, 0.33) 0%, rgba(234, 179, 8, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+    }
+    .zone-winner-panel[data-zone="Green Zone"] {
+      border-color: var(--zone-green-border);
+      background: linear-gradient(165deg, rgba(34, 197, 94, 0.33) 0%, rgba(34, 197, 94, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
+    }
+    .zone-winner-panel[data-zone="Blue Zone"] {
+      border-color: var(--zone-blue-border);
+      background: linear-gradient(165deg, rgba(59, 130, 246, 0.33) 0%, rgba(59, 130, 246, 0.14) 55%, rgba(15, 23, 42, 0.96) 100%);
     }
 
     .zt-lbl-d1 {
@@ -832,7 +957,7 @@
       margin-top: 2px;
     }
 
-    /* Zone Winners Grid (Uniform Zone-Coloured Panels Matching Match Overview) */
+    /* Zone Winners Grid */
     .zone-winners-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1028,7 +1153,7 @@
     }
 
     @media (max-width: 1120px) {
-      .zones-telemetry-grid {
+      .session-h2h-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .zone-winners-grid {
@@ -1075,12 +1200,14 @@
       .kpi-cell:nth-child(n+5) {
         border-bottom: none;
       }
+      .session-h2h-grid {
+        grid-template-columns: 1fr;
+      }
       .extrapolated-bar {
         grid-template-columns: 1fr;
       }
       .h2h-grid { grid-template-columns: 1fr; }
       .app-header { padding: 1.1rem; }
-      .zones-telemetry-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1153,7 +1280,13 @@
 
       <div class="rings-strip-card">
         <div class="rings-strip-header">
-          <div class="rings-strip-title">Zone Length & Fish Count Breakdown</div>
+          <div class="rings-strip-title">Fish Length & Fish Count Breakdown</div>
+          <div class="zone-legend-mini">
+            <span class="zone-dot-item"><span class="zone-dot" style="background:#ef4444;"></span>Red</span>
+            <span class="zone-dot-item"><span class="zone-dot" style="background:#eab308;"></span>Yellow</span>
+            <span class="zone-dot-item"><span class="zone-dot" style="background:#22c55e;"></span>Green</span>
+            <span class="zone-dot-item"><span class="zone-dot" style="background:#3b82f6;"></span>Blue</span>
+          </div>
         </div>
         <div class="session-donuts-grid" id="sessionDonutsGrid"></div>
         <div class="extrapolated-bar" id="extrapolatedInsightsRow"></div>
@@ -1161,13 +1294,16 @@
 
       <div class="glass-card">
         <div class="card-header">
-          <div class="card-title">Overall Performance</div>
+          <div>
+            <div class="card-title">🌙 Day 1 (Night) vs. ☀️ Day 2 (Day) Performance</div>
+            <div class="card-subtitle">Head-to-head session comparison across catch volume, length, strike rate & top zones</div>
+          </div>
           <div style="display:flex; gap:0.75rem; font-size:0.8rem; font-weight:700;">
-            <span class="zt-lbl-d1">🌙 Day 1</span>
-            <span class="zt-lbl-d2">☀️ Day 2</span>
+            <span class="zt-lbl-d1">🌙 Night (D1)</span>
+            <span class="zt-lbl-d2">☀️ Day (D2)</span>
           </div>
         </div>
-        <div class="zones-telemetry-grid" id="unifiedZonesGrid"></div>
+        <div class="session-h2h-grid" id="sessionComparisonGrid"></div>
       </div>
     </section>
 
@@ -1345,7 +1481,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.5.0",
+      version: "v3.5.1",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       dates: "2027 Open Shore",
@@ -1375,66 +1511,48 @@
       return (zoneStr || "").replace(" Zone", "").trim();
     }
 
-    function buildZoneDonutSvg(rawValues, formattedLabels, centerTopText, centerBotText) {
-      const cx = 58;
-      const cy = 58;
-      const r = 42;
-      const strokeW = 19;
-      const circ = 2 * Math.PI * r;
+    // Build 4-zone colour-coded vertical bar chart for a metric slot (Length or Fish Count)
+    function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
-      const total = rawValues.reduce((s, v) => s + v, 0);
+      const trackTints = [
+        "rgba(239, 68, 68, 0.12)",
+        "rgba(234, 179, 8, 0.12)",
+        "rgba(34, 197, 94, 0.12)",
+        "rgba(59, 130, 246, 0.12)"
+      ];
+      const axisLetters = ["R", "Y", "G", "B"];
+      const maxVal = Math.max(...rawValues, 1);
 
-      let cumulativeShare = 0;
-      let arcsHtml = "";
-      let labelsHtml = "";
+      const barsHtml = rawValues.map((val, idx) => {
+        const pctHeight = val > 0 ? Math.max(8, Math.round((val / maxVal) * 100)) : 2;
+        return `
+          <div class="vbar-col">
+            <div class="vbar-track" style="background:${trackTints[idx]};">
+              <div class="vbar-fill" style="height:${pctHeight}%; background:${colors[idx]};">
+                <span class="vbar-val-tag">${formattedLabels[idx]}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
 
-      if (total > 0) {
-        rawValues.forEach((val, idx) => {
-          if (val <= 0) return;
-          const share = val / total;
-          const dashLen = share * circ;
-          const gapLen = circ - dashLen;
-          const offset = -(cumulativeShare * circ);
-
-          arcsHtml += `
-            <circle
-              cx="${cx}" cy="${cy}" r="${r}"
-              fill="none"
-              stroke="${colors[idx]}"
-              stroke-width="${strokeW}"
-              stroke-dasharray="${Math.max(0, dashLen - 1.5).toFixed(2)} ${(gapLen + 1.5).toFixed(2)}"
-              stroke-dashoffset="${offset.toFixed(2)}"
-              transform="rotate(-90 ${cx} ${cy})"
-            />
-          `;
-
-          if (share >= 0.06) {
-            const midShare = cumulativeShare + share / 2;
-            const angleRad = (midShare * 360 - 90) * (Math.PI / 180);
-            const lx = cx + r * Math.cos(angleRad);
-            const ly = cy + r * Math.sin(angleRad);
-
-            labelsHtml += `
-              <text
-                x="${lx.toFixed(1)}"
-                y="${ly.toFixed(1)}"
-                class="ring-val-label"
-              >${formattedLabels[idx]}</text>
-            `;
-          }
-
-          cumulativeShare += share;
-        });
-      }
+      const axisHtml = axisLetters.map((letter, idx) => `
+        <span class="vbar-axis-lbl" style="color:${colors[idx]};">${letter}</span>
+      `).join("");
 
       return `
-        <svg class="ring-donut-svg" viewBox="0 0 116 116">
-          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="${strokeW}" />
-          ${arcsHtml}
-          ${labelsHtml}
-          <text x="${cx}" y="${cy - 3}" fill="#f8fafc" font-size="12" font-weight="800" text-anchor="middle">${centerTopText}</text>
-          <text x="${cx}" y="${cy + 10}" fill="#94a3b8" font-size="7.2" font-weight="700" text-anchor="middle">${centerBotText}</text>
-        </svg>
+        <div class="bar-chart-slot">
+          <div class="bar-chart-header">
+            <span class="bar-chart-metric-name">${metricTitle}</span>
+            <span class="bar-chart-total-badge">${totalBadgeText}</span>
+          </div>
+          <div class="vbar-plot-area">
+            ${barsHtml}
+          </div>
+          <div class="vbar-axis-row">
+            ${axisHtml}
+          </div>
+        </div>
       `;
     }
 
@@ -1574,7 +1692,7 @@
             sessionLabel: "🌙 Day 1",
             zone: a.d1.zone,
             peg: a.d1.peg,
-            species: a.d1.biggestFishSpecies || "Unspecified",
+            species: (a.d1.biggestFishSpecies || "").trim(),
             lengthCm: a.d1.biggestFishCm,
             anglerName: a.anglerName,
             teamName: a.teamName
@@ -1586,7 +1704,7 @@
             sessionLabel: "☀️ Day 2",
             zone: a.d2.zone,
             peg: a.d2.peg,
-            species: a.d2.biggestFishSpecies || "Unspecified",
+            species: (a.d2.biggestFishSpecies || "").trim(),
             lengthCm: a.d2.biggestFishCm,
             anglerName: a.anglerName,
             teamName: a.teamName
@@ -1657,20 +1775,31 @@
       const avgFishPerAngler = (totalFish / Math.max(1, totalAnglers)).toFixed(1);
 
       const totalRodSessions = totalAnglers * 2;
-      const activeRodSessions =
-        anglers.filter(a => (a.d1.fishCount || 0) > 0).length +
-        anglers.filter(a => (a.d2.fishCount || 0) > 0).length;
+      const d1CatchingAnglers = anglers.filter(a => (a.d1.fishCount || 0) > 0).length;
+      const d2CatchingAnglers = anglers.filter(a => (a.d2.fishCount || 0) > 0).length;
+      const activeRodSessions = d1CatchingAnglers + d2CatchingAnglers;
       const anglersCaughtPct = Math.round((activeRodSessions / totalRodSessions) * 100);
 
       let bestSessionFish = 0;
       let bestSessionWho = "—";
+      let d1BestBag = { fish: 0, angler: "—" };
+      let d2BestBag = { fish: 0, angler: "—" };
+
       anglers.forEach(a => {
-        if ((a.d1.fishCount || 0) > bestSessionFish) {
-          bestSessionFish = a.d1.fishCount;
+        const f1 = a.d1.fishCount || 0;
+        const f2 = a.d2.fishCount || 0;
+        if (f1 > d1BestBag.fish) {
+          d1BestBag = { fish: f1, angler: a.anglerName };
+        }
+        if (f2 > d2BestBag.fish) {
+          d2BestBag = { fish: f2, angler: a.anglerName };
+        }
+        if (f1 > bestSessionFish) {
+          bestSessionFish = f1;
           bestSessionWho = `${a.anglerName} (🌙 D1)`;
         }
-        if ((a.d2.fishCount || 0) > bestSessionFish) {
-          bestSessionFish = a.d2.fishCount;
+        if (f2 > bestSessionFish) {
+          bestSessionFish = f2;
           bestSessionWho = `${a.anglerName} (☀️ D2)`;
         }
       });
@@ -1678,7 +1807,7 @@
       const topSpecimen = STATE.specimensAll[0];
       const specimenValHtml = topSpecimen ? `${topSpecimen.lengthCm}<span style="font-size:0.82rem; font-weight:600;">cm</span>` : "—";
       const specimenSubText = topSpecimen
-        ? `${topSpecimen.species} • ${topSpecimen.anglerName} (${topSpecimen.day === "D1" ? "🌙" : "☀️"})`
+        ? `${topSpecimen.species ? topSpecimen.species + " • " : ""}${topSpecimen.anglerName} (${topSpecimen.day === "D1" ? "🌙" : "☀️"})`
         : "No specimen recorded";
 
       document.getElementById("overviewKpis").innerHTML = `
@@ -1746,89 +1875,65 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
-      // Mobile-first Paired Session Donuts:
-      // Each session card shows Length Donut + Fish Count Donut side-by-side on the same line
+      // Mobile-First Paired Vertical Bar Charts:
+      // Length (left) & Fish Count (right) side-by-side per session card
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card">
           <div class="session-donut-card-title">2 Day Total</div>
           <div class="donut-pair-row">
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.zoneLen),
-                zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}m`),
-                `${totalLengthMeters}m`,
-                "TOTAL"
-              )}
-              <div class="donut-slot-title">Length</div>
-              <div class="donut-slot-sub">${totalLengthCm} cm</div>
-            </div>
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.zoneFish),
-                zoneStats.map(z => `${z.zoneFish}`),
-                `${totalFish}`,
-                "FISH"
-              )}
-              <div class="donut-slot-title">Fish Count</div>
-              <div class="donut-slot-sub">${totalFish} landed</div>
-            </div>
+            ${buildZoneVerticalBarChart(
+              "Length",
+              `${totalLengthMeters}m`,
+              zoneStats.map(z => z.zoneLen),
+              zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}m`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalFish}`,
+              zoneStats.map(z => z.zoneFish),
+              zoneStats.map(z => `${z.zoneFish}`)
+            )}
           </div>
         </div>
 
         <div class="session-donut-card">
           <div class="session-donut-card-title">🌙 Day 1</div>
           <div class="donut-pair-row">
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.d1Len),
-                zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}m`),
-                `${totalD1Meters}m`,
-                "DAY 1"
-              )}
-              <div class="donut-slot-title">Length</div>
-              <div class="donut-slot-sub">${totalD1LenCm} cm</div>
-            </div>
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.d1Fish),
-                zoneStats.map(z => `${z.d1Fish}`),
-                `${totalD1Fish}`,
-                "DAY 1"
-              )}
-              <div class="donut-slot-title">Fish Count</div>
-              <div class="donut-slot-sub">${totalD1Fish} landed</div>
-            </div>
+            ${buildZoneVerticalBarChart(
+              "Length",
+              `${totalD1Meters}m`,
+              zoneStats.map(z => z.d1Len),
+              zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}m`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalD1Fish}`,
+              zoneStats.map(z => z.d1Fish),
+              zoneStats.map(z => `${z.d1Fish}`)
+            )}
           </div>
         </div>
 
         <div class="session-donut-card">
           <div class="session-donut-card-title">☀️ Day 2</div>
           <div class="donut-pair-row">
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.d2Len),
-                zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}m`),
-                `${totalD2Meters}m`,
-                "DAY 2"
-              )}
-              <div class="donut-slot-title">Length</div>
-              <div class="donut-slot-sub">${totalD2LenCm} cm</div>
-            </div>
-            <div class="donut-slot">
-              ${buildZoneDonutSvg(
-                zoneStats.map(z => z.d2Fish),
-                zoneStats.map(z => `${z.d2Fish}`),
-                `${totalD2Fish}`,
-                "DAY 2"
-              )}
-              <div class="donut-slot-title">Fish Count</div>
-              <div class="donut-slot-sub">${totalD2Fish} landed</div>
-            </div>
+            ${buildZoneVerticalBarChart(
+              "Length",
+              `${totalD2Meters}m`,
+              zoneStats.map(z => z.d2Len),
+              zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}m`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalD2Fish}`,
+              zoneStats.map(z => z.d2Fish),
+              zoneStats.map(z => `${z.d2Fish}`)
+            )}
           </div>
         </div>
       `;
 
-      // Extrapolated Day 1 vs Day 2 Shift & Zone Volume Insights (no duplicate Avg Fish Size)
+      // Extrapolated Day 1 vs Day 2 Shift & Zone Volume Insights
       const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
       const topFishZone = [...zoneStats].sort((a, b) => b.zoneFish - a.zoneFish)[0];
 
@@ -1879,85 +1984,207 @@
         </div>
       `;
 
-      const cardsHtml = zoneStats.map(zs => {
-        const { zoneName, d1Rows, d2Rows, d1Fish, d2Fish, zoneFish, zoneLen } = zs;
+      // Cohesive Day 1 (Night) vs Day 2 (Day) Performance Comparison Card
+      const d1AvgFishSize = totalD1Fish > 0 ? (totalD1LenCm / totalD1Fish).toFixed(1) : "0.0";
+      const d2AvgFishSize = totalD2Fish > 0 ? (totalD2LenCm / totalD2Fish).toFixed(1) : "0.0";
+      const d1AvgPerRod = (totalD1Fish / Math.max(1, totalAnglers)).toFixed(1);
+      const d2AvgPerRod = (totalD2Fish / Math.max(1, totalAnglers)).toFixed(1);
 
-        const totalZoneSessions = d1Rows.length + d2Rows.length;
-        const anglersWhoCaught =
-          d1Rows.filter(a => (a.d1.fishCount || 0) > 0).length +
-          d2Rows.filter(a => (a.d2.fishCount || 0) > 0).length;
-        const anglersCaughtZonePct = totalZoneSessions > 0 ? Math.round((anglersWhoCaught / totalZoneSessions) * 100) : 0;
+      const d1WeighInPct = Math.round((d1CatchingAnglers / Math.max(1, totalAnglers)) * 100);
+      const d2WeighInPct = Math.round((d2CatchingAnglers / Math.max(1, totalAnglers)) * 100);
 
-        const avgFishSizeCm = zoneFish > 0 ? (zoneLen / zoneFish).toFixed(1) : "0.0";
+      // Session longest individual fish (only display species if recorded in Top 5)
+      const d1TopSpec = STATE.specimensAll.find(s => s.day === "D1");
+      const d2TopSpec = STATE.specimensAll.find(s => s.day === "D2");
+      const d1SpecText = d1TopSpec
+        ? `${d1TopSpec.lengthCm}cm${d1TopSpec.species ? ` (${d1TopSpec.species})` : ""} • ${d1TopSpec.anglerName}`
+        : "No specimen";
+      const d2SpecText = d2TopSpec
+        ? `${d2TopSpec.lengthCm}cm${d2TopSpec.species ? ` (${d2TopSpec.species})` : ""} • ${d2TopSpec.anglerName}`
+        : "No specimen";
 
-        let zoneBiggestCm = 0;
-        let zoneBiggestSpecies = "No specimen";
-        d1Rows.forEach(a => {
-          if ((a.d1.biggestFishCm || 0) > zoneBiggestCm) {
-            zoneBiggestCm = a.d1.biggestFishCm;
-            zoneBiggestSpecies = `${a.d1.biggestFishSpecies || "Fish"} (🌙 D1)`;
-          }
-        });
-        d2Rows.forEach(a => {
-          if ((a.d2.biggestFishCm || 0) > zoneBiggestCm) {
-            zoneBiggestCm = a.d2.biggestFishCm;
-            zoneBiggestSpecies = `${a.d2.biggestFishSpecies || "Fish"} (☀️ D2)`;
-          }
-        });
+      // Best zone per session by length (and fish count)
+      const d1TopZone = [...zoneStats].sort((a, b) => b.d1Len - a.d1Len || b.d1Fish - a.d1Fish)[0];
+      const d2TopZone = [...zoneStats].sort((a, b) => b.d2Len - a.d2Len || b.d2Fish - a.d2Fish)[0];
 
-        const d1Bags = d1Rows.map(a => a.d1.fishCount || 0);
-        const d2Bags = d2Rows.map(a => a.d2.fishCount || 0);
-        const d1Max = d1Bags.length ? Math.max(...d1Bags) : 0;
-        const d2Max = d2Bags.length ? Math.max(...d2Bags) : 0;
-        const d1AvgCatch = d1Rows.length ? (d1Fish / d1Rows.length).toFixed(1) : "0.0";
-        const d2AvgCatch = d2Rows.length ? (d2Fish / d2Rows.length).toFixed(1) : "0.0";
+      function buildEdgeBadge(d1Val, d2Val, d1WinText, d2WinText) {
+        if (d1Val > d2Val) return `<span class="sh2h-edge-badge d1">${d1WinText}</span>`;
+        if (d2Val > d1Val) return `<span class="sh2h-edge-badge d2">${d2WinText}</span>`;
+        return `<span class="sh2h-edge-badge even">Level</span>`;
+      }
 
-        return `
-          <div class="zone-telemetry-card" data-zone="${zoneName}">
-            <div class="zt-text-row">
-              <div class="zt-row-left">
-                <div class="zt-row-label">Weigh-In Success</div>
-                <div class="zt-row-sub">${anglersWhoCaught} of ${totalZoneSessions} rod-sessions</div>
-              </div>
-              <div class="zt-row-value">${anglersCaughtZonePct}%</div>
+      document.getElementById("sessionComparisonGrid").innerHTML = `
+        <!-- 1. Total Fish Landed -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Total Fish Landed</span>
+            ${buildEdgeBadge(
+              totalD1Fish,
+              totalD2Fish,
+              `🌙 Night +${totalD1Fish - totalD2Fish} fish`,
+              `☀️ Day +${totalD2Fish - totalD1Fish} fish`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${totalD1Fish} fish</div>
+              <div class="sh2h-side-sub">Avg ${d1AvgPerRod} / angler</div>
             </div>
-
-            <div class="zt-text-row">
-              <div class="zt-row-left">
-                <div class="zt-row-label">Average Fish Size</div>
-                <div class="zt-row-sub">Across ${zoneFish} fish (${(zoneLen / 100).toFixed(2)}m)</div>
-              </div>
-              <div class="zt-row-value">${avgFishSizeCm} cm</div>
-            </div>
-
-            <div class="zt-text-row">
-              <div class="zt-row-left">
-                <div class="zt-row-label">Zone Specimen High</div>
-                <div class="zt-row-sub">${zoneBiggestSpecies}</div>
-              </div>
-              <div class="zt-row-value">${zoneBiggestCm > 0 ? zoneBiggestCm + " cm" : "—"}</div>
-            </div>
-
-            <div class="zt-text-row">
-              <div class="zt-row-left">
-                <div class="zt-row-label"><span class="zt-lbl-d1">🌙 Day 1 Rod Stats</span></div>
-                <div class="zt-row-sub">Best bag: ${d1Max} fish</div>
-              </div>
-              <div class="zt-row-value">Avg ${d1AvgCatch}</div>
-            </div>
-
-            <div class="zt-text-row">
-              <div class="zt-row-left">
-                <div class="zt-row-label"><span class="zt-lbl-d2">☀️ Day 2 Rod Stats</span></div>
-                <div class="zt-row-sub">Best bag: ${d2Max} fish</div>
-              </div>
-              <div class="zt-row-value">Avg ${d2AvgCatch}</div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${totalD2Fish} fish</div>
+              <div class="sh2h-side-sub">Avg ${d2AvgPerRod} / angler</div>
             </div>
           </div>
-        `;
-      }).join("");
+          <div class="sh2h-footer-note">
+            ${totalFish > 0 ? `${Math.round((totalD1Fish / totalFish) * 100)}% caught at night vs ${Math.round((totalD2Fish / totalFish) * 100)}% during the day` : "No fish recorded"}
+          </div>
+        </div>
 
-      document.getElementById("unifiedZonesGrid").innerHTML = cardsHtml;
+        <!-- 2. Total Measured Length -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Total Fish Length</span>
+            ${buildEdgeBadge(
+              totalD1LenCm,
+              totalD2LenCm,
+              `🌙 Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`,
+              `☀️ Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${totalD1Meters}m</div>
+              <div class="sh2h-side-sub">${totalD1LenCm} cm total</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${totalD2Meters}m</div>
+              <div class="sh2h-side-sub">${totalD2LenCm} cm total</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Combined championship length: ${totalLengthMeters}m (${totalLengthCm} cm)
+          </div>
+        </div>
+
+        <!-- 3. Average Fish Size -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Average Fish Size</span>
+            ${buildEdgeBadge(
+              Number(d1AvgFishSize),
+              Number(d2AvgFishSize),
+              `🌙 Larger (+${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm)`,
+              `☀️ Larger (+${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm)`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
+              <div class="sh2h-side-sub">Per fish landed</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
+              <div class="sh2h-side-sub">Per fish landed</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Compares specimen stamp between darkness & daylight sessions
+          </div>
+        </div>
+
+        <!-- 4. Angler Weigh-In Rate -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Angler Weigh-In Rate</span>
+            ${buildEdgeBadge(
+              d1CatchingAnglers,
+              d2CatchingAnglers,
+              `🌙 +${d1CatchingAnglers - d2CatchingAnglers} rods catching`,
+              `☀️ +${d2CatchingAnglers - d1CatchingAnglers} rods catching`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1WeighInPct}%</div>
+              <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2WeighInPct}%</div>
+              <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            ${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers weighed in on both Day 1 & Day 2
+          </div>
+        </div>
+
+        <!-- 5. Best Session Bag & Biggest Fish -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Peak Session Bag</span>
+            ${buildEdgeBadge(
+              d1BestBag.fish,
+              d2BestBag.fish,
+              `🌙 Top bag (${d1BestBag.fish})`,
+              `☀️ Top bag (${d2BestBag.fish})`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1BestBag.fish} fish</div>
+              <div class="sh2h-side-sub">${d1BestBag.angler}</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2BestBag.fish} fish</div>
+              <div class="sh2h-side-sub">${d2BestBag.angler}</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Longest: 🌙 ${d1SpecText} • ☀️ ${d2SpecText}
+          </div>
+        </div>
+
+        <!-- 6. Best Performing Zones by Session -->
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Top Performing Zone</span>
+            <span class="sh2h-edge-badge even">2-Day: ${shortZone(topLengthZone.zoneName)}</span>
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1 Best</div>
+              <div class="sh2h-side-val">${shortZone(d1TopZone.zoneName)}</div>
+              <div class="sh2h-side-sub">${(d1TopZone.d1Len / 100).toFixed(2)}m • ${d1TopZone.d1Fish} fish</div>
+            </div>
+            <div class="sh2h-vs-sep">→</div>
+            <div class="sh2h-side">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2 Best</div>
+              <div class="sh2h-side-val">${shortZone(d2TopZone.zoneName)}</div>
+              <div class="sh2h-side-sub">${(d2TopZone.d2Len / 100).toFixed(2)}m • ${d2TopZone.d2Fish} fish</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            ${d1TopZone.zoneName === d2TopZone.zoneName
+              ? `${d1TopZone.zoneName} led both sessions across the championship`
+              : `Hot zone shifted from ${shortZone(d1TopZone.zoneName)} (Night) to ${shortZone(d2TopZone.zoneName)} (Day)`}
+          </div>
+        </div>
+      `;
     }
 
     /* ---------------------------------------------------------
@@ -2199,7 +2426,7 @@
             <td>${s.sessionLabel}</td>
             <td><span class="zone-chip ${zShort}">${s.zone}</span></td>
             <td>#${s.peg}</td>
-            <td><strong>${s.species}</strong></td>
+            <td><strong>${s.species || "—"}</strong></td>
             <td><strong style="color:var(--accent-amber);">${s.lengthCm} cm</strong></td>
             <td>${s.anglerName}</td>
             <td style="color:var(--text-secondary);">${s.teamName}</td>
