@@ -27,6 +27,8 @@
       --brand-tint-border: #bfd9f2;
 
       --accent-emerald: #059669;
+      --accent-emerald-bg: #ecfdf5;
+      --accent-emerald-border: #a7f3d0;
       --accent-amber: #d97706;
       --accent-indigo: #4338ca;
 
@@ -238,6 +240,53 @@
       transform: translateY(0);
     }
 
+    /* Front-Page My Match Report Card with Embedded Angler Quick Search */
+    .hub-report-launcher {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-left: 4px solid var(--brand-cobalt);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+    }
+
+    .hub-report-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .hub-quick-search-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .hub-mini-input, .hub-mini-select {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.48rem 0.7rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.81rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .hub-mini-input:focus, .hub-mini-select:focus {
+      border-color: var(--brand-cobalt);
+      background: #ffffff;
+      box-shadow: 0 0 0 2.5px rgba(0, 94, 184, 0.14);
+    }
+
     .hub-btn-text-wrap {
       display: flex;
       flex-direction: column;
@@ -265,7 +314,8 @@
       transition: transform 0.18s ease;
     }
 
-    .hub-btn-card:hover .hub-arrow {
+    .hub-btn-card:hover .hub-arrow,
+    .hub-report-top:hover .hub-arrow {
       transform: translateX(4px);
     }
 
@@ -362,7 +412,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Clean Solid-Bar Vertical Chart Strip (No Background Column Shadows) */
+    /* Clean Solid-Bar Vertical Chart Strip */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -663,7 +713,7 @@
       padding-top: 0.42rem;
     }
 
-    /* Zone Winners Panels (Light Fintech Tinted Panels Matching Zone Colours) */
+    /* Zone Winners Panels */
     .zone-winner-panel[data-zone="Red Zone"] {
       border-color: #f87171;
       border-top: 4px solid #ef4444;
@@ -707,7 +757,6 @@
       position: relative;
     }
 
-    /* Viewport-capped scroll wrapper so sticky thead stays locked at the top for 120+ anglers */
     .sticky-scroll-wrap {
       overflow: auto;
       max-height: calc(100vh - 150px);
@@ -721,7 +770,6 @@
       margin: 0 auto;
     }
 
-    /* Subtle Horizontal Bounce Hint for Overflowing Tables */
     @keyframes tableHorizontalPeek {
       0% { transform: translateX(0); }
       30% { transform: translateX(-28px); }
@@ -742,7 +790,6 @@
       text-align: left;
     }
 
-    /* Single-tier Sticky Floating Table Headers (Biggest Fish, etc.) */
     table.sticky-header-table thead th {
       position: sticky;
       top: 0;
@@ -750,7 +797,6 @@
       box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
     }
 
-    /* Two-tier Sticky Header Row Offset for Individual & Team Leaderboards */
     table.two-tier-sticky-table thead tr:nth-child(1) th {
       position: sticky;
       top: 0;
@@ -825,7 +871,6 @@
       border-bottom-right-radius: var(--radius-md);
     }
 
-    /* Podium Left Accent on Zone Winner / Team Rows */
     table.card-row-table tbody tr.podium-1 td:first-child {
       border-left: 4px solid #eab308;
     }
@@ -881,19 +926,16 @@
       text-align: left;
     }
 
-    /* Right edge of Left Overall Card Header */
     table.two-tier-sticky-table th.overall-card-end {
       border-right: 1px solid #003566 !important;
       border-bottom-right-radius: var(--radius-sm);
     }
 
-    /* Left edge of Right Session / Angler Card Header */
     table.two-tier-sticky-table th.session-card-start {
       border-left: 1px solid #003566 !important;
       border-bottom-left-radius: var(--radius-sm);
     }
 
-    /* Transparent Vertical Gap Column Between Left Overall Card & Right Card */
     table.two-tier-sticky-table th.col-gap-spacer,
     table.two-tier-sticky-table td.col-gap-spacer {
       background: var(--bg-surface) !important;
@@ -911,7 +953,6 @@
       text-align: center;
     }
 
-    /* Left Card Rounded Right Cap & Subtle Banking Blue Tint */
     table.two-tier-sticky-table tbody tr td.overall-card-end {
       border-right: 1px solid var(--brand-tint-border) !important;
       border-top-right-radius: var(--radius-md);
@@ -928,7 +969,6 @@
       border-left-color: var(--brand-tint-border);
     }
 
-    /* Right Card Rounded Left Cap */
     table.two-tier-sticky-table tbody tr td.session-card-start {
       border-left: 1px solid var(--border-glass) !important;
       border-top-left-radius: var(--radius-md);
@@ -944,7 +984,6 @@
       background: var(--brand-tint);
     }
 
-    /* Horizontal Spacer Row Between Different Overall Points Totals */
     table.tight-ind-table tbody tr.pts-bracket-gap td {
       background: transparent !important;
       border: none !important;
@@ -992,7 +1031,7 @@
       border-left: 1.5px solid #cbd5e1 !important;
     }
 
-    /* Team Leaderboard Specific Cells within Two-Card Split Table */
+    /* Team Leaderboard Specific Cells */
     table.one-line-team-table {
       border-spacing: 0 7px;
     }
@@ -1084,13 +1123,15 @@
       border-radius: 999px;
     }
 
-    /* My Match Report Card with "Nth out of 28th" Ring Gauges */
+    /* =========================================================================
+       MY MATCH REPORT: MOMENTUM BANNER + 4 MOTIF CARDS + SIDE-BY-SIDE H2H
+       ========================================================================= */
     .angler-select-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 0.85rem;
       align-items: flex-end;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .glass-select, .glass-input {
@@ -1102,7 +1143,7 @@
       font-size: 0.86rem;
       font-weight: 600;
       outline: none;
-      min-width: 210px;
+      min-width: 220px;
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
@@ -1111,23 +1152,103 @@
       box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
     }
 
+    /* Two-Day Trajectory / Momentum Banner */
+    .momentum-banner {
+      background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
+      border: 1px solid var(--brand-tint-border);
+      border-left: 4px solid var(--brand-cobalt);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .momentum-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .momentum-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-navy);
+    }
+
+    .momentum-headline {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+
+    .momentum-subline {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .momentum-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .momentum-pill.up {
+      background: var(--accent-emerald-bg);
+      color: #065f46;
+      border: 1px solid var(--accent-emerald-border);
+    }
+
+    .momentum-pill.down {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .momentum-pill.steady {
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+    }
+
+    /* 4 Motif Cards: Heading Above Circle, Actual vs Best Below Circle */
     .gauges-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
     }
 
     .gauge-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 1.1rem 0.9rem;
+      padding: 0.95rem 0.85rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      position: relative;
+    }
+
+    .gauge-top-heading {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--brand-navy);
+      margin-bottom: 0.6rem;
     }
 
     .gauge-ring-container {
@@ -1182,17 +1303,225 @@
       margin-top: 2px;
     }
 
-    .gauge-label {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-top: 0.6rem;
+    .gauge-bottom-compare {
+      margin-top: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.14rem;
     }
 
-    .gauge-sub {
-      font-size: 0.72rem;
+    .gauge-actual-score {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .gauge-best-benchmark {
+      font-size: 0.71rem;
+      font-weight: 600;
       color: var(--text-secondary);
-      margin-top: 0.15rem;
+      background: #ffffff;
+      border: 1px solid var(--border-glass);
+      padding: 0.14rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    /* Opt-In Side-by-Side Head-to-Head Comparison */
+    .h2h-selector-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--brand-tint-border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.05rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .h2h-selector-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .h2h-side-by-side-wrap {
+      margin-top: 1rem;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .h2h-sbs-header {
+      display: grid;
+      grid-template-columns: 1fr 110px 1fr;
+      align-items: center;
+      background: var(--brand-navy);
+      color: #ffffff;
+      padding: 0.75rem 0.85rem;
+      gap: 0.5rem;
+    }
+
+    .h2h-sbs-angler.left {
+      text-align: left;
+    }
+
+    .h2h-sbs-angler.right {
+      text-align: right;
+    }
+
+    .h2h-sbs-name {
+      font-size: 0.94rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .h2h-sbs-meta {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .h2h-sbs-vs-badge {
+      text-align: center;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.24rem 0.55rem;
+      border-radius: 999px;
+      margin: 0 auto;
+    }
+
+    .h2h-sbs-section-bar {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .h2h-sbs-section-title {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-navy);
+    }
+
+    .h2h-clash-pill {
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 0.14rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .h2h-sbs-row {
+      display: grid;
+      grid-template-columns: 1fr 145px 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .h2h-sbs-row:last-child {
+      border-bottom: none;
+    }
+
+    .h2h-sbs-cell {
+      padding: 0.62rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .h2h-sbs-cell.left {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .h2h-sbs-cell.right {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    .h2h-sbs-cell.win-cell {
+      background: var(--accent-emerald-bg);
+    }
+
+    .h2h-sbs-val {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .h2h-sbs-cell.win-cell .h2h-sbs-val {
+      color: #065f46;
+    }
+
+    .h2h-sbs-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .h2h-sbs-center {
+      padding: 0.5rem 0.4rem;
+      text-align: center;
+      border-left: 1px solid var(--border-glass);
+      border-right: 1px solid var(--border-glass);
+      background: #fafcff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.16rem;
+    }
+
+    .h2h-sbs-metric-lbl {
+      font-size: 0.71rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      line-height: 1.15;
+    }
+
+    .h2h-sbs-margin-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.1rem 0.42rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .h2h-sbs-margin-tag.me-lead {
+      background: var(--accent-emerald-bg);
+      color: #065f46;
+      border: 1px solid var(--accent-emerald-border);
+    }
+
+    .h2h-sbs-margin-tag.rival-lead {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+
+    .h2h-sbs-margin-tag.tie {
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
     }
 
     .zone-chip {
@@ -1211,28 +1540,6 @@
     .rank-1 { color: #b45309; }
     .rank-2 { color: #475569; }
     .rank-3 { color: #9a3412; }
-
-    .h2h-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0.85rem;
-      align-items: center;
-      margin-top: 1rem;
-    }
-
-    .h2h-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-md);
-      padding: 1rem;
-    }
-
-    .h2h-vs {
-      font-weight: 800;
-      color: var(--brand-navy);
-      font-size: 0.95rem;
-      text-align: center;
-    }
 
     .species-summary-pills {
       display: flex;
@@ -1289,7 +1596,19 @@
       .session-h2h-grid {
         grid-template-columns: 1fr;
       }
-      .h2h-grid { grid-template-columns: 1fr; }
+      .hub-quick-search-row {
+        grid-template-columns: 1fr;
+      }
+      .h2h-sbs-header {
+        grid-template-columns: 1fr 64px 1fr;
+        padding: 0.65rem 0.6rem;
+      }
+      .h2h-sbs-row {
+        grid-template-columns: 1fr 112px 1fr;
+      }
+      .h2h-sbs-cell {
+        padding: 0.55rem 0.55rem;
+      }
       .app-header { padding: 0.95rem 1rem; }
       .sticky-scroll-wrap {
         max-height: calc(100vh - 185px);
@@ -1325,13 +1644,32 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button class="hub-btn-card insight-card" data-nav="myreport">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">My Match Report</span>
-              <span class="hub-btn-sub">Personal rank gauges & head-to-head rival comparison</span>
+          <!-- My Match Report Card with Embedded Angler Search & Picker -->
+          <div class="hub-report-launcher">
+            <div class="hub-report-top" data-nav="myreport">
+              <div class="hub-btn-text-wrap">
+                <span class="hub-btn-title">My Match Report</span>
+                <span class="hub-btn-sub">Search or select your name below to view your personal report</span>
+              </div>
+              <span class="hub-arrow">›</span>
             </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <div class="hub-quick-search-row">
+              <input
+                type="text"
+                id="homeAnglerSearch"
+                class="hub-mini-input"
+                placeholder="🔍 Type angler name..."
+                aria-label="Search angler name"
+              />
+              <select
+                id="homeAnglerSelect"
+                class="hub-mini-select"
+                aria-label="Choose angler for personal match report"
+              >
+                <option value="">Select angler...</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1418,7 +1756,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 2: INDIVIDUAL LEADERBOARD (STICKY HEADERS + TWO-CARD SPLIT)
+         VIEW 2: INDIVIDUAL LEADERBOARD
          ========================================================= -->
     <section id="view-individual" class="view-section">
       <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
@@ -1466,7 +1804,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (STICKY TWO-TIER HEADERS + TWO-CARD SPLIT)
+         VIEW 3: TEAM LEADERBOARD
          ========================================================= -->
     <section id="view-teams" class="view-section">
       <div class="glass-card" style="max-width: 1240px; margin-left: auto; margin-right: auto;">
@@ -1516,7 +1854,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 4: BIGGEST FISH (STICKY HEADERS)
+         VIEW 4: BIGGEST FISH
          ========================================================= -->
     <section id="view-biggest" class="view-section">
       <div class="glass-card">
@@ -1564,30 +1902,42 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT ("NTH OUT OF 28TH" METRIC ICONS)
+         VIEW 6: MY MATCH REPORT (MOMENTUM + 4 MOTIF CARDS + OPT-IN SIDE-BY-SIDE H2H)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
-      <div class="glass-card">
+      <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">My Match Report</div>
-            <div class="card-subtitle">Personal telemetry gauges showing exact field standing and rival comparison</div>
+            <div class="card-subtitle">Two-day trajectory, field ranking motifs & benchmark comparison</div>
           </div>
-        </div>
-
-        <div class="angler-select-bar">
           <div>
-            <label for="myAnglerSelect" class="kpi-label" style="display:block; margin-bottom:0.25rem;">Primary Angler</label>
+            <label for="myAnglerSelect" class="kpi-label" style="display:block; margin-bottom:0.2rem;">Viewing Angler</label>
             <select id="myAnglerSelect" class="glass-select"></select>
           </div>
-          <div>
-            <label for="compareAnglerSelect" class="kpi-label" style="display:block; margin-bottom:0.25rem;">Head-to-Head Rival</label>
-            <select id="compareAnglerSelect" class="glass-select"></select>
-          </div>
         </div>
 
+        <!-- Two-Day Trajectory / Momentum Banner -->
+        <div id="myMomentumBanner"></div>
+
+        <!-- 4 Circle Motif Cards (Heading Above, Actual vs Field Best Below) -->
         <div class="gauges-row" id="myGaugesRow"></div>
-        <div class="h2h-grid" id="h2hContainer"></div>
+      </div>
+
+      <!-- Opt-In Side-by-Side Head-to-Head Comparison Card Underneath -->
+      <div class="h2h-selector-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+        <div class="h2h-selector-bar">
+          <div>
+            <div class="card-title">Head-to-Head Angler Comparison</div>
+            <div class="card-subtitle">Select another angler to compare overall and session-by-session stats side by side</div>
+          </div>
+          <div>
+            <select id="compareAnglerSelect" class="glass-select" aria-label="Select a rival angler to compare against">
+              <option value="">— Select a rival angler —</option>
+            </select>
+          </div>
+        </div>
+        <div id="h2hContainer"></div>
       </div>
     </section>
   </div>
@@ -1599,7 +1949,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.7.0",
+      version: "v3.8.0",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -1615,7 +1965,8 @@
       raw: null,
       anglers: [],
       teams: [],
-      specimensAll: []
+      specimensAll: [],
+      selectedAnglerName: ""
     };
 
     function getOrdinal(n) {
@@ -1628,7 +1979,6 @@
       return (zoneStr || "").replace(" Zone", "").trim();
     }
 
-    // Build 4-zone solid colour vertical bar chart (no background shadow tracks)
     function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
       const axisLetters = ["R", "Y", "G", "B"];
@@ -1668,7 +2018,6 @@
       `;
     }
 
-    // Horizontal bounce hint for any table that overflows horizontally on narrow screens
     function triggerTableBounceHints(containerEl) {
       const root = containerEl || document;
       requestAnimationFrame(() => {
@@ -1709,8 +2058,6 @@
       STATE.raw = data;
       const list = Array.isArray(data.anglers) ? data.anglers : [];
 
-      // Sort individuals using exact rule:
-      // 1. Lowest Points -> 2. Highest Length -> 3. Highest Fish -> 4. Biggest Single Fish
       const enriched = list.map(a => {
         const d1Obj = a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
         const d2Obj = a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
@@ -1737,20 +2084,70 @@
         );
       });
 
+      // Calculate Day 1 Overall Standings so we can compute Day 1 -> Final rank movement
+      const sortedDay1Overall = [...sorted].sort((a, b) => {
+        return (
+          (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
+          (b.d1.totalLengthCm ?? 0) - (a.d1.totalLengthCm ?? 0) ||
+          (b.d1.fishCount ?? 0) - (a.d1.fishCount ?? 0) ||
+          (b.d1.biggestFishCm ?? 0) - (a.d1.biggestFishCm ?? 0)
+        );
+      });
+
+      const d1OverallRankMap = {};
+      sortedDay1Overall.forEach((a, i) => {
+        d1OverallRankMap[a.anglerName] = i + 1;
+      });
+
+      // Calculate exact Zone Finishes for Day 1 & Day 2
+      const d1ZonePosMap = {};
+      const d2ZonePosMap = {};
+      MATCH_CONFIG.zones.forEach(zName => {
+        const z1 = sorted
+          .filter(a => a.d1.zone === zName)
+          .sort((a, b) =>
+            (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
+            (b.d1.totalLengthCm ?? 0) - (a.d1.totalLengthCm ?? 0) ||
+            (b.d1.fishCount ?? 0) - (a.d1.fishCount ?? 0) ||
+            (b.d1.biggestFishCm ?? 0) - (a.d1.biggestFishCm ?? 0)
+          );
+        z1.forEach((a, i) => {
+          d1ZonePosMap[a.anglerName] = { pos: i + 1, count: z1.length };
+        });
+
+        const z2 = sorted
+          .filter(a => a.d2.zone === zName)
+          .sort((a, b) =>
+            (a.d2.zonePoints ?? 999) - (b.d2.zonePoints ?? 999) ||
+            (b.d2.totalLengthCm ?? 0) - (a.d2.totalLengthCm ?? 0) ||
+            (b.d2.fishCount ?? 0) - (a.d2.fishCount ?? 0) ||
+            (b.d2.biggestFishCm ?? 0) - (a.d2.biggestFishCm ?? 0)
+          );
+        z2.forEach((a, i) => {
+          d2ZonePosMap[a.anglerName] = { pos: i + 1, count: z2.length };
+        });
+      });
+
       const totalCount = sorted.length;
       const byFish = [...sorted].sort((a, b) => (b.totals?.cumulativeFish || 0) - (a.totals?.cumulativeFish || 0));
       const byLength = [...sorted].sort((a, b) => (b.totals?.cumulativeLengthCm || 0) - (a.totals?.cumulativeLengthCm || 0));
+      const byBiggest = [...sorted].sort((a, b) => (b.overallBiggestCm || 0) - (a.overallBiggestCm || 0));
 
       STATE.anglers = sorted.map((a, idx) => {
         const rank = a.totals?.overallRank || (idx + 1);
         const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
         const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const biggestRank = byBiggest.findIndex(x => x.anglerName === a.anglerName) + 1;
 
         return {
           ...a,
           rank,
+          d1OverallRank: d1OverallRankMap[a.anglerName] || rank,
+          d1ZoneStanding: d1ZonePosMap[a.anglerName] || { pos: 1, count: 0 },
+          d2ZoneStanding: d2ZonePosMap[a.anglerName] || { pos: 1, count: 0 },
           fishRank,
           lengthRank,
+          biggestRank,
           totalField: totalCount,
           totals: {
             ...a.totals,
@@ -1785,8 +2182,6 @@
         }
       });
 
-      // Team ranking rule:
-      // 1. Lowest Points -> 2. Highest Total Length -> 3. Highest Total Fish -> 4. Biggest Single Fish
       STATE.teams = Object.values(teamMap).sort(
         (a, b) =>
           a.totalPts - b.totalPts ||
@@ -1830,6 +2225,7 @@
     }
 
     function renderAllViews() {
+      setupHomeAnglerQuickSearch();
       renderOverview();
       renderIndividualTable();
       renderTeamsContributions();
@@ -1838,6 +2234,70 @@
       renderBiggestFish();
       renderMyReport();
       renderSecretPairs();
+    }
+
+    /* ---------------------------------------------------------
+       FRONT PAGE QUICK ANGLER SEARCH & LAUNCHER
+       --------------------------------------------------------- */
+    function setupHomeAnglerQuickSearch() {
+      const searchInput = document.getElementById("homeAnglerSearch");
+      const homeSelect = document.getElementById("homeAnglerSelect");
+      if (!searchInput || !homeSelect) return;
+
+      // Sort alphabetically by angler name for fast lookup on the front page
+      const alphaAnglers = [...STATE.anglers].sort((a, b) => a.anglerName.localeCompare(b.anglerName));
+
+      function populateHomeDropdown(filterText) {
+        const q = (filterText || "").trim().toLowerCase();
+        const matches = alphaAnglers.filter(
+          a => a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q)
+        );
+
+        homeSelect.innerHTML = `<option value="">${
+          matches.length ? `Select angler (${matches.length})...` : "No matching anglers"
+        }</option>`;
+
+        matches.forEach(a => {
+          const opt = document.createElement("option");
+          opt.value = a.anglerName;
+          opt.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
+          homeSelect.appendChild(opt);
+        });
+      }
+
+      populateHomeDropdown("");
+
+      searchInput.oninput = () => {
+        populateHomeDropdown(searchInput.value);
+      };
+
+      searchInput.onkeydown = e => {
+        if (e.key === "Enter") {
+          const q = searchInput.value.trim().toLowerCase();
+          const exactOrFirst = alphaAnglers.find(
+            a => a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q)
+          );
+          if (exactOrFirst) {
+            openPersonalReportFor(exactOrFirst.anglerName);
+          }
+        }
+      };
+
+      homeSelect.onchange = () => {
+        if (homeSelect.value) {
+          openPersonalReportFor(homeSelect.value);
+        }
+      };
+    }
+
+    function openPersonalReportFor(anglerName) {
+      STATE.selectedAnglerName = anglerName;
+      const mySelect = document.getElementById("myAnglerSelect");
+      if (mySelect) {
+        mySelect.value = anglerName;
+        mySelect.dispatchEvent(new Event("change"));
+      }
+      switchView("myreport");
     }
 
     function setupNavigation() {
@@ -1989,7 +2449,6 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
-      // Mobile-First Paired Vertical Bar Charts (Solid Coloured Columns Only)
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card">
           <div class="session-donut-card-title">Competition Total</div>
@@ -2046,7 +2505,6 @@
         </div>
       `;
 
-      // Segmented Day 1 (Night) vs Day 2 (Day) Performance Comparison Cards
       const d1AvgFishSize = totalD1Fish > 0 ? (totalD1LenCm / totalD1Fish).toFixed(1) : "0.0";
       const d2AvgFishSize = totalD2Fish > 0 ? (totalD2LenCm / totalD2Fish).toFixed(1) : "0.0";
       const d1AvgPerRod = (totalD1Fish / Math.max(1, totalAnglers)).toFixed(1);
@@ -2055,7 +2513,6 @@
       const d1CatchPct = Math.round((d1CatchingAnglers / Math.max(1, totalAnglers)) * 100);
       const d2CatchPct = Math.round((d2CatchingAnglers / Math.max(1, totalAnglers)) * 100);
 
-      // Session longest individual fish (only display species if recorded in Top 5)
       const d1TopSpec = STATE.specimensAll.find(s => s.day === "D1");
       const d2TopSpec = STATE.specimensAll.find(s => s.day === "D2");
       const d1SpecText = d1TopSpec
@@ -2065,7 +2522,6 @@
         ? `${d2TopSpec.lengthCm}cm${d2TopSpec.species ? ` (${d2TopSpec.species})` : ""} • ${d2TopSpec.anglerName}`
         : "No specimen";
 
-      // Best zone per session by length (and fish count)
       const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
       const d1TopZone = [...zoneStats].sort((a, b) => b.d1Len - a.d1Len || b.d1Fish - a.d1Fish)[0];
       const d2TopZone = [...zoneStats].sort((a, b) => b.d2Len - a.d2Len || b.d2Fish - a.d2Fish)[0];
@@ -2077,7 +2533,6 @@
       }
 
       document.getElementById("sessionComparisonGrid").innerHTML = `
-        <!-- 1. Total Fish Caught -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Total Fish Caught</span>
@@ -2106,7 +2561,6 @@
           </div>
         </div>
 
-        <!-- 2. Total Fish Length -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Total Fish Length</span>
@@ -2135,7 +2589,6 @@
           </div>
         </div>
 
-        <!-- 3. Average Fish Size -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Average Fish Size</span>
@@ -2164,7 +2617,6 @@
           </div>
         </div>
 
-        <!-- 4. Anglers Catching vs Blanking -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Anglers Catching vs Blanking</span>
@@ -2193,7 +2645,6 @@
           </div>
         </div>
 
-        <!-- 5. Top Individual Catch -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Top Individual Catch</span>
@@ -2222,7 +2673,6 @@
           </div>
         </div>
 
-        <!-- 6. Top Performing Zone -->
         <div class="sh2h-metric-card">
           <div class="sh2h-top-row">
             <span class="sh2h-title">Top Performing Zone</span>
@@ -2251,7 +2701,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 2: INDIVIDUAL LEADERBOARD (TWO-CARD SPLIT + POINTS BRACKET GAPS)
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD
        --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
@@ -2284,7 +2734,6 @@
 
           rowsHtml.push(`
             <tr class="ind-data-row">
-              <!-- LEFT CARD: Primary Final Overall Result -->
               <td class="pos-cell overall-card-cell ${rankClass}">${getOrdinal(a.rank)}</td>
               <td class="angler-cell overall-card-cell">
                 <div class="ind-angler-name">${a.anglerName}</div>
@@ -2295,10 +2744,8 @@
               <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
               <td class="overall-card-cell overall-card-end">${ovBig}</td>
 
-              <!-- VERTICAL GAP BETWEEN OVERALL CARD & SESSION CARD -->
               <td class="col-gap-spacer" aria-hidden="true"></td>
 
-              <!-- RIGHT CARD: Day 1 & Day 2 Session Breakdown -->
               <td class="session-card-cell session-card-start">${a.d1.zonePoints}</td>
               <td class="session-card-cell">${a.d1.totalLengthCm}</td>
               <td class="session-card-cell">${a.d1.fishCount}</td>
@@ -2319,7 +2766,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (TWO-CARD SPLIT + STICKY TWO-TIER HEADERS)
+       RENDER VIEW 3: TEAM LEADERBOARD
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -2351,8 +2798,6 @@
         const rankClass = teamRank <= 3 ? `rank-medal rank-${teamRank}` : "";
         const prefix = rankIcons[teamRank] || "";
 
-        // Sort anglers best-performing first:
-        // 1. Lowest Points -> 2. Highest Length -> 3. Highest Fish -> 4. Biggest Single Fish
         const sortedMembers = [...team.members].sort(
           (a, b) =>
             a.totals.cumulativePoints - b.totals.cumulativePoints ||
@@ -2392,7 +2837,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (TINTED FINTECH CARDS)
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS
        --------------------------------------------------------- */
     function renderDayZoneWinners(dayKey, gridElementId) {
       const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
@@ -2563,7 +3008,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 6: MY MATCH REPORT ("NTH OUT OF 28TH" GAUGES)
+       RENDER VIEW 6: MY MATCH REPORT (MOMENTUM + 4 MOTIF CARDS + OPT-IN SIDE-BY-SIDE H2H)
        --------------------------------------------------------- */
     function renderMyReport() {
       const anglers = STATE.anglers;
@@ -2572,53 +3017,101 @@
       const mySelect = document.getElementById("myAnglerSelect");
       const rivalSelect = document.getElementById("compareAnglerSelect");
 
-      const prevMe = mySelect.value;
+      const prevMe = STATE.selectedAnglerName || mySelect.value;
       const prevRival = rivalSelect.value;
 
       mySelect.innerHTML = "";
-      rivalSelect.innerHTML = "";
-
       anglers.forEach(a => {
         const opt1 = document.createElement("option");
         opt1.value = a.anglerName;
         opt1.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
         mySelect.appendChild(opt1);
-
-        const opt2 = document.createElement("option");
-        opt2.value = a.anglerName;
-        opt2.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
-        rivalSelect.appendChild(opt2);
       });
 
       if (prevMe && anglers.some(a => a.anglerName === prevMe)) {
         mySelect.value = prevMe;
       }
-      if (prevRival && anglers.some(a => a.anglerName === prevRival)) {
-        rivalSelect.value = prevRival;
-      } else if (anglers.length > 1) {
-        rivalSelect.value = anglers[1].anglerName;
+
+      // Compute field-best benchmarks across all 4 motif metrics
+      const fieldBestPts = Math.min(...anglers.map(a => a.totals.cumulativePoints ?? 999));
+      const fieldBestFish = Math.max(...anglers.map(a => a.totals.cumulativeFish || 0));
+      const fieldBestLength = Math.max(...anglers.map(a => a.totals.cumulativeLengthCm || 0));
+      const fieldBestBiggest = Math.max(...anglers.map(a => a.overallBiggestCm || 0));
+
+      function populateRivalDropdown(currentMeName) {
+        const savedRival = rivalSelect.value || prevRival;
+        rivalSelect.innerHTML = `<option value="">— Select a rival angler —</option>`;
+        anglers
+          .filter(a => a.anglerName !== currentMeName)
+          .forEach(a => {
+            const opt2 = document.createElement("option");
+            opt2.value = a.anglerName;
+            opt2.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
+            rivalSelect.appendChild(opt2);
+          });
+
+        if (savedRival && savedRival !== currentMeName && anglers.some(a => a.anglerName === savedRival)) {
+          rivalSelect.value = savedRival;
+        } else {
+          rivalSelect.value = "";
+        }
       }
 
       function updateReport() {
         const me = anglers.find(a => a.anglerName === mySelect.value) || anglers[0];
-        const rival = anglers.find(a => a.anglerName === rivalSelect.value) || anglers[1] || anglers[0];
+        STATE.selectedAnglerName = me.anglerName;
+        populateRivalDropdown(me.anglerName);
+
         const fieldSize = anglers.length;
         const fieldOrdinal = getOrdinal(fieldSize);
 
+        // 1. Two-Day Trajectory / Momentum Banner
+        const rankDelta = me.d1OverallRank - me.rank;
+        let moveBadgeClass = "steady";
+        let movePillText = `➡️ Held steady at ${getOrdinal(me.rank)}`;
+        let moveHeadline = `Finished ${getOrdinal(me.rank)} overall — unchanged from Day 1 (${getOrdinal(me.d1OverallRank)})`;
+
+        if (rankDelta > 0) {
+          moveBadgeClass = "up";
+          movePillText = `📈 Climbed ${rankDelta} ${rankDelta === 1 ? "place" : "places"}`;
+          moveHeadline = `Rose from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+        } else if (rankDelta < 0) {
+          const dropCount = Math.abs(rankDelta);
+          moveBadgeClass = "down";
+          movePillText = `📉 Dropped ${dropCount} ${dropCount === 1 ? "place" : "places"}`;
+          moveHeadline = `Moved from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+        }
+
+        const z1Text = `🌙 Day 1: ${getOrdinal(me.d1ZoneStanding.pos)} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
+        const z2Text = `☀️ Day 2: ${getOrdinal(me.d2ZoneStanding.pos)} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
+
+        document.getElementById("myMomentumBanner").innerHTML = `
+          <div class="momentum-banner">
+            <div class="momentum-left">
+              <div class="momentum-eyebrow">Two-Day Championship Trajectory • ${me.anglerName} (${me.teamName})</div>
+              <div class="momentum-headline">${moveHeadline}</div>
+              <div class="momentum-subline">${z1Text}  •  ${z2Text}</div>
+            </div>
+            <span class="momentum-pill ${moveBadgeClass}">${movePillText}</span>
+          </div>
+        `;
+
+        // 2. Four Circle Motif Cards (Heading Above Circle, Actual vs Best Below Circle)
         const overallPct = Math.max(6, Math.round(((fieldSize - me.rank + 1) / fieldSize) * 100));
         const fishRankPct = Math.max(6, Math.round(((fieldSize - me.fishRank + 1) / fieldSize) * 100));
         const lengthRankPct = Math.max(6, Math.round(((fieldSize - me.lengthRank + 1) / fieldSize) * 100));
-        const d1SharePct = me.totals.cumulativeFish > 0
-          ? Math.round((me.d1.fishCount / me.totals.cumulativeFish) * 100)
-          : 0;
+        const biggestRankPct = me.overallBiggestCm > 0
+          ? Math.max(6, Math.round(((fieldSize - me.biggestRank + 1) / fieldSize) * 100))
+          : 4;
 
         const r = 38;
         const c = 2 * Math.PI * r;
 
-        function buildOrdinalGauge(title, ordinalVal, subOutOf, detailSub, pct, color) {
+        function buildMotifCard(topHeading, insideOrdinal, insideSub, actualLabel, bestLabel, pct, color) {
           const offset = c - (pct / 100) * c;
           return `
             <div class="gauge-card">
+              <div class="gauge-top-heading">${topHeading}</div>
               <div class="gauge-ring-container">
                 <svg class="gauge-svg" viewBox="0 0 96 96">
                   <circle class="gauge-track" cx="48" cy="48" r="${r}"></circle>
@@ -2628,87 +3121,284 @@
                     stroke-dashoffset="${offset.toFixed(1)}"></circle>
                 </svg>
                 <div class="gauge-inside-text">
-                  <span class="gauge-ordinal">${ordinalVal}</span>
-                  <span class="gauge-out-of">${subOutOf}</span>
+                  <span class="gauge-ordinal">${insideOrdinal}</span>
+                  <span class="gauge-out-of">${insideSub}</span>
                 </div>
               </div>
-              <div class="gauge-label">${title}</div>
-              <div class="gauge-sub">${detailSub}</div>
+              <div class="gauge-bottom-compare">
+                <span class="gauge-actual-score">${actualLabel}</span>
+                <span class="gauge-best-benchmark">Field Best: ${bestLabel}</span>
+              </div>
             </div>
           `;
         }
 
         document.getElementById("myGaugesRow").innerHTML = `
-          ${buildOrdinalGauge(
+          ${buildMotifCard(
             "Overall Standing",
             getOrdinal(me.rank),
             `out of ${fieldOrdinal}`,
-            `${me.totals.cumulativePoints} cumulative zone pts`,
+            `${me.totals.cumulativePoints} zone pts`,
+            `${fieldBestPts} pts`,
             overallPct,
             "#004481"
           )}
-          ${buildOrdinalGauge(
-            "Total Fish Rank",
+          ${buildMotifCard(
+            "Total Fish",
             getOrdinal(me.fishRank),
             `out of ${fieldOrdinal}`,
-            `${me.totals.cumulativeFish} total fish landed`,
+            `${me.totals.cumulativeFish} fish`,
+            `${fieldBestFish} fish`,
             fishRankPct,
             "#059669"
           )}
-          ${buildOrdinalGauge(
-            "Total Length Rank",
+          ${buildMotifCard(
+            "Total Length",
             getOrdinal(me.lengthRank),
             `out of ${fieldOrdinal}`,
-            `${me.totals.cumulativeLengthCm} cm measured`,
+            `${me.totals.cumulativeLengthCm} cm`,
+            `${fieldBestLength} cm`,
             lengthRankPct,
             "#005eb8"
           )}
-          ${buildOrdinalGauge(
-            "Session Share",
-            `${d1SharePct}%`,
-            "🌙 Day 1 Share",
-            `🌙 ${me.d1.fishCount} • ☀️ ${me.d2.fishCount}`,
-            Math.max(6, d1SharePct),
+          ${buildMotifCard(
+            "Biggest Fish",
+            me.overallBiggestCm > 0 ? getOrdinal(me.biggestRank) : "—",
+            me.overallBiggestCm > 0 ? `out of ${fieldOrdinal}` : "No fish",
+            me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "0 cm",
+            `${fieldBestBiggest} cm`,
+            biggestRankPct,
             "#d97706"
           )}
         `;
 
-        const meBest = Math.max(me.d1.biggestFishCm || 0, me.d2.biggestFishCm || 0);
-        const rivalBest = Math.max(rival.d1.biggestFishCm || 0, rival.d2.biggestFishCm || 0);
+        // 3. Opt-In Side-by-Side Head-to-Head Comparison
+        renderSideBySideH2H(me);
+      }
 
-        document.getElementById("h2hContainer").innerHTML = `
-          <div class="h2h-box">
-            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem; color:var(--brand-navy);">
-              ${me.anglerName} <span style="color:var(--brand-cobalt);">(${getOrdinal(me.rank)} out of ${fieldOrdinal})</span>
-            </div>
-            <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${me.teamName}</div>
-            <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.84rem;">
-              <div>🌙 Day 1 (${shortZone(me.d1.zone)} #${me.d1.peg}): <strong>${me.d1.fishCount} fish</strong> • ${me.d1.totalLengthCm}cm (${me.d1.zonePoints} pts)</div>
-              <div>☀️ Day 2 (${shortZone(me.d2.zone)} #${me.d2.peg}): <strong>${me.d2.fishCount} fish</strong> • ${me.d2.totalLengthCm}cm (${me.d2.zonePoints} pts)</div>
-              <div>📏 Biggest Fish: <strong>${meBest} cm</strong></div>
-              <div style="margin-top:0.25rem; color:var(--accent-emerald);">Combined: <strong>${me.totals.cumulativePoints} pts • ${me.totals.cumulativeFish} fish • ${me.totals.cumulativeLengthCm}cm</strong></div>
-            </div>
-          </div>
+      function renderSideBySideH2H(me) {
+        const h2hContainer = document.getElementById("h2hContainer");
+        const rivalName = rivalSelect.value;
 
-          <div class="h2h-vs">VS</div>
+        if (!rivalName) {
+          h2hContainer.innerHTML = "";
+          return;
+        }
 
-          <div class="h2h-box">
-            <div style="font-weight:800; font-size:1.02rem; margin-bottom:0.25rem; color:var(--brand-navy);">
-              ${rival.anglerName} <span style="color:var(--accent-indigo);">(${getOrdinal(rival.rank)} out of ${fieldOrdinal})</span>
+        const rival = anglers.find(a => a.anglerName === rivalName);
+        if (!rival) {
+          h2hContainer.innerHTML = "";
+          return;
+        }
+
+        const meAvgSize = me.totals.cumulativeFish > 0
+          ? (me.totals.cumulativeLengthCm / me.totals.cumulativeFish)
+          : 0;
+        const rivalAvgSize = rival.totals.cumulativeFish > 0
+          ? (rival.totals.cumulativeLengthCm / rival.totals.cumulativeFish)
+          : 0;
+
+        function buildSbsRow({ metricLabel, meVal, rivalVal, meSub = "", rivalSub = "", meNum, rivalNum, lowerIsBetter = false, unitSuffix = "" }) {
+          let winner = "tie";
+          let diff = 0;
+
+          if (typeof meNum === "number" && typeof rivalNum === "number" && meNum !== rivalNum) {
+            if (lowerIsBetter) {
+              winner = meNum < rivalNum ? "me" : "rival";
+              diff = Math.abs(rivalNum - meNum);
+            } else {
+              winner = meNum > rivalNum ? "me" : "rival";
+              diff = Math.abs(meNum - rivalNum);
+            }
+          }
+
+          const formattedDiff = Number.isInteger(diff) ? diff : diff.toFixed(1);
+          let marginHtml = "";
+          if (typeof meNum === "number" && typeof rivalNum === "number") {
+            if (winner === "me") {
+              marginHtml = `<span class="h2h-sbs-margin-tag me-lead">◀ +${formattedDiff}${unitSuffix}</span>`;
+            } else if (winner === "rival") {
+              marginHtml = `<span class="h2h-sbs-margin-tag rival-lead">+${formattedDiff}${unitSuffix} ▶</span>`;
+            } else {
+              marginHtml = `<span class="h2h-sbs-margin-tag tie">Level</span>`;
+            }
+          }
+
+          return `
+            <div class="h2h-sbs-row">
+              <div class="h2h-sbs-cell left ${winner === "me" ? "win-cell" : ""}">
+                <div class="h2h-sbs-val">${meVal}</div>
+                ${meSub ? `<div class="h2h-sbs-sub">${meSub}</div>` : ""}
+              </div>
+              <div class="h2h-sbs-center">
+                <div class="h2h-sbs-metric-lbl">${metricLabel}</div>
+                ${marginHtml}
+              </div>
+              <div class="h2h-sbs-cell right ${winner === "rival" ? "win-cell" : ""}">
+                <div class="h2h-sbs-val">${rivalVal}</div>
+                ${rivalSub ? `<div class="h2h-sbs-sub">${rivalSub}</div>` : ""}
+              </div>
             </div>
-            <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.65rem;">Team: ${rival.teamName}</div>
-            <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.84rem;">
-              <div>🌙 Day 1 (${shortZone(rival.d1.zone)} #${rival.d1.peg}): <strong>${rival.d1.fishCount} fish</strong> • ${rival.d1.totalLengthCm}cm (${rival.d1.zonePoints} pts)</div>
-              <div>☀️ Day 2 (${shortZone(rival.d2.zone)} #${rival.d2.peg}): <strong>${rival.d2.fishCount} fish</strong> • ${rival.d2.totalLengthCm}cm (${rival.d2.zonePoints} pts)</div>
-              <div>📏 Biggest Fish: <strong>${rivalBest} cm</strong></div>
-              <div style="margin-top:0.25rem; color:var(--accent-emerald);">Combined: <strong>${rival.totals.cumulativePoints} pts • ${rival.totals.cumulativeFish} fish • ${rival.totals.cumulativeLengthCm}cm</strong></div>
+          `;
+        }
+
+        const sameZoneD1 = me.d1.zone && me.d1.zone === rival.d1.zone;
+        const sameZoneD2 = me.d2.zone && me.d2.zone === rival.d2.zone;
+
+        h2hContainer.innerHTML = `
+          <div class="h2h-side-by-side-wrap">
+            <!-- Top Angler Header Strip -->
+            <div class="h2h-sbs-header">
+              <div class="h2h-sbs-angler left">
+                <div class="h2h-sbs-name">${me.anglerName}</div>
+                <div class="h2h-sbs-meta">${getOrdinal(me.rank)} Overall • ${me.teamName}</div>
+              </div>
+              <div class="h2h-sbs-vs-badge">VS</div>
+              <div class="h2h-sbs-angler right">
+                <div class="h2h-sbs-name">${rival.anglerName}</div>
+                <div class="h2h-sbs-meta">${getOrdinal(rival.rank)} Overall • ${rival.teamName}</div>
+              </div>
             </div>
+
+            <!-- OVERALL CHAMPIONSHIP METRICS -->
+            <div class="h2h-sbs-section-bar">
+              <span class="h2h-sbs-section-title">Overall Championship Head-to-Head</span>
+            </div>
+
+            ${buildSbsRow({
+              metricLabel: "Total Zone Points",
+              meVal: `${me.totals.cumulativePoints} pts`,
+              rivalVal: `${rival.totals.cumulativePoints} pts`,
+              meSub: `Rank: ${getOrdinal(me.rank)}`,
+              rivalSub: `Rank: ${getOrdinal(rival.rank)}`,
+              meNum: me.totals.cumulativePoints,
+              rivalNum: rival.totals.cumulativePoints,
+              lowerIsBetter: true,
+              unitSuffix: " pts"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Total Fish Landed",
+              meVal: `${me.totals.cumulativeFish} fish`,
+              rivalVal: `${rival.totals.cumulativeFish} fish`,
+              meSub: `Field Rank: ${getOrdinal(me.fishRank)}`,
+              rivalSub: `Field Rank: ${getOrdinal(rival.fishRank)}`,
+              meNum: me.totals.cumulativeFish,
+              rivalNum: rival.totals.cumulativeFish,
+              lowerIsBetter: false,
+              unitSuffix: " fish"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Total Measured Length",
+              meVal: `${me.totals.cumulativeLengthCm} cm`,
+              rivalVal: `${rival.totals.cumulativeLengthCm} cm`,
+              meSub: `${(me.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(me.lengthRank)})`,
+              rivalSub: `${(rival.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(rival.lengthRank)})`,
+              meNum: me.totals.cumulativeLengthCm,
+              rivalNum: rival.totals.cumulativeLengthCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Avg Fish Stamp",
+              meVal: `${meAvgSize.toFixed(1)} cm`,
+              rivalVal: `${rivalAvgSize.toFixed(1)} cm`,
+              meSub: "Per fish caught",
+              rivalSub: "Per fish caught",
+              meNum: Number(meAvgSize.toFixed(1)),
+              rivalNum: Number(rivalAvgSize.toFixed(1)),
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Biggest Single Fish",
+              meVal: me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "—",
+              rivalVal: rival.overallBiggestCm > 0 ? `${rival.overallBiggestCm} cm` : "—",
+              meNum: me.overallBiggestCm,
+              rivalNum: rival.overallBiggestCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
+
+            <!-- DAY 1 SESSION SPLIT -->
+            <div class="h2h-sbs-section-bar">
+              <span class="h2h-sbs-section-title">🌙 Day 1 — Night Session Split</span>
+              ${sameZoneD1 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d1.zone)})</span>` : ""}
+            </div>
+
+            ${buildSbsRow({
+              metricLabel: "Zone & Peg",
+              meVal: `${shortZone(me.d1.zone)} #${me.d1.peg}`,
+              rivalVal: `${shortZone(rival.d1.zone)} #${rival.d1.peg}`
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Zone Finish & Pts",
+              meVal: `${getOrdinal(me.d1ZoneStanding.pos)} (${me.d1.zonePoints} pts)`,
+              rivalVal: `${getOrdinal(rival.d1ZoneStanding.pos)} (${rival.d1.zonePoints} pts)`,
+              meNum: me.d1.zonePoints,
+              rivalNum: rival.d1.zonePoints,
+              lowerIsBetter: true,
+              unitSuffix: " pts"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Session Length & Fish",
+              meVal: `${me.d1.totalLengthCm} cm`,
+              rivalVal: `${rival.d1.totalLengthCm} cm`,
+              meSub: `${me.d1.fishCount} fish • Big: ${me.d1.biggestFishCm > 0 ? me.d1.biggestFishCm + "cm" : "—"}`,
+              rivalSub: `${rival.d1.fishCount} fish • Big: ${rival.d1.biggestFishCm > 0 ? rival.d1.biggestFishCm + "cm" : "—"}`,
+              meNum: me.d1.totalLengthCm,
+              rivalNum: rival.d1.totalLengthCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
+
+            <!-- DAY 2 SESSION SPLIT -->
+            <div class="h2h-sbs-section-bar">
+              <span class="h2h-sbs-section-title">☀️ Day 2 — Day Session Split</span>
+              ${sameZoneD2 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d2.zone)})</span>` : ""}
+            </div>
+
+            ${buildSbsRow({
+              metricLabel: "Zone & Peg",
+              meVal: `${shortZone(me.d2.zone)} #${me.d2.peg}`,
+              rivalVal: `${shortZone(rival.d2.zone)} #${rival.d2.peg}`
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Zone Finish & Pts",
+              meVal: `${getOrdinal(me.d2ZoneStanding.pos)} (${me.d2.zonePoints} pts)`,
+              rivalVal: `${getOrdinal(rival.d2ZoneStanding.pos)} (${rival.d2.zonePoints} pts)`,
+              meNum: me.d2.zonePoints,
+              rivalNum: rival.d2.zonePoints,
+              lowerIsBetter: true,
+              unitSuffix: " pts"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Session Length & Fish",
+              meVal: `${me.d2.totalLengthCm} cm`,
+              rivalVal: `${rival.d2.totalLengthCm} cm`,
+              meSub: `${me.d2.fishCount} fish • Big: ${me.d2.biggestFishCm > 0 ? me.d2.biggestFishCm + "cm" : "—"}`,
+              rivalSub: `${rival.d2.fishCount} fish • Big: ${rival.d2.biggestFishCm > 0 ? rival.d2.biggestFishCm + "cm" : "—"}`,
+              meNum: me.d2.totalLengthCm,
+              rivalNum: rival.d2.totalLengthCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
           </div>
         `;
       }
 
       mySelect.onchange = updateReport;
-      rivalSelect.onchange = updateReport;
+      rivalSelect.onchange = () => {
+        const me = anglers.find(a => a.anglerName === mySelect.value) || anglers[0];
+        renderSideBySideH2H(me);
+      };
       updateReport();
     }
 
