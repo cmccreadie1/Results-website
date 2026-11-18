@@ -364,12 +364,12 @@
       text-overflow: ellipsis;
     }
 
-    /* Clean Solid-Bar Vertical Chart Strip with Primary Hero + Daily Breakdown Sub-Divider */
+    /* Clean Solid-Bar Vertical Chart Strip with Tighter Padding for Wider Diagrams */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 0.95rem 1rem;
+      padding: 0.85rem 0.65rem;
       box-shadow: var(--shadow-card);
       margin-bottom: 0;
       width: 100%;
@@ -379,7 +379,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.7rem;
+      padding: 0 0.25rem;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
@@ -394,17 +395,17 @@
     .session-donuts-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.9rem;
+      gap: 0.65rem;
     }
 
     .session-donut-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 0.72rem 0.68rem 0.75rem;
+      padding: 0.62rem 0.45rem 0.6rem;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
+      gap: 0.48rem;
     }
 
     .session-donut-card.total-hero-card {
@@ -464,7 +465,7 @@
       color: var(--brand-navy);
       text-align: center;
       letter-spacing: -0.01em;
-      padding-bottom: 0.38rem;
+      padding-bottom: 0.35rem;
       border-bottom: 1px solid var(--border-glass);
       display: flex;
       align-items: center;
@@ -490,7 +491,7 @@
     .donut-pair-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.65rem;
+      gap: 0.42rem;
       align-items: stretch;
     }
 
@@ -498,7 +499,7 @@
       background: #ffffff;
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-sm);
-      padding: 0.5rem 0.45rem 0.45rem;
+      padding: 0.45rem 0.25rem 0.4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -514,31 +515,31 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 0.25rem;
-      margin-bottom: 0.35rem;
-      padding: 0 0.15rem;
+      gap: 0.2rem;
+      margin-bottom: 0.32rem;
+      padding: 0 0.22rem;
     }
 
     .bar-chart-metric-name {
-      font-size: 0.71rem;
+      font-size: 0.69rem;
       font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
     }
 
     .bar-chart-total-badge {
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 800;
       color: var(--brand-cobalt);
     }
 
     .vbar-plot-area {
       width: 100%;
-      height: 110px;
+      height: 112px;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.28rem;
+      gap: 0.15rem;
       align-items: end;
       padding-top: 1.1rem;
       border-bottom: 1.5px solid #cbd5e1;
@@ -556,7 +557,7 @@
 
     .vbar-track {
       width: 100%;
-      max-width: 28px;
+      max-width: 30px;
       height: 100%;
       background: transparent;
       display: flex;
@@ -579,7 +580,7 @@
       bottom: calc(100% + 2px);
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 800;
       color: var(--text-primary);
       white-space: nowrap;
@@ -591,7 +592,7 @@
       width: 100%;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.28rem;
+      gap: 0.15rem;
       margin-top: 0.24rem;
       text-align: center;
     }
@@ -2080,7 +2081,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.10",
+      version: "v3.8.11",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2585,10 +2586,10 @@
           </div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
-              "Length",
+              "Length (m)",
               `${totalLengthMeters}m`,
               zoneStats.map(z => z.zoneLen),
-              zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}m`)
+              zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}`)
             )}
             ${buildZoneVerticalBarChart(
               "Fish Count",
@@ -2607,10 +2608,10 @@
           <div class="session-donut-card-title">🌙 Day 1</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
-              "Length",
+              "Length (m)",
               `${totalD1Meters}m`,
               zoneStats.map(z => z.d1Len),
-              zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}m`)
+              zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}`)
             )}
             ${buildZoneVerticalBarChart(
               "Fish Count",
@@ -2625,10 +2626,10 @@
           <div class="session-donut-card-title">☀️ Day 2</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
-              "Length",
+              "Length (m)",
               `${totalD2Meters}m`,
               zoneStats.map(z => z.d2Len),
-              zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}m`)
+              zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}`)
             )}
             ${buildZoneVerticalBarChart(
               "Fish Count",
@@ -3252,7 +3253,7 @@
           <div class="momentum-left">
             <div class="momentum-eyebrow">Two-Day Championship Trajectory • ${me.anglerName} (${me.teamName})</div>
             <div class="momentum-headline">${moveHeadline}</div>
-            <div class="momentum-subline">${z1Text}  •  ${z2Text}</div>
+            <div class="momentum-subline">${z1Text}  •  ${z2Text}</div>
           </div>
           <span class="momentum-pill ${moveBadgeClass}">${movePillText}</span>
         </div>
