@@ -1,85 +1,3494 @@
-const CACHE_NAME = "spra-results-portal-v3.8.11";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.json"
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#004481" />
+  <title>SPRA Scottish Shore Championship 2027 | Results Portal</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root {
+      /* Modern Frosted Glass / Bank of Scotland Light Palette */
+      --bg-base: #e7eef8;
+      --bg-surface: rgba(255, 255, 255, 0.76);
+      --bg-surface-strong: rgba(255, 255, 255, 0.88);
+      --bg-card: rgba(248, 250, 252, 0.72);
+      --bg-card-hover: rgba(255, 255, 255, 0.92);
+      --border-glass: rgba(203, 213, 225, 0.72);
+      --border-glass-highlight: rgba(255, 255, 255, 0.88);
+      --border-strong: rgba(148, 163, 184, 0.55);
 
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
-  );
-  self.skipWaiting();
-});
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
 
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
-  );
-  self.clients.claim();
-});
+      --brand-navy: #004481;
+      --brand-navy-dark: #00315c;
+      --brand-cobalt: #005eb8;
+      --brand-tint: rgba(238, 245, 252, 0.82);
+      --brand-tint-border: rgba(191, 217, 242, 0.85);
 
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
+      --accent-emerald: #059669;
+      --accent-emerald-bg: rgba(236, 253, 245, 0.85);
+      --accent-emerald-border: rgba(167, 243, 208, 0.85);
+      --accent-amber: #d97706;
+      --accent-indigo: #4338ca;
 
-  const requestUrl = new URL(event.request.url);
+      /* Zone Colors */
+      --zone-red: #ef4444;
+      --zone-red-bg: rgba(254, 242, 242, 0.85);
+      --zone-red-border: #fca5a5;
 
-  // Network-First for scores.json so updated match scores load immediately while falling back to cache offline
-  if (requestUrl.pathname.endsWith("scores.json")) {
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put("./scores.json", clone));
+      --zone-yellow: #eab308;
+      --zone-yellow-bg: rgba(254, 252, 232, 0.85);
+      --zone-yellow-border: #fde047;
+
+      --zone-green: #22c55e;
+      --zone-green-bg: rgba(240, 253, 244, 0.85);
+      --zone-green-border: #86efac;
+
+      --zone-blue: #3b82f6;
+      --zone-blue-bg: rgba(239, 246, 255, 0.85);
+      --zone-blue-border: #93c5fd;
+
+      --glass-blur: blur(14px);
+      --glass-blur-sm: blur(10px);
+      --glass-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-card: 0 4px 18px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(0, 68, 129, 0.05);
+      --shadow-elevated: 0 10px 28px rgba(0, 68, 129, 0.13), 0 2px 6px rgba(15, 23, 42, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(at 10% 6%, rgba(191, 219, 254, 0.72) 0px, transparent 52%),
+        radial-gradient(at 90% 14%, rgba(219, 234, 254, 0.78) 0px, transparent 50%),
+        radial-gradient(at 82% 84%, rgba(199, 210, 254, 0.45) 0px, transparent 52%),
+        radial-gradient(at 14% 88%, rgba(204, 251, 241, 0.42) 0px, transparent 50%),
+        linear-gradient(180deg, #e5edf8 0%, #f1f5fb 50%, #e6eef8 100%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      padding-bottom: 4.5rem;
+    }
+
+    .container {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0.85rem 0.65rem;
+    }
+
+    /* Streamlined Frosted Glass Front-Page Header */
+    .app-header {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-top: 4px solid var(--brand-navy);
+      border-radius: var(--radius-lg);
+      padding: 1.05rem 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+      text-align: center;
+    }
+
+    .app-header.hidden {
+      display: none;
+    }
+
+    .brand-block h1 {
+      font-size: 1.42rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--brand-navy);
+      line-height: 1.25;
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.22rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.24rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.73rem;
+      font-weight: 700;
+      background: var(--brand-tint);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+      box-shadow: var(--glass-inner-glow);
+    }
+
+    /* Views & High-Contrast Frosted Floating Bottom-Left Back Button */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.22s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .floating-back-btn {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      z-index: 999;
+      display: none;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(0, 68, 129, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.82);
+      color: #ffffff;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 68, 129, 0.36), 0 3px 8px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: all 0.18s ease;
+    }
+
+    .floating-back-btn.visible {
+      display: inline-flex;
+    }
+
+    .floating-back-btn:hover {
+      background: rgba(0, 94, 184, 0.94);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0, 68, 129, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    /* Two-Group Frosted Glass Navigation Panels */
+    .hub-group-panel {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.05rem;
+      margin-bottom: 0.95rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+    }
+
+    .hub-group-panel.insights-group {
+      border-color: rgba(191, 217, 242, 0.88);
+      background: linear-gradient(180deg, rgba(240, 247, 255, 0.82) 0%, rgba(255, 255, 255, 0.72) 100%);
+    }
+
+    .hub-section-label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-navy);
+      margin: 0 0 0.7rem 0.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hub-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .hub-btn-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-left: 4px solid var(--brand-navy);
+      border-radius: var(--radius-md);
+      padding: 1.05rem 1.15rem;
+      text-align: left;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.045), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hub-btn-card.insight-card {
+      border-left-color: var(--brand-cobalt);
+    }
+
+    .hub-btn-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-tint-border);
+      border-left-color: var(--brand-cobalt);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-elevated), inset 0 1px 0 #ffffff;
+    }
+
+    .hub-btn-card:active {
+      transform: translateY(0);
+    }
+
+    .hub-btn-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .hub-btn-title {
+      font-size: 1.01rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      letter-spacing: -0.01em;
+    }
+
+    .hub-btn-sub {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .hub-arrow {
+      font-size: 1.15rem;
+      color: var(--brand-cobalt);
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+
+    .hub-btn-card:hover .hub-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Frosted White Elevated Glass Cards */
+    .glass-card {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.05rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+      margin-bottom: 0.85rem;
+      width: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* Frosted Slate-Blue Anchor Band: Top 6-Column Unified KPI Card */
+    .kpi-unified-card {
+      background: linear-gradient(180deg, rgba(221, 234, 250, 0.82) 0%, rgba(235, 243, 253, 0.76) 100%);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid rgba(191, 211, 236, 0.85);
+      border-top: 4px solid var(--brand-navy);
+      border-radius: var(--radius-lg);
+      padding: 0.65rem 0.45rem;
+      margin-bottom: 0.95rem;
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      width: 100%;
+    }
+
+    .kpi-unified-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    .kpi-cell {
+      padding: 0.35rem 0.75rem;
+      border-right: 1px solid rgba(186, 207, 233, 0.75);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .kpi-cell:last-child {
+      border-right: none;
+    }
+
+    .kpi-label {
+      font-size: 0.64rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-navy-dark);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .kpi-value {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      margin: 0.1rem 0;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .kpi-sub {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Frosted Solid-Bar Vertical Chart Strip with Primary Hero + Daily Breakdown Sub-Divider */
+    .rings-strip-card {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: var(--radius-lg);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+      margin-bottom: 0;
+      width: 100%;
+    }
+
+    .rings-strip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .rings-strip-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.01em;
+    }
+
+    .session-donuts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .session-donut-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: var(--radius-md);
+      padding: 0.72rem 0.68rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .session-donut-card.total-hero-card {
+      grid-column: 1 / -1;
+      background: linear-gradient(180deg, rgba(235, 244, 254, 0.84) 0%, rgba(248, 251, 255, 0.74) 100%);
+      border: 1.5px solid var(--brand-tint-border);
+      border-top: 3.5px solid var(--brand-navy);
+      box-shadow: 0 4px 16px rgba(0, 68, 129, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    .daily-breakdown-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin: 0.35rem 0 0.15rem;
+    }
+
+    .daily-breakdown-divider.section-gap-divider {
+      margin: 1.15rem 0 1.05rem;
+    }
+
+    .daily-breakdown-divider::before,
+    .daily-breakdown-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.55), transparent);
+    }
+
+    .daily-breakdown-divider span {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-navy);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 0.18rem 0.75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    .session-donut-card.day1-sub-card {
+      background: linear-gradient(180deg, rgba(243, 245, 255, 0.82) 0%, rgba(248, 250, 252, 0.72) 100%);
+      border-top: 3px solid var(--accent-indigo);
+    }
+
+    .session-donut-card.day2-sub-card {
+      background: linear-gradient(180deg, rgba(255, 252, 240, 0.82) 0%, rgba(248, 250, 252, 0.72) 100%);
+      border-top: 3px solid var(--accent-amber);
+    }
+
+    .session-donut-card-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      text-align: center;
+      letter-spacing: -0.01em;
+      padding-bottom: 0.38rem;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.42rem;
+    }
+
+    .session-donut-card.total-hero-card .session-donut-card-title {
+      border-bottom-color: var(--brand-tint-border);
+    }
+
+    .overall-hero-pill {
+      font-size: 0.61rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--brand-navy);
+      color: #ffffff;
+      padding: 0.12rem 0.48rem;
+      border-radius: 999px;
+    }
+
+    .donut-pair-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      align-items: stretch;
+    }
+
+    .bar-chart-slot {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.45rem 0.45rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+    }
+
+    .session-donut-card.total-hero-card .bar-chart-slot {
+      border-color: var(--brand-tint-border);
+    }
+
+    .bar-chart-header {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.25rem;
+      margin-bottom: 0.35rem;
+      padding: 0 0.15rem;
+    }
+
+    .bar-chart-metric-name {
+      font-size: 0.71rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .bar-chart-total-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--brand-cobalt);
+    }
+
+    .vbar-plot-area {
+      width: 100%;
+      height: 110px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.28rem;
+      align-items: end;
+      padding-top: 1.1rem;
+      border-bottom: 1.5px solid rgba(148, 163, 184, 0.55);
+    }
+
+    .vbar-col {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      min-width: 0;
+    }
+
+    .vbar-track {
+      width: 100%;
+      max-width: 28px;
+      height: 100%;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+    }
+
+    .vbar-fill {
+      width: 100%;
+      border-radius: 5px 5px 0 0;
+      transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      min-height: 3px;
+    }
+
+    .vbar-val-tag {
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      white-space: nowrap;
+      letter-spacing: -0.03em;
+      pointer-events: none;
+    }
+
+    .vbar-axis-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.28rem;
+      margin-top: 0.24rem;
+      text-align: center;
+    }
+
+    .vbar-axis-lbl {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    /* Frosted Slate-Blue Anchor Band: Day 1 (Night) vs Day 2 (Day) Performance Banner */
+    .session-section-banner {
+      background: linear-gradient(180deg, rgba(221, 234, 250, 0.82) 0%, rgba(235, 243, 253, 0.76) 100%);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid rgba(191, 211, 236, 0.85);
+      border-left: 4px solid var(--brand-navy);
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .session-h2h-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      width: 100%;
+      margin-bottom: 0.85rem;
+    }
+
+    .sh2h-metric-card {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-top: 3px solid var(--brand-tint-border);
+      border-radius: var(--radius-lg);
+      padding: 0.9rem 0.95rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .sh2h-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.45rem;
+    }
+
+    .sh2h-title {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 800;
+      color: var(--brand-navy);
+    }
+
+    .sh2h-edge-badge {
+      font-size: 0.67rem;
+      font-weight: 700;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .sh2h-edge-badge.d1 {
+      background: rgba(238, 242, 255, 0.9);
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
+    }
+
+    .sh2h-edge-badge.d2 {
+      background: rgba(255, 251, 235, 0.9);
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .sh2h-edge-badge.even {
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+    }
+
+    .sh2h-split-cols {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .sh2h-side {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 0.58rem 0.64rem;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .sh2h-side.d1-side {
+      background: rgba(245, 247, 255, 0.82);
+      border-color: #dbeafe;
+      border-top: 2.5px solid #818cf8;
+    }
+
+    .sh2h-side.d2-side {
+      background: rgba(255, 253, 245, 0.82);
+      border-color: #fef3c7;
+      border-top: 2.5px solid #fbbf24;
+    }
+
+    .sh2h-side.d1-side.winner-side {
+      background: rgba(238, 242, 255, 0.92);
+      border-color: #818cf8;
+      border-top: 3px solid var(--accent-indigo);
+      box-shadow: 0 2px 6px rgba(67, 56, 202, 0.08);
+    }
+
+    .sh2h-side.d2-side.winner-side {
+      background: rgba(255, 251, 235, 0.92);
+      border-color: #f59e0b;
+      border-top: 3px solid var(--accent-amber);
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.09);
+    }
+
+    .sh2h-side-lbl {
+      font-size: 0.66rem;
+      font-weight: 800;
+      margin-bottom: 0.14rem;
+    }
+
+    .sh2h-side-val {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .sh2h-side-sub {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin-top: 0.16rem;
+    }
+
+    .sh2h-vs-sep {
+      font-size: 0.66rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sh2h-footer-note {
+      font-size: 0.71rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-glass);
+      padding-top: 0.42rem;
+    }
+
+    /* Frosted Zone Winners Panels */
+    .zone-winner-panel[data-zone="Red Zone"] {
+      border-color: rgba(248, 113, 113, 0.75);
+      border-top: 4px solid #ef4444;
+      background: linear-gradient(180deg, rgba(254, 242, 242, 0.84) 0%, rgba(255, 255, 255, 0.74) 44%);
+    }
+    .zone-winner-panel[data-zone="Yellow Zone"] {
+      border-color: rgba(250, 204, 21, 0.78);
+      border-top: 4px solid #eab308;
+      background: linear-gradient(180deg, rgba(254, 252, 232, 0.84) 0%, rgba(255, 255, 255, 0.74) 44%);
+    }
+    .zone-winner-panel[data-zone="Green Zone"] {
+      border-color: rgba(74, 222, 128, 0.75);
+      border-top: 4px solid #22c55e;
+      background: linear-gradient(180deg, rgba(240, 253, 244, 0.84) 0%, rgba(255, 255, 255, 0.74) 44%);
+    }
+    .zone-winner-panel[data-zone="Blue Zone"] {
+      border-color: rgba(96, 165, 250, 0.78);
+      border-top: 4px solid #3b82f6;
+      background: linear-gradient(180deg, rgba(239, 246, 255, 0.84) 0%, rgba(255, 255, 255, 0.74) 44%);
+    }
+
+    .zt-lbl-d1 {
+      color: #4338ca;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .zt-lbl-d2 {
+      color: #b45309;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* =========================================================================
+       FROSTED ROUNDED-CORNER CARD-ROW TABLE SYSTEM + STICKY HEADERS & OVERFLOW FADE
+       ========================================================================= */
+    .table-scroll-shell {
+      position: relative;
+      width: 100%;
+    }
+
+    .table-scroll-shell.has-overflow-right::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 4px;
+      width: 28px;
+      pointer-events: none;
+      z-index: 32;
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(15, 23, 42, 0.11) 100%);
+      transition: opacity 0.2s ease;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .sticky-scroll-wrap {
+      overflow: auto;
+      max-height: calc(100vh - 150px);
+      border-radius: var(--radius-md);
+      padding-right: 2px;
+      padding-bottom: 4px;
+    }
+
+    .table-wrap.tight-scores-wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+    }
+
+    @keyframes tableHorizontalPeek {
+      0%   { transform: translateX(0); }
+      28%  { transform: translateX(-105px); }
+      52%  { transform: translateX(-18px); }
+      74%  { transform: translateX(-78px); }
+      100% { transform: translateX(0); }
+    }
+
+    .table-peek-bounce {
+      animation: tableHorizontalPeek 2.0s cubic-bezier(0.25, 1, 0.5, 1) 1;
+      will-change: transform;
+    }
+
+    table.card-row-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+      text-align: left;
+    }
+
+    table.sticky-header-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.10);
+    }
+
+    table.two-tier-sticky-table thead tr:nth-child(1) th {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 30px;
+      box-shadow: none;
+    }
+
+    table.two-tier-sticky-table thead tr:nth-child(2) th {
+      position: sticky;
+      top: 30px;
+      z-index: 29;
+      box-shadow: 0 3px 6px rgba(15, 23, 42, 0.10);
+    }
+
+    table.card-row-table thead th {
+      background: rgba(0, 68, 129, 0.96);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.69rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.55rem 0.7rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: 1px solid var(--brand-navy);
+      white-space: nowrap;
+    }
+
+    table.card-row-table thead tr:first-child th:first-child {
+      border-left: 1px solid var(--brand-navy);
+      border-top-left-radius: var(--radius-sm);
+    }
+
+    table.card-row-table thead tr:first-child th:last-child {
+      border-right: 1px solid var(--brand-navy);
+      border-top-right-radius: var(--radius-sm);
+    }
+
+    table.card-row-table thead tr:last-child th:first-child {
+      border-left: 1px solid var(--brand-navy);
+      border-bottom-left-radius: var(--radius-sm);
+    }
+
+    table.card-row-table thead tr:last-child th:last-child {
+      border-right: 1px solid var(--brand-navy);
+      border-bottom-right-radius: var(--radius-sm);
+    }
+
+    table.card-row-table tbody tr td {
+      background: rgba(255, 255, 255, 0.84);
+      border-top: 1px solid rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 0.55rem 0.7rem;
+      color: var(--text-primary);
+      vertical-align: middle;
+      white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    }
+
+    table.card-row-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    table.card-row-table tbody tr td:first-child {
+      border-left: 1px solid var(--border-glass);
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+
+    table.card-row-table tbody tr td:last-child {
+      border-right: 1px solid var(--border-glass);
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    table.card-row-table tbody tr.podium-1 td:first-child {
+      border-left: 4px solid #eab308;
+    }
+    table.card-row-table tbody tr.podium-2 td:first-child {
+      border-left: 4px solid #94a3b8;
+    }
+    table.card-row-table tbody tr.podium-3 td:first-child {
+      border-left: 4px solid #d97706;
+    }
+
+    /* =========================================================================
+       SHARED TWO-CARD SPLIT STYLING (INDIVIDUAL & TEAM LEADERBOARDS)
+       ========================================================================= */
+    table.tight-ind-table {
+      font-size: 0.78rem;
+      border-spacing: 0 5px;
+    }
+
+    table.two-tier-sticky-table th.group-th {
+      text-align: center;
+      padding: 0.38rem 0.45rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    table.two-tier-sticky-table th.group-th.overall-grp {
+      color: #ffffff;
+      background: rgba(0, 68, 129, 0.96);
+      border-right: 1px solid var(--brand-navy);
+      border-top-right-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table th.group-th.d1-grp {
+      color: #e0e7ff;
+      background: rgba(30, 58, 138, 0.96);
+      border-left: 1px solid #1e3a8a;
+      border-top-left-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table th.group-th.d2-grp {
+      color: #fef3c7;
+      background: rgba(30, 64, 175, 0.96);
+    }
+
+    table.two-tier-sticky-table th.sub-th {
+      padding: 0.38rem 0.45rem;
+      font-size: 0.66rem;
+      text-align: center;
+      background: rgba(0, 53, 102, 0.96);
+    }
+
+    table.two-tier-sticky-table th.sub-th.left-align {
+      text-align: left;
+    }
+
+    table.two-tier-sticky-table th.overall-card-end {
+      border-right: 1px solid #003566 !important;
+      border-bottom-right-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table th.session-card-start {
+      border-left: 1px solid #003566 !important;
+      border-bottom-left-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table th.col-gap-spacer,
+    table.two-tier-sticky-table td.col-gap-spacer {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      width: 11px;
+      min-width: 11px;
+      max-width: 11px;
+      padding: 0 !important;
+      pointer-events: none;
+    }
+
+    table.tight-ind-table tbody tr.ind-data-row td {
+      padding: 0.46rem 0.36rem;
+      text-align: center;
+    }
+
+    table.two-tier-sticky-table tbody tr td.overall-card-end {
+      border-right: 1px solid var(--brand-tint-border) !important;
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    table.two-tier-sticky-table tbody tr td.overall-card-cell {
+      background: rgba(240, 247, 255, 0.88);
+      border-top-color: rgba(255, 255, 255, 0.9);
+      border-bottom-color: var(--brand-tint-border);
+    }
+
+    table.two-tier-sticky-table tbody tr td.overall-card-cell:first-child {
+      border-left-color: var(--brand-tint-border);
+    }
+
+    table.two-tier-sticky-table tbody tr td.session-card-start {
+      border-left: 1px solid var(--border-glass) !important;
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+
+    table.two-tier-sticky-table tbody tr td.session-card-cell {
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    table.two-tier-sticky-table tbody tr:hover td.overall-card-cell,
+    table.two-tier-sticky-table tbody tr:hover td.session-card-cell {
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    table.tight-ind-table tbody tr.pts-bracket-gap td {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 11px;
+      padding: 0 !important;
+      pointer-events: none;
+    }
+
+    table.tight-ind-table td.pos-cell {
+      width: 42px;
+      padding-left: 0.55rem;
+      padding-right: 0.25rem;
+      text-align: left;
+    }
+
+    table.tight-ind-table td.angler-cell {
+      text-align: left;
+      padding-left: 0.35rem;
+      padding-right: 0.55rem;
+      max-width: 175px;
+    }
+
+    .ind-angler-name {
+      font-weight: 800;
+      font-size: 0.81rem;
+      color: var(--text-primary);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ind-team-sub {
+      font-size: 0.67rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.15;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sec-sep-left {
+      border-left: 1.5px solid rgba(148, 163, 184, 0.55) !important;
+    }
+
+    /* Team Leaderboard Specific Cells */
+    table.one-line-team-table {
+      border-spacing: 0 7px;
+    }
+
+    table.one-line-team-table tbody tr.team-strip-row td:first-child {
+      width: 64px;
+      text-align: center;
+    }
+
+    .team-main-cell {
+      min-width: 185px;
+      text-align: left;
+    }
+
+    .team-name-line {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      line-height: 1.2;
+    }
+
+    .team-totals-line {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--brand-cobalt);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .team-contrib-cell {
+      border-left: 1px solid var(--border-glass);
+      text-align: left;
+      min-width: 156px;
+    }
+
+    .contrib-angler-line {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .contrib-stats-line {
+      font-size: 0.69rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    /* Zone Winners Grid */
+    .zone-winners-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.95rem;
+    }
+
+    .zone-winner-panel {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--border-glass-highlight);
+      border-radius: var(--radius-lg);
+      padding: 0.95rem 1rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+    }
+
+    .zw-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .zw-zone-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.01em;
+    }
+
+    .zw-winner-callout {
+      font-size: 0.77rem;
+      font-weight: 700;
+      color: #78350f;
+      background: rgba(254, 243, 199, 0.88);
+      border: 1px solid #fcd34d;
+      padding: 0.24rem 0.68rem;
+      border-radius: 999px;
+      box-shadow: var(--glass-inner-glow);
+    }
+
+    /* Frosted Glass Native Inputs & Select Dropdowns */
+    .glass-input {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 600;
+      outline: none;
+      min-width: 220px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: var(--brand-cobalt);
+      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
+    }
+
+    .glass-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: rgba(255, 255, 255, 0.82);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23004481' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 14px 14px;
+      border: 1.5px solid var(--brand-tint-border);
+      border-left: 4px solid var(--brand-navy);
+      color: var(--brand-navy);
+      padding: 0.6rem 2.35rem 0.6rem 0.9rem;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 800;
+      outline: none;
+      min-width: 245px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 68, 129, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: all 0.16s ease;
+    }
+
+    .glass-select:hover {
+      border-color: var(--brand-cobalt);
+      background-color: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 4px 14px rgba(0, 68, 129, 0.11);
+    }
+
+    .glass-select:focus {
+      border-color: var(--brand-cobalt);
+      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.15);
+    }
+
+    /* Empty Prompt Card when no angler is selected yet */
+    .report-empty-prompt {
+      background: linear-gradient(135deg, rgba(248, 251, 255, 0.8) 0%, rgba(238, 245, 252, 0.75) 100%);
+      border: 1.5px dashed var(--brand-tint-border);
+      border-radius: var(--radius-md);
+      padding: 1.65rem 1.2rem;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .report-empty-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      margin-bottom: 0.25rem;
+    }
+
+    .report-empty-sub {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* Two-Day Trajectory / Momentum Banner */
+    .momentum-banner {
+      background: linear-gradient(135deg, rgba(248, 251, 255, 0.85) 0%, rgba(235, 244, 253, 0.78) 100%);
+      border: 1px solid var(--brand-tint-border);
+      border-left: 4px solid var(--brand-cobalt);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    .momentum-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .momentum-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-navy);
+    }
+
+    .momentum-headline {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+
+    .momentum-subline {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .momentum-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .momentum-pill.up {
+      background: var(--accent-emerald-bg);
+      color: #065f46;
+      border: 1px solid var(--accent-emerald-border);
+    }
+
+    .momentum-pill.down {
+      background: rgba(254, 242, 242, 0.88);
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .momentum-pill.steady {
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+    }
+
+    /* 4 Frosted Motif Cards: Heading Above Circle, Actual vs Best Below Circle */
+    .gauges-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .gauge-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .gauge-top-heading {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--brand-navy);
+      margin-bottom: 0.6rem;
+    }
+
+    .gauge-ring-container {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-svg {
+      width: 96px;
+      height: 96px;
+      transform: rotate(-90deg);
+    }
+
+    .gauge-track {
+      fill: none;
+      stroke: rgba(203, 213, 225, 0.65);
+      stroke-width: 7.5;
+    }
+
+    .gauge-progress {
+      fill: none;
+      stroke-width: 7.5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.6s ease;
+    }
+
+    .gauge-inside-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .gauge-ordinal {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      line-height: 1.1;
+    }
+
+    .gauge-out-of {
+      font-size: 0.64rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .gauge-bottom-compare {
+      margin-top: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.14rem;
+    }
+
+    .gauge-actual-score {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .gauge-best-benchmark {
+      font-size: 0.71rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border-glass);
+      padding: 0.14rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    /* Opt-In Frosted Side-by-Side Head-to-Head Comparison */
+    .h2h-selector-card {
+      background: var(--bg-surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1.5px solid var(--brand-tint-border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.05rem;
+      box-shadow: var(--shadow-card), var(--glass-inner-glow);
+    }
+
+    .h2h-selector-card.hidden {
+      display: none;
+    }
+
+    .h2h-selector-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .h2h-side-by-side-wrap {
+      margin-top: 1rem;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .h2h-sbs-header {
+      display: grid;
+      grid-template-columns: 1fr 110px 1fr;
+      align-items: center;
+      background: rgba(0, 68, 129, 0.95);
+      color: #ffffff;
+      padding: 0.75rem 0.85rem;
+      gap: 0.5rem;
+    }
+
+    .h2h-sbs-angler.left {
+      text-align: left;
+    }
+
+    .h2h-sbs-angler.right {
+      text-align: right;
+    }
+
+    .h2h-sbs-name {
+      font-size: 0.94rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .h2h-sbs-meta {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .h2h-sbs-vs-badge {
+      text-align: center;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.24rem 0.55rem;
+      border-radius: 999px;
+      margin: 0 auto;
+    }
+
+    .h2h-sbs-section-bar {
+      background: rgba(241, 245, 249, 0.75);
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .h2h-sbs-section-title {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-navy);
+    }
+
+    .h2h-sbs-row {
+      display: grid;
+      grid-template-columns: 1fr 145px 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .h2h-sbs-row:last-child {
+      border-bottom: none;
+    }
+
+    .h2h-sbs-cell {
+      padding: 0.62rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .h2h-sbs-cell.left {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .h2h-sbs-cell.right {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    .h2h-sbs-cell.win-cell {
+      background: var(--accent-emerald-bg);
+    }
+
+    .h2h-sbs-val {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .h2h-sbs-cell.win-cell .h2h-sbs-val {
+      color: #065f46;
+    }
+
+    .h2h-sbs-sub {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .h2h-sbs-center {
+      padding: 0.5rem 0.4rem;
+      text-align: center;
+      border-left: 1px solid var(--border-glass);
+      border-right: 1px solid var(--border-glass);
+      background: rgba(248, 250, 252, 0.78);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.16rem;
+    }
+
+    .h2h-sbs-metric-lbl {
+      font-size: 0.71rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      line-height: 1.15;
+    }
+
+    .h2h-sbs-margin-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.1rem 0.42rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .h2h-sbs-margin-tag.me-lead {
+      background: var(--accent-emerald-bg);
+      color: #065f46;
+      border: 1px solid var(--accent-emerald-border);
+    }
+
+    .h2h-sbs-margin-tag.rival-lead {
+      background: rgba(241, 245, 249, 0.9);
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+
+    .h2h-sbs-margin-tag.tie {
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+    }
+
+    .zone-chip {
+      display: inline-block;
+      padding: 0.12rem 0.48rem;
+      border-radius: 6px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .zone-chip.Red { background: var(--zone-red-bg); color: #b91c1c; border: 1px solid var(--zone-red-border); }
+    .zone-chip.Yellow { background: var(--zone-yellow-bg); color: #a16207; border: 1px solid var(--zone-yellow-border); }
+    .zone-chip.Green { background: var(--zone-green-bg); color: #15803d; border: 1px solid var(--zone-green-border); }
+    .zone-chip.Blue { background: var(--zone-blue-bg); color: #1d4ed8; border: 1px solid var(--zone-blue-border); }
+
+    .rank-medal { font-weight: 800; }
+    .rank-1 { color: #b45309; }
+    .rank-2 { color: #475569; }
+    .rank-3 { color: #9a3412; }
+
+    @media (max-width: 1120px) {
+      .session-h2h-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .zone-winners-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .kpi-unified-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .kpi-cell {
+        border-right: 1px solid rgba(186, 207, 233, 0.75);
+        border-bottom: 1px solid rgba(186, 207, 233, 0.75);
+        padding: 0.42rem 0.65rem;
+      }
+      .kpi-cell:nth-child(3n) {
+        border-right: none;
+      }
+      .kpi-cell:nth-child(n+4) {
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .session-donuts-grid {
+        grid-template-columns: 1fr;
+      }
+      .kpi-unified-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .kpi-cell:nth-child(3n) {
+        border-right: 1px solid rgba(186, 207, 233, 0.75);
+      }
+      .kpi-cell:nth-child(2n) {
+        border-right: none;
+      }
+      .kpi-cell:nth-child(n+3) {
+        border-bottom: 1px solid rgba(186, 207, 233, 0.75);
+      }
+      .kpi-cell:nth-child(n+5) {
+        border-bottom: none;
+      }
+      .session-h2h-grid {
+        grid-template-columns: 1fr;
+      }
+      .h2h-sbs-header {
+        grid-template-columns: 1fr 64px 1fr;
+        padding: 0.65rem 0.6rem;
+      }
+      .h2h-sbs-row {
+        grid-template-columns: 1fr 112px 1fr;
+      }
+      .h2h-sbs-cell {
+        padding: 0.55rem 0.55rem;
+      }
+      .glass-select {
+        width: 100%;
+        min-width: 0;
+      }
+      .app-header { padding: 0.95rem 1rem; }
+      .sticky-scroll-wrap {
+        max-height: calc(100vh - 185px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Streamlined Frosted Glass Front-Page Header (Shown ONLY on the Front Splash Page) -->
+    <header class="app-header" id="mainSplashHeader">
+      <div class="brand-block">
+        <h1 id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
+        <div class="brand-meta">
+          <span id="matchVenue">Arbroath & Elliot Beach</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         VIEW 0: FRONT SPLASH SCREEN (TWO BORDERED NAVIGATION PANELS)
+         ========================================================= -->
+    <main id="view-home" class="view-section active">
+      <!-- PANEL 1: GENERAL MATCH STATS & PERSONAL REPORT -->
+      <div class="hub-group-panel insights-group">
+        <div class="hub-section-label">Match Insights & Reports</div>
+        <div class="hub-buttons-grid">
+          <button class="hub-btn-card insight-card" data-nav="overview">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Match Overview</span>
+              <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card insight-card" data-nav="myreport">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">My Match Report</span>
+              <span class="hub-btn-sub">Personal rank motifs, momentum & head-to-head comparison</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL 2: ACTUAL CHAMPIONSHIP STANDINGS & RESULTS -->
+      <div class="hub-group-panel">
+        <div class="hub-section-label">Championship Standings & Results</div>
+        <div class="hub-buttons-grid">
+          <button class="hub-btn-card" data-nav="individual">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Individual Leaderboard</span>
+              <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card" data-nav="teams">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Team Leaderboard</span>
+              <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card" data-nav="day1zones">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Day 1 Zone Winners</span>
+              <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card" data-nav="day2zones">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Day 2 Zone Winners</span>
+              <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card" data-nav="biggest">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Biggest Fish</span>
+              <span class="hub-btn-sub">Top 5 longest individual specimens recorded</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+
+          <button class="hub-btn-card" data-nav="secret">
+            <div class="hub-btn-text-wrap">
+              <span class="hub-btn-title">Mystery Pairs</span>
+              <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
+            </div>
+            <span class="hub-arrow">›</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- =========================================================
+         VIEW 1: MATCH OVERVIEW
+         ========================================================= -->
+    <section id="view-overview" class="view-section">
+      <div class="kpi-unified-card" id="overviewKpis"></div>
+
+      <div class="rings-strip-card">
+        <div class="rings-strip-header">
+          <div class="rings-strip-title">Fish Length & Fish Count Breakdown</div>
+        </div>
+        <div class="session-donuts-grid" id="sessionDonutsGrid"></div>
+      </div>
+
+      <div class="daily-breakdown-divider section-gap-divider" role="separator" aria-label="Daily Comparison">
+        <span>Daily Comparison</span>
+      </div>
+
+      <div class="session-section-banner">
+        <div>
+          <div class="card-title">🌙 Day 1 (Night) vs. ☀️ Day 2 (Day) Performance</div>
+          <div class="card-subtitle">Head-to-head session breakdown across catch volume, length, blank rate & top zones</div>
+        </div>
+        <div style="display:flex; gap:0.75rem; font-size:0.8rem; font-weight:700;">
+          <span class="zt-lbl-d1">🌙 Night (D1)</span>
+          <span class="zt-lbl-d2">☀️ Day (D2)</span>
+        </div>
+      </div>
+
+      <div class="session-h2h-grid" id="sessionComparisonGrid"></div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 2: INDIVIDUAL LEADERBOARD
+         ========================================================= -->
+    <section id="view-individual" class="view-section">
+      <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Individual Leaderboard</div>
+            <div class="card-subtitle">All lengths & biggest fish in cm • Separated by Overall Points tiers</div>
+          </div>
+          <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
+        </div>
+        <div class="table-scroll-shell" id="indScrollShell">
+          <div class="table-wrap sticky-scroll-wrap tight-scores-wrap" id="indTableWrap">
+            <table class="card-row-table tight-ind-table two-tier-sticky-table">
+              <thead>
+                <tr>
+                  <th colspan="2" class="group-th"></th>
+                  <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th colspan="4" class="group-th d1-grp">🌙 Day 1</th>
+                  <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
+                </tr>
+                <tr>
+                  <th class="sub-th left-align">Pos</th>
+                  <th class="sub-th left-align">Angler</th>
+                  <th class="sub-th sec-sep-left">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th overall-card-end">Big</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th class="sub-th session-card-start">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th">Big</th>
+                  <th class="sub-th sec-sep-left">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th">Big</th>
+                </tr>
+              </thead>
+              <tbody id="individualTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 3: TEAM LEADERBOARD
+         ========================================================= -->
+    <section id="view-teams" class="view-section">
+      <div class="glass-card" style="max-width: 1240px; margin-left: auto; margin-right: auto;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Team Leaderboard</div>
+            <div class="card-subtitle">Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
+          </div>
+        </div>
+        <div class="table-scroll-shell" id="teamsScrollShell">
+          <div class="table-wrap sticky-scroll-wrap" id="teamsTableWrap">
+            <table class="card-row-table one-line-team-table two-tier-sticky-table">
+              <thead id="teamsTableHead"></thead>
+              <tbody id="teamsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 3B: DAY 1 ZONE WINNERS
+         ========================================================= -->
+    <section id="view-day1zones" class="view-section">
+      <div class="glass-card" style="margin-bottom: 0.9rem;">
+        <div class="card-header" style="margin-bottom:0;">
+          <div>
+            <div class="card-title">🌙 Day 1 Zone Winners</div>
+            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+          </div>
+        </div>
+      </div>
+      <div class="zone-winners-grid" id="day1ZonesGrid"></div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 3C: DAY 2 ZONE WINNERS
+         ========================================================= -->
+    <section id="view-day2zones" class="view-section">
+      <div class="glass-card" style="margin-bottom: 0.9rem;">
+        <div class="card-header" style="margin-bottom:0;">
+          <div>
+            <div class="card-title">☀️ Day 2 Zone Winners</div>
+            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+          </div>
+        </div>
+      </div>
+      <div class="zone-winners-grid" id="day2ZonesGrid"></div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 4: BIGGEST FISH (TOP 5 & 4 STACKED COLUMNS)
+         ========================================================= -->
+    <section id="view-biggest" class="view-section">
+      <div class="glass-card" style="max-width: 820px; margin-left: auto; margin-right: auto;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Biggest Fish</div>
+            <div class="card-subtitle">Top 5 longest individual fish recorded across Day 1 (🌙) and Day 2 (☀️)</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="card-row-table">
+            <thead>
+              <tr>
+                <th style="width: 64px; text-align: center;">Rank</th>
+                <th>Angler</th>
+                <th>Session</th>
+                <th style="text-align: right;">Fish</th>
+              </tr>
+            </thead>
+            <tbody id="biggestFishTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 5: MYSTERY PAIRS
+         ========================================================= -->
+    <section id="view-secret" class="view-section">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Mystery Pairs</div>
+            <div class="card-subtitle" id="secretPairsDesc">Target Length calculated for wildcard mystery pairing.</div>
+          </div>
+          <span class="badge-pill" id="secretTargetBadge">Target Length: 0cm</span>
+        </div>
+        <div id="secretPairsBody"></div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         VIEW 6: MY MATCH REPORT (NAME-ONLY ALPHABETICAL SELECT + UNSELECTED DEFAULT)
+         ========================================================= -->
+    <section id="view-myreport" class="view-section">
+      <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">My Match Report</div>
+            <div class="card-subtitle">Two-day trajectory, field ranking motifs & benchmark comparison</div>
+          </div>
+          <div>
+            <label class="kpi-label" for="myAnglerSelect" style="display:block; margin-bottom:0.25rem;">Viewing Angler (A–Z)</label>
+            <select id="myAnglerSelect" class="glass-select"></select>
+          </div>
+        </div>
+
+        <!-- Two-Day Trajectory / Momentum Banner (or Empty Prompt when unselected) -->
+        <div id="myMomentumBanner"></div>
+
+        <!-- 4 Circle Motif Cards (Heading Above, Actual vs Best Below) -->
+        <div class="gauges-row" id="myGaugesRow"></div>
+      </div>
+
+      <!-- Opt-In Side-by-Side Head-to-Head Comparison Card Underneath -->
+      <div class="h2h-selector-card hidden" id="h2hSelectorCard" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+        <div class="h2h-selector-bar">
+          <div>
+            <div class="card-title">Head-to-Head Angler Comparison</div>
+            <div class="card-subtitle">Select another angler to compare overall championship stats side by side</div>
+          </div>
+          <div>
+            <select id="compareAnglerSelect" class="glass-select"></select>
+          </div>
+        </div>
+        <div id="h2hContainer"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- High-Contrast Frosted Floating Bottom-Left Back Button (Visible on all sub-pages) -->
+  <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
+    ← Back
+  </button>
+
+  <script>
+    const MATCH_CONFIG = {
+      version: "v3.8.12",
+      title: "SPRA Scottish Shore Championship 2027",
+      venue: "Arbroath & Elliot Beach",
+      zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
+      zoneColors: {
+        "Red Zone": "#ef4444",
+        "Yellow Zone": "#eab308",
+        "Green Zone": "#22c55e",
+        "Blue Zone": "#3b82f6"
+      }
+    };
+
+    let STATE = {
+      raw: null,
+      anglers: [],
+      teams: [],
+      specimensAll: [],
+      selectedAnglerName: "",
+      compareAnglerName: ""
+    };
+
+    function getOrdinal(n) {
+      const s = ["th", "st", "nd", "rd"];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    function shortZone(zoneStr) {
+      return (zoneStr || "").replace(" Zone", "").trim();
+    }
+
+    function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
+      const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
+      const axisLetters = ["R", "Y", "G", "B"];
+      const axisTextColors = ["#dc2626", "#b45309", "#15803d", "#1d4ed8"];
+      const maxVal = Math.max(...rawValues, 1);
+
+      const barsHtml = rawValues.map((val, idx) => {
+        const pctHeight = val > 0 ? Math.max(8, Math.round((val / maxVal) * 100)) : 2;
+        return `
+          <div class="vbar-col">
+            <div class="vbar-track">
+              <div class="vbar-fill" style="height:${pctHeight}%; background:${colors[idx]};">
+                <span class="vbar-val-tag">${formattedLabels[idx]}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const axisHtml = axisLetters.map((letter, idx) => `
+        <span class="vbar-axis-lbl" style="color:${axisTextColors[idx]};">${letter}</span>
+      `).join("");
+
+      return `
+        <div class="bar-chart-slot">
+          <div class="bar-chart-header">
+            <span class="bar-chart-metric-name">${metricTitle}</span>
+            <span class="bar-chart-total-badge">${totalBadgeText}</span>
+          </div>
+          <div class="vbar-plot-area">
+            ${barsHtml}
+          </div>
+          <div class="vbar-axis-row">
+            ${axisHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function syncScrollShellState(wrapEl, shellEl) {
+      if (!wrapEl || !shellEl) return;
+      const hasMoreRight = wrapEl.scrollWidth > wrapEl.clientWidth + 6 &&
+        (wrapEl.scrollLeft + wrapEl.clientWidth) < (wrapEl.scrollWidth - 6);
+      shellEl.classList.toggle("has-overflow-right", hasMoreRight);
+    }
+
+    function setupScrollCues() {
+      const pairs = [
+        { wrapId: "teamsTableWrap", shellId: "teamsScrollShell" },
+        { wrapId: "indTableWrap", shellId: "indScrollShell" }
+      ];
+
+      pairs.forEach(({ wrapId, shellId }) => {
+        const wrapEl = document.getElementById(wrapId);
+        const shellEl = document.getElementById(shellId);
+        if (!wrapEl || !shellEl) return;
+
+        wrapEl.addEventListener("scroll", () => {
+          syncScrollShellState(wrapEl, shellEl);
+        }, { passive: true });
+      });
+
+      window.addEventListener("resize", () => {
+        pairs.forEach(({ wrapId, shellId }) => {
+          syncScrollShellState(
+            document.getElementById(wrapId),
+            document.getElementById(shellId)
+          );
+        });
+      });
+    }
+
+    function triggerTableBounceHints(containerEl) {
+      const root = containerEl || document;
+      requestAnimationFrame(() => {
+        syncScrollShellState(
+          document.getElementById("teamsTableWrap"),
+          document.getElementById("teamsScrollShell")
+        );
+        syncScrollShellState(
+          document.getElementById("indTableWrap"),
+          document.getElementById("indScrollShell")
+        );
+
+        // Wait 350ms after view switch settles before running the 2-pulse peek
+        setTimeout(() => {
+          root.querySelectorAll(".table-wrap").forEach(wrap => {
+            if (wrap.scrollWidth > wrap.clientWidth + 6 && wrap.scrollLeft === 0) {
+              const tbl = wrap.querySelector("table");
+              if (!tbl) return;
+              tbl.classList.remove("table-peek-bounce");
+              void tbl.offsetWidth;
+              tbl.classList.add("table-peek-bounce");
+
+              const stopBounce = () => {
+                tbl.classList.remove("table-peek-bounce");
+              };
+              wrap.addEventListener("touchstart", stopBounce, { once: true, passive: true });
+              wrap.addEventListener("pointerdown", stopBounce, { once: true, passive: true });
+              wrap.addEventListener("scroll", stopBounce, { once: true, passive: true });
+              tbl.addEventListener("animationend", stopBounce, { once: true });
+            }
+          });
+        }, 350);
+      });
+    }
+
+    async function loadScoresJson() {
+      try {
+        const response = await fetch("./scores.json?t=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const data = await response.json();
+        processMatchData(data);
+      } catch (err) {
+        console.error("Error loading scores.json:", err);
+      }
+    }
+
+    function processMatchData(data) {
+      STATE.raw = data;
+      const list = Array.isArray(data.anglers) ? data.anglers : [];
+
+      const enriched = list.map(a => {
+        const d1Obj = a.day1 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const d2Obj = a.day2 || { zone: "", peg: "-", fishCount: 0, totalLengthCm: 0, biggestFishCm: 0, biggestFishSpecies: "", zonePoints: 0 };
+        const overallBiggestCm = Math.max(d1Obj.biggestFishCm || 0, d2Obj.biggestFishCm || 0);
+        const totals = a.totals || { cumulativePoints: 0, cumulativeFish: 0, cumulativeLengthCm: 0 };
+        return {
+          ...a,
+          d1: d1Obj,
+          d2: d2Obj,
+          overallBiggestCm,
+          totals
+        };
+      });
+
+      const sorted = [...enriched].sort((a, b) => {
+        const rA = a.totals?.overallRank ?? 999;
+        const rB = b.totals?.overallRank ?? 999;
+        if (rA !== rB) return rA - rB;
+        return (
+          (a.totals.cumulativePoints ?? 999) - (b.totals.cumulativePoints ?? 999) ||
+          (b.totals.cumulativeLengthCm ?? 0) - (a.totals.cumulativeLengthCm ?? 0) ||
+          (b.totals.cumulativeFish ?? 0) - (a.totals.cumulativeFish ?? 0) ||
+          (b.overallBiggestCm ?? 0) - (a.overallBiggestCm ?? 0)
+        );
+      });
+
+      // Calculate Day 1 Overall Standings so we can compute Day 1 -> Final rank movement
+      const sortedDay1Overall = [...sorted].sort((a, b) => {
+        return (
+          (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
+          (b.d1.totalLengthCm ?? 0) - (a.d1.totalLengthCm ?? 0) ||
+          (b.d1.fishCount ?? 0) - (a.d1.fishCount ?? 0) ||
+          (b.d1.biggestFishCm ?? 0) - (a.d1.biggestFishCm ?? 0)
+        );
+      });
+
+      const d1OverallRankMap = {};
+      sortedDay1Overall.forEach((a, i) => {
+        d1OverallRankMap[a.anglerName] = i + 1;
+      });
+
+      // Calculate exact Zone Finishes for Day 1 & Day 2
+      const d1ZonePosMap = {};
+      const d2ZonePosMap = {};
+      MATCH_CONFIG.zones.forEach(zName => {
+        const z1 = sorted
+          .filter(a => a.d1.zone === zName)
+          .sort((a, b) =>
+            (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
+            (b.d1.totalLengthCm ?? 0) - (a.d1.totalLengthCm ?? 0) ||
+            (b.d1.fishCount ?? 0) - (a.d1.fishCount ?? 0) ||
+            (b.d1.biggestFishCm ?? 0) - (a.d1.biggestFishCm ?? 0)
+          );
+        z1.forEach((a, i) => {
+          d1ZonePosMap[a.anglerName] = { pos: i + 1, count: z1.length };
+        });
+
+        const z2 = sorted
+          .filter(a => a.d2.zone === zName)
+          .sort((a, b) =>
+            (a.d2.zonePoints ?? 999) - (b.d2.zonePoints ?? 999) ||
+            (b.d2.totalLengthCm ?? 0) - (a.d2.totalLengthCm ?? 0) ||
+            (b.d2.fishCount ?? 0) - (a.d2.fishCount ?? 0) ||
+            (b.d2.biggestFishCm ?? 0) - (a.d2.biggestFishCm ?? 0)
+          );
+        z2.forEach((a, i) => {
+          d2ZonePosMap[a.anglerName] = { pos: i + 1, count: z2.length };
+        });
+      });
+
+      const totalCount = sorted.length;
+      const byFish = [...sorted].sort((a, b) => (b.totals?.cumulativeFish || 0) - (a.totals?.cumulativeFish || 0));
+      const byLength = [...sorted].sort((a, b) => (b.totals?.cumulativeLengthCm || 0) - (a.totals?.cumulativeLengthCm || 0));
+      const byBiggest = [...sorted].sort((a, b) => (b.overallBiggestCm || 0) - (a.overallBiggestCm || 0));
+
+      STATE.anglers = sorted.map((a, idx) => {
+        const rank = a.totals?.overallRank || (idx + 1);
+        const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const biggestRank = byBiggest.findIndex(x => x.anglerName === a.anglerName) + 1;
+
+        return {
+          ...a,
+          rank,
+          d1OverallRank: d1OverallRankMap[a.anglerName] || rank,
+          d1ZoneStanding: d1ZonePosMap[a.anglerName] || { pos: 1, count: 0 },
+          d2ZoneStanding: d2ZonePosMap[a.anglerName] || { pos: 1, count: 0 },
+          fishRank,
+          lengthRank,
+          biggestRank,
+          totalField: totalCount,
+          totals: {
+            ...a.totals,
+            overallRank: rank
           }
-          return networkResponse;
-        })
-        .catch(() => caches.match("./scores.json"))
-    );
-    return;
-  }
+        };
+      });
 
-  // Network-First for HTML navigation so UI updates deploy immediately without stale cached scripts
-  if (
-    event.request.mode === "navigate" ||
-    requestUrl.pathname.endsWith("/") ||
-    requestUrl.pathname.endsWith("index.html")
-  ) {
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put("./index.html", clone));
+      const teamMap = {};
+      STATE.anglers.forEach(a => {
+        const tName = a.teamName || "Independent";
+        if (!teamMap[tName]) {
+          teamMap[tName] = {
+            teamName: tName,
+            members: [],
+            d1Pts: 0,
+            d2Pts: 0,
+            totalPts: 0,
+            totalFish: 0,
+            totalLengthCm: 0,
+            biggestFishCm: 0
+          };
+        }
+        teamMap[tName].members.push(a);
+        teamMap[tName].d1Pts += a.d1.zonePoints || 0;
+        teamMap[tName].d2Pts += a.d2.zonePoints || 0;
+        teamMap[tName].totalPts += a.totals.cumulativePoints || 0;
+        teamMap[tName].totalFish += a.totals.cumulativeFish || 0;
+        teamMap[tName].totalLengthCm += a.totals.cumulativeLengthCm || 0;
+        if (a.overallBiggestCm > teamMap[tName].biggestFishCm) {
+          teamMap[tName].biggestFishCm = a.overallBiggestCm;
+        }
+      });
+
+      STATE.teams = Object.values(teamMap).sort(
+        (a, b) =>
+          a.totalPts - b.totalPts ||
+          b.totalLengthCm - a.totalLengthCm ||
+          b.totalFish - a.totalFish ||
+          b.biggestFishCm - a.biggestFishCm
+      );
+
+      const d1Specimens = [];
+      const d2Specimens = [];
+      STATE.anglers.forEach(a => {
+        if ((a.d1.biggestFishCm || 0) > 0) {
+          d1Specimens.push({
+            day: "D1",
+            sessionLabel: "🌙 Day 1",
+            zone: a.d1.zone,
+            peg: a.d1.peg,
+            species: (a.d1.biggestFishSpecies || "").trim(),
+            lengthCm: a.d1.biggestFishCm,
+            anglerName: a.anglerName,
+            teamName: a.teamName
+          });
+        }
+        if ((a.d2.biggestFishCm || 0) > 0) {
+          d2Specimens.push({
+            day: "D2",
+            sessionLabel: "☀️ Day 2",
+            zone: a.d2.zone,
+            peg: a.d2.peg,
+            species: (a.d2.biggestFishSpecies || "").trim(),
+            lengthCm: a.d2.biggestFishCm,
+            anglerName: a.anglerName,
+            teamName: a.teamName
+          });
+        }
+      });
+
+      STATE.specimensAll = [...d1Specimens, ...d2Specimens].sort((a, b) => b.lengthCm - a.lengthCm);
+
+      renderAllViews();
+    }
+
+    function renderAllViews() {
+      renderOverview();
+      renderIndividualTable();
+      renderTeamsContributions();
+      renderDayZoneWinners("d1", "day1ZonesGrid");
+      renderDayZoneWinners("d2", "day2ZonesGrid");
+      renderBiggestFish();
+      renderMyReport();
+      renderSecretPairs();
+    }
+
+    function setupNavigation() {
+      document.querySelectorAll("[data-nav]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetView = btn.getAttribute("data-nav");
+          switchView(targetView);
+        });
+      });
+    }
+
+    function switchView(viewName) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+      const target = document.getElementById("view-" + viewName);
+      if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        triggerTableBounceHints(target);
+      }
+
+      const splashHeader = document.getElementById("mainSplashHeader");
+      const floatingBackBtn = document.getElementById("floatingBackBtn");
+
+      if (viewName === "home") {
+        if (splashHeader) splashHeader.classList.remove("hidden");
+        if (floatingBackBtn) floatingBackBtn.classList.remove("visible");
+      } else {
+        if (splashHeader) splashHeader.classList.add("hidden");
+        if (floatingBackBtn) floatingBackBtn.classList.add("visible");
+      }
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 1: MATCH OVERVIEW
+       --------------------------------------------------------- */
+    function renderOverview() {
+      const anglers = STATE.anglers;
+      if (!anglers.length) return;
+
+      const totalAnglers = anglers.length;
+      const totalTeams = STATE.teams.length;
+      const totalD1Fish = anglers.reduce((s, a) => s + (a.d1.fishCount || 0), 0);
+      const totalD2Fish = anglers.reduce((s, a) => s + (a.d2.fishCount || 0), 0);
+      const totalFish = totalD1Fish + totalD2Fish;
+      const totalLengthCm = anglers.reduce((s, a) => s + (a.totals.cumulativeLengthCm || 0), 0);
+      const totalLengthMeters = (totalLengthCm / 100).toFixed(2);
+      const avgFishPerAngler = (totalFish / Math.max(1, totalAnglers)).toFixed(1);
+
+      const totalRodSessions = totalAnglers * 2;
+      const d1CatchingAnglers = anglers.filter(a => (a.d1.fishCount || 0) > 0).length;
+      const d2CatchingAnglers = anglers.filter(a => (a.d2.fishCount || 0) > 0).length;
+      const d1BlankingAnglers = totalAnglers - d1CatchingAnglers;
+      const d2BlankingAnglers = totalAnglers - d2CatchingAnglers;
+      const activeRodSessions = d1CatchingAnglers + d2CatchingAnglers;
+      const anglersCaughtPct = Math.round((activeRodSessions / totalRodSessions) * 100);
+
+      let bestSessionFish = 0;
+      let bestSessionWho = "—";
+      let d1BestBag = { fish: 0, angler: "—" };
+      let d2BestBag = { fish: 0, angler: "—" };
+
+      anglers.forEach(a => {
+        const f1 = a.d1.fishCount || 0;
+        const f2 = a.d2.fishCount || 0;
+        if (f1 > d1BestBag.fish) {
+          d1BestBag = { fish: f1, angler: a.anglerName };
+        }
+        if (f2 > d2BestBag.fish) {
+          d2BestBag = { fish: f2, angler: a.anglerName };
+        }
+        if (f1 > bestSessionFish) {
+          bestSessionFish = f1;
+          bestSessionWho = `${a.anglerName} (🌙 D1)`;
+        }
+        if (f2 > bestSessionFish) {
+          bestSessionFish = f2;
+          bestSessionWho = `${a.anglerName} (☀️ D2)`;
+        }
+      });
+
+      const topSpecimen = STATE.specimensAll[0];
+      const specimenValHtml = topSpecimen ? `${topSpecimen.lengthCm}<span style="font-size:0.82rem; font-weight:600;">cm</span>` : "—";
+      const specimenSubText = topSpecimen
+        ? `${topSpecimen.species ? topSpecimen.species + " • " : ""}${topSpecimen.anglerName} (${topSpecimen.day === "D1" ? "🌙" : "☀️"})`
+        : "No specimen recorded";
+
+      document.getElementById("overviewKpis").innerHTML = `
+        <div class="kpi-unified-grid">
+          <div class="kpi-cell">
+            <div class="kpi-label">Field Entered</div>
+            <div class="kpi-value">${totalAnglers}</div>
+            <div class="kpi-sub">${totalTeams} Teams • 4 Zones / Day</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Total Fish Landed</div>
+            <div class="kpi-value">${totalFish}</div>
+            <div class="kpi-sub">Avg ${avgFishPerAngler} fish / angler</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Total Length</div>
+            <div class="kpi-value">${totalLengthMeters}<span style="font-size:0.85rem; font-weight:600;">m</span></div>
+            <div class="kpi-sub">Avg ${(totalLengthCm / Math.max(1, totalFish)).toFixed(1)} cm / fish</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Weigh-In Rate</div>
+            <div class="kpi-value">${anglersCaughtPct}%</div>
+            <div class="kpi-sub">${activeRodSessions} of ${totalRodSessions} rod-sessions</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Best Session Bag</div>
+            <div class="kpi-value">${bestSessionFish} <span style="font-size:0.82rem; font-weight:600;">fish</span></div>
+            <div class="kpi-sub">${bestSessionWho}</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Specimen High</div>
+            <div class="kpi-value" style="color:var(--accent-amber);">${specimenValHtml}</div>
+            <div class="kpi-sub">${specimenSubText}</div>
+          </div>
+        </div>
+      `;
+
+      const zoneStats = MATCH_CONFIG.zones.map(zoneName => {
+        const d1Rows = anglers.filter(a => a.d1.zone === zoneName);
+        const d2Rows = anglers.filter(a => a.d2.zone === zoneName);
+
+        const d1Fish = d1Rows.reduce((s, a) => s + (a.d1.fishCount || 0), 0);
+        const d2Fish = d2Rows.reduce((s, a) => s + (a.d2.fishCount || 0), 0);
+        const zoneFish = d1Fish + d2Fish;
+
+        const d1Len = d1Rows.reduce((s, a) => s + (a.d1.totalLengthCm || 0), 0);
+        const d2Len = d2Rows.reduce((s, a) => s + (a.d2.totalLengthCm || 0), 0);
+        const zoneLen = d1Len + d2Len;
+
+        return {
+          zoneName,
+          d1Rows,
+          d2Rows,
+          d1Fish,
+          d2Fish,
+          zoneFish,
+          d1Len,
+          d2Len,
+          zoneLen
+        };
+      });
+
+      const totalD1LenCm = zoneStats.reduce((s, z) => s + z.d1Len, 0);
+      const totalD2LenCm = zoneStats.reduce((s, z) => s + z.d2Len, 0);
+      const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
+      const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
+
+      document.getElementById("sessionDonutsGrid").innerHTML = `
+        <div class="session-donut-card total-hero-card">
+          <div class="session-donut-card-title">
+            <span>Competition Total</span>
+            <span class="overall-hero-pill">Overall</span>
+          </div>
+          <div class="donut-pair-row">
+            ${buildZoneVerticalBarChart(
+              "Length (m)",
+              `${totalLengthMeters}m`,
+              zoneStats.map(z => z.zoneLen),
+              zoneStats.map(z => `${(z.zoneLen / 100).toFixed(2)}`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalFish}`,
+              zoneStats.map(z => z.zoneFish),
+              zoneStats.map(z => `${z.zoneFish}`)
+            )}
+          </div>
+        </div>
+
+        <div class="daily-breakdown-divider" role="separator" aria-label="Daily Breakdown">
+          <span>Daily Breakdown</span>
+        </div>
+
+        <div class="session-donut-card day1-sub-card">
+          <div class="session-donut-card-title">🌙 Day 1</div>
+          <div class="donut-pair-row">
+            ${buildZoneVerticalBarChart(
+              "Length (m)",
+              `${totalD1Meters}m`,
+              zoneStats.map(z => z.d1Len),
+              zoneStats.map(z => `${(z.d1Len / 100).toFixed(2)}`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalD1Fish}`,
+              zoneStats.map(z => z.d1Fish),
+              zoneStats.map(z => `${z.d1Fish}`)
+            )}
+          </div>
+        </div>
+
+        <div class="session-donut-card day2-sub-card">
+          <div class="session-donut-card-title">☀️ Day 2</div>
+          <div class="donut-pair-row">
+            ${buildZoneVerticalBarChart(
+              "Length (m)",
+              `${totalD2Meters}m`,
+              zoneStats.map(z => z.d2Len),
+              zoneStats.map(z => `${(z.d2Len / 100).toFixed(2)}`)
+            )}
+            ${buildZoneVerticalBarChart(
+              "Fish Count",
+              `${totalD2Fish}`,
+              zoneStats.map(z => z.d2Fish),
+              zoneStats.map(z => `${z.d2Fish}`)
+            )}
+          </div>
+        </div>
+      `;
+
+      const d1AvgFishSize = totalD1Fish > 0 ? (totalD1LenCm / totalD1Fish).toFixed(1) : "0.0";
+      const d2AvgFishSize = totalD2Fish > 0 ? (totalD2LenCm / totalD2Fish).toFixed(1) : "0.0";
+      const d1AvgPerRod = (totalD1Fish / Math.max(1, totalAnglers)).toFixed(1);
+      const d2AvgPerRod = (totalD2Fish / Math.max(1, totalAnglers)).toFixed(1);
+
+      const d1CatchPct = Math.round((d1CatchingAnglers / Math.max(1, totalAnglers)) * 100);
+      const d2CatchPct = Math.round((d2CatchingAnglers / Math.max(1, totalAnglers)) * 100);
+
+      const d1TopSpec = STATE.specimensAll.find(s => s.day === "D1");
+      const d2TopSpec = STATE.specimensAll.find(s => s.day === "D2");
+      const d1SpecText = d1TopSpec
+        ? `${d1TopSpec.lengthCm}cm${d1TopSpec.species ? ` (${d1TopSpec.species})` : ""} • ${d1TopSpec.anglerName}`
+        : "No specimen";
+      const d2SpecText = d2TopSpec
+        ? `${d2TopSpec.lengthCm}cm${d2TopSpec.species ? ` (${d2TopSpec.species})` : ""} • ${d2TopSpec.anglerName}`
+        : "No specimen";
+
+      const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
+      const d1TopZone = [...zoneStats].sort((a, b) => b.d1Len - a.d1Len || b.d1Fish - a.d1Fish)[0];
+      const d2TopZone = [...zoneStats].sort((a, b) => b.d2Len - a.d2Len || b.d2Fish - a.d2Fish)[0];
+
+      function buildEdgeBadge(d1Val, d2Val, d1WinText, d2WinText) {
+        if (d1Val > d2Val) return `<span class="sh2h-edge-badge d1">${d1WinText}</span>`;
+        if (d2Val > d1Val) return `<span class="sh2h-edge-badge d2">${d2WinText}</span>`;
+        return `<span class="sh2h-edge-badge even">Level</span>`;
+      }
+
+      document.getElementById("sessionComparisonGrid").innerHTML = `
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Total Fish Caught</span>
+            ${buildEdgeBadge(
+              totalD1Fish,
+              totalD2Fish,
+              `🌙 Night +${totalD1Fish - totalD2Fish} fish`,
+              `☀️ Day +${totalD2Fish - totalD1Fish} fish`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${totalD1Fish} fish</div>
+              <div class="sh2h-side-sub">Avg ${d1AvgPerRod} / angler</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side d2-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${totalD2Fish} fish</div>
+              <div class="sh2h-side-sub">Avg ${d2AvgPerRod} / angler</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            ${totalFish > 0 ? `${Math.round((totalD1Fish / totalFish) * 100)}% caught at night vs ${Math.round((totalD2Fish / totalFish) * 100)}% during the day` : "No fish recorded"}
+          </div>
+        </div>
+
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Total Fish Length</span>
+            ${buildEdgeBadge(
+              totalD1LenCm,
+              totalD2LenCm,
+              `🌙 Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`,
+              `☀️ Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${totalD1Meters}m</div>
+              <div class="sh2h-side-sub">${totalD1LenCm} cm total</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side d2-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${totalD2Meters}m</div>
+              <div class="sh2h-side-sub">${totalD2LenCm} cm total</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Competition total length: ${totalLengthMeters}m (${totalLengthCm} cm)
+          </div>
+        </div>
+
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Average Fish Size</span>
+            ${buildEdgeBadge(
+              Number(d1AvgFishSize),
+              Number(d2AvgFishSize),
+              `🌙 Larger (+${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm)`,
+              `☀️ Larger (+${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm)`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
+              <div class="sh2h-side-sub">Per fish caught</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side d2-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
+              <div class="sh2h-side-sub">Per fish caught</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Compares average fish stamp between darkness & daylight sessions
+          </div>
+        </div>
+
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Anglers Catching vs Blanking</span>
+            ${buildEdgeBadge(
+              d1CatchingAnglers,
+              d2CatchingAnglers,
+              `🌙 +${d1CatchingAnglers - d2CatchingAnglers} more catching`,
+              `☀️ +${d2CatchingAnglers - d1CatchingAnglers} more catching`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1CatchPct}% Caught</div>
+              <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers caught (${d1BlankingAnglers} blanked)</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side d2-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2CatchPct}% Caught</div>
+              <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers caught (${d2BlankingAnglers} blanked)</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            ${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers caught in both sessions • ${anglers.filter(a => (a.d1.fishCount || 0) === 0 && (a.d2.fishCount || 0) === 0).length} blanked both
+          </div>
+        </div>
+
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Top Individual Catch</span>
+            ${buildEdgeBadge(
+              d1BestBag.fish,
+              d2BestBag.fish,
+              `🌙 Top catch (${d1BestBag.fish})`,
+              `☀️ Top catch (${d2BestBag.fish})`
+            )}
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-val">${d1BestBag.fish} fish</div>
+              <div class="sh2h-side-sub">${d1BestBag.angler}</div>
+            </div>
+            <div class="sh2h-vs-sep">vs</div>
+            <div class="sh2h-side d2-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-val">${d2BestBag.fish} fish</div>
+              <div class="sh2h-side-sub">${d2BestBag.angler}</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            Longest: 🌙 ${d1SpecText} • ☀️ ${d2SpecText}
+          </div>
+        </div>
+
+        <div class="sh2h-metric-card">
+          <div class="sh2h-top-row">
+            <span class="sh2h-title">Top Performing Zone</span>
+            <span class="sh2h-edge-badge even">Overall: ${shortZone(topLengthZone.zoneName)}</span>
+          </div>
+          <div class="sh2h-split-cols">
+            <div class="sh2h-side d1-side">
+              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1 Best</div>
+              <div class="sh2h-side-val">${shortZone(d1TopZone.zoneName)}</div>
+              <div class="sh2h-side-sub">${(d1TopZone.d1Len / 100).toFixed(2)}m • ${d1TopZone.d1Fish} fish</div>
+            </div>
+            <div class="sh2h-vs-sep">→</div>
+            <div class="sh2h-side d2-side">
+              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2 Best</div>
+              <div class="sh2h-side-val">${shortZone(d2TopZone.zoneName)}</div>
+              <div class="sh2h-side-sub">${(d2TopZone.d2Len / 100).toFixed(2)}m • ${d2TopZone.d2Fish} fish</div>
+            </div>
+          </div>
+          <div class="sh2h-footer-note">
+            ${d1TopZone.zoneName === d2TopZone.zoneName
+              ? `${d1TopZone.zoneName} led both sessions across the championship`
+              : `Top zone shifted from ${shortZone(d1TopZone.zoneName)} (Night) to ${shortZone(d2TopZone.zoneName)} (Day)`}
+          </div>
+        </div>
+      `;
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD
+       --------------------------------------------------------- */
+    function renderIndividualTable() {
+      const searchInput = document.getElementById("searchAngler");
+
+      function update() {
+        const q = searchInput.value.trim().toLowerCase();
+
+        const filtered = STATE.anglers.filter(a => {
+          return a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q);
+        });
+
+        let lastPts = null;
+        const rowsHtml = [];
+
+        filtered.forEach((a, idx) => {
+          const pts = a.totals.cumulativePoints;
+          if (idx > 0 && pts !== lastPts) {
+            rowsHtml.push(`
+              <tr class="pts-bracket-gap" aria-hidden="true">
+                <td colspan="15"></td>
+              </tr>
+            `);
           }
-          return networkResponse;
-        })
-        .catch(() => caches.match("./index.html") || caches.match("./"))
-    );
-    return;
-  }
+          lastPts = pts;
 
-  // Stale-While-Revalidate for remaining app shell assets
-  event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      const fetchPromise = fetch(event.request)
-        .then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200 && networkResponse.type === "basic") {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          const rankClass = a.rank <= 3 ? `rank-medal rank-${a.rank}` : "";
+          const ovBig = a.overallBiggestCm > 0 ? a.overallBiggestCm : "—";
+          const d1Big = (a.d1.biggestFishCm || 0) > 0 ? a.d1.biggestFishCm : "—";
+          const d2Big = (a.d2.biggestFishCm || 0) > 0 ? a.d2.biggestFishCm : "—";
+
+          rowsHtml.push(`
+            <tr class="ind-data-row">
+              <td class="pos-cell overall-card-cell ${rankClass}">${getOrdinal(a.rank)}</td>
+              <td class="angler-cell overall-card-cell">
+                <div class="ind-angler-name">${a.anglerName}</div>
+                <div class="ind-team-sub">${a.teamName}</div>
+              </td>
+              <td class="overall-card-cell sec-sep-left"><strong style="color:var(--brand-navy);">${pts}</strong></td>
+              <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
+              <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
+              <td class="overall-card-cell overall-card-end">${ovBig}</td>
+
+              <td class="col-gap-spacer" aria-hidden="true"></td>
+
+              <td class="session-card-cell session-card-start">${a.d1.zonePoints}</td>
+              <td class="session-card-cell">${a.d1.totalLengthCm}</td>
+              <td class="session-card-cell">${a.d1.fishCount}</td>
+              <td class="session-card-cell">${d1Big}</td>
+              <td class="session-card-cell sec-sep-left">${a.d2.zonePoints}</td>
+              <td class="session-card-cell">${a.d2.totalLengthCm}</td>
+              <td class="session-card-cell">${a.d2.fishCount}</td>
+              <td class="session-card-cell">${d2Big}</td>
+            </tr>
+          `);
+        });
+
+        document.getElementById("individualTableBody").innerHTML = rowsHtml.join("");
+        syncScrollShellState(
+          document.getElementById("indTableWrap"),
+          document.getElementById("indScrollShell")
+        );
+      }
+
+      searchInput.oninput = update;
+      update();
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 3: TEAM LEADERBOARD
+       --------------------------------------------------------- */
+    function renderTeamsContributions() {
+      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
+      const maxMembers = Math.max(4, ...STATE.teams.map(t => t.members.length));
+
+      let anglerHeaders = "";
+      for (let i = 1; i <= maxMembers; i++) {
+        const startClass = i === 1 ? "session-card-start" : "";
+        anglerHeaders += `<th class="sub-th left-align ${startClass}">Angler ${i}</th>`;
+      }
+
+      document.getElementById("teamsTableHead").innerHTML = `
+        <tr>
+          <th colspan="2" class="group-th overall-grp">Team Overall</th>
+          <th class="col-gap-spacer" aria-hidden="true"></th>
+          <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
+        </tr>
+        <tr>
+          <th class="sub-th" style="text-align:center;">Pos</th>
+          <th class="sub-th left-align overall-card-end">Team & Totals</th>
+          <th class="col-gap-spacer" aria-hidden="true"></th>
+          ${anglerHeaders}
+        </tr>
+      `;
+
+      document.getElementById("teamsTableBody").innerHTML = STATE.teams.map((team, idx) => {
+        const teamRank = idx + 1;
+        const podiumClass = teamRank <= 3 ? `podium-${teamRank}` : "";
+        const rankClass = teamRank <= 3 ? `rank-medal rank-${teamRank}` : "";
+        const prefix = rankIcons[teamRank] || "";
+
+        const sortedMembers = [...team.members].sort(
+          (a, b) =>
+            a.totals.cumulativePoints - b.totals.cumulativePoints ||
+            b.totals.cumulativeLengthCm - a.totals.cumulativeLengthCm ||
+            b.totals.cumulativeFish - a.totals.cumulativeFish ||
+            b.overallBiggestCm - a.overallBiggestCm
+        );
+
+        let memberCells = "";
+        for (let i = 0; i < maxMembers; i++) {
+          const m = sortedMembers[i];
+          const startClass = i === 0 ? "session-card-start" : "";
+          if (m) {
+            memberCells += `
+              <td class="team-contrib-cell session-card-cell ${startClass}">
+                <div class="contrib-angler-line">${m.anglerName}</div>
+                <div class="contrib-stats-line">${m.totals.cumulativePoints} pts • ${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
+              </td>
+            `;
+          } else {
+            memberCells += `<td class="team-contrib-cell session-card-cell ${startClass}" style="color:var(--text-muted);">—</td>`;
           }
-          return networkResponse;
-        })
-        .catch(() => cachedResponse);
+        }
 
-      return cachedResponse || fetchPromise;
-    })
-  );
-});
+        return `
+          <tr class="team-strip-row ${podiumClass}">
+            <td class="overall-card-cell ${rankClass}">${prefix}${getOrdinal(teamRank)}</td>
+            <td class="team-main-cell overall-card-cell overall-card-end">
+              <div class="team-name-line">${team.teamName}</div>
+              <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
+            </td>
+            <td class="col-gap-spacer" aria-hidden="true"></td>
+            ${memberCells}
+          </tr>
+        `;
+      }).join("");
+
+      syncScrollShellState(
+        document.getElementById("teamsTableWrap"),
+        document.getElementById("teamsScrollShell")
+      );
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS
+       --------------------------------------------------------- */
+    function renderDayZoneWinners(dayKey, gridElementId) {
+      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
+      const gridEl = document.getElementById(gridElementId);
+      if (!gridEl) return;
+
+      gridEl.innerHTML = MATCH_CONFIG.zones.map(zoneName => {
+        const zoneAnglers = STATE.anglers
+          .filter(a => a[dayKey]?.zone === zoneName)
+          .sort((a, b) => {
+            const sA = a[dayKey];
+            const sB = b[dayKey];
+            return (
+              (sA.zonePoints ?? 999) - (sB.zonePoints ?? 999) ||
+              (sB.totalLengthCm ?? 0) - (sA.totalLengthCm ?? 0) ||
+              (sB.fishCount ?? 0) - (sA.fishCount ?? 0) ||
+              (sB.biggestFishCm ?? 0) - (sA.biggestFishCm ?? 0)
+            );
+          });
+
+        const winner = zoneAnglers[0];
+        const winnerBadge = winner
+          ? `<span class="zw-winner-callout">🥇 ${winner.anglerName} (${winner[dayKey].zonePoints} pts • ${winner[dayKey].totalLengthCm}cm)</span>`
+          : `<span class="zw-winner-callout">No anglers recorded</span>`;
+
+        const rowsHtml = zoneAnglers.map((a, idx) => {
+          const pos = idx + 1;
+          const podiumClass = pos <= 3 ? `podium-${pos}` : "";
+          const rankClass = pos <= 3 ? `rank-medal rank-${pos}` : "";
+          const prefix = rankIcons[pos] || "";
+          const sess = a[dayKey];
+          const bigDisplay = (sess.biggestFishCm || 0) > 0
+            ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.68rem;">(${sess.biggestFishSpecies})</span>` : ""}`
+            : "—";
+
+          return `
+            <tr class="${podiumClass}">
+              <td class="${rankClass}" style="text-align:center; width:54px;">${prefix}${getOrdinal(pos)}</td>
+              <td>
+                <div class="ind-angler-name">${a.anglerName}</div>
+                <div class="ind-team-sub">${a.teamName}</div>
+              </td>
+              <td style="text-align:center;"><strong style="color:var(--brand-navy);">${sess.zonePoints}</strong></td>
+              <td style="text-align:center;">${sess.totalLengthCm}</td>
+              <td style="text-align:center;"><strong>${sess.fishCount}</strong></td>
+              <td style="text-align:center;">${bigDisplay}</td>
+            </tr>
+          `;
+        }).join("");
+
+        return `
+          <div class="zone-winner-panel" data-zone="${zoneName}">
+            <div class="zw-panel-header">
+              <div class="zw-zone-title">${zoneName}</div>
+              ${winnerBadge}
+            </div>
+            <div class="table-wrap">
+              <table class="card-row-table">
+                <thead>
+                  <tr>
+                    <th style="text-align:center;">Pos</th>
+                    <th>Angler</th>
+                    <th style="text-align:center;">Pts</th>
+                    <th style="text-align:center;">Len</th>
+                    <th style="text-align:center;">Fish</th>
+                    <th style="text-align:center;">Big</th>
+                  </tr>
+                </thead>
+                <tbody>${rowsHtml}</tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 4: BIGGEST FISH (TOP 5 & 4 STACKED COLUMNS)
+       --------------------------------------------------------- */
+    function renderBiggestFish() {
+      const top5 = STATE.specimensAll.slice(0, 5);
+
+      document.getElementById("biggestFishTableBody").innerHTML = top5.map((s, idx) => {
+        const rank = idx + 1;
+        const podiumClass = rank <= 3 ? `podium-${rank}` : "";
+        const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
+        const zShort = shortZone(s.zone);
+
+        return `
+          <tr class="${podiumClass}">
+            <td class="${rankClass}" style="text-align:center;">${getOrdinal(rank)}</td>
+            <td>
+              <div class="ind-angler-name">${s.anglerName}</div>
+              <div class="ind-team-sub">${s.teamName}</div>
+            </td>
+            <td>
+              <div style="font-weight:700; font-size:0.8rem; line-height:1.2;">${s.sessionLabel}</div>
+              <div><span class="zone-chip ${zShort}">${s.zone}</span></div>
+            </td>
+            <td style="text-align:right;">
+              <div style="font-weight:800; font-size:0.92rem; color:var(--accent-amber); line-height:1.2;">${s.lengthCm} cm</div>
+              <div class="ind-team-sub">${s.species || "—"}</div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 5: MYSTERY PAIRS
+       --------------------------------------------------------- */
+    function renderSecretPairs() {
+      const sp = STATE.raw?.secretPairs || {};
+      document.getElementById("secretPairsDesc").textContent =
+        sp.description || "Target Length calculated for wildcard mystery pairing.";
+      document.getElementById("secretTargetBadge").textContent =
+        `Target Length: ${sp.targetLength || "0cm"}`;
+
+      const winners = Array.isArray(sp.winners) ? sp.winners : [];
+      const others = Array.isArray(sp.otherPairs) ? sp.otherPairs : [];
+      const bodyEl = document.getElementById("secretPairsBody");
+
+      if (!winners.length && !others.length) {
+        bodyEl.innerHTML = `
+          <div style="padding:1.5rem; text-align:center; background:rgba(255, 255, 255, 0.72); border-radius:var(--radius-md); border:1px dashed var(--border-strong); color:var(--text-secondary);">
+            <div style="font-size:1.4rem; margin-bottom:0.35rem;">🎲</div>
+            <div style="font-weight:700; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
+            <div style="font-size:0.82rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
+          </div>
+        `;
+        return;
+      }
+
+      const allPairs = [...winners, ...others];
+      bodyEl.innerHTML = `
+        <div class="table-wrap">
+          <table class="card-row-table">
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th>Angler 1</th>
+                <th>Angler 2</th>
+                <th>Combined Length</th>
+                <th>Target Diff</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allPairs.map((p, i) => `
+                <tr>
+                  <td><strong>#${i + 1}</strong></td>
+                  <td>${p.angler1 || "—"}</td>
+                  <td>${p.angler2 || "—"}</td>
+                  <td>${p.combinedLength || "—"}</td>
+                  <td>${p.diff || "—"}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    /* ---------------------------------------------------------
+       RENDER VIEW 6: MY MATCH REPORT (NAME-ONLY ALPHABETICAL SELECT + UNSELECTED DEFAULT)
+       --------------------------------------------------------- */
+    function renderMyReport() {
+      const anglers = STATE.anglers;
+      if (!anglers.length) return;
+
+      const selectEl = document.getElementById("myAnglerSelect");
+      const compareSelectEl = document.getElementById("compareAnglerSelect");
+      const h2hCardEl = document.getElementById("h2hSelectorCard");
+      const bannerEl = document.getElementById("myMomentumBanner");
+      const gaugesEl = document.getElementById("myGaugesRow");
+
+      // Sort anglers alphabetically A-Z by name
+      const sortedAlpha = [...anglers].sort((a, b) =>
+        a.anglerName.localeCompare(b.anglerName, undefined, { sensitivity: "base" })
+      );
+
+      // Validate that selectedAnglerName still exists in dataset; otherwise remain unselected ("")
+      if (STATE.selectedAnglerName && !sortedAlpha.some(a => a.anglerName === STATE.selectedAnglerName)) {
+        STATE.selectedAnglerName = "";
+      }
+
+      selectEl.innerHTML =
+        `<option value="">— Select an angler —</option>` +
+        sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
+
+      selectEl.value = STATE.selectedAnglerName;
+
+      selectEl.onchange = () => {
+        STATE.selectedAnglerName = selectEl.value;
+        if (STATE.compareAnglerName === STATE.selectedAnglerName) {
+          STATE.compareAnglerName = "";
+        }
+        renderMyReport();
+      };
+
+      // Unselected default state: do NOT pre-populate 1st place (Clyde)
+      if (!STATE.selectedAnglerName) {
+        bannerEl.innerHTML = `
+          <div class="report-empty-prompt">
+            <div class="report-empty-title">Choose an angler from the selector above</div>
+            <div class="report-empty-sub">View two-day championship trajectory, field ranking motifs, and head-to-head comparisons.</div>
+          </div>
+        `;
+        gaugesEl.innerHTML = "";
+        if (h2hCardEl) h2hCardEl.classList.add("hidden");
+        return;
+      }
+
+      const me = anglers.find(a => a.anglerName === STATE.selectedAnglerName);
+      if (!me) return;
+
+      // Reveal Head-to-Head card once a primary angler is chosen
+      if (h2hCardEl) h2hCardEl.classList.remove("hidden");
+
+      const rivalCandidatesAlpha = sortedAlpha.filter(a => a.anglerName !== me.anglerName);
+      if (STATE.compareAnglerName && !rivalCandidatesAlpha.some(a => a.anglerName === STATE.compareAnglerName)) {
+        STATE.compareAnglerName = "";
+      }
+
+      compareSelectEl.innerHTML =
+        `<option value="">— Select an angler to compare —</option>` +
+        rivalCandidatesAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
+
+      compareSelectEl.value = STATE.compareAnglerName;
+
+      compareSelectEl.onchange = () => {
+        STATE.compareAnglerName = compareSelectEl.value;
+        renderSideBySideH2H(me);
+      };
+
+      // Compute field-best benchmarks across all 4 motif metrics
+      const fieldBestPts = Math.min(...anglers.map(a => a.totals.cumulativePoints ?? 999));
+      const fieldBestFish = Math.max(...anglers.map(a => a.totals.cumulativeFish || 0));
+      const fieldBestLength = Math.max(...anglers.map(a => a.totals.cumulativeLengthCm || 0));
+      const fieldBestBiggest = Math.max(...anglers.map(a => a.overallBiggestCm || 0));
+
+      const fieldSize = anglers.length;
+      const fieldOrdinal = getOrdinal(fieldSize);
+
+      // 1. Two-Day Trajectory / Momentum Banner
+      const rankDelta = me.d1OverallRank - me.rank;
+      let moveBadgeClass = "steady";
+      let movePillText = `➡️ Held steady at ${getOrdinal(me.rank)}`;
+      let moveHeadline = `Finished ${getOrdinal(me.rank)} overall — unchanged from Day 1 (${getOrdinal(me.d1OverallRank)})`;
+
+      if (rankDelta > 0) {
+        moveBadgeClass = "up";
+        movePillText = `📈 Climbed ${rankDelta} ${rankDelta === 1 ? "place" : "places"}`;
+        moveHeadline = `Rose from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+      } else if (rankDelta < 0) {
+        const dropCount = Math.abs(rankDelta);
+        moveBadgeClass = "down";
+        movePillText = `📉 Dropped ${dropCount} ${dropCount === 1 ? "place" : "places"}`;
+        moveHeadline = `Moved from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+      }
+
+      const z1Text = `🌙 Day 1: ${getOrdinal(me.d1ZoneStanding.pos)} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
+      const z2Text = `☀️ Day 2: ${getOrdinal(me.d2ZoneStanding.pos)} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
+
+      bannerEl.innerHTML = `
+        <div class="momentum-banner">
+          <div class="momentum-left">
+            <div class="momentum-eyebrow">Two-Day Championship Trajectory • ${me.anglerName} (${me.teamName})</div>
+            <div class="momentum-headline">${moveHeadline}</div>
+            <div class="momentum-subline">${z1Text}  •  ${z2Text}</div>
+          </div>
+          <span class="momentum-pill ${moveBadgeClass}">${movePillText}</span>
+        </div>
+      `;
+
+      // 2. Four Circle Motif Cards (Heading Above Circle, Actual vs Best Below Circle)
+      const overallPct = Math.max(6, Math.round(((fieldSize - me.rank + 1) / fieldSize) * 100));
+      const fishRankPct = Math.max(6, Math.round(((fieldSize - me.fishRank + 1) / fieldSize) * 100));
+      const lengthRankPct = Math.max(6, Math.round(((fieldSize - me.lengthRank + 1) / fieldSize) * 100));
+      const biggestRankPct = me.overallBiggestCm > 0
+        ? Math.max(6, Math.round(((fieldSize - me.biggestRank + 1) / fieldSize) * 100))
+        : 4;
+
+      const r = 38;
+      const c = 2 * Math.PI * r;
+
+      function buildMotifCard(topHeading, insideOrdinal, insideSub, actualLabel, bestLabel, pct, color) {
+        const offset = c - (pct / 100) * c;
+        return `
+          <div class="gauge-card">
+            <div class="gauge-top-heading">${topHeading}</div>
+            <div class="gauge-ring-container">
+              <svg class="gauge-svg" viewBox="0 0 96 96">
+                <circle class="gauge-track" cx="48" cy="48" r="${r}"></circle>
+                <circle class="gauge-progress" cx="48" cy="48" r="${r}"
+                  stroke="${color}"
+                  stroke-dasharray="${c.toFixed(1)}"
+                  stroke-dashoffset="${offset.toFixed(1)}"></circle>
+              </svg>
+              <div class="gauge-inside-text">
+                <span class="gauge-ordinal">${insideOrdinal}</span>
+                <span class="gauge-out-of">${insideSub}</span>
+              </div>
+            </div>
+            <div class="gauge-bottom-compare">
+              <span class="gauge-actual-score">${actualLabel}</span>
+              <span class="gauge-best-benchmark">Field Best: ${bestLabel}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      gaugesEl.innerHTML = `
+        ${buildMotifCard(
+          "Overall Standing",
+          getOrdinal(me.rank),
+          `out of ${fieldOrdinal}`,
+          `${me.totals.cumulativePoints} zone pts`,
+          `${fieldBestPts} pts`,
+          overallPct,
+          "#004481"
+        )}
+        ${buildMotifCard(
+          "Total Fish",
+          getOrdinal(me.fishRank),
+          `out of ${fieldOrdinal}`,
+          `${me.totals.cumulativeFish} fish`,
+          `${fieldBestFish} fish`,
+          fishRankPct,
+          "#059669"
+        )}
+        ${buildMotifCard(
+          "Total Length",
+          getOrdinal(me.lengthRank),
+          `out of ${fieldOrdinal}`,
+          `${me.totals.cumulativeLengthCm} cm`,
+          `${fieldBestLength} cm`,
+          lengthRankPct,
+          "#005eb8"
+        )}
+        ${buildMotifCard(
+          "Biggest Fish",
+          me.overallBiggestCm > 0 ? getOrdinal(me.biggestRank) : "—",
+          me.overallBiggestCm > 0 ? `out of ${fieldOrdinal}` : "No fish",
+          me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "0 cm",
+          `${fieldBestBiggest} cm`,
+          biggestRankPct,
+          "#d97706"
+        )}
+      `;
+
+      // 3. Opt-In Side-by-Side Head-to-Head Comparison
+      renderSideBySideH2H(me);
+    }
+
+    function renderSideBySideH2H(me) {
+      const h2hContainer = document.getElementById("h2hContainer");
+      const rivalName = STATE.compareAnglerName;
+
+      if (!rivalName) {
+        h2hContainer.innerHTML = "";
+        return;
+      }
+
+      const rival = STATE.anglers.find(a => a.anglerName === rivalName);
+      if (!rival) {
+        h2hContainer.innerHTML = "";
+        return;
+      }
+
+      const meAvgSize = me.totals.cumulativeFish > 0
+        ? (me.totals.cumulativeLengthCm / me.totals.cumulativeFish)
+        : 0;
+      const rivalAvgSize = rival.totals.cumulativeFish > 0
+        ? (rival.totals.cumulativeLengthCm / rival.totals.cumulativeFish)
+        : 0;
+
+      function buildSbsRow({ metricLabel, meVal, rivalVal, meSub = "", rivalSub = "", meNum, rivalNum, lowerIsBetter = false, unitSuffix = "" }) {
+        let winner = "tie";
+        let diff = 0;
+
+        if (typeof meNum === "number" && typeof rivalNum === "number" && meNum !== rivalNum) {
+          if (lowerIsBetter) {
+            winner = meNum < rivalNum ? "me" : "rival";
+            diff = Math.abs(rivalNum - meNum);
+          } else {
+            winner = meNum > rivalNum ? "me" : "rival";
+            diff = Math.abs(meNum - rivalNum);
+          }
+        }
+
+        const formattedDiff = Number.isInteger(diff) ? diff : diff.toFixed(1);
+        let marginHtml = "";
+        if (typeof meNum === "number" && typeof rivalNum === "number") {
+          if (winner === "me") {
+            marginHtml = `<span class="h2h-sbs-margin-tag me-lead">◀ +${formattedDiff}${unitSuffix}</span>`;
+          } else if (winner === "rival") {
+            marginHtml = `<span class="h2h-sbs-margin-tag rival-lead">+${formattedDiff}${unitSuffix} ▶</span>`;
+          } else {
+            marginHtml = `<span class="h2h-sbs-margin-tag tie">Level</span>`;
+          }
+        }
+
+        return `
+          <div class="h2h-sbs-row">
+            <div class="h2h-sbs-cell left ${winner === "me" ? "win-cell" : ""}">
+              <div class="h2h-sbs-val">${meVal}</div>
+              ${meSub ? `<div class="h2h-sbs-sub">${meSub}</div>` : ""}
+            </div>
+            <div class="h2h-sbs-center">
+              <div class="h2h-sbs-metric-lbl">${metricLabel}</div>
+              ${marginHtml}
+            </div>
+            <div class="h2h-sbs-cell right ${winner === "rival" ? "win-cell" : ""}">
+              <div class="h2h-sbs-val">${rivalVal}</div>
+              ${rivalSub ? `<div class="h2h-sbs-sub">${rivalSub}</div>` : ""}
+            </div>
+          </div>
+        `;
+      }
+
+      h2hContainer.innerHTML = `
+        <div class="h2h-side-by-side-wrap">
+          <!-- Top Angler Header Strip -->
+          <div class="h2h-sbs-header">
+            <div class="h2h-sbs-angler left">
+              <div class="h2h-sbs-name">${me.anglerName}</div>
+              <div class="h2h-sbs-meta">${getOrdinal(me.rank)} Overall • ${me.teamName}</div>
+            </div>
+            <div class="h2h-sbs-vs-badge">VS</div>
+            <div class="h2h-sbs-angler right">
+              <div class="h2h-sbs-name">${rival.anglerName}</div>
+              <div class="h2h-sbs-meta">${getOrdinal(rival.rank)} Overall • ${rival.teamName}</div>
+            </div>
+          </div>
+
+          <!-- OVERALL CHAMPIONSHIP METRICS -->
+          <div class="h2h-sbs-section-bar">
+            <span class="h2h-sbs-section-title">Overall Championship Head-to-Head</span>
+          </div>
+
+          ${buildSbsRow({
+            metricLabel: "Total Zone Points",
+            meVal: `${me.totals.cumulativePoints} pts`,
+            rivalVal: `${rival.totals.cumulativePoints} pts`,
+            meSub: `Rank: ${getOrdinal(me.rank)}`,
+            rivalSub: `Rank: ${getOrdinal(rival.rank)}`,
+            meNum: me.totals.cumulativePoints,
+            rivalNum: rival.totals.cumulativePoints,
+            lowerIsBetter: true,
+            unitSuffix: " pts"
+          })}
+
+          ${buildSbsRow({
+            metricLabel: "Total Fish Landed",
+            meVal: `${me.totals.cumulativeFish} fish`,
+            rivalVal: `${rival.totals.cumulativeFish} fish`,
+            meSub: `Field Rank: ${getOrdinal(me.fishRank)}`,
+            rivalSub: `Field Rank: ${getOrdinal(rival.fishRank)}`,
+            meNum: me.totals.cumulativeFish,
+            rivalNum: rival.totals.cumulativeFish,
+            lowerIsBetter: false,
+            unitSuffix: " fish"
+          })}
+
+          ${buildSbsRow({
+            metricLabel: "Total Measured Length",
+            meVal: `${me.totals.cumulativeLengthCm} cm`,
+            rivalVal: `${rival.totals.cumulativeLengthCm} cm`,
+            meSub: `${(me.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(me.lengthRank)})`,
+            rivalSub: `${(rival.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(rival.lengthRank)})`,
+            meNum: me.totals.cumulativeLengthCm,
+            rivalNum: rival.totals.cumulativeLengthCm,
+            lowerIsBetter: false,
+            unitSuffix: "cm"
+          })}
+
+          ${buildSbsRow({
+            metricLabel: "Avg Fish Stamp",
+            meVal: `${meAvgSize.toFixed(1)} cm`,
+            rivalVal: `${rivalAvgSize.toFixed(1)} cm`,
+            meSub: "Per fish caught",
+            rivalSub: "Per fish caught",
+            meNum: Number(meAvgSize.toFixed(1)),
+            rivalNum: Number(rivalAvgSize.toFixed(1)),
+            lowerIsBetter: false,
+            unitSuffix: "cm"
+          })}
+
+          ${buildSbsRow({
+            metricLabel: "Biggest Single Fish",
+            meVal: me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "—",
+            rivalVal: rival.overallBiggestCm > 0 ? `${rival.overallBiggestCm} cm` : "—",
+            meNum: me.overallBiggestCm,
+            rivalNum: rival.overallBiggestCm,
+            lowerIsBetter: false,
+            unitSuffix: "cm"
+          })}
+        </div>
+      `;
+    }
+
+    // Service Worker Registration
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+
+    // Boot
+    setupNavigation();
+    setupScrollCues();
+    loadScoresJson();
+  </script>
+</body>
+</html>
