@@ -1076,9 +1076,17 @@
     }
 
     /* =========================================================================
-       CUSTOM FINTECH ALPHABETICAL SCROLLING PICKER (MATCHES APP DESIGN)
+       MY MATCH REPORT: MOMENTUM BANNER + 4 MOTIF CARDS + SIDE-BY-SIDE H2H
        ========================================================================= */
-    .glass-input {
+    .angler-select-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .glass-select, .glass-input {
       background: #ffffff;
       border: 1px solid var(--border-strong);
       color: var(--text-primary);
@@ -1091,162 +1099,9 @@
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
-    .glass-input:focus {
+    .glass-select:focus, .glass-input:focus {
       border-color: var(--brand-cobalt);
       box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
-    }
-
-    .alpha-picker-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 340px;
-    }
-
-    .alpha-picker-input-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .alpha-picker-input {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-strong);
-      color: var(--text-primary);
-      padding: 0.62rem 2.2rem 0.62rem 0.9rem;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 700;
-      outline: none;
-      transition: all 0.16s ease;
-    }
-
-    .alpha-picker-input::placeholder {
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .alpha-picker-input:focus,
-    .alpha-picker-wrap.open .alpha-picker-input {
-      background: #ffffff;
-      border-color: var(--brand-cobalt);
-      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
-    }
-
-    .alpha-picker-chevron {
-      position: absolute;
-      right: 0.75rem;
-      color: var(--brand-cobalt);
-      font-size: 0.85rem;
-      font-weight: 800;
-      pointer-events: none;
-      transition: transform 0.18s ease;
-    }
-
-    .alpha-picker-wrap.open .alpha-picker-chevron {
-      transform: rotate(180deg);
-    }
-
-    .alpha-picker-menu {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      right: 0;
-      z-index: 120;
-      background: var(--bg-surface);
-      border: 1.5px solid var(--brand-tint-border);
-      border-radius: var(--radius-md);
-      box-shadow: 0 12px 30px rgba(0, 68, 129, 0.16), 0 4px 10px rgba(15, 23, 42, 0.08);
-      max-height: 270px;
-      overflow-y: auto;
-      display: none;
-      padding: 0.35rem;
-    }
-
-    .alpha-picker-wrap.open .alpha-picker-menu {
-      display: block;
-      animation: fadeIn 0.14s ease;
-    }
-
-    .alpha-picker-menu-header {
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--brand-navy);
-      background: var(--brand-tint);
-      padding: 0.32rem 0.6rem;
-      border-radius: 6px;
-      margin-bottom: 0.25rem;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .alpha-picker-item {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.65rem;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      transition: background 0.12s ease;
-    }
-
-    .alpha-picker-item:hover {
-      background: var(--brand-tint);
-    }
-
-    .alpha-picker-item.selected {
-      background: var(--brand-tint);
-      border-left: 3px solid var(--brand-cobalt);
-    }
-
-    .alpha-item-main {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .alpha-item-name {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .alpha-item-team {
-      font-size: 0.69rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .alpha-item-rank {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--brand-navy);
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      padding: 0.14rem 0.48rem;
-      border-radius: 999px;
-      flex-shrink: 0;
-    }
-
-    .alpha-picker-empty {
-      padding: 0.85rem 0.65rem;
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
     }
 
     /* Two-Day Trajectory / Momentum Banner */
@@ -1325,7 +1180,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
       gap: 0.9rem;
-      margin-bottom: 0.25rem;
+      margin-bottom: 1.1rem;
     }
 
     .gauge-card {
@@ -1424,17 +1279,13 @@
       border-radius: 999px;
     }
 
-    /* Opt-In Side-by-Side Head-to-Head Comparison (Overall Metrics Only) */
+    /* Opt-In Side-by-Side Head-to-Head Comparison */
     .h2h-selector-card {
       background: var(--bg-surface);
       border: 1.5px solid var(--brand-tint-border);
       border-radius: var(--radius-lg);
       padding: 1rem 1.05rem;
       box-shadow: var(--shadow-card);
-    }
-
-    .h2h-selector-card.hidden {
-      display: none;
     }
 
     .h2h-selector-bar {
@@ -1516,6 +1367,16 @@
       color: var(--brand-navy);
     }
 
+    .h2h-clash-pill {
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 0.14rem 0.55rem;
+      border-radius: 999px;
+    }
+
     .h2h-sbs-row {
       display: grid;
       grid-template-columns: 1fr 145px 1fr;
@@ -1528,7 +1389,7 @@
     }
 
     .h2h-sbs-cell {
-      padding: 0.65rem 0.85rem;
+      padding: 0.62rem 0.85rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1687,9 +1548,6 @@
       .session-h2h-grid {
         grid-template-columns: 1fr;
       }
-      .alpha-picker-wrap {
-        max-width: 100%;
-      }
       .h2h-sbs-header {
         grid-template-columns: 1fr 64px 1fr;
         padding: 0.65rem 0.6rem;
@@ -1727,7 +1585,7 @@
       <div class="hub-group-panel insights-group">
         <div class="hub-section-label">Match Insights & Reports</div>
         <div class="hub-buttons-grid">
-          <button type="button" class="hub-btn-card insight-card" data-nav="overview" onclick="switchView('overview')">
+          <button class="hub-btn-card insight-card" data-nav="overview">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Match Overview</span>
               <span class="hub-btn-sub">Field totals, zone bar charts & Day 1 vs Day 2 metrics</span>
@@ -1735,7 +1593,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card insight-card" data-nav="myreport" onclick="switchView('myreport')">
+          <button class="hub-btn-card insight-card" data-nav="myreport">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">My Match Report</span>
               <span class="hub-btn-sub">Personal rank motifs, momentum & head-to-head comparison</span>
@@ -1749,7 +1607,7 @@
       <div class="hub-group-panel">
         <div class="hub-section-label">Championship Standings & Results</div>
         <div class="hub-buttons-grid">
-          <button type="button" class="hub-btn-card" data-nav="individual" onclick="switchView('individual')">
+          <button class="hub-btn-card" data-nav="individual">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Individual Leaderboard</span>
               <span class="hub-btn-sub">Full field standings, points brackets & session splits</span>
@@ -1757,7 +1615,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card" data-nav="teams" onclick="switchView('teams')">
+          <button class="hub-btn-card" data-nav="teams">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Team Leaderboard</span>
               <span class="hub-btn-sub">Team rankings & individual angler contributions</span>
@@ -1765,7 +1623,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card" data-nav="day1zones" onclick="switchView('day1zones')">
+          <button class="hub-btn-card" data-nav="day1zones">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Day 1 Zone Winners</span>
               <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue</span>
@@ -1773,7 +1631,7 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card" data-nav="day2zones" onclick="switchView('day2zones')">
+          <button class="hub-btn-card" data-nav="day2zones">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Day 2 Zone Winners</span>
               <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue</span>
@@ -1781,15 +1639,15 @@
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card" data-nav="biggest" onclick="switchView('biggest')">
+          <button class="hub-btn-card" data-nav="biggest">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Biggest Fish</span>
-              <span class="hub-btn-sub">Top 5 longest individual specimens recorded across the match</span>
+              <span class="hub-btn-sub">Longest individual specimens & top 5 recorded species</span>
             </div>
             <span class="hub-arrow">›</span>
           </button>
 
-          <button type="button" class="hub-btn-card" data-nav="secret" onclick="switchView('secret')">
+          <button class="hub-btn-card" data-nav="secret">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Mystery Pairs</span>
               <span class="hub-btn-sub">Wildcard target length draw & paired standings</span>
@@ -1926,14 +1784,14 @@
     </section>
 
     <!-- =========================================================
-         VIEW 4: BIGGEST FISH (TOP 5 SPECIMENS ONLY)
+         VIEW 4: BIGGEST FISH
          ========================================================= -->
     <section id="view-biggest" class="view-section">
       <div class="glass-card">
         <div class="card-header">
           <div>
             <div class="card-title">Biggest Fish</div>
-            <div class="card-subtitle">Top 5 longest individual fish recorded across Day 1 (🌙) and Day 2 (☀️)</div>
+            <div class="card-subtitle">Longest individual fish recorded in Day 1 (🌙) and Day 2 (☀️)</div>
           </div>
         </div>
         <div class="species-summary-pills" id="biggestSpeciesSummary"></div>
@@ -1974,62 +1832,39 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT (CUSTOM A-Z SCROLLING PICKER + OVERALL H2H)
+         VIEW 6: MY MATCH REPORT (MOMENTUM + 4 MOTIF CARDS + OPT-IN SIDE-BY-SIDE H2H)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
       <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">My Match Report</div>
-            <div class="card-subtitle">Select your name to view your two-day trajectory and field standing motifs</div>
+            <div class="card-subtitle">Two-day trajectory, field ranking motifs & benchmark comparison</div>
           </div>
-
-          <!-- Custom App-Styled Alphabetical Scrolling Picker (Primary Angler) -->
-          <div class="alpha-picker-wrap" id="myAnglerPickerWrap">
-            <div class="alpha-picker-input-box">
-              <input
-                type="text"
-                id="myAnglerPickerInput"
-                class="alpha-picker-input"
-                placeholder="Enter your name here..."
-                autocomplete="off"
-                aria-label="Enter your name here"
-              />
-              <span class="alpha-picker-chevron">▾</span>
-            </div>
-            <div class="alpha-picker-menu" id="myAnglerPickerMenu"></div>
+          <div>
+            <label for="myAnglerSelect" class="kpi-label" style="display:block; margin-bottom:0.2rem;">Viewing Angler</label>
+            <select id="myAnglerSelect" class="glass-select"></select>
           </div>
         </div>
 
-        <!-- Two-Day Trajectory / Momentum Banner (Hidden until angler selected) -->
+        <!-- Two-Day Trajectory / Momentum Banner -->
         <div id="myMomentumBanner"></div>
 
-        <!-- 4 Circle Motif Cards (Hidden until angler selected) -->
+        <!-- 4 Circle Motif Cards (Heading Above, Actual vs Field Best Below) -->
         <div class="gauges-row" id="myGaugesRow"></div>
       </div>
 
-      <!-- Opt-In Side-by-Side Head-to-Head Comparison Card Underneath (Hidden until primary angler selected) -->
-      <div class="h2h-selector-card hidden" id="h2hSectionCard" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+      <!-- Opt-In Side-by-Side Head-to-Head Comparison Card Underneath -->
+      <div class="h2h-selector-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
         <div class="h2h-selector-bar">
           <div>
             <div class="card-title">Head-to-Head Angler Comparison</div>
-            <div class="card-subtitle">Choose another angler from the A–Z list to compare overall championship stats</div>
+            <div class="card-subtitle">Select another angler to compare overall and session-by-session stats side by side</div>
           </div>
-
-          <!-- Custom App-Styled Alphabetical Scrolling Picker (Rival Angler) -->
-          <div class="alpha-picker-wrap" id="rivalAnglerPickerWrap">
-            <div class="alpha-picker-input-box">
-              <input
-                type="text"
-                id="rivalAnglerPickerInput"
-                class="alpha-picker-input"
-                placeholder="Select a rival angler..."
-                autocomplete="off"
-                aria-label="Select a rival angler"
-              />
-              <span class="alpha-picker-chevron">▾</span>
-            </div>
-            <div class="alpha-picker-menu" id="rivalAnglerPickerMenu"></div>
+          <div>
+            <select id="compareAnglerSelect" class="glass-select" aria-label="Select a rival angler to compare against">
+              <option value="">— Select a rival angler —</option>
+            </select>
           </div>
         </div>
         <div id="h2hContainer"></div>
@@ -2038,13 +1873,13 @@
   </div>
 
   <!-- High-Contrast Floating Bottom-Left Back Button (Visible on all sub-pages) -->
-  <button type="button" class="floating-back-btn" id="floatingBackBtn" data-nav="home" onclick="switchView('home')" aria-label="Back to Home">
+  <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
     ← Back
   </button>
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.9.1",
+      version: "v3.8.1",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2061,8 +1896,7 @@
       anglers: [],
       teams: [],
       specimensAll: [],
-      selectedAnglerName: "",
-      selectedRivalName: ""
+      selectedAnglerName: ""
     };
 
     function getOrdinal(n) {
@@ -2180,6 +2014,7 @@
         );
       });
 
+      // Calculate Day 1 Overall Standings so we can compute Day 1 -> Final rank movement
       const sortedDay1Overall = [...sorted].sort((a, b) => {
         return (
           (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
@@ -2194,6 +2029,7 @@
         d1OverallRankMap[a.anglerName] = i + 1;
       });
 
+      // Calculate exact Zone Finishes for Day 1 & Day 2
       const d1ZonePosMap = {};
       const d2ZonePosMap = {};
       MATCH_CONFIG.zones.forEach(zName => {
@@ -2318,23 +2154,15 @@
       renderAllViews();
     }
 
-    function safeRun(fn, label) {
-      try {
-        fn();
-      } catch (err) {
-        console.error(`Error rendering ${label}:`, err);
-      }
-    }
-
     function renderAllViews() {
-      safeRun(renderOverview, "overview");
-      safeRun(renderIndividualTable, "individual");
-      safeRun(renderTeamsContributions, "teams");
-      safeRun(() => renderDayZoneWinners("d1", "day1ZonesGrid"), "day1zones");
-      safeRun(() => renderDayZoneWinners("d2", "day2ZonesGrid"), "day2zones");
-      safeRun(renderBiggestFish, "biggest");
-      safeRun(renderMyReport, "myreport");
-      safeRun(renderSecretPairs, "secret");
+      renderOverview();
+      renderIndividualTable();
+      renderTeamsContributions();
+      renderDayZoneWinners("d1", "day1ZonesGrid");
+      renderDayZoneWinners("d2", "day2ZonesGrid");
+      renderBiggestFish();
+      renderMyReport();
+      renderSecretPairs();
     }
 
     function setupNavigation() {
@@ -2952,7 +2780,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 4: BIGGEST FISH (TOP 5 SPECIMENS ONLY)
+       RENDER VIEW 4: BIGGEST FISH
        --------------------------------------------------------- */
     function renderBiggestFish() {
       const spSummary = STATE.raw?.biggestFishSpecies;
@@ -2971,9 +2799,7 @@
         `;
       }
 
-      const topFiveSpecimens = STATE.specimensAll.slice(0, 5);
-
-      document.getElementById("biggestFishTableBody").innerHTML = topFiveSpecimens.map((s, idx) => {
+      document.getElementById("biggestFishTableBody").innerHTML = STATE.specimensAll.map((s, idx) => {
         const rank = idx + 1;
         const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
         const zShort = shortZone(s.zone);
@@ -3047,153 +2873,59 @@
     }
 
     /* ---------------------------------------------------------
-       CUSTOM APP-STYLED ALPHABETICAL SCROLLING PICKER HELPER
-       --------------------------------------------------------- */
-    function initAlphaPicker({ wrapId, inputId, menuId, getOptions, getSelectedValue, onSelect }) {
-      const wrap = document.getElementById(wrapId);
-      const input = document.getElementById(inputId);
-      const menu = document.getElementById(menuId);
-      if (!wrap || !input || !menu) return;
-
-      function renderMenu(filterText) {
-        const q = (filterText || "").trim().toLowerCase();
-        const selectedVal = getSelectedValue();
-        const options = getOptions().filter(
-          a => !q || a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q)
-        );
-
-        if (!options.length) {
-          menu.innerHTML = `<div class="alpha-picker-empty">No matching anglers found</div>`;
-          return;
-        }
-
-        const headerHtml = `
-          <div class="alpha-picker-menu-header">
-            <span>Alphabetical List (A–Z)</span>
-            <span>${options.length} ${options.length === 1 ? "angler" : "anglers"}</span>
-          </div>
-        `;
-
-        const itemsHtml = options.map(a => {
-          const isSel = a.anglerName === selectedVal ? "selected" : "";
-          return `
-            <button type="button" class="alpha-picker-item ${isSel}" data-angler-val="${a.anglerName.replace(/"/g, """)}">
-              <div class="alpha-item-main">
-                <span class="alpha-item-name">${a.anglerName}</span>
-                <span class="alpha-item-team">${a.teamName}</span>
-              </div>
-              <span class="alpha-item-rank">${getOrdinal(a.rank)}</span>
-            </button>
-          `;
-        }).join("");
-
-        menu.innerHTML = headerHtml + itemsHtml;
-      }
-
-      function openMenu(showAll) {
-        document.querySelectorAll(".alpha-picker-wrap.open").forEach(other => {
-          if (other !== wrap) other.classList.remove("open");
-        });
-        wrap.classList.add("open");
-        renderMenu(showAll ? "" : input.value);
-      }
-
-      function closeMenu() {
-        wrap.classList.remove("open");
-        const currentSelected = getSelectedValue();
-        input.value = currentSelected || "";
-      }
-
-      input.addEventListener("focus", () => {
-        openMenu(true);
-      });
-
-      input.addEventListener("click", () => {
-        openMenu(true);
-      });
-
-      input.addEventListener("input", () => {
-        if (!wrap.classList.contains("open")) {
-          wrap.classList.add("open");
-        }
-        renderMenu(input.value);
-      });
-
-      menu.addEventListener("click", e => {
-        const itemBtn = e.target.closest("[data-angler-val]");
-        if (!itemBtn) return;
-        const chosenName = itemBtn.getAttribute("data-angler-val");
-        input.value = chosenName;
-        wrap.classList.remove("open");
-        onSelect(chosenName);
-      });
-
-      document.addEventListener("click", e => {
-        if (!wrap.contains(e.target) && wrap.classList.contains("open")) {
-          closeMenu();
-        }
-      });
-    }
-
-    /* ---------------------------------------------------------
-       RENDER VIEW 6: MY MATCH REPORT (CUSTOM A-Z PICKER + OVERALL H2H)
+       RENDER VIEW 6: MY MATCH REPORT (MOMENTUM + 4 MOTIF CARDS + OPT-IN SIDE-BY-SIDE H2H)
        --------------------------------------------------------- */
     function renderMyReport() {
       const anglers = STATE.anglers;
       if (!anglers.length) return;
 
-      const alphaAnglers = [...anglers].sort((a, b) => a.anglerName.localeCompare(b.anglerName));
+      const mySelect = document.getElementById("myAnglerSelect");
+      const rivalSelect = document.getElementById("compareAnglerSelect");
 
+      const prevMe = STATE.selectedAnglerName || mySelect.value;
+      const prevRival = rivalSelect.value;
+
+      mySelect.innerHTML = "";
+      anglers.forEach(a => {
+        const opt1 = document.createElement("option");
+        opt1.value = a.anglerName;
+        opt1.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
+        mySelect.appendChild(opt1);
+      });
+
+      if (prevMe && anglers.some(a => a.anglerName === prevMe)) {
+        mySelect.value = prevMe;
+      }
+
+      // Compute field-best benchmarks across all 4 motif metrics
       const fieldBestPts = Math.min(...anglers.map(a => a.totals.cumulativePoints ?? 999));
       const fieldBestFish = Math.max(...anglers.map(a => a.totals.cumulativeFish || 0));
       const fieldBestLength = Math.max(...anglers.map(a => a.totals.cumulativeLengthCm || 0));
       const fieldBestBiggest = Math.max(...anglers.map(a => a.overallBiggestCm || 0));
 
-      initAlphaPicker({
-        wrapId: "myAnglerPickerWrap",
-        inputId: "myAnglerPickerInput",
-        menuId: "myAnglerPickerMenu",
-        getOptions: () => alphaAnglers,
-        getSelectedValue: () => STATE.selectedAnglerName,
-        onSelect: chosenName => {
-          STATE.selectedAnglerName = chosenName;
-          if (STATE.selectedRivalName === chosenName) {
-            STATE.selectedRivalName = "";
-            const rivalInput = document.getElementById("rivalAnglerPickerInput");
-            if (rivalInput) rivalInput.value = "";
-          }
-          updateReport();
-        }
-      });
+      function populateRivalDropdown(currentMeName) {
+        const savedRival = rivalSelect.value || prevRival;
+        rivalSelect.innerHTML = `<option value="">— Select a rival angler —</option>`;
+        anglers
+          .filter(a => a.anglerName !== currentMeName)
+          .forEach(a => {
+            const opt2 = document.createElement("option");
+            opt2.value = a.anglerName;
+            opt2.textContent = `${a.anglerName} (${getOrdinal(a.rank)} • ${a.teamName})`;
+            rivalSelect.appendChild(opt2);
+          });
 
-      initAlphaPicker({
-        wrapId: "rivalAnglerPickerWrap",
-        inputId: "rivalAnglerPickerInput",
-        menuId: "rivalAnglerPickerMenu",
-        getOptions: () => alphaAnglers.filter(a => a.anglerName !== STATE.selectedAnglerName),
-        getSelectedValue: () => STATE.selectedRivalName,
-        onSelect: chosenRival => {
-          STATE.selectedRivalName = chosenRival;
-          const me = anglers.find(a => a.anglerName === STATE.selectedAnglerName);
-          if (me) renderSideBySideH2H(me);
+        if (savedRival && savedRival !== currentMeName && anglers.some(a => a.anglerName === savedRival)) {
+          rivalSelect.value = savedRival;
+        } else {
+          rivalSelect.value = "";
         }
-      });
+      }
 
       function updateReport() {
-        const momentumEl = document.getElementById("myMomentumBanner");
-        const gaugesEl = document.getElementById("myGaugesRow");
-        const h2hSectionCard = document.getElementById("h2hSectionCard");
-
-        const me = anglers.find(a => a.anglerName === STATE.selectedAnglerName);
-
-        if (!me) {
-          momentumEl.innerHTML = "";
-          gaugesEl.innerHTML = "";
-          if (h2hSectionCard) h2hSectionCard.classList.add("hidden");
-          return;
-        }
-
-        if (h2hSectionCard) h2hSectionCard.classList.remove("hidden");
+        const me = anglers.find(a => a.anglerName === mySelect.value) || anglers[0];
+        STATE.selectedAnglerName = me.anglerName;
+        populateRivalDropdown(me.anglerName);
 
         const fieldSize = anglers.length;
         const fieldOrdinal = getOrdinal(fieldSize);
@@ -3218,7 +2950,7 @@
         const z1Text = `🌙 Day 1: ${getOrdinal(me.d1ZoneStanding.pos)} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
         const z2Text = `☀️ Day 2: ${getOrdinal(me.d2ZoneStanding.pos)} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
 
-        momentumEl.innerHTML = `
+        document.getElementById("myMomentumBanner").innerHTML = `
           <div class="momentum-banner">
             <div class="momentum-left">
               <div class="momentum-eyebrow">Two-Day Championship Trajectory • ${me.anglerName} (${me.teamName})</div>
@@ -3266,7 +2998,7 @@
           `;
         }
 
-        gaugesEl.innerHTML = `
+        document.getElementById("myGaugesRow").innerHTML = `
           ${buildMotifCard(
             "Overall Standing",
             getOrdinal(me.rank),
@@ -3305,15 +3037,15 @@
           )}
         `;
 
-        // 3. Opt-In Side-by-Side Head-to-Head Comparison (Overall Metrics Only)
+        // 3. Opt-In Side-by-Side Head-to-Head Comparison
         renderSideBySideH2H(me);
       }
 
       function renderSideBySideH2H(me) {
         const h2hContainer = document.getElementById("h2hContainer");
-        const rivalName = STATE.selectedRivalName;
+        const rivalName = rivalSelect.value;
 
-        if (!rivalName || rivalName === me.anglerName) {
+        if (!rivalName) {
           h2hContainer.innerHTML = "";
           return;
         }
@@ -3375,8 +3107,12 @@
           `;
         }
 
+        const sameZoneD1 = me.d1.zone && me.d1.zone === rival.d1.zone;
+        const sameZoneD2 = me.d2.zone && me.d2.zone === rival.d2.zone;
+
         h2hContainer.innerHTML = `
           <div class="h2h-side-by-side-wrap">
+            <!-- Top Angler Header Strip -->
             <div class="h2h-sbs-header">
               <div class="h2h-sbs-angler left">
                 <div class="h2h-sbs-name">${me.anglerName}</div>
@@ -3389,6 +3125,7 @@
               </div>
             </div>
 
+            <!-- OVERALL CHAMPIONSHIP METRICS -->
             <div class="h2h-sbs-section-bar">
               <span class="h2h-sbs-section-title">Overall Championship Head-to-Head</span>
             </div>
@@ -3450,10 +3187,83 @@
               lowerIsBetter: false,
               unitSuffix: "cm"
             })}
+
+            <!-- DAY 1 SESSION SPLIT -->
+            <div class="h2h-sbs-section-bar">
+              <span class="h2h-sbs-section-title">🌙 Day 1 — Night Session Split</span>
+              ${sameZoneD1 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d1.zone)})</span>` : ""}
+            </div>
+
+            ${buildSbsRow({
+              metricLabel: "Zone & Peg",
+              meVal: `${shortZone(me.d1.zone)} #${me.d1.peg}`,
+              rivalVal: `${shortZone(rival.d1.zone)} #${rival.d1.peg}`
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Zone Finish & Pts",
+              meVal: `${getOrdinal(me.d1ZoneStanding.pos)} (${me.d1.zonePoints} pts)`,
+              rivalVal: `${getOrdinal(rival.d1ZoneStanding.pos)} (${rival.d1.zonePoints} pts)`,
+              meNum: me.d1.zonePoints,
+              rivalNum: rival.d1.zonePoints,
+              lowerIsBetter: true,
+              unitSuffix: " pts"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Session Length & Fish",
+              meVal: `${me.d1.totalLengthCm} cm`,
+              rivalVal: `${rival.d1.totalLengthCm} cm`,
+              meSub: `${me.d1.fishCount} fish • Big: ${me.d1.biggestFishCm > 0 ? me.d1.biggestFishCm + "cm" : "—"}`,
+              rivalSub: `${rival.d1.fishCount} fish • Big: ${rival.d1.biggestFishCm > 0 ? rival.d1.biggestFishCm + "cm" : "—"}`,
+              meNum: me.d1.totalLengthCm,
+              rivalNum: rival.d1.totalLengthCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
+
+            <!-- DAY 2 SESSION SPLIT -->
+            <div class="h2h-sbs-section-bar">
+              <span class="h2h-sbs-section-title">☀️ Day 2 — Day Session Split</span>
+              ${sameZoneD2 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d2.zone)})</span>` : ""}
+            </div>
+
+            ${buildSbsRow({
+              metricLabel: "Zone & Peg",
+              meVal: `${shortZone(me.d2.zone)} #${me.d2.peg}`,
+              rivalVal: `${shortZone(rival.d2.zone)} #${rival.d2.peg}`
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Zone Finish & Pts",
+              meVal: `${getOrdinal(me.d2ZoneStanding.pos)} (${me.d2.zonePoints} pts)`,
+              rivalVal: `${getOrdinal(rival.d2ZoneStanding.pos)} (${rival.d2.zonePoints} pts)`,
+              meNum: me.d2.zonePoints,
+              rivalNum: rival.d2.zonePoints,
+              lowerIsBetter: true,
+              unitSuffix: " pts"
+            })}
+
+            ${buildSbsRow({
+              metricLabel: "Session Length & Fish",
+              meVal: `${me.d2.totalLengthCm} cm`,
+              rivalVal: `${rival.d2.totalLengthCm} cm`,
+              meSub: `${me.d2.fishCount} fish • Big: ${me.d2.biggestFishCm > 0 ? me.d2.biggestFishCm + "cm" : "—"}`,
+              rivalSub: `${rival.d2.fishCount} fish • Big: ${rival.d2.biggestFishCm > 0 ? rival.d2.biggestFishCm + "cm" : "—"}`,
+              meNum: me.d2.totalLengthCm,
+              rivalNum: rival.d2.totalLengthCm,
+              lowerIsBetter: false,
+              unitSuffix: "cm"
+            })}
           </div>
         `;
       }
 
+      mySelect.onchange = updateReport;
+      rivalSelect.onchange = () => {
+        const me = anglers.find(a => a.anglerName === mySelect.value) || anglers[0];
+        renderSideBySideH2H(me);
+      };
       updateReport();
     }
 
