@@ -1112,7 +1112,7 @@
       font-size: 0.88rem;
       font-weight: 800;
       outline: none;
-      min-width: 265px;
+      min-width: 245px;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 68, 129, 0.06);
       transition: all 0.16s ease;
@@ -1419,16 +1419,6 @@
       color: var(--brand-navy);
     }
 
-    .h2h-clash-pill {
-      font-size: 0.68rem;
-      font-weight: 800;
-      background: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fcd34d;
-      padding: 0.14rem 0.55rem;
-      border-radius: 999px;
-    }
-
     .h2h-sbs-row {
       display: grid;
       grid-template-columns: 1fr 145px 1fr;
@@ -1530,10 +1520,11 @@
 
     .zone-chip {
       display: inline-block;
-      padding: 0.16rem 0.55rem;
+      padding: 0.12rem 0.48rem;
       border-radius: 6px;
-      font-size: 0.72rem;
+      font-size: 0.67rem;
       font-weight: 700;
+      margin-top: 2px;
     }
     .zone-chip.Red { background: var(--zone-red-bg); color: #b91c1c; border: 1px solid var(--zone-red-border); }
     .zone-chip.Yellow { background: var(--zone-yellow-bg); color: #a16207; border: 1px solid var(--zone-yellow-border); }
@@ -1544,13 +1535,6 @@
     .rank-1 { color: #b45309; }
     .rank-2 { color: #475569; }
     .rank-3 { color: #9a3412; }
-
-    .species-summary-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.85rem;
-    }
 
     @media (max-width: 1120px) {
       .session-h2h-grid {
@@ -1698,7 +1682,7 @@
           <button class="hub-btn-card" data-nav="biggest">
             <div class="hub-btn-text-wrap">
               <span class="hub-btn-title">Biggest Fish</span>
-              <span class="hub-btn-sub">Longest individual specimens & top 5 recorded species</span>
+              <span class="hub-btn-sub">Top 5 longest individual specimens recorded</span>
             </div>
             <span class="hub-arrow">›</span>
           </button>
@@ -1840,29 +1824,24 @@
     </section>
 
     <!-- =========================================================
-         VIEW 4: BIGGEST FISH
+         VIEW 4: BIGGEST FISH (TOP 5 & 4 STACKED COLUMNS)
          ========================================================= -->
     <section id="view-biggest" class="view-section">
-      <div class="glass-card">
+      <div class="glass-card" style="max-width: 820px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Biggest Fish</div>
-            <div class="card-subtitle">Longest individual fish recorded in Day 1 (🌙) and Day 2 (☀️)</div>
+            <div class="card-subtitle">Top 5 longest individual fish recorded across Day 1 (🌙) and Day 2 (☀️)</div>
           </div>
         </div>
-        <div class="species-summary-pills" id="biggestSpeciesSummary"></div>
-        <div class="table-wrap sticky-scroll-wrap">
-          <table class="card-row-table sticky-header-table">
+        <div class="table-wrap">
+          <table class="card-row-table">
             <thead>
               <tr>
-                <th>Rank</th>
-                <th>Session</th>
-                <th>Zone</th>
-                <th>Peg</th>
-                <th>Species</th>
-                <th>Length (cm)</th>
+                <th style="width: 64px; text-align: center;">Rank</th>
                 <th>Angler</th>
-                <th>Team</th>
+                <th>Session</th>
+                <th style="text-align: right;">Fish</th>
               </tr>
             </thead>
             <tbody id="biggestFishTableBody"></tbody>
@@ -1888,7 +1867,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT (APP-STYLED ALPHABETICAL SELECT + UNSELECTED DEFAULT)
+         VIEW 6: MY MATCH REPORT (NAME-ONLY ALPHABETICAL SELECT + UNSELECTED DEFAULT)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
       <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
@@ -1915,7 +1894,7 @@
         <div class="h2h-selector-bar">
           <div>
             <div class="card-title">Head-to-Head Angler Comparison</div>
-            <div class="card-subtitle">Select another angler to compare overall and session-by-session stats side by side</div>
+            <div class="card-subtitle">Select another angler to compare overall championship stats side by side</div>
           </div>
           <div>
             <select id="compareAnglerSelect" class="glass-select"></select>
@@ -1933,7 +1912,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.4",
+      version: "v3.8.5",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2835,39 +2814,32 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 4: BIGGEST FISH
+       RENDER VIEW 4: BIGGEST FISH (TOP 5 & 4 STACKED COLUMNS)
        --------------------------------------------------------- */
     function renderBiggestFish() {
-      const spSummary = STATE.raw?.biggestFishSpecies;
-      const summaryEl = document.getElementById("biggestSpeciesSummary");
+      const top5 = STATE.specimensAll.slice(0, 5);
 
-      if (spSummary) {
-        const d1List = (spSummary.day1 || []).join(", ") || "None";
-        const d2List = (spSummary.day2 || []).join(", ") || "None";
-        summaryEl.innerHTML = `
-          <span class="badge-pill" style="background:#eef2ff; color:#3730a3; border-color:#c7d2fe;">
-            🌙 Day 1 Top Species: ${d1List}
-          </span>
-          <span class="badge-pill" style="background:#fffbeb; color:#b45309; border-color:#fde68a;">
-            ☀️ Day 2 Top Species: ${d2List}
-          </span>
-        `;
-      }
-
-      document.getElementById("biggestFishTableBody").innerHTML = STATE.specimensAll.map((s, idx) => {
+      document.getElementById("biggestFishTableBody").innerHTML = top5.map((s, idx) => {
         const rank = idx + 1;
+        const podiumClass = rank <= 3 ? `podium-${rank}` : "";
         const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
         const zShort = shortZone(s.zone);
+
         return `
-          <tr>
-            <td class="${rankClass}">${getOrdinal(rank)}</td>
-            <td>${s.sessionLabel}</td>
-            <td><span class="zone-chip ${zShort}">${s.zone}</span></td>
-            <td>#${s.peg}</td>
-            <td><strong>${s.species || "—"}</strong></td>
-            <td><strong style="color:var(--accent-amber);">${s.lengthCm} cm</strong></td>
-            <td>${s.anglerName}</td>
-            <td style="color:var(--text-secondary);">${s.teamName}</td>
+          <tr class="${podiumClass}">
+            <td class="${rankClass}" style="text-align:center;">${getOrdinal(rank)}</td>
+            <td>
+              <div class="ind-angler-name">${s.anglerName}</div>
+              <div class="ind-team-sub">${s.teamName}</div>
+            </td>
+            <td>
+              <div style="font-weight:700; font-size:0.8rem; line-height:1.2;">${s.sessionLabel}</div>
+              <div><span class="zone-chip ${zShort}">${s.zone}</span></div>
+            </td>
+            <td style="text-align:right;">
+              <div style="font-weight:800; font-size:0.92rem; color:var(--accent-amber); line-height:1.2;">${s.lengthCm} cm</div>
+              <div class="ind-team-sub">${s.species || "—"}</div>
+            </td>
           </tr>
         `;
       }).join("");
@@ -2928,7 +2900,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 6: MY MATCH REPORT (APP-STYLED NATIVE A-Z SELECT + UNSELECTED DEFAULT)
+       RENDER VIEW 6: MY MATCH REPORT (NAME-ONLY ALPHABETICAL SELECT + UNSELECTED DEFAULT)
        --------------------------------------------------------- */
     function renderMyReport() {
       const anglers = STATE.anglers;
@@ -2991,6 +2963,7 @@
       compareSelectEl.innerHTML =
         `<option value="">— Select an angler to compare —</option>` +
         rivalCandidatesAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
+
       compareSelectEl.value = STATE.compareAnglerName;
 
       compareSelectEl.onchange = () => {
@@ -3184,9 +3157,6 @@
         `;
       }
 
-      const sameZoneD1 = me.d1.zone && me.d1.zone === rival.d1.zone;
-      const sameZoneD2 = me.d2.zone && me.d2.zone === rival.d2.zone;
-
       h2hContainer.innerHTML = `
         <div class="h2h-side-by-side-wrap">
           <!-- Top Angler Header Strip -->
@@ -3261,74 +3231,6 @@
             rivalVal: rival.overallBiggestCm > 0 ? `${rival.overallBiggestCm} cm` : "—",
             meNum: me.overallBiggestCm,
             rivalNum: rival.overallBiggestCm,
-            lowerIsBetter: false,
-            unitSuffix: "cm"
-          })}
-
-          <!-- DAY 1 SESSION SPLIT -->
-          <div class="h2h-sbs-section-bar">
-            <span class="h2h-sbs-section-title">🌙 Day 1 — Night Session Split</span>
-            ${sameZoneD1 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d1.zone)})</span>` : ""}
-          </div>
-
-          ${buildSbsRow({
-            metricLabel: "Zone & Peg",
-            meVal: `${shortZone(me.d1.zone)} #${me.d1.peg}`,
-            rivalVal: `${shortZone(rival.d1.zone)} #${rival.d1.peg}`
-          })}
-
-          ${buildSbsRow({
-            metricLabel: "Zone Finish & Pts",
-            meVal: `${getOrdinal(me.d1ZoneStanding.pos)} (${me.d1.zonePoints} pts)`,
-            rivalVal: `${getOrdinal(rival.d1ZoneStanding.pos)} (${rival.d1.zonePoints} pts)`,
-            meNum: me.d1.zonePoints,
-            rivalNum: rival.d1.zonePoints,
-            lowerIsBetter: true,
-            unitSuffix: " pts"
-          })}
-
-          ${buildSbsRow({
-            metricLabel: "Session Length & Fish",
-            meVal: `${me.d1.totalLengthCm} cm`,
-            rivalVal: `${rival.d1.totalLengthCm} cm`,
-            meSub: `${me.d1.fishCount} fish • Big: ${me.d1.biggestFishCm > 0 ? me.d1.biggestFishCm + "cm" : "—"}`,
-            rivalSub: `${rival.d1.fishCount} fish • Big: ${rival.d1.biggestFishCm > 0 ? rival.d1.biggestFishCm + "cm" : "—"}`,
-            meNum: me.d1.totalLengthCm,
-            rivalNum: rival.d1.totalLengthCm,
-            lowerIsBetter: false,
-            unitSuffix: "cm"
-          })}
-
-          <!-- DAY 2 SESSION SPLIT -->
-          <div class="h2h-sbs-section-bar">
-            <span class="h2h-sbs-section-title">☀️ Day 2 — Day Session Split</span>
-            ${sameZoneD2 ? `<span class="h2h-clash-pill">Direct Zone Clash (${shortZone(me.d2.zone)})</span>` : ""}
-          </div>
-
-          ${buildSbsRow({
-            metricLabel: "Zone & Peg",
-            meVal: `${shortZone(me.d2.zone)} #${me.d2.peg}`,
-            rivalVal: `${shortZone(rival.d2.zone)} #${rival.d2.peg}`
-          })}
-
-          ${buildSbsRow({
-            metricLabel: "Zone Finish & Pts",
-            meVal: `${getOrdinal(me.d2ZoneStanding.pos)} (${me.d2.zonePoints} pts)`,
-            rivalVal: `${getOrdinal(rival.d2ZoneStanding.pos)} (${rival.d2.zonePoints} pts)`,
-            meNum: me.d2.zonePoints,
-            rivalNum: rival.d2.zonePoints,
-            lowerIsBetter: true,
-            unitSuffix: " pts"
-          })}
-
-          ${buildSbsRow({
-            metricLabel: "Session Length & Fish",
-            meVal: `${me.d2.totalLengthCm} cm`,
-            rivalVal: `${rival.d2.totalLengthCm} cm`,
-            meSub: `${me.d2.fishCount} fish • Big: ${me.d2.biggestFishCm > 0 ? me.d2.biggestFishCm + "cm" : "—"}`,
-            rivalSub: `${rival.d2.fishCount} fish • Big: ${rival.d2.biggestFishCm > 0 ? rival.d2.biggestFishCm + "cm" : "—"}`,
-            meNum: me.d2.totalLengthCm,
-            rivalNum: rival.d2.totalLengthCm,
             lowerIsBetter: false,
             unitSuffix: "cm"
           })}
