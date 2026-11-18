@@ -821,42 +821,6 @@
       transition: opacity 0.2s ease;
     }
 
-    .swipe-cue-pill {
-      display: none;
-      align-items: center;
-      gap: 0.35rem;
-      background: var(--brand-tint);
-      border: 1px solid var(--brand-tint-border);
-      color: var(--brand-navy);
-      font-family: inherit;
-      font-size: 0.73rem;
-      font-weight: 800;
-      padding: 0.3rem 0.72rem;
-      border-radius: 999px;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0, 68, 129, 0.08);
-      transition: opacity 0.22s ease, transform 0.18s ease, background 0.16s ease;
-    }
-
-    .swipe-cue-pill.visible {
-      display: inline-flex;
-    }
-
-    .swipe-cue-pill:hover {
-      background: #dcebfa;
-    }
-
-    .swipe-cue-arrow {
-      display: inline-block;
-      animation: cueArrowNudge 1.25s ease-in-out infinite;
-    }
-
-    @keyframes cueArrowNudge {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(4px); }
-    }
-
     .table-wrap {
       overflow-x: auto;
       position: relative;
@@ -1895,9 +1859,6 @@
             <div class="card-subtitle">All lengths & biggest fish in cm • Separated by Overall Points tiers</div>
           </div>
           <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
-            <button type="button" class="swipe-cue-pill" id="indSwipeCue" aria-label="Scroll table to view Day 1 and Day 2 columns">
-              Swipe for Day 1 & 2 <span class="swipe-cue-arrow">→</span>
-            </button>
             <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
           </div>
         </div>
@@ -1947,9 +1908,6 @@
             <div class="card-title">Team Leaderboard</div>
             <div class="card-subtitle">Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
           </div>
-          <button type="button" class="swipe-cue-pill" id="teamsSwipeCue" aria-label="Scroll table to view all anglers">
-            Swipe to see all anglers <span class="swipe-cue-arrow">→</span>
-          </button>
         </div>
         <div class="table-scroll-shell" id="teamsScrollShell">
           <div class="table-wrap sticky-scroll-wrap" id="teamsTableWrap">
@@ -2081,7 +2039,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.12",
+      version: "v3.8.13",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2151,7 +2109,7 @@
       `;
     }
 
-    function syncScrollShellState(wrapEl, shellEl, cuePillEl) {
+    function syncScrollShellState(wrapEl, shellEl) {
       if (!wrapEl) return;
       const hasMoreRight = wrapEl.scrollWidth > wrapEl.clientWidth + 6 &&
         (wrapEl.scrollLeft + wrapEl.clientWidth) < (wrapEl.scrollWidth - 6);
@@ -2159,41 +2117,29 @@
       if (shellEl) {
         shellEl.classList.toggle("has-overflow-right", hasMoreRight);
       }
-      if (cuePillEl) {
-        const showCue = wrapEl.scrollWidth > wrapEl.clientWidth + 6 && wrapEl.scrollLeft < 24;
-        cuePillEl.classList.toggle("visible", showCue);
-      }
     }
 
     function setupScrollCues() {
       const pairs = [
-        { wrapId: "teamsTableWrap", shellId: "teamsScrollShell", cueId: "teamsSwipeCue" },
-        { wrapId: "indTableWrap", shellId: "indScrollShell", cueId: "indSwipeCue" }
+        { wrapId: "teamsTableWrap", shellId: "teamsScrollShell" },
+        { wrapId: "indTableWrap", shellId: "indScrollShell" }
       ];
 
-      pairs.forEach(({ wrapId, shellId, cueId }) => {
+      pairs.forEach(({ wrapId, shellId }) => {
         const wrapEl = document.getElementById(wrapId);
         const shellEl = document.getElementById(shellId);
-        const cueEl = document.getElementById(cueId);
         if (!wrapEl) return;
 
         wrapEl.addEventListener("scroll", () => {
-          syncScrollShellState(wrapEl, shellEl, cueEl);
+          syncScrollShellState(wrapEl, shellEl);
         }, { passive: true });
-
-        if (cueEl) {
-          cueEl.addEventListener("click", () => {
-            wrapEl.scrollBy({ left: 190, behavior: "smooth" });
-          });
-        }
       });
 
       window.addEventListener("resize", () => {
-        pairs.forEach(({ wrapId, shellId, cueId }) => {
+        pairs.forEach(({ wrapId, shellId }) => {
           syncScrollShellState(
             document.getElementById(wrapId),
-            document.getElementById(shellId),
-            document.getElementById(cueId)
+            document.getElementById(shellId)
           );
         });
       });
@@ -2202,16 +2148,14 @@
     function triggerTableBounceHints(containerEl) {
       const root = containerEl || document;
       requestAnimationFrame(() => {
-        // Update right-edge fade shadow & swipe pill visibility immediately
+        // Update right-edge fade shadow immediately
         syncScrollShellState(
           document.getElementById("teamsTableWrap"),
-          document.getElementById("teamsScrollShell"),
-          document.getElementById("teamsSwipeCue")
+          document.getElementById("teamsScrollShell")
         );
         syncScrollShellState(
           document.getElementById("indTableWrap"),
-          document.getElementById("indScrollShell"),
-          document.getElementById("indSwipeCue")
+          document.getElementById("indScrollShell")
         );
 
         // Wait 350ms after view switch settles before running the 2-pulse peek
@@ -2897,8 +2841,7 @@
         document.getElementById("individualTableBody").innerHTML = rowsHtml.join("");
         syncScrollShellState(
           document.getElementById("indTableWrap"),
-          document.getElementById("indScrollShell"),
-          document.getElementById("indSwipeCue")
+          document.getElementById("indScrollShell")
         );
       }
 
@@ -2978,8 +2921,7 @@
 
       syncScrollShellState(
         document.getElementById("teamsTableWrap"),
-        document.getElementById("teamsScrollShell"),
-        document.getElementById("teamsSwipeCue")
+        document.getElementById("teamsScrollShell")
       );
     }
 
