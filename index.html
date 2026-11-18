@@ -364,7 +364,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Clean Solid-Bar Vertical Chart Strip */
+    /* Clean Solid-Bar Vertical Chart Strip with Primary vs Session Hierarchy */
     .rings-strip-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -394,17 +394,34 @@
     .session-donuts-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.8rem;
+      gap: 0.85rem;
     }
 
     .session-donut-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 0.7rem 0.65rem 0.75rem;
+      padding: 0.72rem 0.68rem 0.75rem;
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
+    }
+
+    .session-donut-card.total-hero-card {
+      background: linear-gradient(180deg, #eef5fc 0%, #f8fbff 100%);
+      border: 1.5px solid var(--brand-tint-border);
+      border-top: 3.5px solid var(--brand-navy);
+      box-shadow: 0 4px 14px rgba(0, 68, 129, 0.08);
+    }
+
+    .session-donut-card.day1-sub-card {
+      background: linear-gradient(180deg, #f5f7ff 0%, #f8fafc 100%);
+      border-top: 3px solid var(--accent-indigo);
+    }
+
+    .session-donut-card.day2-sub-card {
+      background: linear-gradient(180deg, #fffdf5 0%, #f8fafc 100%);
+      border-top: 3px solid var(--accent-amber);
     }
 
     .session-donut-card-title {
@@ -413,8 +430,27 @@
       color: var(--brand-navy);
       text-align: center;
       letter-spacing: -0.01em;
-      padding-bottom: 0.35rem;
+      padding-bottom: 0.38rem;
       border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.42rem;
+    }
+
+    .session-donut-card.total-hero-card .session-donut-card-title {
+      border-bottom-color: var(--brand-tint-border);
+    }
+
+    .overall-hero-pill {
+      font-size: 0.61rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--brand-navy);
+      color: #ffffff;
+      padding: 0.12rem 0.48rem;
+      border-radius: 999px;
     }
 
     .donut-pair-row {
@@ -433,6 +469,10 @@
       flex-direction: column;
       align-items: center;
       min-width: 0;
+    }
+
+    .session-donut-card.total-hero-card .bar-chart-slot {
+      border-color: var(--brand-tint-border);
     }
 
     .bar-chart-header {
@@ -555,6 +595,7 @@
     .sh2h-metric-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
+      border-top: 3px solid var(--brand-tint-border);
       border-radius: var(--radius-lg);
       padding: 0.9rem 0.95rem;
       box-shadow: var(--shadow-card);
@@ -616,21 +657,42 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-md);
-      padding: 0.55rem 0.62rem;
+      padding: 0.58rem 0.64rem;
       min-width: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .sh2h-side.winner-side {
-      border-color: var(--brand-cobalt);
-      background: var(--brand-tint);
+    .sh2h-side.d1-side {
+      background: #f5f7ff;
+      border-color: #dbeafe;
+      border-top: 2.5px solid #818cf8;
+    }
+
+    .sh2h-side.d2-side {
+      background: #fffdf5;
+      border-color: #fef3c7;
+      border-top: 2.5px solid #fbbf24;
+    }
+
+    .sh2h-side.d1-side.winner-side {
+      background: #eef2ff;
+      border-color: #818cf8;
+      border-top: 3px solid var(--accent-indigo);
+      box-shadow: 0 2px 6px rgba(67, 56, 202, 0.08);
+    }
+
+    .sh2h-side.d2-side.winner-side {
+      background: #fffbeb;
+      border-color: #f59e0b;
+      border-top: 3px solid var(--accent-amber);
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.09);
     }
 
     .sh2h-side-lbl {
       font-size: 0.66rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 0.14rem;
     }
 
@@ -1912,7 +1974,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.5",
+      version: "v3.8.6",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2349,8 +2411,11 @@
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
       document.getElementById("sessionDonutsGrid").innerHTML = `
-        <div class="session-donut-card">
-          <div class="session-donut-card-title">Competition Total</div>
+        <div class="session-donut-card total-hero-card">
+          <div class="session-donut-card-title">
+            <span>Competition Total</span>
+            <span class="overall-hero-pill">Overall</span>
+          </div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
               "Length",
@@ -2367,7 +2432,7 @@
           </div>
         </div>
 
-        <div class="session-donut-card">
+        <div class="session-donut-card day1-sub-card">
           <div class="session-donut-card-title">🌙 Day 1</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
@@ -2385,7 +2450,7 @@
           </div>
         </div>
 
-        <div class="session-donut-card">
+        <div class="session-donut-card day2-sub-card">
           <div class="session-donut-card-title">☀️ Day 2</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
@@ -2443,13 +2508,13 @@
             )}
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
+            <div class="sh2h-side d1-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${totalD1Fish} fish</div>
               <div class="sh2h-side-sub">Avg ${d1AvgPerRod} / angler</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
+            <div class="sh2h-side d2-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${totalD2Fish} fish</div>
               <div class="sh2h-side-sub">Avg ${d2AvgPerRod} / angler</div>
@@ -2471,13 +2536,13 @@
             )}
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
+            <div class="sh2h-side d1-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${totalD1Meters}m</div>
               <div class="sh2h-side-sub">${totalD1LenCm} cm total</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
+            <div class="sh2h-side d2-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${totalD2Meters}m</div>
               <div class="sh2h-side-sub">${totalD2LenCm} cm total</div>
@@ -2499,13 +2564,13 @@
             )}
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
+            <div class="sh2h-side d1-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
               <div class="sh2h-side-sub">Per fish caught</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
+            <div class="sh2h-side d2-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
               <div class="sh2h-side-sub">Per fish caught</div>
@@ -2527,13 +2592,13 @@
             )}
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
+            <div class="sh2h-side d1-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${d1CatchPct}% Caught</div>
               <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers caught (${d1BlankingAnglers} blanked)</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
+            <div class="sh2h-side d2-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${d2CatchPct}% Caught</div>
               <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers caught (${d2BlankingAnglers} blanked)</div>
@@ -2555,13 +2620,13 @@
             )}
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
+            <div class="sh2h-side d1-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
               <div class="sh2h-side-val">${d1BestBag.fish} fish</div>
               <div class="sh2h-side-sub">${d1BestBag.angler}</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
+            <div class="sh2h-side d2-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
               <div class="sh2h-side-val">${d2BestBag.fish} fish</div>
               <div class="sh2h-side-sub">${d2BestBag.angler}</div>
@@ -2578,13 +2643,13 @@
             <span class="sh2h-edge-badge even">Overall: ${shortZone(topLengthZone.zoneName)}</span>
           </div>
           <div class="sh2h-split-cols">
-            <div class="sh2h-side">
+            <div class="sh2h-side d1-side">
               <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1 Best</div>
               <div class="sh2h-side-val">${shortZone(d1TopZone.zoneName)}</div>
               <div class="sh2h-side-sub">${(d1TopZone.d1Len / 100).toFixed(2)}m • ${d1TopZone.d1Fish} fish</div>
             </div>
             <div class="sh2h-vs-sep">→</div>
-            <div class="sh2h-side">
+            <div class="sh2h-side d2-side">
               <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2 Best</div>
               <div class="sh2h-side-val">${shortZone(d2TopZone.zoneName)}</div>
               <div class="sh2h-side-sub">${(d2TopZone.d2Len / 100).toFixed(2)}m • ${d2TopZone.d2Fish} fish</div>
