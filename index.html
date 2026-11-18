@@ -1933,7 +1933,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.3",
+      version: "v3.8.4",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2952,7 +2952,7 @@
 
       selectEl.innerHTML =
         `<option value="">— Select an angler —</option>` +
-        sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName} — ${a.teamName} (${getOrdinal(a.rank)})</option>`).join("");
+        sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
 
       selectEl.value = STATE.selectedAnglerName;
 
@@ -2990,8 +2990,7 @@
 
       compareSelectEl.innerHTML =
         `<option value="">— Select an angler to compare —</option>` +
-        rivalCandidatesAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName} — ${a.teamName} (${getOrdinal(a.rank)})</option>`).join("");
-
+        rivalCandidatesAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
       compareSelectEl.value = STATE.compareAnglerName;
 
       compareSelectEl.onchange = () => {
