@@ -1075,9 +1075,7 @@
       border-radius: 999px;
     }
 
-    /* =========================================================================
-       CUSTOM FINTECH ANGLER PICKER (ALPHABETICAL A-Z, APP-STYLED)
-       ========================================================================= */
+    /* App-Styled Native Inputs & Select Dropdowns (Fintech Navy Theme) */
     .glass-input {
       background: #ffffff;
       border: 1px solid var(--border-strong);
@@ -1096,223 +1094,39 @@
       box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
     }
 
-    .angler-picker {
-      position: relative;
-      min-width: 270px;
-      max-width: 100%;
-    }
-
-    .angler-picker-btn {
-      width: 100%;
-      background: #ffffff;
+    .glass-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23004481' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 14px 14px;
       border: 1.5px solid var(--brand-tint-border);
       border-left: 4px solid var(--brand-navy);
+      color: var(--brand-navy);
+      padding: 0.6rem 2.35rem 0.6rem 0.9rem;
       border-radius: var(--radius-md);
-      padding: 0.58rem 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.65rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 800;
+      outline: none;
+      min-width: 265px;
       cursor: pointer;
-      text-align: left;
       box-shadow: 0 2px 6px rgba(0, 68, 129, 0.06);
       transition: all 0.16s ease;
     }
 
-    .angler-picker-btn:hover {
+    .glass-select:hover {
       border-color: var(--brand-cobalt);
-      background: #f8fbff;
+      background-color: #f8fbff;
       box-shadow: 0 4px 12px rgba(0, 68, 129, 0.10);
     }
 
-    .angler-picker.open .angler-picker-btn {
+    .glass-select:focus {
       border-color: var(--brand-cobalt);
-      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
-    }
-
-    .picker-btn-content {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .picker-btn-placeholder {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--brand-navy);
-    }
-
-    .picker-btn-name {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--brand-navy);
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .picker-btn-sub {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      line-height: 1.2;
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .picker-btn-right {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      flex-shrink: 0;
-    }
-
-    .picker-rank-badge {
-      font-size: 0.69rem;
-      font-weight: 800;
-      padding: 0.16rem 0.52rem;
-      border-radius: 999px;
-      background: var(--brand-tint);
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
-    }
-
-    .picker-chevron {
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--brand-cobalt);
-      transition: transform 0.18s ease;
-    }
-
-    .angler-picker.open .picker-chevron {
-      transform: rotate(180deg);
-    }
-
-    .angler-picker-menu {
-      position: absolute;
-      top: calc(100% + 6px);
-      right: 0;
-      width: 320px;
-      max-width: calc(100vw - 2.2rem);
-      background: #ffffff;
-      border: 1.5px solid var(--brand-tint-border);
-      border-top: 3.5px solid var(--brand-navy);
-      border-radius: var(--radius-md);
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16), 0 4px 10px rgba(0, 68, 129, 0.08);
-      z-index: 120;
-      display: none;
-      overflow: hidden;
-      animation: fadeIn 0.14s ease;
-    }
-
-    .angler-picker.open .angler-picker-menu {
-      display: block;
-    }
-
-    .picker-search-wrap {
-      padding: 0.55rem 0.6rem;
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--border-glass);
-    }
-
-    .picker-search-input {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      padding: 0.44rem 0.68rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      outline: none;
-    }
-
-    .picker-search-input:focus {
-      border-color: var(--brand-cobalt);
-      box-shadow: 0 0 0 2px rgba(0, 94, 184, 0.14);
-    }
-
-    .picker-options-list {
-      max-height: 270px;
-      overflow-y: auto;
-      padding: 0.3rem;
-    }
-
-    .picker-option-item {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 0.5rem 0.65rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.55rem;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.12s ease;
-    }
-
-    .picker-option-item:hover {
-      background: var(--brand-tint);
-    }
-
-    .picker-option-item.selected {
-      background: var(--brand-tint);
-      border-left: 3px solid var(--brand-cobalt);
-    }
-
-    .picker-option-item.clear-item {
-      color: var(--text-secondary);
-      border-bottom: 1px dashed var(--border-glass);
-      margin-bottom: 0.25rem;
-      border-radius: 6px;
-      font-size: 0.77rem;
-      font-weight: 700;
-    }
-
-    .picker-option-item.clear-item:hover {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .picker-opt-left {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .picker-opt-name {
-      font-size: 0.84rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .picker-opt-team {
-      font-size: 0.69rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      line-height: 1.2;
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .picker-empty-msg {
-      padding: 1rem 0.75rem;
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
+      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.15);
     }
 
     /* Empty Prompt Card when no angler is selected yet */
@@ -1796,14 +1610,9 @@
       .h2h-sbs-cell {
         padding: 0.55rem 0.55rem;
       }
-      .angler-picker {
+      .glass-select {
         width: 100%;
         min-width: 0;
-      }
-      .angler-picker-menu {
-        left: 0;
-        right: auto;
-        width: 100%;
       }
       .app-header { padding: 0.95rem 1rem; }
       .sticky-scroll-wrap {
@@ -2079,7 +1888,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT (CUSTOM ALPHABETICAL PICKER + UNSELECTED DEFAULT)
+         VIEW 6: MY MATCH REPORT (APP-STYLED ALPHABETICAL SELECT + UNSELECTED DEFAULT)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
       <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
@@ -2089,8 +1898,8 @@
             <div class="card-subtitle">Two-day trajectory, field ranking motifs & benchmark comparison</div>
           </div>
           <div>
-            <span class="kpi-label" style="display:block; margin-bottom:0.25rem;">Viewing Angler (A–Z)</span>
-            <div class="angler-picker" id="myAnglerPicker"></div>
+            <label class="kpi-label" for="myAnglerSelect" style="display:block; margin-bottom:0.25rem;">Viewing Angler (A–Z)</label>
+            <select id="myAnglerSelect" class="glass-select"></select>
           </div>
         </div>
 
@@ -2109,7 +1918,7 @@
             <div class="card-subtitle">Select another angler to compare overall and session-by-session stats side by side</div>
           </div>
           <div>
-            <div class="angler-picker" id="compareAnglerPicker"></div>
+            <select id="compareAnglerSelect" class="glass-select"></select>
           </div>
         </div>
         <div id="h2hContainer"></div>
@@ -2124,7 +1933,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.2",
+      version: "v3.8.3",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2411,30 +2220,16 @@
       renderSecretPairs();
     }
 
-    function closeAllAnglerPickers() {
-      document.querySelectorAll(".angler-picker.open").forEach(p => p.classList.remove("open"));
-    }
-
     function setupNavigation() {
-      document.addEventListener("click", e => {
-        if (!e.target.closest(".angler-picker")) {
-          closeAllAnglerPickers();
-        }
-        const trigger = e.target.closest("[data-nav]");
-        if (!trigger) return;
-        const targetView = trigger.getAttribute("data-nav");
-        switchView(targetView);
-      });
-
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-          closeAllAnglerPickers();
-        }
+      document.querySelectorAll("[data-nav]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetView = btn.getAttribute("data-nav");
+          switchView(targetView);
+        });
       });
     }
 
     function switchView(viewName) {
-      closeAllAnglerPickers();
       document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
       const target = document.getElementById("view-" + viewName);
       if (target) {
@@ -3133,150 +2928,41 @@
     }
 
     /* ---------------------------------------------------------
-       CUSTOM APP-STYLED ALPHABETICAL ANGLER PICKER BUILDER
-       --------------------------------------------------------- */
-    function buildCustomAnglerPicker({ containerEl, anglersList, selectedName, placeholderText, clearLabel, onSelect }) {
-      if (!containerEl) return;
-
-      const sortedAlpha = [...anglersList].sort((a, b) =>
-        a.anglerName.localeCompare(b.anglerName, undefined, { sensitivity: "base" })
-      );
-
-      const activeAngler = sortedAlpha.find(a => a.anglerName === selectedName) || null;
-
-      const btnLeftHtml = activeAngler
-        ? `
-          <span class="picker-btn-name">${activeAngler.anglerName}</span>
-          <span class="picker-btn-sub">${activeAngler.teamName}</span>
-        `
-        : `<span class="picker-btn-placeholder">${placeholderText}</span>`;
-
-      const btnBadgeHtml = activeAngler
-        ? `<span class="picker-rank-badge">${getOrdinal(activeAngler.rank)}</span>`
-        : "";
-
-      containerEl.innerHTML = `
-        <button type="button" class="angler-picker-btn" aria-haspopup="listbox" aria-expanded="false">
-          <div class="picker-btn-content">
-            ${btnLeftHtml}
-          </div>
-          <div class="picker-btn-right">
-            ${btnBadgeHtml}
-            <span class="picker-chevron">▼</span>
-          </div>
-        </button>
-        <div class="angler-picker-menu" role="listbox">
-          <div class="picker-search-wrap">
-            <input type="text" class="picker-search-input" placeholder="Filter A–Z by name or team..." autocomplete="off" />
-          </div>
-          <div class="picker-options-list"></div>
-        </div>
-      `;
-
-      const btn = containerEl.querySelector(".angler-picker-btn");
-      const searchInput = containerEl.querySelector(".picker-search-input");
-      const listEl = containerEl.querySelector(".picker-options-list");
-
-      function renderOptions(filterText = "") {
-        const q = filterText.trim().toLowerCase();
-        const matches = sortedAlpha.filter(a =>
-          a.anglerName.toLowerCase().includes(q) || a.teamName.toLowerCase().includes(q)
-        );
-
-        let html = "";
-        if (activeAngler && !q) {
-          html += `
-            <button type="button" class="picker-option-item clear-item" data-val="">
-              <span>✕ ${clearLabel}</span>
-            </button>
-          `;
-        }
-
-        if (!matches.length) {
-          html += `<div class="picker-empty-msg">No matching anglers found</div>`;
-        } else {
-          html += matches.map(a => {
-            const isSel = a.anglerName === selectedName ? "selected" : "";
-            return `
-              <button type="button" class="picker-option-item ${isSel}" data-val="${a.anglerName.replace(/"/g, """)}">
-                <div class="picker-opt-left">
-                  <span class="picker-opt-name">${a.anglerName}</span>
-                  <span class="picker-opt-team">${a.teamName}</span>
-                </div>
-                <span class="picker-rank-badge">${getOrdinal(a.rank)}</span>
-              </button>
-            `;
-          }).join("");
-        }
-
-        listEl.innerHTML = html;
-
-        listEl.querySelectorAll(".picker-option-item").forEach(optBtn => {
-          optBtn.addEventListener("click", e => {
-            e.stopPropagation();
-            const chosenVal = optBtn.getAttribute("data-val") || "";
-            closeAllAnglerPickers();
-            onSelect(chosenVal);
-          });
-        });
-      }
-
-      btn.addEventListener("click", e => {
-        e.stopPropagation();
-        const wasOpen = containerEl.classList.contains("open");
-        closeAllAnglerPickers();
-        if (!wasOpen) {
-          containerEl.classList.add("open");
-          btn.setAttribute("aria-expanded", "true");
-          searchInput.value = "";
-          renderOptions("");
-          setTimeout(() => searchInput.focus(), 20);
-        } else {
-          btn.setAttribute("aria-expanded", "false");
-        }
-      });
-
-      searchInput.addEventListener("input", () => {
-        renderOptions(searchInput.value);
-      });
-
-      searchInput.addEventListener("click", e => e.stopPropagation());
-
-      renderOptions("");
-    }
-
-    /* ---------------------------------------------------------
-       RENDER VIEW 6: MY MATCH REPORT (UNSELECTED DEFAULT + A-Z CUSTOM PICKERS)
+       RENDER VIEW 6: MY MATCH REPORT (APP-STYLED NATIVE A-Z SELECT + UNSELECTED DEFAULT)
        --------------------------------------------------------- */
     function renderMyReport() {
       const anglers = STATE.anglers;
       if (!anglers.length) return;
 
-      const myPickerEl = document.getElementById("myAnglerPicker");
-      const rivalPickerEl = document.getElementById("compareAnglerPicker");
+      const selectEl = document.getElementById("myAnglerSelect");
+      const compareSelectEl = document.getElementById("compareAnglerSelect");
       const h2hCardEl = document.getElementById("h2hSelectorCard");
       const bannerEl = document.getElementById("myMomentumBanner");
       const gaugesEl = document.getElementById("myGaugesRow");
 
-      // Validate that selectedAnglerName still exists in dataset; otherwise stay unselected ("")
-      if (STATE.selectedAnglerName && !anglers.some(a => a.anglerName === STATE.selectedAnglerName)) {
+      // Sort anglers alphabetically A-Z by name
+      const sortedAlpha = [...anglers].sort((a, b) =>
+        a.anglerName.localeCompare(b.anglerName, undefined, { sensitivity: "base" })
+      );
+
+      // Validate that selectedAnglerName still exists in dataset; otherwise remain unselected ("")
+      if (STATE.selectedAnglerName && !sortedAlpha.some(a => a.anglerName === STATE.selectedAnglerName)) {
         STATE.selectedAnglerName = "";
       }
 
-      buildCustomAnglerPicker({
-        containerEl: myPickerEl,
-        anglersList: anglers,
-        selectedName: STATE.selectedAnglerName,
-        placeholderText: "Select an angler…",
-        clearLabel: "Clear angler selection",
-        onSelect: chosenName => {
-          STATE.selectedAnglerName = chosenName;
-          if (STATE.compareAnglerName === chosenName) {
-            STATE.compareAnglerName = "";
-          }
-          renderMyReport();
+      selectEl.innerHTML =
+        `<option value="">— Select an angler —</option>` +
+        sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName} — ${a.teamName} (${getOrdinal(a.rank)})</option>`).join("");
+
+      selectEl.value = STATE.selectedAnglerName;
+
+      selectEl.onchange = () => {
+        STATE.selectedAnglerName = selectEl.value;
+        if (STATE.compareAnglerName === STATE.selectedAnglerName) {
+          STATE.compareAnglerName = "";
         }
-      });
+        renderMyReport();
+      };
 
       // Unselected default state: do NOT pre-populate 1st place (Clyde)
       if (!STATE.selectedAnglerName) {
@@ -3297,22 +2983,21 @@
       // Reveal Head-to-Head card once a primary angler is chosen
       if (h2hCardEl) h2hCardEl.classList.remove("hidden");
 
-      const rivalCandidates = anglers.filter(a => a.anglerName !== me.anglerName);
-      if (STATE.compareAnglerName && !rivalCandidates.some(a => a.anglerName === STATE.compareAnglerName)) {
+      const rivalCandidatesAlpha = sortedAlpha.filter(a => a.anglerName !== me.anglerName);
+      if (STATE.compareAnglerName && !rivalCandidatesAlpha.some(a => a.anglerName === STATE.compareAnglerName)) {
         STATE.compareAnglerName = "";
       }
 
-      buildCustomAnglerPicker({
-        containerEl: rivalPickerEl,
-        anglersList: rivalCandidates,
-        selectedName: STATE.compareAnglerName,
-        placeholderText: "Select a rival angler…",
-        clearLabel: "Clear rival comparison",
-        onSelect: chosenRival => {
-          STATE.compareAnglerName = chosenRival;
-          renderMyReport();
-        }
-      });
+      compareSelectEl.innerHTML =
+        `<option value="">— Select an angler to compare —</option>` +
+        rivalCandidatesAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName} — ${a.teamName} (${getOrdinal(a.rank)})</option>`).join("");
+
+      compareSelectEl.value = STATE.compareAnglerName;
+
+      compareSelectEl.onchange = () => {
+        STATE.compareAnglerName = compareSelectEl.value;
+        renderSideBySideH2H(me);
+      };
 
       // Compute field-best benchmarks across all 4 motif metrics
       const fieldBestPts = Math.min(...anglers.map(a => a.totals.cumulativePoints ?? 999));
