@@ -3113,7 +3113,7 @@
       }
 
       selectEl.innerHTML =
-        `<option value="">— Select an angler —</option>` +
+        `<option value="">— Select your name —</option>` +
         sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
 
       selectEl.value = STATE.selectedAnglerName;
