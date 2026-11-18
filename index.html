@@ -1137,49 +1137,19 @@
       border-left: 1.5px solid #cbd5e1 !important;
     }
 
-    /* Team Leaderboard Specific Cells & Sticky Left Team Columns */
+    /* Team Leaderboard Specific Cells */
     table.one-line-team-table {
       border-spacing: 0 7px;
     }
 
-    table.one-line-team-table thead tr:nth-child(1) th.group-th.overall-grp {
-      position: sticky;
-      left: 0;
-      z-index: 36;
-    }
-
-    table.one-line-team-table thead tr:nth-child(2) th.team-sticky-pos {
-      position: sticky;
-      left: 0;
-      z-index: 35;
-      width: 58px;
-      min-width: 58px;
-    }
-
-    table.one-line-team-table thead tr:nth-child(2) th.team-sticky-info {
-      position: sticky;
-      left: 58px;
-      z-index: 35;
-      min-width: 185px;
-      box-shadow: 4px 3px 8px rgba(15, 23, 42, 0.12);
-    }
-
     table.one-line-team-table tbody tr.team-strip-row td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 15;
-      width: 58px;
-      min-width: 58px;
+      width: 64px;
       text-align: center;
     }
 
     .team-main-cell {
-      position: sticky;
-      left: 58px;
-      z-index: 15;
       min-width: 185px;
       text-align: left;
-      box-shadow: 4px 0 8px rgba(15, 23, 42, 0.06);
     }
 
     .team-name-line {
@@ -1786,16 +1756,6 @@
       .sticky-scroll-wrap {
         max-height: calc(100vh - 185px);
       }
-      table.one-line-team-table thead tr:nth-child(2) th.team-sticky-pos,
-      table.one-line-team-table tbody tr.team-strip-row td:first-child {
-        width: 48px;
-        min-width: 48px;
-      }
-      table.one-line-team-table thead tr:nth-child(2) th.team-sticky-info,
-      .team-main-cell {
-        left: 48px;
-        min-width: 158px;
-      }
     }
   </style>
 </head>
@@ -2120,7 +2080,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.9",
+      version: "v3.8.10",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2965,8 +2925,8 @@
           <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
-          <th class="sub-th team-sticky-pos" style="text-align:center;">Pos</th>
-          <th class="sub-th left-align overall-card-end team-sticky-info">Team & Totals</th>
+          <th class="sub-th" style="text-align:center;">Pos</th>
+          <th class="sub-th left-align overall-card-end">Team & Totals</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
