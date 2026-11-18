@@ -798,8 +798,64 @@
     }
 
     /* =========================================================================
-       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM + STICKY HEADERS
+       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM + STICKY HEADERS & SCROLL CUES
        ========================================================================= */
+    .table-scroll-shell {
+      position: relative;
+      width: 100%;
+    }
+
+    .table-scroll-shell.has-overflow-right::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 4px;
+      width: 28px;
+      pointer-events: none;
+      z-index: 32;
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(15, 23, 42, 0.11) 100%);
+      transition: opacity 0.2s ease;
+    }
+
+    .swipe-cue-pill {
+      display: none;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--brand-tint);
+      border: 1px solid var(--brand-tint-border);
+      color: var(--brand-navy);
+      font-family: inherit;
+      font-size: 0.73rem;
+      font-weight: 800;
+      padding: 0.3rem 0.72rem;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0, 68, 129, 0.08);
+      transition: opacity 0.22s ease, transform 0.18s ease, background 0.16s ease;
+    }
+
+    .swipe-cue-pill.visible {
+      display: inline-flex;
+    }
+
+    .swipe-cue-pill:hover {
+      background: #dcebfa;
+    }
+
+    .swipe-cue-arrow {
+      display: inline-block;
+      animation: cueArrowNudge 1.25s ease-in-out infinite;
+    }
+
+    @keyframes cueArrowNudge {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
     .table-wrap {
       overflow-x: auto;
       position: relative;
@@ -819,14 +875,16 @@
     }
 
     @keyframes tableHorizontalPeek {
-      0% { transform: translateX(0); }
-      30% { transform: translateX(-28px); }
-      65% { transform: translateX(4px); }
+      0%   { transform: translateX(0); }
+      28%  { transform: translateX(-105px); }
+      52%  { transform: translateX(-18px); }
+      74%  { transform: translateX(-78px); }
       100% { transform: translateX(0); }
     }
 
     .table-peek-bounce {
-      animation: tableHorizontalPeek 0.95s cubic-bezier(0.25, 1, 0.5, 1) 1;
+      animation: tableHorizontalPeek 2.0s cubic-bezier(0.25, 1, 0.5, 1) 1;
+      will-change: transform;
     }
 
     table.card-row-table {
@@ -1079,19 +1137,49 @@
       border-left: 1.5px solid #cbd5e1 !important;
     }
 
-    /* Team Leaderboard Specific Cells */
+    /* Team Leaderboard Specific Cells & Sticky Left Team Columns */
     table.one-line-team-table {
       border-spacing: 0 7px;
     }
 
-    table.one-line-team-table tbody tr.team-strip-row td:first-child {
+    table.one-line-team-table thead tr:nth-child(1) th.group-th.overall-grp {
+      position: sticky;
+      left: 0;
+      z-index: 36;
+    }
+
+    table.one-line-team-table thead tr:nth-child(2) th.team-sticky-pos {
+      position: sticky;
+      left: 0;
+      z-index: 35;
       width: 58px;
+      min-width: 58px;
+    }
+
+    table.one-line-team-table thead tr:nth-child(2) th.team-sticky-info {
+      position: sticky;
+      left: 58px;
+      z-index: 35;
+      min-width: 185px;
+      box-shadow: 4px 3px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    table.one-line-team-table tbody tr.team-strip-row td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 15;
+      width: 58px;
+      min-width: 58px;
       text-align: center;
     }
 
     .team-main-cell {
+      position: sticky;
+      left: 58px;
+      z-index: 15;
       min-width: 185px;
       text-align: left;
+      box-shadow: 4px 0 8px rgba(15, 23, 42, 0.06);
     }
 
     .team-name-line {
@@ -1698,6 +1786,16 @@
       .sticky-scroll-wrap {
         max-height: calc(100vh - 185px);
       }
+      table.one-line-team-table thead tr:nth-child(2) th.team-sticky-pos,
+      table.one-line-team-table tbody tr.team-strip-row td:first-child {
+        width: 48px;
+        min-width: 48px;
+      }
+      table.one-line-team-table thead tr:nth-child(2) th.team-sticky-info,
+      .team-main-cell {
+        left: 48px;
+        min-width: 158px;
+      }
     }
   </style>
 </head>
@@ -1835,40 +1933,45 @@
             <div class="card-title">Individual Leaderboard</div>
             <div class="card-subtitle">All lengths & biggest fish in cm • Separated by Overall Points tiers</div>
           </div>
-          <div>
+          <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
+            <button type="button" class="swipe-cue-pill" id="indSwipeCue" aria-label="Scroll table to view Day 1 and Day 2 columns">
+              Swipe for Day 1 & 2 <span class="swipe-cue-arrow">→</span>
+            </button>
             <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
           </div>
         </div>
-        <div class="table-wrap sticky-scroll-wrap tight-scores-wrap">
-          <table class="card-row-table tight-ind-table two-tier-sticky-table">
-            <thead>
-              <tr>
-                <th colspan="2" class="group-th"></th>
-                <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
-                <th class="col-gap-spacer" aria-hidden="true"></th>
-                <th colspan="4" class="group-th d1-grp">🌙 Day 1</th>
-                <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
-              </tr>
-              <tr>
-                <th class="sub-th left-align">Pos</th>
-                <th class="sub-th left-align">Angler</th>
-                <th class="sub-th sec-sep-left">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-                <th class="sub-th overall-card-end">Big</th>
-                <th class="col-gap-spacer" aria-hidden="true"></th>
-                <th class="sub-th session-card-start">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-                <th class="sub-th">Big</th>
-                <th class="sub-th sec-sep-left">Pts</th>
-                <th class="sub-th">Len</th>
-                <th class="sub-th">Fish</th>
-                <th class="sub-th">Big</th>
-              </tr>
-            </thead>
-            <tbody id="individualTableBody"></tbody>
-          </table>
+        <div class="table-scroll-shell" id="indScrollShell">
+          <div class="table-wrap sticky-scroll-wrap tight-scores-wrap" id="indTableWrap">
+            <table class="card-row-table tight-ind-table two-tier-sticky-table">
+              <thead>
+                <tr>
+                  <th colspan="2" class="group-th"></th>
+                  <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th colspan="4" class="group-th d1-grp">🌙 Day 1</th>
+                  <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
+                </tr>
+                <tr>
+                  <th class="sub-th left-align">Pos</th>
+                  <th class="sub-th left-align">Angler</th>
+                  <th class="sub-th sec-sep-left">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th overall-card-end">Big</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th class="sub-th session-card-start">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th">Big</th>
+                  <th class="sub-th sec-sep-left">Pts</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th">Big</th>
+                </tr>
+              </thead>
+              <tbody id="individualTableBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -1883,12 +1986,17 @@
             <div class="card-title">Team Leaderboard</div>
             <div class="card-subtitle">Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
           </div>
+          <button type="button" class="swipe-cue-pill" id="teamsSwipeCue" aria-label="Scroll table to view all anglers">
+            Swipe to see all anglers <span class="swipe-cue-arrow">→</span>
+          </button>
         </div>
-        <div class="table-wrap sticky-scroll-wrap">
-          <table class="card-row-table one-line-team-table two-tier-sticky-table">
-            <thead id="teamsTableHead"></thead>
-            <tbody id="teamsTableBody"></tbody>
-          </table>
+        <div class="table-scroll-shell" id="teamsScrollShell">
+          <div class="table-wrap sticky-scroll-wrap" id="teamsTableWrap">
+            <table class="card-row-table one-line-team-table two-tier-sticky-table">
+              <thead id="teamsTableHead"></thead>
+              <tbody id="teamsTableBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -2012,7 +2120,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.8",
+      version: "v3.8.9",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2082,12 +2190,73 @@
       `;
     }
 
+    function syncScrollShellState(wrapEl, shellEl, cuePillEl) {
+      if (!wrapEl) return;
+      const hasMoreRight = wrapEl.scrollWidth > wrapEl.clientWidth + 6 &&
+        (wrapEl.scrollLeft + wrapEl.clientWidth) < (wrapEl.scrollWidth - 6);
+
+      if (shellEl) {
+        shellEl.classList.toggle("has-overflow-right", hasMoreRight);
+      }
+      if (cuePillEl) {
+        const showCue = wrapEl.scrollWidth > wrapEl.clientWidth + 6 && wrapEl.scrollLeft < 24;
+        cuePillEl.classList.toggle("visible", showCue);
+      }
+    }
+
+    function setupScrollCues() {
+      const pairs = [
+        { wrapId: "teamsTableWrap", shellId: "teamsScrollShell", cueId: "teamsSwipeCue" },
+        { wrapId: "indTableWrap", shellId: "indScrollShell", cueId: "indSwipeCue" }
+      ];
+
+      pairs.forEach(({ wrapId, shellId, cueId }) => {
+        const wrapEl = document.getElementById(wrapId);
+        const shellEl = document.getElementById(shellId);
+        const cueEl = document.getElementById(cueId);
+        if (!wrapEl) return;
+
+        wrapEl.addEventListener("scroll", () => {
+          syncScrollShellState(wrapEl, shellEl, cueEl);
+        }, { passive: true });
+
+        if (cueEl) {
+          cueEl.addEventListener("click", () => {
+            wrapEl.scrollBy({ left: 190, behavior: "smooth" });
+          });
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        pairs.forEach(({ wrapId, shellId, cueId }) => {
+          syncScrollShellState(
+            document.getElementById(wrapId),
+            document.getElementById(shellId),
+            document.getElementById(cueId)
+          );
+        });
+      });
+    }
+
     function triggerTableBounceHints(containerEl) {
       const root = containerEl || document;
       requestAnimationFrame(() => {
+        // Update right-edge fade shadow & swipe pill visibility immediately
+        syncScrollShellState(
+          document.getElementById("teamsTableWrap"),
+          document.getElementById("teamsScrollShell"),
+          document.getElementById("teamsSwipeCue")
+        );
+        syncScrollShellState(
+          document.getElementById("indTableWrap"),
+          document.getElementById("indScrollShell"),
+          document.getElementById("indSwipeCue")
+        );
+
+        // Wait 350ms after view switch settles before running the 2-pulse peek
         setTimeout(() => {
           root.querySelectorAll(".table-wrap").forEach(wrap => {
-            if (wrap.scrollWidth > wrap.clientWidth + 4) {
+            if (wrap.scrollWidth > wrap.clientWidth + 6 && wrap.scrollLeft === 0) {
               const tbl = wrap.querySelector("table");
               if (!tbl) return;
               tbl.classList.remove("table-peek-bounce");
@@ -2103,7 +2272,7 @@
               tbl.addEventListener("animationend", stopBounce, { once: true });
             }
           });
-        }, 120);
+        }, 350);
       });
     }
 
@@ -2765,6 +2934,11 @@
         });
 
         document.getElementById("individualTableBody").innerHTML = rowsHtml.join("");
+        syncScrollShellState(
+          document.getElementById("indTableWrap"),
+          document.getElementById("indScrollShell"),
+          document.getElementById("indSwipeCue")
+        );
       }
 
       searchInput.oninput = update;
@@ -2791,8 +2965,8 @@
           <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
-          <th class="sub-th" style="text-align:center;">Pos</th>
-          <th class="sub-th left-align overall-card-end">Team & Totals</th>
+          <th class="sub-th team-sticky-pos" style="text-align:center;">Pos</th>
+          <th class="sub-th left-align overall-card-end team-sticky-info">Team & Totals</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
@@ -2840,6 +3014,12 @@
           </tr>
         `;
       }).join("");
+
+      syncScrollShellState(
+        document.getElementById("teamsTableWrap"),
+        document.getElementById("teamsScrollShell"),
+        document.getElementById("teamsSwipeCue")
+      );
     }
 
     /* ---------------------------------------------------------
@@ -3354,6 +3534,7 @@
 
     // Boot
     setupNavigation();
+    setupScrollCues();
     loadScoresJson();
   </script>
 </body>
