@@ -1,4 +1,4 @@
-const CACHE_NAME = "spra-results-portal-v3.8.4";
+const CACHE_NAME = "spra-results-portal-v3.8.11";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -46,7 +46,27 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  // Stale-While-Revalidate for app shell assets
+  // Network-First for HTML navigation so UI updates deploy immediately without stale cached scripts
+  if (
+    event.request.mode === "navigate" ||
+    requestUrl.pathname.endsWith("/") ||
+    requestUrl.pathname.endsWith("index.html")
+  ) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put("./index.html", clone));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match("./index.html") || caches.match("./"))
+    );
+    return;
+  }
+
+  // Stale-While-Revalidate for remaining app shell assets
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const fetchPromise = fetch(event.request)
