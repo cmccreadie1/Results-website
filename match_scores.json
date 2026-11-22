@@ -1,0 +1,1951 @@
+{
+  "title": "103-Angler Championship Test",
+  "duration": 2,
+  "anglers": [
+    {
+      "id": "a_1_1",
+      "name": "Tulip",
+      "teamId": "team_1",
+      "mobility": true
+    },
+    {
+      "id": "a_1_2",
+      "name": "Daffodil",
+      "teamId": "team_1",
+      "mobility": true
+    },
+    {
+      "id": "a_1_3",
+      "name": "Orchid",
+      "teamId": "team_1",
+      "mobility": false
+    },
+    {
+      "id": "a_1_4",
+      "name": "Bluebell",
+      "teamId": "team_1",
+      "mobility": false
+    },
+    {
+      "id": "a_2_1",
+      "name": "Robin",
+      "teamId": "team_2",
+      "mobility": true
+    },
+    {
+      "id": "a_2_2",
+      "name": "Kestrel",
+      "teamId": "team_2",
+      "mobility": false
+    },
+    {
+      "id": "a_2_3",
+      "name": "Puffin",
+      "teamId": "team_2",
+      "mobility": false
+    },
+    {
+      "id": "a_2_4",
+      "name": "Kingfisher",
+      "teamId": "team_2",
+      "mobility": false
+    },
+    {
+      "id": "a_3_1",
+      "name": "Scotland",
+      "teamId": "team_3",
+      "mobility": true
+    },
+    {
+      "id": "a_3_2",
+      "name": "Poland",
+      "teamId": "team_3",
+      "mobility": false
+    },
+    {
+      "id": "a_3_3",
+      "name": "Norway",
+      "teamId": "team_3",
+      "mobility": false
+    },
+    {
+      "id": "a_3_4",
+      "name": "Portugal",
+      "teamId": "team_3",
+      "mobility": false
+    },
+    {
+      "id": "a_4_1",
+      "name": "Oak",
+      "teamId": "team_4",
+      "mobility": true
+    },
+    {
+      "id": "a_4_2",
+      "name": "Birch",
+      "teamId": "team_4",
+      "mobility": false
+    },
+    {
+      "id": "a_4_3",
+      "name": "Rowan",
+      "teamId": "team_4",
+      "mobility": false
+    },
+    {
+      "id": "a_4_4",
+      "name": "Willow",
+      "teamId": "team_4",
+      "mobility": false
+    },
+    {
+      "id": "a_5_1",
+      "name": "Cod",
+      "teamId": "team_5",
+      "mobility": true
+    },
+    {
+      "id": "a_5_2",
+      "name": "Bass",
+      "teamId": "team_5",
+      "mobility": false
+    },
+    {
+      "id": "a_5_3",
+      "name": "Plaice",
+      "teamId": "team_5",
+      "mobility": false
+    },
+    {
+      "id": "a_5_4",
+      "name": "Flounder",
+      "teamId": "team_5",
+      "mobility": false
+    },
+    {
+      "id": "a_6_1",
+      "name": "Mars",
+      "teamId": "team_6",
+      "mobility": true
+    },
+    {
+      "id": "a_6_2",
+      "name": "Venus",
+      "teamId": "team_6",
+      "mobility": false
+    },
+    {
+      "id": "a_6_3",
+      "name": "Saturn",
+      "teamId": "team_6",
+      "mobility": false
+    },
+    {
+      "id": "a_6_4",
+      "name": "Neptune",
+      "teamId": "team_6",
+      "mobility": false
+    },
+    {
+      "id": "a_7_1",
+      "name": "Ruby",
+      "teamId": "team_7",
+      "mobility": true
+    },
+    {
+      "id": "a_7_2",
+      "name": "Emerald",
+      "teamId": "team_7",
+      "mobility": false
+    },
+    {
+      "id": "a_7_3",
+      "name": "Sapphire",
+      "teamId": "team_7",
+      "mobility": false
+    },
+    {
+      "id": "a_7_4",
+      "name": "Amber",
+      "teamId": "team_7",
+      "mobility": false
+    },
+    {
+      "id": "a_8_1",
+      "name": "Clyde",
+      "teamId": "team_8",
+      "mobility": true
+    },
+    {
+      "id": "a_8_2",
+      "name": "Forth",
+      "teamId": "team_8",
+      "mobility": false
+    },
+    {
+      "id": "a_8_3",
+      "name": "Tay",
+      "teamId": "team_8",
+      "mobility": false
+    },
+    {
+      "id": "a_8_4",
+      "name": "Tweed",
+      "teamId": "team_8",
+      "mobility": false
+    },
+    {
+      "id": "a_9_1",
+      "name": "Nevis",
+      "teamId": "team_9",
+      "mobility": true
+    },
+    {
+      "id": "a_9_2",
+      "name": "Lomond",
+      "teamId": "team_9",
+      "mobility": false
+    },
+    {
+      "id": "a_9_3",
+      "name": "Cairngorm",
+      "teamId": "team_9",
+      "mobility": false
+    },
+    {
+      "id": "a_9_4",
+      "name": "Snowdon",
+      "teamId": "team_9",
+      "mobility": false
+    },
+    {
+      "id": "a_10_1",
+      "name": "Skye",
+      "teamId": "team_10",
+      "mobility": true
+    },
+    {
+      "id": "a_10_2",
+      "name": "Arran",
+      "teamId": "team_10",
+      "mobility": false
+    },
+    {
+      "id": "a_10_3",
+      "name": "Mull",
+      "teamId": "team_10",
+      "mobility": false
+    },
+    {
+      "id": "a_10_4",
+      "name": "Islay",
+      "teamId": "team_10",
+      "mobility": false
+    },
+    {
+      "id": "a_11_1",
+      "name": "Crimson",
+      "teamId": "team_11",
+      "mobility": true
+    },
+    {
+      "id": "a_11_2",
+      "name": "Cobalt",
+      "teamId": "team_11",
+      "mobility": false
+    },
+    {
+      "id": "a_11_3",
+      "name": "Saffron",
+      "teamId": "team_11",
+      "mobility": false
+    },
+    {
+      "id": "a_11_4",
+      "name": "Indigo",
+      "teamId": "team_11",
+      "mobility": false
+    },
+    {
+      "id": "a_12_1",
+      "name": "Spring",
+      "teamId": "team_12",
+      "mobility": true
+    },
+    {
+      "id": "a_12_2",
+      "name": "Summer",
+      "teamId": "team_12",
+      "mobility": false
+    },
+    {
+      "id": "a_12_3",
+      "name": "Autumn",
+      "teamId": "team_12",
+      "mobility": false
+    },
+    {
+      "id": "a_12_4",
+      "name": "Winter",
+      "teamId": "team_12",
+      "mobility": false
+    },
+    {
+      "id": "a_13_1",
+      "name": "Iron",
+      "teamId": "team_13",
+      "mobility": true
+    },
+    {
+      "id": "a_13_2",
+      "name": "Copper",
+      "teamId": "team_13",
+      "mobility": false
+    },
+    {
+      "id": "a_13_3",
+      "name": "Silver",
+      "teamId": "team_13",
+      "mobility": false
+    },
+    {
+      "id": "a_13_4",
+      "name": "Gold",
+      "teamId": "team_13",
+      "mobility": false
+    },
+    {
+      "id": "a_14_1",
+      "name": "Gale",
+      "teamId": "team_14",
+      "mobility": true
+    },
+    {
+      "id": "a_14_2",
+      "name": "Frost",
+      "teamId": "team_14",
+      "mobility": false
+    },
+    {
+      "id": "a_14_3",
+      "name": "Drizzle",
+      "teamId": "team_14",
+      "mobility": false
+    },
+    {
+      "id": "a_14_4",
+      "name": "Thunder",
+      "teamId": "team_14",
+      "mobility": false
+    },
+    {
+      "id": "a_15_1",
+      "name": "Fiddle",
+      "teamId": "team_15",
+      "mobility": true
+    },
+    {
+      "id": "a_15_2",
+      "name": "Bagpipe",
+      "teamId": "team_15",
+      "mobility": false
+    },
+    {
+      "id": "a_15_3",
+      "name": "Guitar",
+      "teamId": "team_15",
+      "mobility": false
+    },
+    {
+      "id": "a_15_4",
+      "name": "Flute",
+      "teamId": "team_15",
+      "mobility": false
+    },
+    {
+      "id": "a_16_1",
+      "name": "Apple",
+      "teamId": "team_16",
+      "mobility": true
+    },
+    {
+      "id": "a_16_2",
+      "name": "Bramble",
+      "teamId": "team_16",
+      "mobility": false
+    },
+    {
+      "id": "a_16_3",
+      "name": "Damson",
+      "teamId": "team_16",
+      "mobility": false
+    },
+    {
+      "id": "a_16_4",
+      "name": "Rowanberry",
+      "teamId": "team_16",
+      "mobility": false
+    },
+    {
+      "id": "a_17_1",
+      "name": "Edinburgh",
+      "teamId": "team_17",
+      "mobility": true
+    },
+    {
+      "id": "a_17_2",
+      "name": "Glasgow",
+      "teamId": "team_17",
+      "mobility": false
+    },
+    {
+      "id": "a_17_3",
+      "name": "Stirling",
+      "teamId": "team_17",
+      "mobility": false
+    },
+    {
+      "id": "a_17_4",
+      "name": "Aberdeen",
+      "teamId": "team_17",
+      "mobility": false
+    },
+    {
+      "id": "a_18_1",
+      "name": "Bowline",
+      "teamId": "team_18",
+      "mobility": true
+    },
+    {
+      "id": "a_18_2",
+      "name": "Clove",
+      "teamId": "team_18",
+      "mobility": false
+    },
+    {
+      "id": "a_18_3",
+      "name": "Uni",
+      "teamId": "team_18",
+      "mobility": false
+    },
+    {
+      "id": "a_18_4",
+      "name": "Palomar",
+      "teamId": "team_18",
+      "mobility": false
+    },
+    {
+      "id": "a_19_1",
+      "name": "Neap",
+      "teamId": "team_19",
+      "mobility": true
+    },
+    {
+      "id": "a_19_2",
+      "name": "Springtide",
+      "teamId": "team_19",
+      "mobility": false
+    },
+    {
+      "id": "a_19_3",
+      "name": "Ebb",
+      "teamId": "team_19",
+      "mobility": false
+    },
+    {
+      "id": "a_19_4",
+      "name": "Flood",
+      "teamId": "team_19",
+      "mobility": false
+    },
+    {
+      "id": "a_20_1",
+      "name": "Landrover",
+      "teamId": "team_20",
+      "mobility": true
+    },
+    {
+      "id": "a_20_2",
+      "name": "Camper",
+      "teamId": "team_20",
+      "mobility": false
+    },
+    {
+      "id": "a_20_3",
+      "name": "Tractor",
+      "teamId": "team_20",
+      "mobility": false
+    },
+    {
+      "id": "a_20_4",
+      "name": "Trawler",
+      "teamId": "team_20",
+      "mobility": false
+    },
+    {
+      "id": "a_21_1",
+      "name": "Cheddar",
+      "teamId": "team_21",
+      "mobility": true
+    },
+    {
+      "id": "a_21_2",
+      "name": "Brie",
+      "teamId": "team_21",
+      "mobility": false
+    },
+    {
+      "id": "a_21_3",
+      "name": "Stilton",
+      "teamId": "team_21",
+      "mobility": false
+    },
+    {
+      "id": "a_21_4",
+      "name": "Gouda",
+      "teamId": "team_21",
+      "mobility": false
+    },
+    {
+      "id": "a_22_1",
+      "name": "Hammer",
+      "teamId": "team_22",
+      "mobility": true
+    },
+    {
+      "id": "a_22_2",
+      "name": "Chisel",
+      "teamId": "team_22",
+      "mobility": false
+    },
+    {
+      "id": "a_22_3",
+      "name": "Spanner",
+      "teamId": "team_22",
+      "mobility": false
+    },
+    {
+      "id": "a_22_4",
+      "name": "Pliers",
+      "teamId": "team_22",
+      "mobility": false
+    },
+    {
+      "id": "a_23_1",
+      "name": "Penny",
+      "teamId": "team_23",
+      "mobility": true
+    },
+    {
+      "id": "a_23_2",
+      "name": "Shilling",
+      "teamId": "team_23",
+      "mobility": false
+    },
+    {
+      "id": "a_23_3",
+      "name": "Florin",
+      "teamId": "team_23",
+      "mobility": false
+    },
+    {
+      "id": "a_23_4",
+      "name": "Sovereign",
+      "teamId": "team_23",
+      "mobility": false
+    },
+    {
+      "id": "a_24_1",
+      "name": "North",
+      "teamId": "team_24",
+      "mobility": true
+    },
+    {
+      "id": "a_24_2",
+      "name": "South",
+      "teamId": "team_24",
+      "mobility": false
+    },
+    {
+      "id": "a_24_3",
+      "name": "East",
+      "teamId": "team_24",
+      "mobility": false
+    },
+    {
+      "id": "a_24_4",
+      "name": "West",
+      "teamId": "team_24",
+      "mobility": false
+    },
+    {
+      "id": "a_25_1",
+      "name": "Saffron",
+      "teamId": "team_25",
+      "mobility": false
+    },
+    {
+      "id": "a_25_2",
+      "name": "Cinnamon",
+      "teamId": "team_25",
+      "mobility": false
+    },
+    {
+      "id": "a_25_3",
+      "name": "Nutmeg",
+      "teamId": "team_25",
+      "mobility": false
+    },
+    {
+      "id": "a_25_4",
+      "name": "Ginger",
+      "teamId": "team_25",
+      "mobility": false
+    },
+    {
+      "id": "solo_1",
+      "name": "joe",
+      "teamId": null,
+      "mobility": false
+    },
+    {
+      "id": "solo_2",
+      "name": "mark",
+      "teamId": null,
+      "mobility": false
+    },
+    {
+      "id": "solo_3",
+      "name": "tam",
+      "teamId": null,
+      "mobility": false
+    }
+  ],
+  "teams": [
+    {
+      "id": "team_1",
+      "name": "Flowers"
+    },
+    {
+      "id": "team_2",
+      "name": "Birds"
+    },
+    {
+      "id": "team_3",
+      "name": "Countries"
+    },
+    {
+      "id": "team_4",
+      "name": "Trees"
+    },
+    {
+      "id": "team_5",
+      "name": "Sea Fish"
+    },
+    {
+      "id": "team_6",
+      "name": "Planets"
+    },
+    {
+      "id": "team_7",
+      "name": "Gemstones"
+    },
+    {
+      "id": "team_8",
+      "name": "Rivers"
+    },
+    {
+      "id": "team_9",
+      "name": "Mountains"
+    },
+    {
+      "id": "team_10",
+      "name": "Islands"
+    },
+    {
+      "id": "team_11",
+      "name": "Colours"
+    },
+    {
+      "id": "team_12",
+      "name": "Seasons"
+    },
+    {
+      "id": "team_13",
+      "name": "Elements"
+    },
+    {
+      "id": "team_14",
+      "name": "Weather"
+    },
+    {
+      "id": "team_15",
+      "name": "Instruments"
+    },
+    {
+      "id": "team_16",
+      "name": "Fruits"
+    },
+    {
+      "id": "team_17",
+      "name": "Cities"
+    },
+    {
+      "id": "team_18",
+      "name": "Knots"
+    },
+    {
+      "id": "team_19",
+      "name": "Tides"
+    },
+    {
+      "id": "team_20",
+      "name": "Vehicles"
+    },
+    {
+      "id": "team_21",
+      "name": "Cheeses"
+    },
+    {
+      "id": "team_22",
+      "name": "Tools"
+    },
+    {
+      "id": "team_23",
+      "name": "Coins"
+    },
+    {
+      "id": "team_24",
+      "name": "Compass"
+    },
+    {
+      "id": "team_25",
+      "name": "Spices"
+    }
+  ],
+  "scores": {
+    "day1": {
+      "a_1_2": {
+        "totalMetric": 320,
+        "fishCount": 9,
+        "bestFish": 44,
+        "bestFishSpecies": "Cod"
+      },
+      "a_18_1": {
+        "totalMetric": 320,
+        "fishCount": 7,
+        "bestFish": 51,
+        "bestFishSpecies": "Bass"
+      },
+      "a_9_1": {
+        "totalMetric": 280,
+        "fishCount": 7,
+        "bestFish": 54,
+        "bestFishSpecies": "Ray"
+      },
+      "a_16_1": {
+        "totalMetric": 280,
+        "fishCount": 7,
+        "bestFish": 46,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_6_1": {
+        "totalMetric": 250,
+        "fishCount": 6,
+        "bestFish": 45,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_23_1": {
+        "totalMetric": 250,
+        "fishCount": 6,
+        "bestFish": 45,
+        "bestFishSpecies": "Dab"
+      },
+      "a_12_1": {
+        "totalMetric": 250,
+        "fishCount": 6,
+        "bestFish": 45,
+        "bestFishSpecies": "Plaice"
+      },
+      "a_2_4": {
+        "totalMetric": 230,
+        "fishCount": 6,
+        "bestFish": 42,
+        "bestFishSpecies": "Dogfish"
+      },
+      "a_3_4": {
+        "totalMetric": 220,
+        "fishCount": 3,
+        "bestFish": 33,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_4_2": {
+        "totalMetric": 210,
+        "fishCount": 5,
+        "bestFish": 32,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_5_3": {
+        "totalMetric": 200,
+        "fishCount": 4,
+        "bestFish": 41,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_7_2": {
+        "totalMetric": 190,
+        "fishCount": 3,
+        "bestFish": 40,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_8_4": {
+        "totalMetric": 180,
+        "fishCount": 5,
+        "bestFish": 39,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_10_2": {
+        "totalMetric": 170,
+        "fishCount": 4,
+        "bestFish": 38,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_11_2": {
+        "totalMetric": 160,
+        "fishCount": 3,
+        "bestFish": 37,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_13_4": {
+        "totalMetric": 150,
+        "fishCount": 5,
+        "bestFish": 36,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_14_3": {
+        "totalMetric": 140,
+        "fishCount": 4,
+        "bestFish": 35,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_15_3": {
+        "totalMetric": 130,
+        "fishCount": 3,
+        "bestFish": 34,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_17_2": {
+        "totalMetric": 120,
+        "fishCount": 5,
+        "bestFish": 33,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_19_4": {
+        "totalMetric": 110,
+        "fishCount": 4,
+        "bestFish": 32,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_20_3": {
+        "totalMetric": 100,
+        "fishCount": 3,
+        "bestFish": 41,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_21_3": {
+        "totalMetric": 90,
+        "fishCount": 5,
+        "bestFish": 40,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_22_2": {
+        "totalMetric": 80,
+        "fishCount": 4,
+        "bestFish": 39,
+        "bestFishSpecies": "Coalies"
+      },
+      "a_24_4": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_25_2": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_2": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_1_1": {
+        "totalMetric": 310,
+        "fishCount": 8,
+        "bestFish": 56,
+        "bestFishSpecies": "Bull Huss"
+      },
+      "a_20_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 48,
+        "bestFishSpecies": "Codling"
+      },
+      "a_19_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 48,
+        "bestFishSpecies": "Codling"
+      },
+      "a_11_1": {
+        "totalMetric": 233,
+        "fishCount": 3,
+        "bestFish": 41,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_21_1": {
+        "totalMetric": 224,
+        "fishCount": 6,
+        "bestFish": 40,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_5_1": {
+        "totalMetric": 215,
+        "fishCount": 5,
+        "bestFish": 39,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_13_1": {
+        "totalMetric": 206,
+        "fishCount": 4,
+        "bestFish": 38,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_8_1": {
+        "totalMetric": 197,
+        "fishCount": 3,
+        "bestFish": 37,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_2_2": {
+        "totalMetric": 188,
+        "fishCount": 6,
+        "bestFish": 36,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_3_2": {
+        "totalMetric": 179,
+        "fishCount": 5,
+        "bestFish": 35,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_4_3": {
+        "totalMetric": 170,
+        "fishCount": 4,
+        "bestFish": 34,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_6_2": {
+        "totalMetric": 161,
+        "fishCount": 3,
+        "bestFish": 33,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_7_3": {
+        "totalMetric": 152,
+        "fishCount": 6,
+        "bestFish": 44,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_9_2": {
+        "totalMetric": 143,
+        "fishCount": 5,
+        "bestFish": 43,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_10_4": {
+        "totalMetric": 134,
+        "fishCount": 4,
+        "bestFish": 42,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_12_3": {
+        "totalMetric": 125,
+        "fishCount": 3,
+        "bestFish": 41,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_14_2": {
+        "totalMetric": 116,
+        "fishCount": 6,
+        "bestFish": 40,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_15_2": {
+        "totalMetric": 107,
+        "fishCount": 5,
+        "bestFish": 39,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_16_3": {
+        "totalMetric": 98,
+        "fishCount": 4,
+        "bestFish": 38,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_17_3": {
+        "totalMetric": 89,
+        "fishCount": 3,
+        "bestFish": 37,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_18_3": {
+        "totalMetric": 80,
+        "fishCount": 6,
+        "bestFish": 36,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_22_4": {
+        "totalMetric": 71,
+        "fishCount": 5,
+        "bestFish": 35,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_23_4": {
+        "totalMetric": 62,
+        "fishCount": 4,
+        "bestFish": 34,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_24_3": {
+        "totalMetric": 53,
+        "fishCount": 3,
+        "bestFish": 33,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_25_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_1": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_2_1": {
+        "totalMetric": 320,
+        "fishCount": 8,
+        "bestFish": 59,
+        "bestFishSpecies": "Bull Huss"
+      },
+      "a_22_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 48,
+        "bestFishSpecies": "Codling"
+      },
+      "a_17_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 48,
+        "bestFishSpecies": "Codling"
+      },
+      "a_15_1": {
+        "totalMetric": 233,
+        "fishCount": 3,
+        "bestFish": 41,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_10_1": {
+        "totalMetric": 224,
+        "fishCount": 6,
+        "bestFish": 40,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_14_1": {
+        "totalMetric": 215,
+        "fishCount": 5,
+        "bestFish": 39,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_7_1": {
+        "totalMetric": 206,
+        "fishCount": 4,
+        "bestFish": 38,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_1_3": {
+        "totalMetric": 197,
+        "fishCount": 3,
+        "bestFish": 37,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_3_3": {
+        "totalMetric": 188,
+        "fishCount": 6,
+        "bestFish": 36,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_4_4": {
+        "totalMetric": 179,
+        "fishCount": 5,
+        "bestFish": 35,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_5_2": {
+        "totalMetric": 170,
+        "fishCount": 4,
+        "bestFish": 34,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_6_3": {
+        "totalMetric": 161,
+        "fishCount": 3,
+        "bestFish": 33,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_8_3": {
+        "totalMetric": 152,
+        "fishCount": 6,
+        "bestFish": 44,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_9_3": {
+        "totalMetric": 143,
+        "fishCount": 5,
+        "bestFish": 43,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_11_4": {
+        "totalMetric": 134,
+        "fishCount": 4,
+        "bestFish": 42,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_12_2": {
+        "totalMetric": 125,
+        "fishCount": 3,
+        "bestFish": 41,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_13_3": {
+        "totalMetric": 116,
+        "fishCount": 6,
+        "bestFish": 40,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_16_2": {
+        "totalMetric": 107,
+        "fishCount": 5,
+        "bestFish": 39,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_18_4": {
+        "totalMetric": 98,
+        "fishCount": 4,
+        "bestFish": 38,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_19_3": {
+        "totalMetric": 89,
+        "fishCount": 3,
+        "bestFish": 37,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_20_4": {
+        "totalMetric": 80,
+        "fishCount": 6,
+        "bestFish": 36,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_21_4": {
+        "totalMetric": 71,
+        "fishCount": 5,
+        "bestFish": 35,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_23_2": {
+        "totalMetric": 62,
+        "fishCount": 4,
+        "bestFish": 34,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_24_2": {
+        "totalMetric": 53,
+        "fishCount": 3,
+        "bestFish": 33,
+        "bestFishSpecies": "Whiting"
+      },
+      "a_25_1": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_3_1": {
+        "totalMetric": 340,
+        "fishCount": 9,
+        "bestFish": 62,
+        "bestFishSpecies": "Smoothhound"
+      },
+      "a_4_1": {
+        "totalMetric": 300,
+        "fishCount": 8,
+        "bestFish": 49,
+        "bestFishSpecies": "Bass"
+      },
+      "a_24_1": {
+        "totalMetric": 300,
+        "fishCount": 6,
+        "bestFish": 53,
+        "bestFishSpecies": "Bass"
+      },
+      "a_1_4": {
+        "totalMetric": 240,
+        "fishCount": 3,
+        "bestFish": 44,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_2_3": {
+        "totalMetric": 230,
+        "fishCount": 6,
+        "bestFish": 43,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_5_4": {
+        "totalMetric": 220,
+        "fishCount": 5,
+        "bestFish": 42,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_6_4": {
+        "totalMetric": 210,
+        "fishCount": 4,
+        "bestFish": 41,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_7_4": {
+        "totalMetric": 200,
+        "fishCount": 3,
+        "bestFish": 40,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_8_2": {
+        "totalMetric": 190,
+        "fishCount": 6,
+        "bestFish": 39,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_9_4": {
+        "totalMetric": 180,
+        "fishCount": 5,
+        "bestFish": 38,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_10_3": {
+        "totalMetric": 170,
+        "fishCount": 4,
+        "bestFish": 37,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_11_3": {
+        "totalMetric": 160,
+        "fishCount": 3,
+        "bestFish": 47,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_12_4": {
+        "totalMetric": 150,
+        "fishCount": 6,
+        "bestFish": 46,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_13_2": {
+        "totalMetric": 140,
+        "fishCount": 5,
+        "bestFish": 45,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_14_4": {
+        "totalMetric": 130,
+        "fishCount": 4,
+        "bestFish": 44,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_15_4": {
+        "totalMetric": 120,
+        "fishCount": 3,
+        "bestFish": 43,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_16_4": {
+        "totalMetric": 110,
+        "fishCount": 6,
+        "bestFish": 42,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_17_4": {
+        "totalMetric": 100,
+        "fishCount": 5,
+        "bestFish": 41,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_18_2": {
+        "totalMetric": 90,
+        "fishCount": 4,
+        "bestFish": 40,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_19_2": {
+        "totalMetric": 80,
+        "fishCount": 3,
+        "bestFish": 39,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_20_2": {
+        "totalMetric": 70,
+        "fishCount": 6,
+        "bestFish": 38,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_21_2": {
+        "totalMetric": 60,
+        "fishCount": 5,
+        "bestFish": 37,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_22_3": {
+        "totalMetric": 50,
+        "fishCount": 4,
+        "bestFish": 47,
+        "bestFishSpecies": "Flounder"
+      },
+      "a_23_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_25_4": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      }
+    },
+    "day2": {
+      "a_20_1": {
+        "totalMetric": 330,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Ray"
+      },
+      "a_22_1": {
+        "totalMetric": 275,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_17_1": {
+        "totalMetric": 275,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_21_1": {
+        "totalMetric": 297,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Bass"
+      },
+      "a_13_1": {
+        "totalMetric": 286,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Ray"
+      },
+      "a_7_1": {
+        "totalMetric": 275,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Bass"
+      },
+      "a_1_3": {
+        "totalMetric": 264,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Ray"
+      },
+      "a_2_2": {
+        "totalMetric": 253,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Bass"
+      },
+      "a_3_3": {
+        "totalMetric": 242,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Ray"
+      },
+      "a_4_3": {
+        "totalMetric": 231,
+        "fishCount": 4,
+        "bestFish": 49,
+        "bestFishSpecies": "Bass"
+      },
+      "a_5_2": {
+        "totalMetric": 220,
+        "fishCount": 8,
+        "bestFish": 48,
+        "bestFishSpecies": "Ray"
+      },
+      "a_6_3": {
+        "totalMetric": 209,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Bass"
+      },
+      "a_8_3": {
+        "totalMetric": 198,
+        "fishCount": 6,
+        "bestFish": 46,
+        "bestFishSpecies": "Ray"
+      },
+      "a_9_3": {
+        "totalMetric": 187,
+        "fishCount": 5,
+        "bestFish": 45,
+        "bestFishSpecies": "Bass"
+      },
+      "a_10_4": {
+        "totalMetric": 176,
+        "fishCount": 4,
+        "bestFish": 44,
+        "bestFishSpecies": "Ray"
+      },
+      "a_11_4": {
+        "totalMetric": 165,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Bass"
+      },
+      "a_12_2": {
+        "totalMetric": 154,
+        "fishCount": 7,
+        "bestFish": 57,
+        "bestFishSpecies": "Ray"
+      },
+      "a_14_4": {
+        "totalMetric": 143,
+        "fishCount": 6,
+        "bestFish": 56,
+        "bestFishSpecies": "Bass"
+      },
+      "a_15_4": {
+        "totalMetric": 132,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Ray"
+      },
+      "a_16_2": {
+        "totalMetric": 121,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Bass"
+      },
+      "a_18_4": {
+        "totalMetric": 110,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Ray"
+      },
+      "a_19_3": {
+        "totalMetric": 99,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Bass"
+      },
+      "a_23_2": {
+        "totalMetric": 88,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Ray"
+      },
+      "a_24_2": {
+        "totalMetric": 77,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Bass"
+      },
+      "a_25_1": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_1_2": {
+        "totalMetric": 334,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Ray"
+      },
+      "a_15_1": {
+        "totalMetric": 280,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_9_1": {
+        "totalMetric": 280,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_16_1": {
+        "totalMetric": 301,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Bass"
+      },
+      "a_6_1": {
+        "totalMetric": 290,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Ray"
+      },
+      "a_2_3": {
+        "totalMetric": 279,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Bass"
+      },
+      "a_3_4": {
+        "totalMetric": 268,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Ray"
+      },
+      "a_4_4": {
+        "totalMetric": 257,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Bass"
+      },
+      "a_5_4": {
+        "totalMetric": 246,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Ray"
+      },
+      "a_7_4": {
+        "totalMetric": 235,
+        "fishCount": 4,
+        "bestFish": 49,
+        "bestFishSpecies": "Bass"
+      },
+      "a_8_2": {
+        "totalMetric": 224,
+        "fishCount": 8,
+        "bestFish": 48,
+        "bestFishSpecies": "Ray"
+      },
+      "a_10_3": {
+        "totalMetric": 213,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Bass"
+      },
+      "a_11_3": {
+        "totalMetric": 202,
+        "fishCount": 6,
+        "bestFish": 46,
+        "bestFishSpecies": "Ray"
+      },
+      "a_12_4": {
+        "totalMetric": 191,
+        "fishCount": 5,
+        "bestFish": 45,
+        "bestFishSpecies": "Bass"
+      },
+      "a_13_3": {
+        "totalMetric": 180,
+        "fishCount": 4,
+        "bestFish": 44,
+        "bestFishSpecies": "Ray"
+      },
+      "a_14_3": {
+        "totalMetric": 169,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Bass"
+      },
+      "a_17_4": {
+        "totalMetric": 158,
+        "fishCount": 7,
+        "bestFish": 57,
+        "bestFishSpecies": "Ray"
+      },
+      "a_18_2": {
+        "totalMetric": 147,
+        "fishCount": 6,
+        "bestFish": 56,
+        "bestFishSpecies": "Bass"
+      },
+      "a_19_2": {
+        "totalMetric": 136,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Ray"
+      },
+      "a_20_2": {
+        "totalMetric": 125,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Bass"
+      },
+      "a_21_2": {
+        "totalMetric": 114,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Ray"
+      },
+      "a_22_3": {
+        "totalMetric": 103,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Bass"
+      },
+      "a_23_3": {
+        "totalMetric": 92,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Ray"
+      },
+      "a_24_4": {
+        "totalMetric": 81,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Bass"
+      },
+      "a_25_4": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_2": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_19_1": {
+        "totalMetric": 338,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Ray"
+      },
+      "a_11_1": {
+        "totalMetric": 285,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_3_1": {
+        "totalMetric": 285,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_4_1": {
+        "totalMetric": 305,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Bass"
+      },
+      "a_23_1": {
+        "totalMetric": 294,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Ray"
+      },
+      "a_12_1": {
+        "totalMetric": 283,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Bass"
+      },
+      "a_24_1": {
+        "totalMetric": 272,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Ray"
+      },
+      "a_1_4": {
+        "totalMetric": 261,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Bass"
+      },
+      "a_2_4": {
+        "totalMetric": 250,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Ray"
+      },
+      "a_5_3": {
+        "totalMetric": 239,
+        "fishCount": 4,
+        "bestFish": 49,
+        "bestFishSpecies": "Bass"
+      },
+      "a_6_4": {
+        "totalMetric": 228,
+        "fishCount": 8,
+        "bestFish": 48,
+        "bestFishSpecies": "Ray"
+      },
+      "a_7_2": {
+        "totalMetric": 217,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Bass"
+      },
+      "a_8_4": {
+        "totalMetric": 206,
+        "fishCount": 6,
+        "bestFish": 46,
+        "bestFishSpecies": "Ray"
+      },
+      "a_9_4": {
+        "totalMetric": 195,
+        "fishCount": 5,
+        "bestFish": 45,
+        "bestFishSpecies": "Bass"
+      },
+      "a_10_2": {
+        "totalMetric": 184,
+        "fishCount": 4,
+        "bestFish": 44,
+        "bestFishSpecies": "Ray"
+      },
+      "a_13_2": {
+        "totalMetric": 173,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Bass"
+      },
+      "a_14_2": {
+        "totalMetric": 162,
+        "fishCount": 7,
+        "bestFish": 57,
+        "bestFishSpecies": "Ray"
+      },
+      "a_15_3": {
+        "totalMetric": 151,
+        "fishCount": 6,
+        "bestFish": 56,
+        "bestFishSpecies": "Bass"
+      },
+      "a_16_4": {
+        "totalMetric": 140,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Ray"
+      },
+      "a_17_2": {
+        "totalMetric": 129,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Bass"
+      },
+      "a_18_3": {
+        "totalMetric": 118,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Ray"
+      },
+      "a_20_3": {
+        "totalMetric": 107,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Bass"
+      },
+      "a_21_3": {
+        "totalMetric": 96,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Ray"
+      },
+      "a_22_2": {
+        "totalMetric": 85,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Bass"
+      },
+      "a_25_2": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "solo_1": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_1_1": {
+        "totalMetric": 342,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Ray"
+      },
+      "a_2_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_18_1": {
+        "totalMetric": 290,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Cod"
+      },
+      "a_5_1": {
+        "totalMetric": 309,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Bass"
+      },
+      "a_10_1": {
+        "totalMetric": 298,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Ray"
+      },
+      "a_14_1": {
+        "totalMetric": 287,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Bass"
+      },
+      "a_8_1": {
+        "totalMetric": 276,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Ray"
+      },
+      "a_3_2": {
+        "totalMetric": 265,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Bass"
+      },
+      "a_4_2": {
+        "totalMetric": 254,
+        "fishCount": 5,
+        "bestFish": 50,
+        "bestFishSpecies": "Ray"
+      },
+      "a_6_2": {
+        "totalMetric": 243,
+        "fishCount": 4,
+        "bestFish": 49,
+        "bestFishSpecies": "Bass"
+      },
+      "a_7_3": {
+        "totalMetric": 232,
+        "fishCount": 8,
+        "bestFish": 48,
+        "bestFishSpecies": "Ray"
+      },
+      "a_9_2": {
+        "totalMetric": 221,
+        "fishCount": 7,
+        "bestFish": 47,
+        "bestFishSpecies": "Bass"
+      },
+      "a_11_2": {
+        "totalMetric": 210,
+        "fishCount": 6,
+        "bestFish": 46,
+        "bestFishSpecies": "Ray"
+      },
+      "a_12_3": {
+        "totalMetric": 199,
+        "fishCount": 5,
+        "bestFish": 45,
+        "bestFishSpecies": "Bass"
+      },
+      "a_13_4": {
+        "totalMetric": 188,
+        "fishCount": 4,
+        "bestFish": 44,
+        "bestFishSpecies": "Ray"
+      },
+      "a_15_2": {
+        "totalMetric": 177,
+        "fishCount": 8,
+        "bestFish": 58,
+        "bestFishSpecies": "Bass"
+      },
+      "a_16_3": {
+        "totalMetric": 166,
+        "fishCount": 7,
+        "bestFish": 57,
+        "bestFishSpecies": "Ray"
+      },
+      "a_17_3": {
+        "totalMetric": 155,
+        "fishCount": 6,
+        "bestFish": 56,
+        "bestFishSpecies": "Bass"
+      },
+      "a_19_4": {
+        "totalMetric": 144,
+        "fishCount": 5,
+        "bestFish": 55,
+        "bestFishSpecies": "Ray"
+      },
+      "a_20_4": {
+        "totalMetric": 133,
+        "fishCount": 4,
+        "bestFish": 54,
+        "bestFishSpecies": "Bass"
+      },
+      "a_21_4": {
+        "totalMetric": 122,
+        "fishCount": 8,
+        "bestFish": 53,
+        "bestFishSpecies": "Ray"
+      },
+      "a_22_4": {
+        "totalMetric": 111,
+        "fishCount": 7,
+        "bestFish": 52,
+        "bestFishSpecies": "Bass"
+      },
+      "a_23_4": {
+        "totalMetric": 100,
+        "fishCount": 6,
+        "bestFish": 51,
+        "bestFishSpecies": "Ray"
+      },
+      "a_24_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      },
+      "a_25_3": {
+        "totalMetric": 0,
+        "fishCount": 0,
+        "bestFish": 0
+      }
+    }
+  }
+}
