@@ -1565,75 +1565,158 @@
       color: var(--text-secondary);
     }
 
-    /* Two-Day Trajectory / Momentum Banner */
-    .momentum-banner {
-      background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
+    /* =========================================================================
+       CLEAN VISUAL TRAJECTORY GRAPHIC + 4 PERSONAL INSIGHTS STRIP
+       ========================================================================= */
+    .trajectory-graphic-card {
+      background: linear-gradient(180deg, #f8fbff 0%, #eef5fc 100%);
       border: 1px solid var(--brand-tint-border);
-      border-left: 4px solid var(--brand-cobalt);
       border-radius: var(--radius-md);
-      padding: 0.85rem 1rem;
-      margin-bottom: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.9rem;
-      flex-wrap: wrap;
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 1.05rem;
     }
 
-    .momentum-left {
+    .traj-flow-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .traj-node {
+      background: #ffffff;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.7rem;
       display: flex;
       flex-direction: column;
-      gap: 0.18rem;
+      align-items: center;
+      text-align: center;
+      min-width: 0;
     }
 
-    .momentum-eyebrow {
-      font-size: 0.68rem;
+    .traj-node.d1-node {
+      border-top: 3px solid var(--accent-indigo);
+    }
+
+    .traj-node.final-node {
+      border-top: 3px solid var(--brand-navy);
+    }
+
+    .traj-node-tag {
+      font-size: 0.63rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--brand-navy);
+      color: var(--text-muted);
     }
 
-    .momentum-headline {
-      font-size: 1.02rem;
+    .traj-node-rank {
+      font-size: 1.22rem;
       font-weight: 800;
-      color: var(--text-primary);
-      line-height: 1.25;
+      color: var(--brand-navy);
+      line-height: 1.15;
+      margin: 0.1rem 0;
+      font-variant-numeric: tabular-nums;
     }
 
-    .momentum-subline {
-      font-size: 0.78rem;
-      font-weight: 600;
+    .traj-node-zone {
+      font-size: 0.69rem;
+      font-weight: 700;
       color: var(--text-secondary);
+      line-height: 1.2;
     }
 
-    .momentum-pill {
+    .traj-delta-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.18rem;
+      padding: 0 0.2rem;
+    }
+
+    .traj-delta-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.35rem 0.8rem;
+      justify-content: center;
+      gap: 0.28rem;
+      padding: 0.34rem 0.78rem;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 800;
       white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
     }
 
-    .momentum-pill.up {
+    .traj-delta-badge.up {
       background: var(--accent-emerald-bg);
       color: #065f46;
-      border: 1px solid var(--accent-emerald-border);
+      border: 1.5px solid var(--accent-emerald-border);
     }
 
-    .momentum-pill.down {
+    .traj-delta-badge.down {
       background: #fef2f2;
       color: #991b1b;
-      border: 1px solid #fecaca;
+      border: 1.5px solid #fecaca;
     }
 
-    .momentum-pill.steady {
-      background: var(--brand-tint);
+    .traj-delta-badge.steady {
+      background: #ffffff;
       color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      border: 1.5px solid var(--brand-tint-border);
+    }
+
+    .traj-arrow-line {
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* 4-Tile Personal Insights Grid inside Top Box */
+    .personal-extras-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--brand-tint-border);
+    }
+
+    .p-extra-tile {
+      background: #ffffff;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      padding: 0.52rem 0.62rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .p-extra-lbl {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.14rem;
+    }
+
+    .p-extra-val {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      line-height: 1.2;
+    }
+
+    .p-extra-sub {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin-top: 0.14rem;
     }
 
     /* 5 Motif Cards: 5-Column Balanced Grid on Desktop, 2-Column on Mobile */
@@ -2006,6 +2089,9 @@
       .gauges-row {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
+      .personal-extras-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     /* =========================================================================
@@ -2029,7 +2115,32 @@
         gap: 0.65rem;
       }
 
-      /* 5 Motif Cards on Mobile: Clean 2-Column Grid with 5th Centered */
+      /* Trajectory Flow & 4-Tile Personal Extras on Mobile */
+      .trajectory-graphic-card {
+        padding: 0.65rem 0.55rem;
+      }
+      .traj-flow-row {
+        gap: 0.35rem;
+      }
+      .traj-node {
+        padding: 0.45rem 0.35rem;
+      }
+      .traj-node-rank {
+        font-size: 1.05rem;
+      }
+      .traj-node-zone {
+        font-size: 0.63rem;
+      }
+      .traj-delta-badge {
+        padding: 0.28rem 0.55rem;
+        font-size: 0.72rem;
+      }
+      .personal-extras-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.45rem;
+      }
+
+      /* 5 Motif Cards on Mobile: Clean 2-Column x 3-Row Grid */
       .gauges-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.65rem;
@@ -2545,7 +2656,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT (5 MOTIFS + WON/LOST/DRAWN H2H)
+         VIEW 6: MY MATCH REPORT (VISUAL TRAJECTORY + 4 INSIGHTS + 5 MOTIFS + H2H)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
       <div class="glass-card" style="max-width: 1120px; margin-left: auto; margin-right: auto;">
@@ -2560,7 +2671,7 @@
           </div>
         </div>
 
-        <!-- Two-Day Trajectory / Momentum Banner (or Empty Prompt when unselected) -->
+        <!-- Visual Trajectory Graphic & 4 Personal Insights (or Empty Prompt when unselected) -->
         <div id="myMomentumBanner"></div>
 
         <!-- 5 Circle Motif Cards (Overall, Total Fish, Total Length, Average Fish Size, Biggest Fish) -->
@@ -2590,7 +2701,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.21",
+      version: "v3.8.22",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3638,7 +3749,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 6: MY MATCH REPORT (5 MOTIFS + WON/LOST/DRAWN H2H)
+       RENDER VIEW 6: MY MATCH REPORT (VISUAL TRAJECTORY + 4 INSIGHTS + 5 MOTIFS + H2H)
        --------------------------------------------------------- */
     function renderMyReport() {
       const anglers = STATE.anglers;
@@ -3715,38 +3826,137 @@
 
       const fieldSize = anglers.length;
 
-      // 1. Two-Day Trajectory / Momentum Banner
+      // 1. Visual 3-Step Trajectory Graphic (Day 1 -> Delta Pill -> Final)
       const rankDelta = me.d1OverallRank - me.rank;
       let moveBadgeClass = "steady";
-      let movePillText = `Held steady at #${me.rank}`;
-      let moveHeadline = `Finished #${me.rank} overall — unchanged from Day 1 (#${me.d1OverallRank})`;
+      let moveBadgeText = "▬ 0 Places";
 
       if (rankDelta > 0) {
         moveBadgeClass = "up";
-        movePillText = `Climbed ${rankDelta} ${rankDelta === 1 ? "place" : "places"}`;
-        moveHeadline = `Rose from #${me.d1OverallRank} after Day 1 to #${me.rank} overall`;
+        moveBadgeText = `▲ +${rankDelta} ${rankDelta === 1 ? "Place" : "Places"}`;
       } else if (rankDelta < 0) {
         const dropCount = Math.abs(rankDelta);
         moveBadgeClass = "down";
-        movePillText = `Dropped ${dropCount} ${dropCount === 1 ? "place" : "places"}`;
-        moveHeadline = `Moved from #${me.d1OverallRank} after Day 1 to #${me.rank} overall`;
+        moveBadgeText = `▼ -${dropCount} ${dropCount === 1 ? "Place" : "Places"}`;
       }
 
-      const z1Text = `Day 1: #${me.d1ZoneStanding.pos} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
-      const z2Text = `Day 2: #${me.d2ZoneStanding.pos} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
+      // 2. Extra Personal Metrics (Session Split, Team Share, Field Beat Rate, Podium / Next Margin)
+      const d1Summary = `${me.d1.fishCount || 0} fish • ${me.d1.totalLengthCm || 0}cm`;
+      const d2Summary = `${me.d2.fishCount || 0} fish • ${me.d2.totalLengthCm || 0}cm`;
+      const betterSessionLabel = (me.d1.zonePoints < me.d2.zonePoints)
+        ? "Stronger Day 1"
+        : (me.d2.zonePoints < me.d1.zonePoints)
+          ? "Stronger Day 2"
+          : (me.d1.totalLengthCm >= me.d2.totalLengthCm ? "Best length D1" : "Best length D2");
+
+      const myTeamObj = STATE.teams.find(t => t.teamName === me.teamName);
+      let teamShareVal = "—";
+      let teamShareSub = me.teamName;
+      if (myTeamObj) {
+        const teamMembersSorted = [...myTeamObj.members].sort(
+          (a, b) =>
+            a.totals.cumulativePoints - b.totals.cumulativePoints ||
+            b.totals.cumulativeLengthCm - a.totals.cumulativeLengthCm
+        );
+        const myTeamPos = teamMembersSorted.findIndex(m => m.anglerName === me.anglerName) + 1;
+        const lenSharePct = myTeamObj.totalLengthCm > 0
+          ? Math.round((me.totals.cumulativeLengthCm / myTeamObj.totalLengthCm) * 100)
+          : 0;
+        teamShareVal = `${lenSharePct}% of Team cm`;
+        teamShareSub = `#${myTeamPos} of ${myTeamObj.members.length} in ${me.teamName}`;
+      }
+
+      const anglersBeaten = Math.max(0, fieldSize - me.rank);
+      const fieldBeatPct = fieldSize > 1
+        ? Math.round((anglersBeaten / (fieldSize - 1)) * 100)
+        : 100;
+
+      let marginTitle = "Podium Margin";
+      let marginVal = "—";
+      let marginSub = "";
+      if (me.rank <= 3) {
+        marginTitle = "Podium Finish";
+        const fourthAngler = anglers[3];
+        if (fourthAngler) {
+          const ptsClear = fourthAngler.totals.cumulativePoints - me.totals.cumulativePoints;
+          marginVal = `#${me.rank} Overall`;
+          marginSub = ptsClear > 0
+            ? `${ptsClear} ${ptsClear === 1 ? "pt" : "pts"} clear of 4th`
+            : `Ahead of 4th on cm`;
+        } else {
+          marginVal = `#${me.rank} Overall`;
+          marginSub = "Top 3 championship finish";
+        }
+      } else {
+        const podiumAngler = anglers[2];
+        const nextUpAngler = anglers[me.rank - 2];
+        const ptsOffPodium = podiumAngler
+          ? me.totals.cumulativePoints - podiumAngler.totals.cumulativePoints
+          : 0;
+        const ptsOffNext = nextUpAngler
+          ? me.totals.cumulativePoints - nextUpAngler.totals.cumulativePoints
+          : 0;
+
+        marginVal = ptsOffPodium > 0
+          ? `${ptsOffPodium} ${ptsOffPodium === 1 ? "pt" : "pts"} off Podium`
+          : `Tied on pts w/ #3`;
+        marginSub = nextUpAngler
+          ? (ptsOffNext > 0
+              ? `${ptsOffNext} ${ptsOffNext === 1 ? "pt" : "pts"} behind #${me.rank - 1}`
+              : `${Math.max(1, nextUpAngler.totals.cumulativeLengthCm - me.totals.cumulativeLengthCm)}cm behind #${me.rank - 1}`)
+          : "";
+      }
 
       bannerEl.innerHTML = `
-        <div class="momentum-banner">
-          <div class="momentum-left">
-            <div class="momentum-eyebrow">Two-Day Championship Trajectory • ${me.anglerName} (${me.teamName})</div>
-            <div class="momentum-headline">${moveHeadline}</div>
-            <div class="momentum-subline">${z1Text}  •  ${z2Text}</div>
+        <div class="trajectory-graphic-card">
+          <div class="traj-flow-row">
+            <div class="traj-node d1-node">
+              <div class="traj-node-tag">After Day 1</div>
+              <div class="traj-node-rank">#${me.d1OverallRank}</div>
+              <div class="traj-node-zone">${shortZone(me.d1.zone)} #${me.d1ZoneStanding.pos} • ${me.d1.zonePoints} pts</div>
+            </div>
+
+            <div class="traj-delta-center">
+              <span class="traj-delta-badge ${moveBadgeClass}">${moveBadgeText}</span>
+              <span class="traj-arrow-line">Day 1 → Final</span>
+            </div>
+
+            <div class="traj-node final-node">
+              <div class="traj-node-tag">Final Standing</div>
+              <div class="traj-node-rank">#${me.rank}</div>
+              <div class="traj-node-zone">${shortZone(me.d2.zone)} #${me.d2ZoneStanding.pos} • ${me.d2.zonePoints} pts</div>
+            </div>
           </div>
-          <span class="momentum-pill ${moveBadgeClass}">${movePillText}</span>
+
+          <div class="personal-extras-grid">
+            <div class="p-extra-tile">
+              <div class="p-extra-lbl">Session Split (${betterSessionLabel})</div>
+              <div class="p-extra-val">D1: ${d1Summary}</div>
+              <div class="p-extra-sub">D2: ${d2Summary}</div>
+            </div>
+
+            <div class="p-extra-tile">
+              <div class="p-extra-lbl">Team Contribution</div>
+              <div class="p-extra-val">${teamShareVal}</div>
+              <div class="p-extra-sub">${teamShareSub}</div>
+            </div>
+
+            <div class="p-extra-tile">
+              <div class="p-extra-lbl">Field Beat Rate</div>
+              <div class="p-extra-val">Beat ${fieldBeatPct}%</div>
+              <div class="p-extra-sub">Ahead of ${anglersBeaten} of ${fieldSize - 1} rivals</div>
+            </div>
+
+            <div class="p-extra-tile">
+              <div class="p-extra-lbl">${marginTitle}</div>
+              <div class="p-extra-val">${marginVal}</div>
+              <div class="p-extra-sub">${marginSub}</div>
+            </div>
+          </div>
         </div>
       `;
 
-      // 2. Five Circle Motif Cards in Exact Order:
+      // 3. Five Circle Motif Cards in Exact Order:
       // 1. Overall Standing | 2. Total Fish | 3. Total Length | 4. Average Fish Size | 5. Biggest Fish
       const overallPct = Math.max(6, Math.round(((fieldSize - me.rank + 1) / fieldSize) * 100));
       const fishRankPct = Math.max(6, Math.round(((fieldSize - me.fishRank + 1) / fieldSize) * 100));
@@ -3835,7 +4045,7 @@
         )}
       `;
 
-      // 3. Opt-In Side-by-Side Head-to-Head Comparison
+      // 4. Opt-In Side-by-Side Head-to-Head Comparison
       renderSideBySideH2H(me);
     }
 
