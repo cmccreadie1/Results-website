@@ -161,6 +161,39 @@
       border: 1px solid var(--brand-tint-border);
     }
 
+    /* Highlighted Points Bordered Box Badges */
+    .pts-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      padding: 0.14rem 0.42rem;
+      border-radius: 6px;
+      background: #e6f0fb;
+      border: 1.5px solid #93c5fd;
+      color: var(--brand-navy);
+      font-weight: 800;
+      font-size: 0.8rem;
+      line-height: 1.15;
+      box-shadow: 0 1px 2px rgba(0, 68, 129, 0.08);
+    }
+
+    .pts-pill-badge.team-total-pts {
+      padding: 0.1rem 0.36rem;
+      font-size: 0.68rem;
+      border-radius: 5px;
+      margin-right: 0.22rem;
+    }
+
+    .pts-pill-badge.member-pts {
+      padding: 0.08rem 0.32rem;
+      font-size: 0.65rem;
+      border-radius: 5px;
+      background: #f0f6fd;
+      border-color: #bfd9f2;
+      margin-right: 0.2rem;
+    }
+
     /* Views & Frosted Glass Floating Bottom-Left Back Button */
     .view-section {
       display: none;
@@ -917,26 +950,26 @@
       padding-top: 0.42rem;
     }
 
-    /* Zone Winners Panels */
+    /* Vivid Zone Winners Panels */
     .zone-winner-panel[data-zone="Red Zone"] {
-      border-color: #f87171;
-      border-top: 4px solid #ef4444;
-      background: linear-gradient(180deg, #fef2f2 0%, #ffffff 42%);
+      border: 2px solid #ef4444;
+      border-top: 5px solid #dc2626;
+      background: linear-gradient(180deg, #fee2e2 0%, #fef2f2 45%, #ffffff 100%);
     }
     .zone-winner-panel[data-zone="Yellow Zone"] {
-      border-color: #facc15;
-      border-top: 4px solid #eab308;
-      background: linear-gradient(180deg, #fefce8 0%, #ffffff 42%);
+      border: 2px solid #eab308;
+      border-top: 5px solid #ca8a04;
+      background: linear-gradient(180deg, #fef08a 0%, #fefce8 45%, #ffffff 100%);
     }
     .zone-winner-panel[data-zone="Green Zone"] {
-      border-color: #4ade80;
-      border-top: 4px solid #22c55e;
-      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%);
+      border: 2px solid #22c55e;
+      border-top: 5px solid #16a34a;
+      background: linear-gradient(180deg, #dcfce7 0%, #f0fdf4 45%, #ffffff 100%);
     }
     .zone-winner-panel[data-zone="Blue Zone"] {
-      border-color: #60a5fa;
-      border-top: 4px solid #3b82f6;
-      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%);
+      border: 2px solid #3b82f6;
+      border-top: 5px solid #2563eb;
+      background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 45%, #ffffff 100%);
     }
 
     .zt-lbl-d1 {
@@ -1342,8 +1375,8 @@
       font-size: 0.71rem;
       font-weight: 700;
       color: var(--brand-cobalt);
-      line-height: 1.2;
-      margin-top: 2px;
+      line-height: 1.25;
+      margin-top: 3px;
     }
 
     .team-contrib-cell {
@@ -1362,8 +1395,8 @@
       font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-secondary);
-      line-height: 1.2;
-      margin-top: 2px;
+      line-height: 1.25;
+      margin-top: 3px;
     }
 
     /* Zone Winners Grid */
@@ -1397,42 +1430,58 @@
       letter-spacing: -0.01em;
     }
 
-    .zw-winner-callout {
-      font-size: 0.74rem;
-      font-weight: 700;
-      color: #78350f;
-      background: #fef3c7;
-      border: 1px solid #fcd34d;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
+    /* Biggest Fish Compact 3-Column Cell Styling (Zero Overflow for Long Species) */
+    .biggest-fish-table {
+      table-layout: fixed;
+      width: 100%;
     }
 
-    /* Biggest Fish Compact 3-Column Cell Styling */
+    .bf-angler-cell {
+      min-width: 0;
+      white-space: normal !important;
+      padding-right: 0.4rem !important;
+    }
+
+    .bf-angler-cell .ind-angler-name {
+      white-space: normal;
+      line-height: 1.2;
+    }
+
+    .bf-catch-cell {
+      text-align: right;
+      white-space: normal !important;
+      padding-left: 0.3rem !important;
+    }
+
     .bf-catch-top {
       display: flex;
       align-items: baseline;
       justify-content: flex-end;
-      gap: 0.35rem;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.32rem;
       line-height: 1.2;
     }
 
     .bf-len-val {
       font-weight: 800;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       color: var(--accent-amber);
+      white-space: nowrap;
     }
 
     .bf-species-lbl {
       font-size: 0.72rem;
       font-weight: 700;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .bf-session-meta {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 0.35rem;
+      flex-wrap: wrap;
+      gap: 0.3rem;
       margin-top: 3px;
       font-size: 0.68rem;
       font-weight: 600;
@@ -1963,13 +2012,18 @@
       }
 
       .zone-winner-panel {
-        padding: 0.65rem 0.45rem;
+        padding: 0.65rem 0.4rem;
         border-radius: var(--radius-md);
       }
 
       .card-header {
         padding: 0 0.2rem;
         margin-bottom: 0.45rem;
+      }
+
+      /* Full Right-Side Scroll Buffer on Individual Leaderboard so Day 2 Slides Cleanly Beside Sticky Name */
+      #indTableWrap {
+        padding-right: 45vw;
       }
 
       /* Tighter Table Cells & Spacers so All 4 Columns Fit Beside Sticky Name */
@@ -1991,6 +2045,12 @@
 
       table.tight-ind-table tbody tr.ind-data-row td {
         padding: 0.38rem 0.22rem;
+      }
+
+      .pts-pill-badge {
+        min-width: 24px;
+        padding: 0.1rem 0.34rem;
+        font-size: 0.74rem;
       }
 
       /* Compact Individual Sticky Identity Columns (26px Pos + 104px Angler) */
@@ -2034,7 +2094,7 @@
         text-overflow: ellipsis;
       }
 
-      /* Compact Team Sticky Identity Columns (26px Pos + 112px Team & Totals) */
+      /* Compact Team Sticky Identity Columns (26px Pos + 114px Team & Totals) */
       table.one-line-team-table th.team-pos-th,
       table.one-line-team-table tbody tr.team-strip-row td:first-child {
         width: 26px;
@@ -2051,9 +2111,9 @@
 
       table.one-line-team-table th.team-name-th,
       .team-main-cell {
-        width: 112px;
-        min-width: 112px;
-        max-width: 112px;
+        width: 114px;
+        min-width: 114px;
+        max-width: 114px;
         padding-left: 0.16rem !important;
         padding-right: 0.3rem !important;
         white-space: normal !important;
@@ -2067,13 +2127,32 @@
 
       .team-totals-line {
         font-size: 0.64rem;
-        line-height: 1.18;
-        margin-top: 2px;
+        line-height: 1.25;
+        margin-top: 3px;
         white-space: normal;
       }
 
       .team-contrib-cell {
-        min-width: 134px;
+        min-width: 136px;
+      }
+
+      /* Zone Winners Mobile Zero-Horizontal-Scroll Table Fit */
+      table.zone-compact-table {
+        font-size: 0.74rem;
+      }
+
+      table.zone-compact-table thead th {
+        padding: 0.38rem 0.22rem;
+        font-size: 0.61rem;
+      }
+
+      table.zone-compact-table tbody tr td {
+        padding: 0.38rem 0.22rem;
+      }
+
+      table.zone-compact-table td.zone-angler-td {
+        white-space: normal;
+        max-width: 115px;
       }
 
       .session-donuts-grid {
@@ -2394,12 +2473,12 @@
           </div>
         </div>
         <div class="table-wrap">
-          <table class="card-row-table">
+          <table class="card-row-table biggest-fish-table">
             <thead>
               <tr>
-                <th style="width: 44px; text-align: center;">Pos</th>
+                <th style="width: 38px; text-align: center;">Pos</th>
                 <th>Angler</th>
-                <th style="text-align: right;">Catch</th>
+                <th style="width: 52%; text-align: right;">Catch</th>
               </tr>
             </thead>
             <tbody id="biggestFishTableBody"></tbody>
@@ -2470,7 +2549,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.19",
+      version: "v3.8.20",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3242,7 +3321,7 @@
 
               <td class="col-gap-spacer" aria-hidden="true"></td>
 
-              <td class="overall-card-cell card-cell-start"><strong style="color:var(--brand-navy);">${pts}</strong></td>
+              <td class="overall-card-cell card-cell-start"><span class="pts-pill-badge">${pts}</span></td>
               <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
               <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
               <td class="overall-card-cell card-cell-end">${ovBig}</td>
@@ -3327,7 +3406,7 @@
             memberCells += `
               <td class="team-contrib-cell session-card-cell card-cell-start card-cell-end">
                 <div class="contrib-angler-line">${m.anglerName}</div>
-                <div class="contrib-stats-line">${m.totals.cumulativePoints} pts • ${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
+                <div class="contrib-stats-line"><span class="pts-pill-badge member-pts">${m.totals.cumulativePoints} pts</span>${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
               </td>
             `;
           } else {
@@ -3340,7 +3419,7 @@
             <td class="overall-card-cell card-cell-start sticky-col-team-pos">${teamRank}</td>
             <td class="team-main-cell overall-card-cell card-cell-end sticky-col-team-name">
               <div class="team-name-line">${team.teamName}</div>
-              <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
+              <div class="team-totals-line"><span class="pts-pill-badge team-total-pts">${team.totalPts} pts</span>${team.totalLengthCm}cm • ${team.totalFish} fish</div>
             </td>
             <td class="col-gap-spacer" aria-hidden="true"></td>
             ${memberCells}
@@ -3355,7 +3434,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (ZERO H-SCROLL, NO WINNER PILL)
        --------------------------------------------------------- */
     function renderDayZoneWinners(dayKey, gridElementId) {
       const gridEl = document.getElementById(gridElementId);
@@ -3375,23 +3454,18 @@
             );
           });
 
-        const winner = zoneAnglers[0];
-        const winnerBadge = winner
-          ? `<span class="zw-winner-callout">Winner: ${winner.anglerName} (${winner[dayKey].zonePoints} pts • ${winner[dayKey].totalLengthCm}cm)</span>`
-          : `<span class="zw-winner-callout">No anglers recorded</span>`;
-
         const rowsHtml = zoneAnglers.map((a, idx) => {
           const pos = idx + 1;
           const podiumClass = pos <= 3 ? `podium-${pos}` : "";
           const sess = a[dayKey];
           const bigDisplay = (sess.biggestFishCm || 0) > 0
-            ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.68rem;">(${sess.biggestFishSpecies})</span>` : ""}`
+            ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.65rem;">(${sess.biggestFishSpecies})</span>` : ""}`
             : "—";
 
           return `
             <tr class="${podiumClass}">
-              <td class="pos-num" style="text-align:center; width:36px;">${pos}</td>
-              <td>
+              <td class="pos-num" style="text-align:center; width:28px;">${pos}</td>
+              <td class="zone-angler-td">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
@@ -3407,15 +3481,14 @@
           <div class="zone-winner-panel" data-zone="${zoneName}">
             <div class="zw-panel-header">
               <div class="zw-zone-title">${zoneName}</div>
-              ${winnerBadge}
             </div>
             <div class="table-wrap">
-              <table class="card-row-table">
+              <table class="card-row-table zone-compact-table">
                 <thead>
                   <tr>
-                    <th style="text-align:center;">Pos</th>
+                    <th style="text-align:center; width:28px;">Pos</th>
                     <th>Angler</th>
-                    <th style="text-align:center;">Pts</th>
+                    <th style="text-align:center;">Pt</th>
                     <th style="text-align:center;">Len</th>
                     <th style="text-align:center;">Fish</th>
                     <th style="text-align:center;">Big</th>
@@ -3430,7 +3503,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 4: BIGGEST FISH (TOP 5 - COMPACT 3 COLUMNS, ZERO H-SCROLL)
+       RENDER VIEW 4: BIGGEST FISH (TOP 5 - SHORT ZONE NAME + LONG SPECIES SAFE)
        --------------------------------------------------------- */
     function renderBiggestFish() {
       const top5 = STATE.specimensAll.slice(0, 5);
@@ -3443,18 +3516,18 @@
         return `
           <tr class="${podiumClass}">
             <td class="pos-num" style="text-align:center;">${rank}</td>
-            <td>
+            <td class="bf-angler-cell">
               <div class="ind-angler-name">${s.anglerName}</div>
               <div class="ind-team-sub">${s.teamName}</div>
             </td>
-            <td style="text-align:right;">
+            <td class="bf-catch-cell">
               <div class="bf-catch-top">
                 <span class="bf-len-val">${s.lengthCm} cm</span>
                 ${s.species ? `<span class="bf-species-lbl">• ${s.species}</span>` : ""}
               </div>
               <div class="bf-session-meta">
                 <span>${s.sessionLabel}</span>
-                <span class="zone-chip ${zShort}">${s.zone}</span>
+                <span class="zone-chip ${zShort}">${zShort}</span>
               </div>
             </td>
           </tr>
