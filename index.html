@@ -1108,7 +1108,7 @@
     }
 
     /* =========================================================================
-       SHARED TWO-CARD SPLIT STYLING + STICKY LEFT IDENTITY COLUMNS
+       SHARED TWO-CARD SPLIT STYLING + COMPACT STICKY LEFT IDENTITY COLUMNS
        ========================================================================= */
     table.tight-ind-table {
       font-size: 0.78rem;
@@ -1218,21 +1218,25 @@
       pointer-events: none;
     }
 
+    /* Tightened Pos-to-Angler gap on Desktop */
+    table.tight-ind-table th.pos-th,
     table.tight-ind-table td.pos-cell {
-      width: 38px;
-      min-width: 38px;
-      padding-left: 0.4rem;
-      padding-right: 0.2rem;
+      width: 32px;
+      min-width: 32px;
+      max-width: 32px;
+      padding-left: 0.3rem;
+      padding-right: 0.1rem;
       text-align: center;
       font-weight: 800;
       color: var(--brand-navy);
     }
 
+    table.tight-ind-table th.angler-th,
     table.tight-ind-table td.angler-cell {
       text-align: left;
-      padding-left: 0.3rem;
-      padding-right: 0.45rem;
-      max-width: 165px;
+      padding-left: 0.2rem;
+      padding-right: 0.42rem;
+      max-width: 155px;
     }
 
     /* Sticky Left Columns for Horizontal Swiping (Individual & Team Tables) */
@@ -1244,7 +1248,7 @@
 
     .sticky-col-name {
       position: sticky;
-      left: 38px;
+      left: 32px;
       z-index: 15;
       box-shadow: 3px 0 6px -2px rgba(15, 23, 42, 0.08);
     }
@@ -1257,7 +1261,7 @@
 
     .sticky-col-team-name {
       position: sticky;
-      left: 42px;
+      left: 34px;
       z-index: 15;
       box-shadow: 3px 0 6px -2px rgba(15, 23, 42, 0.08);
     }
@@ -1294,26 +1298,33 @@
       border-left: 1.5px solid #cbd5e1 !important;
     }
 
-    /* Team Leaderboard Specific Cells */
+    /* Team Leaderboard Specific Cells - Tightened Rank-to-Team Gap */
     table.one-line-team-table {
       border-spacing: 0 6px;
     }
 
+    table.one-line-team-table th.team-pos-th,
     table.one-line-team-table tbody tr.team-strip-row td:first-child {
-      width: 42px;
-      min-width: 42px;
+      width: 34px;
+      min-width: 34px;
+      max-width: 34px;
+      padding-left: 0.3rem;
+      padding-right: 0.1rem;
       text-align: center;
       font-weight: 800;
       color: var(--brand-navy);
     }
 
+    table.one-line-team-table th.team-name-th,
     .team-main-cell {
-      min-width: 175px;
+      min-width: 155px;
       text-align: left;
+      padding-left: 0.22rem !important;
+      padding-right: 0.45rem !important;
     }
 
     .team-name-line {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--brand-navy);
       line-height: 1.2;
@@ -1913,7 +1924,7 @@
     }
 
     /* =========================================================================
-       MOBILE HORIZONTAL SPACE MAXIMISATION FOR RESULT SCREENS (< 640px)
+       MOBILE HORIZONTAL SPACE & COMPACT STICKY IDENTITY COLUMNS (< 640px)
        ========================================================================= */
     @media (max-width: 640px) {
       .container {
@@ -1956,12 +1967,12 @@
 
       /* Tighter Table Cells & Spacers so More Columns Fit on Open */
       table.card-row-table thead th {
-        padding: 0.42rem 0.36rem;
-        font-size: 0.64rem;
+        padding: 0.42rem 0.32rem;
+        font-size: 0.63rem;
       }
 
       table.card-row-table tbody tr td {
-        padding: 0.42rem 0.36rem;
+        padding: 0.42rem 0.32rem;
       }
 
       table.two-tier-sticky-table th.col-gap-spacer,
@@ -1972,41 +1983,90 @@
       }
 
       table.tight-ind-table tbody tr.ind-data-row td {
-        padding: 0.4rem 0.25rem;
+        padding: 0.38rem 0.24rem;
       }
 
+      /* Compact Individual Sticky Identity Columns (26px Pos + 106px Angler) */
+      table.tight-ind-table th.pos-th,
       table.tight-ind-table td.pos-cell {
-        width: 32px;
-        min-width: 32px;
-        padding-left: 0.25rem;
-        padding-right: 0.15rem;
-      }
-
-      table.tight-ind-table td.angler-cell {
-        max-width: 128px;
+        width: 26px;
+        min-width: 26px;
+        max-width: 26px;
         padding-left: 0.22rem;
-        padding-right: 0.3rem;
+        padding-right: 0.08rem;
+        font-size: 0.74rem;
       }
 
       .sticky-col-name {
-        left: 32px;
+        left: 26px;
       }
 
+      table.tight-ind-table th.angler-th,
+      table.tight-ind-table td.angler-cell {
+        width: 106px;
+        min-width: 106px;
+        max-width: 106px;
+        padding-left: 0.16rem;
+        padding-right: 0.28rem;
+        white-space: normal;
+      }
+
+      .ind-angler-name {
+        font-size: 0.74rem;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-height: 1.15;
+      }
+
+      .ind-team-sub {
+        font-size: 0.61rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Compact Team Sticky Identity Columns (26px Pos + 112px Team & Totals) */
+      table.one-line-team-table th.team-pos-th,
       table.one-line-team-table tbody tr.team-strip-row td:first-child {
-        width: 34px;
-        min-width: 34px;
+        width: 26px;
+        min-width: 26px;
+        max-width: 26px;
+        padding-left: 0.22rem;
+        padding-right: 0.08rem;
+        font-size: 0.75rem;
       }
 
       .sticky-col-team-name {
-        left: 34px;
+        left: 26px;
       }
 
+      table.one-line-team-table th.team-name-th,
       .team-main-cell {
-        min-width: 146px;
+        width: 112px;
+        min-width: 112px;
+        max-width: 112px;
+        padding-left: 0.16rem !important;
+        padding-right: 0.3rem !important;
+        white-space: normal !important;
+      }
+
+      .team-name-line {
+        font-size: 0.76rem;
+        line-height: 1.15;
+        white-space: normal;
+      }
+
+      .team-totals-line {
+        font-size: 0.64rem;
+        line-height: 1.18;
+        margin-top: 2px;
+        white-space: normal;
       }
 
       .team-contrib-cell {
-        min-width: 132px;
+        min-width: 136px;
       }
 
       .session-donuts-grid {
@@ -2235,8 +2295,8 @@
                   <th colspan="4" class="group-th d2-grp sec-sep-left">Day 2</th>
                 </tr>
                 <tr>
-                  <th class="sub-th sticky-col-pos" style="text-align:center;">Pos</th>
-                  <th class="sub-th left-align sticky-col-name">Angler</th>
+                  <th class="sub-th pos-th sticky-col-pos" style="text-align:center;">Pos</th>
+                  <th class="sub-th angler-th left-align sticky-col-name">Angler</th>
                   <th class="sub-th sec-sep-left">Pts</th>
                   <th class="sub-th">Len</th>
                   <th class="sub-th">Fish</th>
@@ -2399,7 +2459,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.17",
+      version: "v3.8.18",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3217,8 +3277,8 @@
           <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
-          <th class="sub-th sticky-col-team-pos" style="text-align:center;">Pos</th>
-          <th class="sub-th left-align overall-card-end sticky-col-team-name">Team & Totals</th>
+          <th class="sub-th team-pos-th sticky-col-team-pos" style="text-align:center;">Pos</th>
+          <th class="sub-th team-name-th left-align overall-card-end sticky-col-team-name">Team & Totals</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
