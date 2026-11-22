@@ -2889,7 +2889,321 @@
   "secretPairs": {
     "description": "Target Length calculated for wildcard mystery pairing.",
     "targetLength": "0cm",
-    "winners": [],
-    "otherPairs": []
+    "winners": [
+      {
+        "angler1": "Sapphire",
+        "angler2": "—",
+        "combinedLength": "384cm",
+        "diff": "384cm"
+      },
+      {
+        "angler1": "Oak",
+        "angler2": "Cinnamon",
+        "combinedLength": "605cm",
+        "diff": "605cm"
+      },
+      {
+        "angler1": "Robin",
+        "angler2": "joe",
+        "combinedLength": "610cm",
+        "diff": "610cm"
+      }
+    ],
+    "otherPairs": [
+      {
+        "angler1": "Bowline",
+        "angler2": "Ginger",
+        "combinedLength": "610cm",
+        "diff": "610cm"
+      },
+      {
+        "angler1": "Hammer",
+        "angler2": "East",
+        "combinedLength": "618cm",
+        "diff": "618cm"
+      },
+      {
+        "angler1": "Scotland",
+        "angler2": "tam",
+        "combinedLength": "625cm",
+        "diff": "625cm"
+      },
+      {
+        "angler1": "Neptune",
+        "angler2": "Tractor",
+        "combinedLength": "645cm",
+        "diff": "645cm"
+      },
+      {
+        "angler1": "Edinburgh",
+        "angler2": "West",
+        "combinedLength": "646cm",
+        "diff": "646cm"
+      },
+      {
+        "angler1": "Tulip",
+        "angler2": "Nutmeg",
+        "combinedLength": "652cm",
+        "diff": "652cm"
+      },
+      {
+        "angler1": "Flounder",
+        "angler2": "Stilton",
+        "combinedLength": "652cm",
+        "diff": "652cm"
+      },
+      {
+        "angler1": "Daffodil",
+        "angler2": "mark",
+        "combinedLength": "654cm",
+        "diff": "654cm"
+      },
+      {
+        "angler1": "Snowdon",
+        "angler2": "Guitar",
+        "combinedLength": "656cm",
+        "diff": "656cm"
+      },
+      {
+        "angler1": "Forth",
+        "angler2": "Glasgow",
+        "combinedLength": "663cm",
+        "diff": "663cm"
+      },
+      {
+        "angler1": "Tweed",
+        "angler2": "Summer",
+        "combinedLength": "665cm",
+        "diff": "665cm"
+      },
+      {
+        "angler1": "Arran",
+        "angler2": "Copper",
+        "combinedLength": "667cm",
+        "diff": "667cm"
+      },
+      {
+        "angler1": "Fiddle",
+        "angler2": "Chisel",
+        "combinedLength": "678cm",
+        "diff": "678cm"
+      },
+      {
+        "angler1": "Spring",
+        "angler2": "Shilling",
+        "combinedLength": "683cm",
+        "diff": "683cm"
+      },
+      {
+        "angler1": "Bluebell",
+        "angler2": "Pliers",
+        "combinedLength": "683cm",
+        "diff": "683cm"
+      },
+      {
+        "angler1": "Amber",
+        "angler2": "Flood",
+        "combinedLength": "689cm",
+        "diff": "689cm"
+      },
+      {
+        "angler1": "Nevis",
+        "angler2": "South",
+        "combinedLength": "690cm",
+        "diff": "690cm"
+      },
+      {
+        "angler1": "Kestrel",
+        "angler2": "Flute",
+        "combinedLength": "693cm",
+        "diff": "693cm"
+      },
+      {
+        "angler1": "Kingfisher",
+        "angler2": "Springtide",
+        "combinedLength": "696cm",
+        "diff": "696cm"
+      },
+      {
+        "angler1": "Bass",
+        "angler2": "Drizzle",
+        "combinedLength": "699cm",
+        "diff": "699cm"
+      },
+      {
+        "angler1": "Mars",
+        "angler2": "Sovereign",
+        "combinedLength": "702cm",
+        "diff": "702cm"
+      },
+      {
+        "angler1": "Emerald",
+        "angler2": "Silver",
+        "combinedLength": "703cm",
+        "diff": "703cm"
+      },
+      {
+        "angler1": "Saturn",
+        "angler2": "Gold",
+        "combinedLength": "708cm",
+        "diff": "708cm"
+      },
+      {
+        "angler1": "Cheddar",
+        "angler2": "Ebb",
+        "combinedLength": "709cm",
+        "diff": "709cm"
+      },
+      {
+        "angler1": "Gale",
+        "angler2": "Palomar",
+        "combinedLength": "710cm",
+        "diff": "710cm"
+      },
+      {
+        "angler1": "Crimson",
+        "angler2": "Gouda",
+        "combinedLength": "711cm",
+        "diff": "711cm"
+      },
+      {
+        "angler1": "Orchid",
+        "angler2": "Rowanberry",
+        "combinedLength": "711cm",
+        "diff": "711cm"
+      },
+      {
+        "angler1": "Rowan",
+        "angler2": "Islay",
+        "combinedLength": "711cm",
+        "diff": "711cm"
+      },
+      {
+        "angler1": "Cobalt",
+        "angler2": "Winter",
+        "combinedLength": "711cm",
+        "diff": "711cm"
+      },
+      {
+        "angler1": "Saffron",
+        "angler2": "Tay",
+        "combinedLength": "712cm",
+        "diff": "712cm"
+      },
+      {
+        "angler1": "Mull",
+        "angler2": "Cairngorm",
+        "combinedLength": "713cm",
+        "diff": "713cm"
+      },
+      {
+        "angler1": "Poland",
+        "angler2": "Thunder",
+        "combinedLength": "717cm",
+        "diff": "717cm"
+      },
+      {
+        "angler1": "Neap",
+        "angler2": "Florin",
+        "combinedLength": "720cm",
+        "diff": "720cm"
+      },
+      {
+        "angler1": "Skye",
+        "angler2": "Uni",
+        "combinedLength": "720cm",
+        "diff": "720cm"
+      },
+      {
+        "angler1": "Iron",
+        "angler2": "Bramble",
+        "combinedLength": "720cm",
+        "diff": "720cm"
+      },
+      {
+        "angler1": "Puffin",
+        "angler2": "Trawler",
+        "combinedLength": "722cm",
+        "diff": "722cm"
+      },
+      {
+        "angler1": "Plaice",
+        "angler2": "Bagpipe",
+        "combinedLength": "723cm",
+        "diff": "723cm"
+      },
+      {
+        "angler1": "Birch",
+        "angler2": "Damson",
+        "combinedLength": "728cm",
+        "diff": "728cm"
+      },
+      {
+        "angler1": "Portugal",
+        "angler2": "Stirling",
+        "combinedLength": "732cm",
+        "diff": "732cm"
+      },
+      {
+        "angler1": "Willow",
+        "angler2": "Indigo",
+        "combinedLength": "735cm",
+        "diff": "735cm"
+      },
+      {
+        "angler1": "Penny",
+        "angler2": "Camper",
+        "combinedLength": "739cm",
+        "diff": "739cm"
+      },
+      {
+        "angler1": "Ruby",
+        "angler2": "Aberdeen",
+        "combinedLength": "739cm",
+        "diff": "739cm"
+      },
+      {
+        "angler1": "Clyde",
+        "angler2": "Frost",
+        "combinedLength": "751cm",
+        "diff": "751cm"
+      },
+      {
+        "angler1": "Norway",
+        "angler2": "Autumn",
+        "combinedLength": "754cm",
+        "diff": "754cm"
+      },
+      {
+        "angler1": "Apple",
+        "angler2": "Brie",
+        "combinedLength": "755cm",
+        "diff": "755cm"
+      },
+      {
+        "angler1": "Cod",
+        "angler2": "Clove",
+        "combinedLength": "761cm",
+        "diff": "761cm"
+      },
+      {
+        "angler1": "Venus",
+        "angler2": "Lomond",
+        "combinedLength": "768cm",
+        "diff": "768cm"
+      },
+      {
+        "angler1": "Landrover",
+        "angler2": "Spanner",
+        "combinedLength": "773cm",
+        "diff": "773cm"
+      },
+      {
+        "angler1": "North",
+        "angler2": "Saffron",
+        "combinedLength": "934cm",
+        "diff": "934cm"
+      }
+    ]
   }
 }
