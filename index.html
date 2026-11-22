@@ -1067,7 +1067,9 @@
       width: 42px;
       padding-left: 0.55rem;
       padding-right: 0.25rem;
-      text-align: left;
+      text-align: center;
+      font-weight: 800;
+      color: var(--brand-navy);
     }
 
     table.tight-ind-table td.angler-cell {
@@ -1108,8 +1110,10 @@
     }
 
     table.one-line-team-table tbody tr.team-strip-row td:first-child {
-      width: 64px;
+      width: 56px;
       text-align: center;
+      font-weight: 800;
+      color: var(--brand-navy);
     }
 
     .team-main-cell {
@@ -1409,10 +1413,11 @@
     }
 
     .gauge-ordinal {
-      font-size: 1.05rem;
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--brand-navy);
       line-height: 1.1;
+      font-variant-numeric: tabular-nums;
     }
 
     .gauge-out-of {
@@ -1650,10 +1655,11 @@
     .zone-chip.Green { background: var(--zone-green-bg); color: #15803d; border: 1px solid var(--zone-green-border); }
     .zone-chip.Blue { background: var(--zone-blue-bg); color: #1d4ed8; border: 1px solid var(--zone-blue-border); }
 
-    .rank-medal { font-weight: 800; }
-    .rank-1 { color: #b45309; }
-    .rank-2 { color: #475569; }
-    .rank-3 { color: #9a3412; }
+    .pos-num {
+      font-weight: 800;
+      color: var(--brand-navy);
+      font-variant-numeric: tabular-nums;
+    }
 
     @media (max-width: 1120px) {
       .session-h2h-grid {
@@ -1836,12 +1842,12 @@
 
       <div class="session-section-banner">
         <div>
-          <div class="card-title">🌙 Day 1 (Night) vs. ☀️ Day 2 (Day) Performance</div>
+          <div class="card-title">Day 1 (Night) vs. Day 2 (Day) Performance</div>
           <div class="card-subtitle">Head-to-head session breakdown across catch volume, length, blank rate & top zones</div>
         </div>
         <div style="display:flex; gap:0.75rem; font-size:0.8rem; font-weight:700;">
-          <span class="zt-lbl-d1">🌙 Night (D1)</span>
-          <span class="zt-lbl-d2">☀️ Day (D2)</span>
+          <span class="zt-lbl-d1">Night (D1)</span>
+          <span class="zt-lbl-d2">Day (D2)</span>
         </div>
       </div>
 
@@ -1870,11 +1876,11 @@
                   <th colspan="2" class="group-th"></th>
                   <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
-                  <th colspan="4" class="group-th d1-grp">🌙 Day 1</th>
-                  <th colspan="4" class="group-th d2-grp sec-sep-left">☀️ Day 2</th>
+                  <th colspan="4" class="group-th d1-grp">Day 1</th>
+                  <th colspan="4" class="group-th d2-grp sec-sep-left">Day 2</th>
                 </tr>
                 <tr>
-                  <th class="sub-th left-align">Pos</th>
+                  <th class="sub-th" style="text-align:center;">Pos</th>
                   <th class="sub-th left-align">Angler</th>
                   <th class="sub-th sec-sep-left">Pts</th>
                   <th class="sub-th">Len</th>
@@ -1927,8 +1933,8 @@
       <div class="glass-card" style="margin-bottom: 0.9rem;">
         <div class="card-header" style="margin-bottom:0;">
           <div>
-            <div class="card-title">🌙 Day 1 Zone Winners</div>
-            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+            <div class="card-title">Day 1 Zone Winners</div>
+            <div class="card-subtitle">Night session • Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
           </div>
         </div>
       </div>
@@ -1942,8 +1948,8 @@
       <div class="glass-card" style="margin-bottom: 0.9rem;">
         <div class="card-header" style="margin-bottom:0;">
           <div>
-            <div class="card-title">☀️ Day 2 Zone Winners</div>
-            <div class="card-subtitle">Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
+            <div class="card-title">Day 2 Zone Winners</div>
+            <div class="card-subtitle">Day session • Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
           </div>
         </div>
       </div>
@@ -1958,14 +1964,14 @@
         <div class="card-header">
           <div>
             <div class="card-title">Biggest Fish</div>
-            <div class="card-subtitle">Top 5 longest individual fish recorded across Day 1 (🌙) and Day 2 (☀️)</div>
+            <div class="card-subtitle">Top 5 longest individual fish recorded across Day 1 and Day 2</div>
           </div>
         </div>
         <div class="table-wrap">
           <table class="card-row-table">
             <thead>
               <tr>
-                <th style="width: 64px; text-align: center;">Rank</th>
+                <th style="width: 56px; text-align: center;">Pos</th>
                 <th>Angler</th>
                 <th>Session</th>
                 <th style="text-align: right;">Fish</th>
@@ -2039,7 +2045,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.13",
+      version: "v3.8.14",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2059,12 +2065,6 @@
       selectedAnglerName: "",
       compareAnglerName: ""
     };
-
-    function getOrdinal(n) {
-      const s = ["th", "st", "nd", "rd"];
-      const v = n % 100;
-      return n + (s[(v - 20) % 10] || s[v] || s[0]);
-    }
 
     function shortZone(zoneStr) {
       return (zoneStr || "").replace(" Zone", "").trim();
@@ -2148,7 +2148,6 @@
     function triggerTableBounceHints(containerEl) {
       const root = containerEl || document;
       requestAnimationFrame(() => {
-        // Update right-edge fade shadow immediately
         syncScrollShellState(
           document.getElementById("teamsTableWrap"),
           document.getElementById("teamsScrollShell")
@@ -2158,7 +2157,6 @@
           document.getElementById("indScrollShell")
         );
 
-        // Wait 350ms after view switch settles before running the 2-pulse peek
         setTimeout(() => {
           root.querySelectorAll(".table-wrap").forEach(wrap => {
             if (wrap.scrollWidth > wrap.clientWidth + 6 && wrap.scrollLeft === 0) {
@@ -2222,7 +2220,6 @@
         );
       });
 
-      // Calculate Day 1 Overall Standings so we can compute Day 1 -> Final rank movement
       const sortedDay1Overall = [...sorted].sort((a, b) => {
         return (
           (a.d1.zonePoints ?? 999) - (b.d1.zonePoints ?? 999) ||
@@ -2237,7 +2234,6 @@
         d1OverallRankMap[a.anglerName] = i + 1;
       });
 
-      // Calculate exact Zone Finishes for Day 1 & Day 2
       const d1ZonePosMap = {};
       const d2ZonePosMap = {};
       MATCH_CONFIG.zones.forEach(zName => {
@@ -2334,7 +2330,7 @@
         if ((a.d1.biggestFishCm || 0) > 0) {
           d1Specimens.push({
             day: "D1",
-            sessionLabel: "🌙 Day 1",
+            sessionLabel: "Day 1 (Night)",
             zone: a.d1.zone,
             peg: a.d1.peg,
             species: (a.d1.biggestFishSpecies || "").trim(),
@@ -2346,7 +2342,7 @@
         if ((a.d2.biggestFishCm || 0) > 0) {
           d2Specimens.push({
             day: "D2",
-            sessionLabel: "☀️ Day 2",
+            sessionLabel: "Day 2 (Day)",
             zone: a.d2.zone,
             peg: a.d2.peg,
             species: (a.d2.biggestFishSpecies || "").trim(),
@@ -2443,18 +2439,18 @@
         }
         if (f1 > bestSessionFish) {
           bestSessionFish = f1;
-          bestSessionWho = `${a.anglerName} (🌙 D1)`;
+          bestSessionWho = `${a.anglerName} (D1)`;
         }
         if (f2 > bestSessionFish) {
           bestSessionFish = f2;
-          bestSessionWho = `${a.anglerName} (☀️ D2)`;
+          bestSessionWho = `${a.anglerName} (D2)`;
         }
       });
 
       const topSpecimen = STATE.specimensAll[0];
       const specimenValHtml = topSpecimen ? `${topSpecimen.lengthCm}<span style="font-size:0.82rem; font-weight:600;">cm</span>` : "—";
       const specimenSubText = topSpecimen
-        ? `${topSpecimen.species ? topSpecimen.species + " • " : ""}${topSpecimen.anglerName} (${topSpecimen.day === "D1" ? "🌙" : "☀️"})`
+        ? `${topSpecimen.species ? topSpecimen.species + " • " : ""}${topSpecimen.anglerName} (${topSpecimen.day})`
         : "No specimen recorded";
 
       document.getElementById("overviewKpis").innerHTML = `
@@ -2549,7 +2545,7 @@
         </div>
 
         <div class="session-donut-card day1-sub-card">
-          <div class="session-donut-card-title">🌙 Day 1</div>
+          <div class="session-donut-card-title">Day 1</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
               "Length (m)",
@@ -2567,7 +2563,7 @@
         </div>
 
         <div class="session-donut-card day2-sub-card">
-          <div class="session-donut-card-title">☀️ Day 2</div>
+          <div class="session-donut-card-title">Day 2</div>
           <div class="donut-pair-row">
             ${buildZoneVerticalBarChart(
               "Length (m)",
@@ -2619,19 +2615,19 @@
             ${buildEdgeBadge(
               totalD1Fish,
               totalD2Fish,
-              `🌙 Night +${totalD1Fish - totalD2Fish} fish`,
-              `☀️ Day +${totalD2Fish - totalD1Fish} fish`
+              `Night +${totalD1Fish - totalD2Fish} fish`,
+              `Day +${totalD2Fish - totalD1Fish} fish`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
               <div class="sh2h-side-val">${totalD1Fish} fish</div>
               <div class="sh2h-side-sub">Avg ${d1AvgPerRod} / angler</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side d2-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
               <div class="sh2h-side-val">${totalD2Fish} fish</div>
               <div class="sh2h-side-sub">Avg ${d2AvgPerRod} / angler</div>
             </div>
@@ -2647,19 +2643,19 @@
             ${buildEdgeBadge(
               totalD1LenCm,
               totalD2LenCm,
-              `🌙 Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`,
-              `☀️ Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`
+              `Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`,
+              `Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
               <div class="sh2h-side-val">${totalD1Meters}m</div>
               <div class="sh2h-side-sub">${totalD1LenCm} cm total</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side d2-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
               <div class="sh2h-side-val">${totalD2Meters}m</div>
               <div class="sh2h-side-sub">${totalD2LenCm} cm total</div>
             </div>
@@ -2675,19 +2671,19 @@
             ${buildEdgeBadge(
               Number(d1AvgFishSize),
               Number(d2AvgFishSize),
-              `🌙 Larger (+${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm)`,
-              `☀️ Larger (+${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm)`
+              `Larger (+${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm)`,
+              `Larger (+${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm)`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
               <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
               <div class="sh2h-side-sub">Per fish caught</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side d2-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
               <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
               <div class="sh2h-side-sub">Per fish caught</div>
             </div>
@@ -2703,19 +2699,19 @@
             ${buildEdgeBadge(
               d1CatchingAnglers,
               d2CatchingAnglers,
-              `🌙 +${d1CatchingAnglers - d2CatchingAnglers} more catching`,
-              `☀️ +${d2CatchingAnglers - d1CatchingAnglers} more catching`
+              `+${d1CatchingAnglers - d2CatchingAnglers} more catching`,
+              `+${d2CatchingAnglers - d1CatchingAnglers} more catching`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
               <div class="sh2h-side-val">${d1CatchPct}% Caught</div>
               <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers caught (${d1BlankingAnglers} blanked)</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side d2-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
               <div class="sh2h-side-val">${d2CatchPct}% Caught</div>
               <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers caught (${d2BlankingAnglers} blanked)</div>
             </div>
@@ -2731,25 +2727,25 @@
             ${buildEdgeBadge(
               d1BestBag.fish,
               d2BestBag.fish,
-              `🌙 Top catch (${d1BestBag.fish})`,
-              `☀️ Top catch (${d2BestBag.fish})`
+              `Top catch (${d1BestBag.fish})`,
+              `Top catch (${d2BestBag.fish})`
             )}
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
               <div class="sh2h-side-val">${d1BestBag.fish} fish</div>
               <div class="sh2h-side-sub">${d1BestBag.angler}</div>
             </div>
             <div class="sh2h-vs-sep">vs</div>
             <div class="sh2h-side d2-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
               <div class="sh2h-side-val">${d2BestBag.fish} fish</div>
               <div class="sh2h-side-sub">${d2BestBag.angler}</div>
             </div>
           </div>
           <div class="sh2h-footer-note">
-            Longest: 🌙 ${d1SpecText} • ☀️ ${d2SpecText}
+            Longest: D1 ${d1SpecText} • D2 ${d2SpecText}
           </div>
         </div>
 
@@ -2760,13 +2756,13 @@
           </div>
           <div class="sh2h-split-cols">
             <div class="sh2h-side d1-side">
-              <div class="sh2h-side-lbl zt-lbl-d1">🌙 Day 1 Best</div>
+              <div class="sh2h-side-lbl zt-lbl-d1">Day 1 Best</div>
               <div class="sh2h-side-val">${shortZone(d1TopZone.zoneName)}</div>
               <div class="sh2h-side-sub">${(d1TopZone.d1Len / 100).toFixed(2)}m • ${d1TopZone.d1Fish} fish</div>
             </div>
             <div class="sh2h-vs-sep">→</div>
             <div class="sh2h-side d2-side">
-              <div class="sh2h-side-lbl zt-lbl-d2">☀️ Day 2 Best</div>
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2 Best</div>
               <div class="sh2h-side-val">${shortZone(d2TopZone.zoneName)}</div>
               <div class="sh2h-side-sub">${(d2TopZone.d2Len / 100).toFixed(2)}m • ${d2TopZone.d2Fish} fish</div>
             </div>
@@ -2807,14 +2803,13 @@
           }
           lastPts = pts;
 
-          const rankClass = a.rank <= 3 ? `rank-medal rank-${a.rank}` : "";
           const ovBig = a.overallBiggestCm > 0 ? a.overallBiggestCm : "—";
           const d1Big = (a.d1.biggestFishCm || 0) > 0 ? a.d1.biggestFishCm : "—";
           const d2Big = (a.d2.biggestFishCm || 0) > 0 ? a.d2.biggestFishCm : "—";
 
           rowsHtml.push(`
             <tr class="ind-data-row">
-              <td class="pos-cell overall-card-cell ${rankClass}">${getOrdinal(a.rank)}</td>
+              <td class="pos-cell overall-card-cell">${a.rank}</td>
               <td class="angler-cell overall-card-cell">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
@@ -2853,7 +2848,6 @@
        RENDER VIEW 3: TEAM LEADERBOARD
        --------------------------------------------------------- */
     function renderTeamsContributions() {
-      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
       const maxMembers = Math.max(4, ...STATE.teams.map(t => t.members.length));
 
       let anglerHeaders = "";
@@ -2879,8 +2873,6 @@
       document.getElementById("teamsTableBody").innerHTML = STATE.teams.map((team, idx) => {
         const teamRank = idx + 1;
         const podiumClass = teamRank <= 3 ? `podium-${teamRank}` : "";
-        const rankClass = teamRank <= 3 ? `rank-medal rank-${teamRank}` : "";
-        const prefix = rankIcons[teamRank] || "";
 
         const sortedMembers = [...team.members].sort(
           (a, b) =>
@@ -2908,7 +2900,7 @@
 
         return `
           <tr class="team-strip-row ${podiumClass}">
-            <td class="overall-card-cell ${rankClass}">${prefix}${getOrdinal(teamRank)}</td>
+            <td class="overall-card-cell">${teamRank}</td>
             <td class="team-main-cell overall-card-cell overall-card-end">
               <div class="team-name-line">${team.teamName}</div>
               <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
@@ -2929,7 +2921,6 @@
        RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS
        --------------------------------------------------------- */
     function renderDayZoneWinners(dayKey, gridElementId) {
-      const rankIcons = { 1: "🥇 ", 2: "🥈 ", 3: "🥉 " };
       const gridEl = document.getElementById(gridElementId);
       if (!gridEl) return;
 
@@ -2949,14 +2940,12 @@
 
         const winner = zoneAnglers[0];
         const winnerBadge = winner
-          ? `<span class="zw-winner-callout">🥇 ${winner.anglerName} (${winner[dayKey].zonePoints} pts • ${winner[dayKey].totalLengthCm}cm)</span>`
+          ? `<span class="zw-winner-callout">Winner: ${winner.anglerName} (${winner[dayKey].zonePoints} pts • ${winner[dayKey].totalLengthCm}cm)</span>`
           : `<span class="zw-winner-callout">No anglers recorded</span>`;
 
         const rowsHtml = zoneAnglers.map((a, idx) => {
           const pos = idx + 1;
           const podiumClass = pos <= 3 ? `podium-${pos}` : "";
-          const rankClass = pos <= 3 ? `rank-medal rank-${pos}` : "";
-          const prefix = rankIcons[pos] || "";
           const sess = a[dayKey];
           const bigDisplay = (sess.biggestFishCm || 0) > 0
             ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.68rem;">(${sess.biggestFishSpecies})</span>` : ""}`
@@ -2964,7 +2953,7 @@
 
           return `
             <tr class="${podiumClass}">
-              <td class="${rankClass}" style="text-align:center; width:54px;">${prefix}${getOrdinal(pos)}</td>
+              <td class="pos-num" style="text-align:center; width:46px;">${pos}</td>
               <td>
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
@@ -3012,12 +3001,11 @@
       document.getElementById("biggestFishTableBody").innerHTML = top5.map((s, idx) => {
         const rank = idx + 1;
         const podiumClass = rank <= 3 ? `podium-${rank}` : "";
-        const rankClass = rank <= 3 ? `rank-medal rank-${rank}` : "";
         const zShort = shortZone(s.zone);
 
         return `
           <tr class="${podiumClass}">
-            <td class="${rankClass}" style="text-align:center;">${getOrdinal(rank)}</td>
+            <td class="pos-num" style="text-align:center;">${rank}</td>
             <td>
               <div class="ind-angler-name">${s.anglerName}</div>
               <div class="ind-team-sub">${s.teamName}</div>
@@ -3052,8 +3040,7 @@
       if (!winners.length && !others.length) {
         bodyEl.innerHTML = `
           <div style="padding:1.5rem; text-align:center; background:var(--bg-card); border-radius:var(--radius-md); border:1px dashed var(--border-strong); color:var(--text-secondary);">
-            <div style="font-size:1.4rem; margin-bottom:0.35rem;">🎲</div>
-            <div style="font-weight:700; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
+            <div style="font-weight:800; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
             <div style="font-size:0.82rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
           </div>
         `;
@@ -3066,7 +3053,7 @@
           <table class="card-row-table">
             <thead>
               <tr>
-                <th>Pair</th>
+                <th style="width:56px; text-align:center;">Pos</th>
                 <th>Angler 1</th>
                 <th>Angler 2</th>
                 <th>Combined Length</th>
@@ -3076,7 +3063,7 @@
             <tbody>
               ${allPairs.map((p, i) => `
                 <tr>
-                  <td><strong>#${i + 1}</strong></td>
+                  <td class="pos-num" style="text-align:center;">${i + 1}</td>
                   <td>${p.angler1 || "—"}</td>
                   <td>${p.angler2 || "—"}</td>
                   <td>${p.combinedLength || "—"}</td>
@@ -3113,7 +3100,7 @@
       }
 
       selectEl.innerHTML =
-        `<option value="">— Select your name —</option>` +
+        `<option value="">— Select an angler —</option>` +
         sortedAlpha.map(a => `<option value="${a.anglerName}">${a.anglerName}</option>`).join("");
 
       selectEl.value = STATE.selectedAnglerName;
@@ -3126,7 +3113,7 @@
         renderMyReport();
       };
 
-      // Unselected default state: do NOT pre-populate 1st place (Clyde)
+      // Unselected default state
       if (!STATE.selectedAnglerName) {
         bannerEl.innerHTML = `
           <div class="report-empty-prompt">
@@ -3168,27 +3155,26 @@
       const fieldBestBiggest = Math.max(...anglers.map(a => a.overallBiggestCm || 0));
 
       const fieldSize = anglers.length;
-      const fieldOrdinal = getOrdinal(fieldSize);
 
       // 1. Two-Day Trajectory / Momentum Banner
       const rankDelta = me.d1OverallRank - me.rank;
       let moveBadgeClass = "steady";
-      let movePillText = `➡️ Held steady at ${getOrdinal(me.rank)}`;
-      let moveHeadline = `Finished ${getOrdinal(me.rank)} overall — unchanged from Day 1 (${getOrdinal(me.d1OverallRank)})`;
+      let movePillText = `Held steady at #${me.rank}`;
+      let moveHeadline = `Finished #${me.rank} overall — unchanged from Day 1 (#${me.d1OverallRank})`;
 
       if (rankDelta > 0) {
         moveBadgeClass = "up";
-        movePillText = `📈 Climbed ${rankDelta} ${rankDelta === 1 ? "place" : "places"}`;
-        moveHeadline = `Rose from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+        movePillText = `Climbed ${rankDelta} ${rankDelta === 1 ? "place" : "places"}`;
+        moveHeadline = `Rose from #${me.d1OverallRank} after Day 1 to #${me.rank} overall`;
       } else if (rankDelta < 0) {
         const dropCount = Math.abs(rankDelta);
         moveBadgeClass = "down";
-        movePillText = `📉 Dropped ${dropCount} ${dropCount === 1 ? "place" : "places"}`;
-        moveHeadline = `Moved from ${getOrdinal(me.d1OverallRank)} after Day 1 to ${getOrdinal(me.rank)} overall`;
+        movePillText = `Dropped ${dropCount} ${dropCount === 1 ? "place" : "places"}`;
+        moveHeadline = `Moved from #${me.d1OverallRank} after Day 1 to #${me.rank} overall`;
       }
 
-      const z1Text = `🌙 Day 1: ${getOrdinal(me.d1ZoneStanding.pos)} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
-      const z2Text = `☀️ Day 2: ${getOrdinal(me.d2ZoneStanding.pos)} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
+      const z1Text = `Day 1: #${me.d1ZoneStanding.pos} in ${shortZone(me.d1.zone)} (${me.d1.zonePoints} pts)`;
+      const z2Text = `Day 2: #${me.d2ZoneStanding.pos} in ${shortZone(me.d2.zone)} (${me.d2.zonePoints} pts)`;
 
       bannerEl.innerHTML = `
         <div class="momentum-banner">
@@ -3212,7 +3198,7 @@
       const r = 38;
       const c = 2 * Math.PI * r;
 
-      function buildMotifCard(topHeading, insideOrdinal, insideSub, actualLabel, bestLabel, pct, color) {
+      function buildMotifCard(topHeading, insideRank, insideSub, actualLabel, bestLabel, pct, color) {
         const offset = c - (pct / 100) * c;
         return `
           <div class="gauge-card">
@@ -3226,7 +3212,7 @@
                   stroke-dashoffset="${offset.toFixed(1)}"></circle>
               </svg>
               <div class="gauge-inside-text">
-                <span class="gauge-ordinal">${insideOrdinal}</span>
+                <span class="gauge-ordinal">${insideRank}</span>
                 <span class="gauge-out-of">${insideSub}</span>
               </div>
             </div>
@@ -3241,8 +3227,8 @@
       gaugesEl.innerHTML = `
         ${buildMotifCard(
           "Overall Standing",
-          getOrdinal(me.rank),
-          `out of ${fieldOrdinal}`,
+          `${me.rank}`,
+          `of ${fieldSize}`,
           `${me.totals.cumulativePoints} zone pts`,
           `${fieldBestPts} pts`,
           overallPct,
@@ -3250,8 +3236,8 @@
         )}
         ${buildMotifCard(
           "Total Fish",
-          getOrdinal(me.fishRank),
-          `out of ${fieldOrdinal}`,
+          `${me.fishRank}`,
+          `of ${fieldSize}`,
           `${me.totals.cumulativeFish} fish`,
           `${fieldBestFish} fish`,
           fishRankPct,
@@ -3259,8 +3245,8 @@
         )}
         ${buildMotifCard(
           "Total Length",
-          getOrdinal(me.lengthRank),
-          `out of ${fieldOrdinal}`,
+          `${me.lengthRank}`,
+          `of ${fieldSize}`,
           `${me.totals.cumulativeLengthCm} cm`,
           `${fieldBestLength} cm`,
           lengthRankPct,
@@ -3268,8 +3254,8 @@
         )}
         ${buildMotifCard(
           "Biggest Fish",
-          me.overallBiggestCm > 0 ? getOrdinal(me.biggestRank) : "—",
-          me.overallBiggestCm > 0 ? `out of ${fieldOrdinal}` : "No fish",
+          me.overallBiggestCm > 0 ? `${me.biggestRank}` : "—",
+          me.overallBiggestCm > 0 ? `of ${fieldSize}` : "No fish",
           me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "0 cm",
           `${fieldBestBiggest} cm`,
           biggestRankPct,
@@ -3321,9 +3307,9 @@
         let marginHtml = "";
         if (typeof meNum === "number" && typeof rivalNum === "number") {
           if (winner === "me") {
-            marginHtml = `<span class="h2h-sbs-margin-tag me-lead">◀ +${formattedDiff}${unitSuffix}</span>`;
+            marginHtml = `<span class="h2h-sbs-margin-tag me-lead">+${formattedDiff}${unitSuffix}</span>`;
           } else if (winner === "rival") {
-            marginHtml = `<span class="h2h-sbs-margin-tag rival-lead">+${formattedDiff}${unitSuffix} ▶</span>`;
+            marginHtml = `<span class="h2h-sbs-margin-tag rival-lead">+${formattedDiff}${unitSuffix}</span>`;
           } else {
             marginHtml = `<span class="h2h-sbs-margin-tag tie">Level</span>`;
           }
@@ -3353,12 +3339,12 @@
           <div class="h2h-sbs-header">
             <div class="h2h-sbs-angler left">
               <div class="h2h-sbs-name">${me.anglerName}</div>
-              <div class="h2h-sbs-meta">${getOrdinal(me.rank)} Overall • ${me.teamName}</div>
+              <div class="h2h-sbs-meta">Pos ${me.rank} • ${me.teamName}</div>
             </div>
             <div class="h2h-sbs-vs-badge">VS</div>
             <div class="h2h-sbs-angler right">
               <div class="h2h-sbs-name">${rival.anglerName}</div>
-              <div class="h2h-sbs-meta">${getOrdinal(rival.rank)} Overall • ${rival.teamName}</div>
+              <div class="h2h-sbs-meta">Pos ${rival.rank} • ${rival.teamName}</div>
             </div>
           </div>
 
@@ -3371,8 +3357,8 @@
             metricLabel: "Total Zone Points",
             meVal: `${me.totals.cumulativePoints} pts`,
             rivalVal: `${rival.totals.cumulativePoints} pts`,
-            meSub: `Rank: ${getOrdinal(me.rank)}`,
-            rivalSub: `Rank: ${getOrdinal(rival.rank)}`,
+            meSub: `Rank: ${me.rank}`,
+            rivalSub: `Rank: ${rival.rank}`,
             meNum: me.totals.cumulativePoints,
             rivalNum: rival.totals.cumulativePoints,
             lowerIsBetter: true,
@@ -3383,8 +3369,8 @@
             metricLabel: "Total Fish Landed",
             meVal: `${me.totals.cumulativeFish} fish`,
             rivalVal: `${rival.totals.cumulativeFish} fish`,
-            meSub: `Field Rank: ${getOrdinal(me.fishRank)}`,
-            rivalSub: `Field Rank: ${getOrdinal(rival.fishRank)}`,
+            meSub: `Field Rank: ${me.fishRank}`,
+            rivalSub: `Field Rank: ${rival.fishRank}`,
             meNum: me.totals.cumulativeFish,
             rivalNum: rival.totals.cumulativeFish,
             lowerIsBetter: false,
@@ -3395,8 +3381,8 @@
             metricLabel: "Total Measured Length",
             meVal: `${me.totals.cumulativeLengthCm} cm`,
             rivalVal: `${rival.totals.cumulativeLengthCm} cm`,
-            meSub: `${(me.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(me.lengthRank)})`,
-            rivalSub: `${(rival.totals.cumulativeLengthCm / 100).toFixed(2)}m (${getOrdinal(rival.lengthRank)})`,
+            meSub: `${(me.totals.cumulativeLengthCm / 100).toFixed(2)}m (Rank ${me.lengthRank})`,
+            rivalSub: `${(rival.totals.cumulativeLengthCm / 100).toFixed(2)}m (Rank ${rival.lengthRank})`,
             meNum: me.totals.cumulativeLengthCm,
             rivalNum: rival.totals.cumulativeLengthCm,
             lowerIsBetter: false,
