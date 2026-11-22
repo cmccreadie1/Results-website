@@ -990,7 +990,7 @@
     }
 
     .table-wrap.tight-scores-wrap {
-      max-width: 1020px;
+      max-width: 1040px;
       margin: 0 auto;
     }
 
@@ -1108,7 +1108,7 @@
     }
 
     /* =========================================================================
-       SHARED TWO-CARD SPLIT STYLING + COMPACT STICKY LEFT IDENTITY COLUMNS
+       MODULAR ROUNDED CARD SPLIT SYSTEM (INDIVIDUAL & TEAM LEADERBOARDS)
        ========================================================================= */
     table.tight-ind-table {
       font-size: 0.78rem;
@@ -1125,15 +1125,11 @@
     table.two-tier-sticky-table th.group-th.overall-grp {
       color: #ffffff;
       background: var(--brand-navy);
-      border-right: 1px solid var(--brand-navy);
-      border-top-right-radius: var(--radius-sm);
     }
 
     table.two-tier-sticky-table th.group-th.d1-grp {
       color: #e0e7ff;
       background: #1e3a8a;
-      border-left: 1px solid #1e3a8a;
-      border-top-left-radius: var(--radius-sm);
     }
 
     table.two-tier-sticky-table th.group-th.d2-grp {
@@ -1142,7 +1138,7 @@
     }
 
     table.two-tier-sticky-table th.sub-th {
-      padding: 0.34rem 0.38rem;
+      padding: 0.34rem 0.36rem;
       font-size: 0.65rem;
       text-align: center;
       background: #003566;
@@ -1152,53 +1148,69 @@
       text-align: left;
     }
 
-    table.two-tier-sticky-table th.overall-card-end {
-      border-right: 1px solid #003566 !important;
-      border-bottom-right-radius: var(--radius-sm);
+    /* Reusable Rounded Card Edge Helpers for Multi-Card Rows */
+    table.two-tier-sticky-table th.card-grp-start {
+      border-left: 1px solid rgba(255, 255, 255, 0.14) !important;
+      border-top-left-radius: var(--radius-sm);
     }
 
-    table.two-tier-sticky-table th.session-card-start {
+    table.two-tier-sticky-table th.card-grp-end {
+      border-right: 1px solid rgba(255, 255, 255, 0.14) !important;
+      border-top-right-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table th.card-sub-start {
       border-left: 1px solid #003566 !important;
       border-bottom-left-radius: var(--radius-sm);
     }
 
+    table.two-tier-sticky-table th.card-sub-end {
+      border-right: 1px solid #003566 !important;
+      border-bottom-right-radius: var(--radius-sm);
+    }
+
+    table.two-tier-sticky-table tbody tr td.card-cell-start {
+      border-left: 1px solid var(--border-glass) !important;
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
+    }
+
+    table.two-tier-sticky-table tbody tr td.card-cell-end {
+      border-right: 1px solid var(--border-glass) !important;
+      border-top-right-radius: var(--radius-md);
+      border-bottom-right-radius: var(--radius-md);
+    }
+
+    table.two-tier-sticky-table tbody tr td.overall-card-cell.card-cell-start {
+      border-left-color: var(--brand-tint-border) !important;
+    }
+
+    table.two-tier-sticky-table tbody tr td.overall-card-cell.card-cell-end {
+      border-right-color: var(--brand-tint-border) !important;
+    }
+
+    /* Gap Spacer Between Distinct Rounded Cards */
     table.two-tier-sticky-table th.col-gap-spacer,
     table.two-tier-sticky-table td.col-gap-spacer {
       background: var(--bg-surface) !important;
       border: none !important;
       box-shadow: none !important;
-      width: 9px;
-      min-width: 9px;
-      max-width: 9px;
+      width: 8px;
+      min-width: 8px;
+      max-width: 8px;
       padding: 0 !important;
       pointer-events: none;
     }
 
     table.tight-ind-table tbody tr.ind-data-row td {
-      padding: 0.44rem 0.34rem;
+      padding: 0.44rem 0.32rem;
       text-align: center;
-    }
-
-    table.two-tier-sticky-table tbody tr td.overall-card-end {
-      border-right: 1px solid var(--brand-tint-border) !important;
-      border-top-right-radius: var(--radius-md);
-      border-bottom-right-radius: var(--radius-md);
     }
 
     table.two-tier-sticky-table tbody tr td.overall-card-cell {
       background: #f8fbff;
       border-top-color: var(--brand-tint-border);
       border-bottom-color: var(--brand-tint-border);
-    }
-
-    table.two-tier-sticky-table tbody tr td.overall-card-cell:first-child {
-      border-left-color: var(--brand-tint-border);
-    }
-
-    table.two-tier-sticky-table tbody tr td.session-card-start {
-      border-left: 1px solid var(--border-glass) !important;
-      border-top-left-radius: var(--radius-md);
-      border-bottom-left-radius: var(--radius-md);
     }
 
     table.two-tier-sticky-table tbody tr td.session-card-cell {
@@ -1250,7 +1262,7 @@
       position: sticky;
       left: 32px;
       z-index: 15;
-      box-shadow: 3px 0 6px -2px rgba(15, 23, 42, 0.08);
+      box-shadow: 4px 0 8px -3px rgba(15, 23, 42, 0.11);
     }
 
     .sticky-col-team-pos {
@@ -1263,7 +1275,7 @@
       position: sticky;
       left: 34px;
       z-index: 15;
-      box-shadow: 3px 0 6px -2px rgba(15, 23, 42, 0.08);
+      box-shadow: 4px 0 8px -3px rgba(15, 23, 42, 0.11);
     }
 
     table.two-tier-sticky-table thead th.sticky-col-pos,
@@ -1294,11 +1306,7 @@
       text-overflow: ellipsis;
     }
 
-    .sec-sep-left {
-      border-left: 1.5px solid #cbd5e1 !important;
-    }
-
-    /* Team Leaderboard Specific Cells - Tightened Rank-to-Team Gap */
+    /* Team Leaderboard Specific Cells - Tightened Rank-to-Team Gap & Separated Angler Cards */
     table.one-line-team-table {
       border-spacing: 0 6px;
     }
@@ -1339,7 +1347,6 @@
     }
 
     .team-contrib-cell {
-      border-left: 1px solid var(--border-glass);
       text-align: left;
       min-width: 148px;
     }
@@ -1965,14 +1972,14 @@
         margin-bottom: 0.45rem;
       }
 
-      /* Tighter Table Cells & Spacers so More Columns Fit on Open */
+      /* Tighter Table Cells & Spacers so All 4 Columns Fit Beside Sticky Name */
       table.card-row-table thead th {
-        padding: 0.42rem 0.32rem;
+        padding: 0.42rem 0.3rem;
         font-size: 0.63rem;
       }
 
       table.card-row-table tbody tr td {
-        padding: 0.42rem 0.32rem;
+        padding: 0.42rem 0.3rem;
       }
 
       table.two-tier-sticky-table th.col-gap-spacer,
@@ -1983,10 +1990,10 @@
       }
 
       table.tight-ind-table tbody tr.ind-data-row td {
-        padding: 0.38rem 0.24rem;
+        padding: 0.38rem 0.22rem;
       }
 
-      /* Compact Individual Sticky Identity Columns (26px Pos + 106px Angler) */
+      /* Compact Individual Sticky Identity Columns (26px Pos + 104px Angler) */
       table.tight-ind-table th.pos-th,
       table.tight-ind-table td.pos-cell {
         width: 26px;
@@ -2003,11 +2010,11 @@
 
       table.tight-ind-table th.angler-th,
       table.tight-ind-table td.angler-cell {
-        width: 106px;
-        min-width: 106px;
-        max-width: 106px;
+        width: 104px;
+        min-width: 104px;
+        max-width: 104px;
         padding-left: 0.16rem;
-        padding-right: 0.28rem;
+        padding-right: 0.26rem;
         white-space: normal;
       }
 
@@ -2066,7 +2073,7 @@
       }
 
       .team-contrib-cell {
-        min-width: 136px;
+        min-width: 134px;
       }
 
       .session-donuts-grid {
@@ -2273,7 +2280,7 @@
          VIEW 2: INDIVIDUAL LEADERBOARD
          ========================================================= -->
     <section id="view-individual" class="view-section">
-      <div class="glass-card" style="max-width: 1060px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1080px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Individual Leaderboard</div>
@@ -2288,25 +2295,29 @@
             <table class="card-row-table tight-ind-table two-tier-sticky-table">
               <thead>
                 <tr>
-                  <th colspan="2" class="group-th sticky-col-pos"></th>
-                  <th colspan="4" class="group-th overall-grp sec-sep-left">Overall</th>
+                  <th colspan="2" class="group-th card-grp-end sticky-col-pos"></th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
-                  <th colspan="4" class="group-th d1-grp">Day 1</th>
-                  <th colspan="4" class="group-th d2-grp sec-sep-left">Day 2</th>
+                  <th colspan="4" class="group-th overall-grp card-grp-start card-grp-end">Overall</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th colspan="4" class="group-th d1-grp card-grp-start card-grp-end">Day 1</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th colspan="4" class="group-th d2-grp card-grp-start">Day 2</th>
                 </tr>
                 <tr>
                   <th class="sub-th pos-th sticky-col-pos" style="text-align:center;">Pos</th>
-                  <th class="sub-th angler-th left-align sticky-col-name">Angler</th>
-                  <th class="sub-th sec-sep-left">Pts</th>
-                  <th class="sub-th">Len</th>
-                  <th class="sub-th">Fish</th>
-                  <th class="sub-th overall-card-end">Big</th>
+                  <th class="sub-th angler-th left-align card-sub-end sticky-col-name">Angler</th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
-                  <th class="sub-th session-card-start">Pts</th>
+                  <th class="sub-th card-sub-start">Pt</th>
                   <th class="sub-th">Len</th>
                   <th class="sub-th">Fish</th>
-                  <th class="sub-th">Big</th>
-                  <th class="sub-th sec-sep-left">Pts</th>
+                  <th class="sub-th card-sub-end">Big</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th class="sub-th card-sub-start">Pt</th>
+                  <th class="sub-th">Len</th>
+                  <th class="sub-th">Fish</th>
+                  <th class="sub-th card-sub-end">Big</th>
+                  <th class="col-gap-spacer" aria-hidden="true"></th>
+                  <th class="sub-th card-sub-start">Pt</th>
                   <th class="sub-th">Len</th>
                   <th class="sub-th">Fish</th>
                   <th class="sub-th">Big</th>
@@ -2323,7 +2334,7 @@
          VIEW 3: TEAM LEADERBOARD
          ========================================================= -->
     <section id="view-teams" class="view-section">
-      <div class="glass-card" style="max-width: 1240px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1260px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Team Leaderboard</div>
@@ -2459,7 +2470,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.18",
+      version: "v3.8.19",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3211,7 +3222,7 @@
           if (idx > 0 && pts !== lastPts) {
             rowsHtml.push(`
               <tr class="pts-bracket-gap" aria-hidden="true">
-                <td colspan="15"></td>
+                <td colspan="17"></td>
               </tr>
             `);
           }
@@ -3223,26 +3234,32 @@
 
           rowsHtml.push(`
             <tr class="ind-data-row">
-              <td class="pos-cell overall-card-cell sticky-col-pos">${a.rank}</td>
-              <td class="angler-cell overall-card-cell sticky-col-name">
+              <td class="pos-cell overall-card-cell card-cell-start sticky-col-pos">${a.rank}</td>
+              <td class="angler-cell overall-card-cell card-cell-end sticky-col-name">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <td class="overall-card-cell sec-sep-left"><strong style="color:var(--brand-navy);">${pts}</strong></td>
-              <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
-              <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
-              <td class="overall-card-cell overall-card-end">${ovBig}</td>
 
               <td class="col-gap-spacer" aria-hidden="true"></td>
 
-              <td class="session-card-cell session-card-start">${a.d1.zonePoints}</td>
+              <td class="overall-card-cell card-cell-start"><strong style="color:var(--brand-navy);">${pts}</strong></td>
+              <td class="overall-card-cell">${a.totals.cumulativeLengthCm}</td>
+              <td class="overall-card-cell"><strong>${a.totals.cumulativeFish}</strong></td>
+              <td class="overall-card-cell card-cell-end">${ovBig}</td>
+
+              <td class="col-gap-spacer" aria-hidden="true"></td>
+
+              <td class="session-card-cell card-cell-start">${a.d1.zonePoints}</td>
               <td class="session-card-cell">${a.d1.totalLengthCm}</td>
               <td class="session-card-cell">${a.d1.fishCount}</td>
-              <td class="session-card-cell">${d1Big}</td>
-              <td class="session-card-cell sec-sep-left">${a.d2.zonePoints}</td>
+              <td class="session-card-cell card-cell-end">${d1Big}</td>
+
+              <td class="col-gap-spacer" aria-hidden="true"></td>
+
+              <td class="session-card-cell card-cell-start">${a.d2.zonePoints}</td>
               <td class="session-card-cell">${a.d2.totalLengthCm}</td>
               <td class="session-card-cell">${a.d2.fishCount}</td>
-              <td class="session-card-cell">${d2Big}</td>
+              <td class="session-card-cell card-cell-end">${d2Big}</td>
             </tr>
           `);
         });
@@ -3266,19 +3283,23 @@
 
       let anglerHeaders = "";
       for (let i = 1; i <= maxMembers; i++) {
-        const startClass = i === 1 ? "session-card-start" : "";
-        anglerHeaders += `<th class="sub-th left-align ${startClass}">Angler ${i}</th>`;
+        if (i > 1) {
+          anglerHeaders += `<th class="col-gap-spacer" aria-hidden="true"></th>`;
+        }
+        anglerHeaders += `<th class="sub-th left-align card-sub-start card-sub-end">Angler ${i}</th>`;
       }
+
+      const contribSpan = maxMembers * 2 - 1;
 
       document.getElementById("teamsTableHead").innerHTML = `
         <tr>
-          <th colspan="2" class="group-th overall-grp sticky-col-team-pos">Team Overall</th>
+          <th colspan="2" class="group-th overall-grp card-grp-end sticky-col-team-pos">Team Overall</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
-          <th colspan="${maxMembers}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
+          <th colspan="${contribSpan}" class="group-th d1-grp card-grp-start">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
           <th class="sub-th team-pos-th sticky-col-team-pos" style="text-align:center;">Pos</th>
-          <th class="sub-th team-name-th left-align overall-card-end sticky-col-team-name">Team & Totals</th>
+          <th class="sub-th team-name-th left-align card-sub-end sticky-col-team-name">Team & Totals</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
@@ -3298,24 +3319,26 @@
 
         let memberCells = "";
         for (let i = 0; i < maxMembers; i++) {
+          if (i > 0) {
+            memberCells += `<td class="col-gap-spacer" aria-hidden="true"></td>`;
+          }
           const m = sortedMembers[i];
-          const startClass = i === 0 ? "session-card-start" : "";
           if (m) {
             memberCells += `
-              <td class="team-contrib-cell session-card-cell ${startClass}">
+              <td class="team-contrib-cell session-card-cell card-cell-start card-cell-end">
                 <div class="contrib-angler-line">${m.anglerName}</div>
                 <div class="contrib-stats-line">${m.totals.cumulativePoints} pts • ${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
               </td>
             `;
           } else {
-            memberCells += `<td class="team-contrib-cell session-card-cell ${startClass}" style="color:var(--text-muted);">—</td>`;
+            memberCells += `<td class="team-contrib-cell session-card-cell card-cell-start card-cell-end" style="color:var(--text-muted);">—</td>`;
           }
         }
 
         return `
           <tr class="team-strip-row ${podiumClass}">
-            <td class="overall-card-cell sticky-col-team-pos">${teamRank}</td>
-            <td class="team-main-cell overall-card-cell overall-card-end sticky-col-team-name">
+            <td class="overall-card-cell card-cell-start sticky-col-team-pos">${teamRank}</td>
+            <td class="team-main-cell overall-card-cell card-cell-end sticky-col-team-name">
               <div class="team-name-line">${team.teamName}</div>
               <div class="team-totals-line">${team.totalPts} pts • ${team.totalLengthCm}cm • ${team.totalFish} fish</div>
             </td>
