@@ -21,7 +21,7 @@
       --text-muted: #64748b;
 
       --brand-navy: #004481;
-      --brand-navy-dark: #00315c;
+      --brand-navy-dark: #00284d;
       --brand-cobalt: #005eb8;
       --brand-tint: #eef5fc;
       --brand-tint-border: #bfd9f2;
@@ -53,8 +53,8 @@
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-card: 0 2px 10px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
-      --shadow-elevated: 0 8px 24px rgba(0, 68, 129, 0.10);
+      --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
+      --shadow-elevated: 0 12px 28px rgba(0, 68, 129, 0.12);
     }
 
     * {
@@ -80,39 +80,121 @@
       padding: 0.85rem 0.65rem;
     }
 
-    /* Streamlined Fintech Front-Page Header */
-    .app-header {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      border-top: 4px solid var(--brand-navy);
-      border-radius: var(--radius-lg);
-      padding: 1.05rem 1.4rem;
+    /* =========================================================================
+       DEEP NAVY HERO SPLASH CARD WITH LIVE CHAMPIONSHIP PULSE STRIP
+       ========================================================================= */
+    .hero-splash-banner {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #004481 0%, #00284d 100%);
+      color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 1.35rem 1.35rem 1.15rem;
       margin-bottom: 1rem;
-      box-shadow: var(--shadow-card);
-      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 40, 77, 0.22);
     }
 
-    .app-header.hidden {
+    .hero-splash-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 92% 14%, rgba(255, 255, 255, 0.10) 0%, transparent 45%),
+        repeating-linear-gradient(
+          -28deg,
+          rgba(255, 255, 255, 0.03) 0px,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px,
+          transparent 18px
+        );
+      pointer-events: none;
+    }
+
+    .hero-splash-banner.hidden {
       display: none;
     }
 
-    .brand-block h1 {
-      font-size: 1.42rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: var(--brand-navy);
-      line-height: 1.25;
+    .hero-top-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .brand-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      margin-top: 0.22rem;
-      font-size: 0.88rem;
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #93c5fd;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-title {
+      font-size: 1.48rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .hero-venue {
+      font-size: 0.85rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #cbd5e1;
+      margin-top: 0.25rem;
+    }
+
+    .hero-pulse-strip {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-top: 1.05rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .hero-pulse-cell {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 0.55rem 0.72rem;
+      min-width: 0;
+    }
+
+    .hero-pulse-lbl {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #93c5fd;
+      line-height: 1.2;
+    }
+
+    .hero-pulse-val {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 0.14rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-pulse-sub {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-top: 0.08rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .badge-pill {
@@ -128,7 +210,7 @@
       border: 1px solid var(--brand-tint-border);
     }
 
-    /* Views & High-Contrast Floating Bottom-Left Back Button */
+    /* Views & Frosted Glass Floating Bottom-Left Back Button */
     .view-section {
       display: none;
       animation: fadeIn 0.22s ease;
@@ -151,8 +233,10 @@
       display: none;
       align-items: center;
       gap: 0.45rem;
-      background: var(--brand-navy);
-      border: 1.5px solid #ffffff;
+      background: rgba(0, 68, 129, 0.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
       color: #ffffff;
       padding: 0.65rem 1.25rem;
       border-radius: 999px;
@@ -160,7 +244,7 @@
       font-weight: 700;
       letter-spacing: 0.01em;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0, 68, 129, 0.34), 0 3px 8px rgba(15, 23, 42, 0.16);
+      box-shadow: 0 8px 24px rgba(0, 40, 77, 0.34), 0 3px 8px rgba(15, 23, 42, 0.16);
       transition: all 0.18s ease;
     }
 
@@ -174,89 +258,207 @@
       box-shadow: 0 12px 26px rgba(0, 68, 129, 0.42);
     }
 
-    /* Two-Group Bordered Navigation Panels */
-    .hub-group-panel {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.05rem;
-      margin-bottom: 0.95rem;
-      box-shadow: var(--shadow-card);
+    /* =========================================================================
+       BENTO HUB NAVIGATION SYSTEM (3 DISTINCT VISUAL TIERS)
+       ========================================================================= */
+    .bento-hub-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
     }
 
-    .hub-group-panel.insights-group {
-      border-color: var(--brand-tint-border);
-      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
-    }
-
-    .hub-section-label {
-      font-size: 0.74rem;
+    .bento-tier-label {
+      font-size: 0.69rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--brand-navy);
-      margin: 0 0 0.7rem 0.15rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin: 0 0 0.45rem 0.2rem;
     }
 
-    .hub-buttons-grid {
+    .bento-grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .bento-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 0.75rem;
     }
 
-    .hub-btn-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      border-left: 4px solid var(--brand-navy);
-      border-radius: var(--radius-md);
-      padding: 1.05rem 1.15rem;
+    /* Tier 1: Topmost Insights & Personal Report Tiles */
+    .bento-insight-card {
+      background: linear-gradient(145deg, #eef5fc 0%, #ffffff 100%);
+      border: 1.5px solid var(--brand-tint-border);
+      border-left: 4.5px solid var(--brand-cobalt);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1.2rem;
       text-align: left;
-      color: var(--text-primary);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
-      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 0.9rem;
+      box-shadow: var(--shadow-card);
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .hub-btn-card.insight-card {
-      border-left-color: var(--brand-cobalt);
-    }
-
-    .hub-btn-card:hover {
+    .bento-insight-card:hover {
       transform: translateY(-2px);
-      border-color: var(--brand-tint-border);
-      border-left-color: var(--brand-cobalt);
-      background: #ffffff;
+      border-color: var(--brand-cobalt);
       box-shadow: var(--shadow-elevated);
     }
 
-    .hub-btn-card:active {
-      transform: translateY(0);
+    .bento-insight-eyebrow {
+      font-size: 0.64rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--brand-cobalt);
+      margin-bottom: 0.2rem;
     }
 
-    .hub-btn-text-wrap {
+    .bento-insight-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .bento-insight-sub {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: 0.24rem;
+      line-height: 1.35;
+    }
+
+    /* Tier 2: Championship Standings Spotlight Cards */
+    .bento-spotlight-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-top: 4px solid var(--brand-navy);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.15rem;
+      text-align: left;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 0.12rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+      box-shadow: var(--shadow-card);
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .hub-btn-title {
-      font-size: 1.01rem;
-      font-weight: 700;
+    .bento-spotlight-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-tint-border);
+      border-top-color: var(--brand-cobalt);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .bento-spotlight-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+
+    .bento-spotlight-title {
+      font-size: 1.08rem;
+      font-weight: 800;
       color: var(--brand-navy);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
     }
 
-    .hub-btn-sub {
+    .bento-spotlight-sub {
       font-size: 0.76rem;
       font-weight: 500;
       color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .bento-spotlight-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-glass);
+    }
+
+    .bento-live-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--brand-tint);
+      color: var(--brand-navy);
+      border: 1px solid var(--brand-tint-border);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* Tier 3: Compact 2x2 Session & Special Draw Tiles */
+    .bento-compact-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-top: 3.5px solid var(--brand-navy);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.65rem;
+      box-shadow: var(--shadow-card);
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bento-compact-card.accent-d1 { border-top-color: var(--accent-indigo); }
+    .bento-compact-card.accent-d2 { border-top-color: var(--accent-amber); }
+    .bento-compact-card.accent-big { border-top-color: var(--accent-emerald); }
+    .bento-compact-card.accent-mystery { border-top-color: var(--brand-cobalt); }
+
+    .bento-compact-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-tint-border);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .bento-compact-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .bento-compact-sub {
+      font-size: 0.73rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+      line-height: 1.3;
+    }
+
+    .bento-compact-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--brand-cobalt);
     }
 
     .hub-arrow {
@@ -267,7 +469,9 @@
       transition: transform 0.18s ease;
     }
 
-    .hub-btn-card:hover .hub-arrow {
+    .bento-insight-card:hover .hub-arrow,
+    .bento-spotlight-card:hover .hub-arrow,
+    .bento-compact-card:hover .hub-arrow {
       transform: translateX(4px);
     }
 
@@ -1685,9 +1889,43 @@
       .kpi-cell:nth-child(n+4) {
         border-bottom: none;
       }
+      .bento-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 640px) {
+      .hero-splash-banner {
+        padding: 1.15rem 1rem 1rem;
+      }
+      .hero-title {
+        font-size: 1.28rem;
+      }
+      .hero-pulse-strip {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+      }
+      .hero-pulse-cell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.48rem 0.68rem;
+      }
+      .hero-pulse-val {
+        margin-top: 0;
+        font-size: 0.84rem;
+      }
+      .hero-pulse-sub {
+        display: none;
+      }
+      .bento-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .bento-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+      }
       .session-donuts-grid {
         grid-template-columns: 1fr;
       }
@@ -1723,7 +1961,6 @@
         width: 100%;
         min-width: 0;
       }
-      .app-header { padding: 0.95rem 1rem; }
       .sticky-scroll-wrap {
         max-height: calc(100vh - 185px);
       }
@@ -1732,93 +1969,146 @@
 </head>
 <body>
   <div class="container">
-    <!-- Streamlined Fintech Header (Shown ONLY on the Front Splash Page) -->
-    <header class="app-header" id="mainSplashHeader">
-      <div class="brand-block">
-        <h1 id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
-        <div class="brand-meta">
-          <span id="matchVenue">Arbroath & Elliot Beach</span>
+    <!-- =========================================================
+         DEEP NAVY HERO SPLASH CARD (SHOWN ONLY ON FRONT PAGE)
+         ========================================================= -->
+    <header class="hero-splash-banner" id="mainSplashHeader">
+      <div class="hero-top-row">
+        <div>
+          <div class="hero-eyebrow">Official Results Portal</div>
+          <h1 class="hero-title" id="matchTitle">SPRA Scottish Shore Championship 2027</h1>
+          <div class="hero-venue" id="matchVenue">Arbroath & Elliot Beach</div>
+        </div>
+      </div>
+
+      <div class="hero-pulse-strip" id="heroPulseStrip">
+        <div class="hero-pulse-cell">
+          <div class="hero-pulse-lbl">Individual Leader</div>
+          <div class="hero-pulse-val" id="heroIndLeaderVal">Loading...</div>
+          <div class="hero-pulse-sub" id="heroIndLeaderSub">Two-day aggregate</div>
+        </div>
+        <div class="hero-pulse-cell">
+          <div class="hero-pulse-lbl">Team Leader</div>
+          <div class="hero-pulse-val" id="heroTeamLeaderVal">Loading...</div>
+          <div class="hero-pulse-sub" id="heroTeamLeaderSub">Lowest team points</div>
+        </div>
+        <div class="hero-pulse-cell">
+          <div class="hero-pulse-lbl">Championship Catch</div>
+          <div class="hero-pulse-val" id="heroTotalCatchVal">Loading...</div>
+          <div class="hero-pulse-sub" id="heroTotalCatchSub">Combined field total</div>
         </div>
       </div>
     </header>
 
     <!-- =========================================================
-         VIEW 0: FRONT SPLASH SCREEN (TWO BORDERED NAVIGATION PANELS)
+         VIEW 0: FRONT SPLASH SCREEN (MODERN 3-TIER BENTO HUB)
          ========================================================= -->
     <main id="view-home" class="view-section active">
-      <!-- PANEL 1: GENERAL MATCH STATS & PERSONAL REPORT -->
-      <div class="hub-group-panel insights-group">
-        <div class="hub-section-label">Match Insights & Reports</div>
-        <div class="hub-buttons-grid">
-          <button class="hub-btn-card insight-card" data-nav="overview">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Match Overview</span>
-              <span class="hub-btn-sub">Championship totals and zone comparison charts</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+      <div class="bento-hub-stack">
+        <!-- TIER 1 (TOPMOST): MATCH OVERVIEW & MY MATCH REPORT -->
+        <div>
+          <div class="bento-tier-label">Insights & Personal Performance</div>
+          <div class="bento-grid-2">
+            <button class="bento-insight-card" data-nav="overview">
+              <div>
+                <div class="bento-insight-eyebrow">Championship Analytics</div>
+                <div class="bento-insight-title">Match Overview</div>
+                <div class="bento-insight-sub">Totals, zone charts & Night vs Day breakdown</div>
+              </div>
+              <span class="hub-arrow">›</span>
+            </button>
 
-          <button class="hub-btn-card insight-card" data-nav="myreport">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">My Match Report</span>
-              <span class="hub-btn-sub">See how you performed individually based on 5 key metrics</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <button class="bento-insight-card" data-nav="myreport">
+              <div>
+                <div class="bento-insight-eyebrow">Angler Scorecard</div>
+                <div class="bento-insight-title">My Match Report</div>
+                <div class="bento-insight-sub">Personal trajectory, field rank rings & head-to-head</div>
+              </div>
+              <span class="hub-arrow">›</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <!-- PANEL 2: ACTUAL CHAMPIONSHIP STANDINGS & RESULTS -->
-      <div class="hub-group-panel">
-        <div class="hub-section-label">Championship Standings & Results</div>
-        <div class="hub-buttons-grid">
-          <button class="hub-btn-card" data-nav="individual">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Individual Leaderboard</span>
-              <span class="hub-btn-sub">Full field standings grouped by points, with Day 1 & Day 2 splits</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+        <!-- TIER 2: CHAMPIONSHIP STANDINGS SPOTLIGHT -->
+        <div>
+          <div class="bento-tier-label">Championship Leaderboards</div>
+          <div class="bento-grid-2">
+            <button class="bento-spotlight-card" data-nav="individual">
+              <div class="bento-spotlight-top">
+                <div>
+                  <div class="bento-spotlight-title">Individual Leaderboard</div>
+                  <div class="bento-spotlight-sub">Full field standings grouped by points, with Day 1 & Day 2 splits</div>
+                </div>
+                <span class="hub-arrow">›</span>
+              </div>
+              <div class="bento-spotlight-footer">
+                <span class="bento-live-pill" id="hubIndLeaderPill">Full Field Standings</span>
+              </div>
+            </button>
 
-          <button class="hub-btn-card" data-nav="teams">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Team Leaderboard</span>
-              <span class="hub-btn-sub">Overall team standings & individual angler contributions</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <button class="bento-spotlight-card" data-nav="teams">
+              <div class="bento-spotlight-top">
+                <div>
+                  <div class="bento-spotlight-title">Team Leaderboard</div>
+                  <div class="bento-spotlight-sub">Overall team standings & individual angler contributions</div>
+                </div>
+                <span class="hub-arrow">›</span>
+              </div>
+              <div class="bento-spotlight-footer">
+                <span class="bento-live-pill" id="hubTeamLeaderPill">Team Standings</span>
+              </div>
+            </button>
+          </div>
+        </div>
 
-          <button class="hub-btn-card" data-nav="day1zones">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Day 1 Zone Winners</span>
-              <span class="hub-btn-sub">Night session standings across Red, Yellow, Green & Blue zones</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+        <!-- TIER 3: SESSION & SPECIAL DRAWS (2x2 GRID) -->
+        <div>
+          <div class="bento-tier-label">Sessions & Special Draws</div>
+          <div class="bento-grid-4">
+            <button class="bento-compact-card accent-d1" data-nav="day1zones">
+              <div>
+                <div class="bento-compact-title">Day 1 Zone Winners</div>
+                <div class="bento-compact-sub">Night session across Red, Yellow, Green & Blue</div>
+              </div>
+              <div class="bento-compact-meta">
+                <span>Night Session</span>
+                <span class="hub-arrow">›</span>
+              </div>
+            </button>
 
-          <button class="hub-btn-card" data-nav="day2zones">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Day 2 Zone Winners</span>
-              <span class="hub-btn-sub">Day session standings across Red, Yellow, Green & Blue zones</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <button class="bento-compact-card accent-d2" data-nav="day2zones">
+              <div>
+                <div class="bento-compact-title">Day 2 Zone Winners</div>
+                <div class="bento-compact-sub">Day session across Red, Yellow, Green & Blue</div>
+              </div>
+              <div class="bento-compact-meta">
+                <span>Day Session</span>
+                <span class="hub-arrow">›</span>
+              </div>
+            </button>
 
-          <button class="hub-btn-card" data-nav="biggest">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Biggest Fish</span>
-              <span class="hub-btn-sub">Top 5 longest individual fish by length, species & session</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <button class="bento-compact-card accent-big" data-nav="biggest">
+              <div>
+                <div class="bento-compact-title">Biggest Fish</div>
+                <div class="bento-compact-sub">Top 5 longest individual specimens recorded</div>
+              </div>
+              <div class="bento-compact-meta">
+                <span id="hubBiggestPill">Top 5 Specimens</span>
+                <span class="hub-arrow">›</span>
+              </div>
+            </button>
 
-          <button class="hub-btn-card" data-nav="secret">
-            <div class="hub-btn-text-wrap">
-              <span class="hub-btn-title">Mystery Pairs</span>
-              <span class="hub-btn-sub">Results of the Mystery Pairs Draw</span>
-            </div>
-            <span class="hub-arrow">›</span>
-          </button>
+            <button class="bento-compact-card accent-mystery" data-nav="secret">
+              <div>
+                <div class="bento-compact-title">Mystery Pairs</div>
+                <div class="bento-compact-sub">Wildcard mystery pairing draw & target diff</div>
+              </div>
+              <div class="bento-compact-meta">
+                <span id="hubMysteryPill">View Draw</span>
+                <span class="hub-arrow">›</span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -2038,14 +2328,14 @@
     </section>
   </div>
 
-  <!-- High-Contrast Floating Bottom-Left Back Button (Visible on all sub-pages) -->
+  <!-- Frosted Glass Floating Bottom-Left Back Button (Visible on all sub-pages) -->
   <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
     ← Back
   </button>
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.14",
+      version: "v3.8.15",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2359,6 +2649,7 @@
     }
 
     function renderAllViews() {
+      renderHeroAndHubPills();
       renderOverview();
       renderIndividualTable();
       renderTeamsContributions();
@@ -2367,6 +2658,49 @@
       renderBiggestFish();
       renderMyReport();
       renderSecretPairs();
+    }
+
+    function renderHeroAndHubPills() {
+      const indLeader = STATE.anglers[0];
+      const teamLeader = STATE.teams[0];
+      const topSpec = STATE.specimensAll[0];
+      const totalFish = STATE.anglers.reduce((s, a) => s + (a.totals.cumulativeFish || 0), 0);
+      const totalLenCm = STATE.anglers.reduce((s, a) => s + (a.totals.cumulativeLengthCm || 0), 0);
+
+      if (indLeader) {
+        document.getElementById("heroIndLeaderVal").textContent =
+          `${indLeader.anglerName} (${indLeader.totals.cumulativePoints} pts)`;
+        document.getElementById("heroIndLeaderSub").textContent =
+          `${indLeader.teamName} • ${indLeader.totals.cumulativeLengthCm}cm`;
+        document.getElementById("hubIndLeaderPill").textContent =
+          `Leader: ${indLeader.anglerName} (${indLeader.totals.cumulativePoints} pts)`;
+      }
+
+      if (teamLeader) {
+        document.getElementById("heroTeamLeaderVal").textContent =
+          `${teamLeader.teamName} (${teamLeader.totalPts} pts)`;
+        document.getElementById("heroTeamLeaderSub").textContent =
+          `${teamLeader.totalFish} fish • ${teamLeader.totalLengthCm}cm`;
+        document.getElementById("hubTeamLeaderPill").textContent =
+          `Leader: ${teamLeader.teamName} (${teamLeader.totalPts} pts)`;
+      }
+
+      document.getElementById("heroTotalCatchVal").textContent =
+        `${totalFish} Fish • ${(totalLenCm / 100).toFixed(2)}m`;
+      document.getElementById("heroTotalCatchSub").textContent =
+        topSpec ? `Longest: ${topSpec.lengthCm}cm (${topSpec.anglerName})` : "Combined field total";
+
+      if (topSpec) {
+        document.getElementById("hubBiggestPill").textContent =
+          `High: ${topSpec.lengthCm}cm`;
+      }
+
+      const sp = STATE.raw?.secretPairs || {};
+      const hasPairs = (Array.isArray(sp.winners) && sp.winners.length > 0) ||
+                       (Array.isArray(sp.otherPairs) && sp.otherPairs.length > 0);
+      document.getElementById("hubMysteryPill").textContent = hasPairs
+        ? `Target: ${sp.targetLength || "Set"}`
+        : "Draw Pending";
     }
 
     function setupNavigation() {
