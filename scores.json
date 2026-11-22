@@ -1,1951 +1,2895 @@
 {
   "title": "103-Angler Championship Test",
-  "duration": 2,
   "anglers": [
     {
-      "id": "a_1_1",
-      "name": "Tulip",
-      "teamId": "team_1",
-      "mobility": true
-    },
-    {
-      "id": "a_1_2",
-      "name": "Daffodil",
-      "teamId": "team_1",
-      "mobility": true
-    },
-    {
-      "id": "a_1_3",
-      "name": "Orchid",
-      "teamId": "team_1",
-      "mobility": false
-    },
-    {
-      "id": "a_1_4",
-      "name": "Bluebell",
-      "teamId": "team_1",
-      "mobility": false
-    },
-    {
-      "id": "a_2_1",
-      "name": "Robin",
-      "teamId": "team_2",
-      "mobility": true
-    },
-    {
-      "id": "a_2_2",
-      "name": "Kestrel",
-      "teamId": "team_2",
-      "mobility": false
-    },
-    {
-      "id": "a_2_3",
-      "name": "Puffin",
-      "teamId": "team_2",
-      "mobility": false
-    },
-    {
-      "id": "a_2_4",
-      "name": "Kingfisher",
-      "teamId": "team_2",
-      "mobility": false
-    },
-    {
-      "id": "a_3_1",
-      "name": "Scotland",
-      "teamId": "team_3",
-      "mobility": true
-    },
-    {
-      "id": "a_3_2",
-      "name": "Poland",
-      "teamId": "team_3",
-      "mobility": false
-    },
-    {
-      "id": "a_3_3",
-      "name": "Norway",
-      "teamId": "team_3",
-      "mobility": false
-    },
-    {
-      "id": "a_3_4",
-      "name": "Portugal",
-      "teamId": "team_3",
-      "mobility": false
-    },
-    {
-      "id": "a_4_1",
-      "name": "Oak",
-      "teamId": "team_4",
-      "mobility": true
-    },
-    {
-      "id": "a_4_2",
-      "name": "Birch",
-      "teamId": "team_4",
-      "mobility": false
-    },
-    {
-      "id": "a_4_3",
-      "name": "Rowan",
-      "teamId": "team_4",
-      "mobility": false
-    },
-    {
-      "id": "a_4_4",
-      "name": "Willow",
-      "teamId": "team_4",
-      "mobility": false
-    },
-    {
-      "id": "a_5_1",
-      "name": "Cod",
-      "teamId": "team_5",
-      "mobility": true
-    },
-    {
-      "id": "a_5_2",
-      "name": "Bass",
-      "teamId": "team_5",
-      "mobility": false
-    },
-    {
-      "id": "a_5_3",
-      "name": "Plaice",
-      "teamId": "team_5",
-      "mobility": false
-    },
-    {
-      "id": "a_5_4",
-      "name": "Flounder",
-      "teamId": "team_5",
-      "mobility": false
-    },
-    {
-      "id": "a_6_1",
-      "name": "Mars",
-      "teamId": "team_6",
-      "mobility": true
-    },
-    {
-      "id": "a_6_2",
-      "name": "Venus",
-      "teamId": "team_6",
-      "mobility": false
-    },
-    {
-      "id": "a_6_3",
-      "name": "Saturn",
-      "teamId": "team_6",
-      "mobility": false
-    },
-    {
-      "id": "a_6_4",
-      "name": "Neptune",
-      "teamId": "team_6",
-      "mobility": false
-    },
-    {
-      "id": "a_7_1",
-      "name": "Ruby",
-      "teamId": "team_7",
-      "mobility": true
-    },
-    {
-      "id": "a_7_2",
-      "name": "Emerald",
-      "teamId": "team_7",
-      "mobility": false
-    },
-    {
-      "id": "a_7_3",
-      "name": "Sapphire",
-      "teamId": "team_7",
-      "mobility": false
-    },
-    {
-      "id": "a_7_4",
-      "name": "Amber",
-      "teamId": "team_7",
-      "mobility": false
-    },
-    {
-      "id": "a_8_1",
-      "name": "Clyde",
-      "teamId": "team_8",
-      "mobility": true
-    },
-    {
-      "id": "a_8_2",
-      "name": "Forth",
-      "teamId": "team_8",
-      "mobility": false
-    },
-    {
-      "id": "a_8_3",
-      "name": "Tay",
-      "teamId": "team_8",
-      "mobility": false
-    },
-    {
-      "id": "a_8_4",
-      "name": "Tweed",
-      "teamId": "team_8",
-      "mobility": false
-    },
-    {
-      "id": "a_9_1",
-      "name": "Nevis",
-      "teamId": "team_9",
-      "mobility": true
-    },
-    {
-      "id": "a_9_2",
-      "name": "Lomond",
-      "teamId": "team_9",
-      "mobility": false
-    },
-    {
-      "id": "a_9_3",
-      "name": "Cairngorm",
-      "teamId": "team_9",
-      "mobility": false
-    },
-    {
-      "id": "a_9_4",
-      "name": "Snowdon",
-      "teamId": "team_9",
-      "mobility": false
-    },
-    {
-      "id": "a_10_1",
-      "name": "Skye",
-      "teamId": "team_10",
-      "mobility": true
-    },
-    {
-      "id": "a_10_2",
-      "name": "Arran",
-      "teamId": "team_10",
-      "mobility": false
-    },
-    {
-      "id": "a_10_3",
-      "name": "Mull",
-      "teamId": "team_10",
-      "mobility": false
-    },
-    {
-      "id": "a_10_4",
-      "name": "Islay",
-      "teamId": "team_10",
-      "mobility": false
-    },
-    {
-      "id": "a_11_1",
-      "name": "Crimson",
-      "teamId": "team_11",
-      "mobility": true
-    },
-    {
-      "id": "a_11_2",
-      "name": "Cobalt",
-      "teamId": "team_11",
-      "mobility": false
-    },
-    {
-      "id": "a_11_3",
-      "name": "Saffron",
-      "teamId": "team_11",
-      "mobility": false
-    },
-    {
-      "id": "a_11_4",
-      "name": "Indigo",
-      "teamId": "team_11",
-      "mobility": false
-    },
-    {
-      "id": "a_12_1",
-      "name": "Spring",
-      "teamId": "team_12",
-      "mobility": true
-    },
-    {
-      "id": "a_12_2",
-      "name": "Summer",
-      "teamId": "team_12",
-      "mobility": false
-    },
-    {
-      "id": "a_12_3",
-      "name": "Autumn",
-      "teamId": "team_12",
-      "mobility": false
-    },
-    {
-      "id": "a_12_4",
-      "name": "Winter",
-      "teamId": "team_12",
-      "mobility": false
-    },
-    {
-      "id": "a_13_1",
-      "name": "Iron",
-      "teamId": "team_13",
-      "mobility": true
-    },
-    {
-      "id": "a_13_2",
-      "name": "Copper",
-      "teamId": "team_13",
-      "mobility": false
-    },
-    {
-      "id": "a_13_3",
-      "name": "Silver",
-      "teamId": "team_13",
-      "mobility": false
-    },
-    {
-      "id": "a_13_4",
-      "name": "Gold",
-      "teamId": "team_13",
-      "mobility": false
-    },
-    {
-      "id": "a_14_1",
-      "name": "Gale",
-      "teamId": "team_14",
-      "mobility": true
-    },
-    {
-      "id": "a_14_2",
-      "name": "Frost",
-      "teamId": "team_14",
-      "mobility": false
-    },
-    {
-      "id": "a_14_3",
-      "name": "Drizzle",
-      "teamId": "team_14",
-      "mobility": false
-    },
-    {
-      "id": "a_14_4",
-      "name": "Thunder",
-      "teamId": "team_14",
-      "mobility": false
-    },
-    {
-      "id": "a_15_1",
-      "name": "Fiddle",
-      "teamId": "team_15",
-      "mobility": true
-    },
-    {
-      "id": "a_15_2",
-      "name": "Bagpipe",
-      "teamId": "team_15",
-      "mobility": false
-    },
-    {
-      "id": "a_15_3",
-      "name": "Guitar",
-      "teamId": "team_15",
-      "mobility": false
-    },
-    {
-      "id": "a_15_4",
-      "name": "Flute",
-      "teamId": "team_15",
-      "mobility": false
-    },
-    {
-      "id": "a_16_1",
-      "name": "Apple",
-      "teamId": "team_16",
-      "mobility": true
-    },
-    {
-      "id": "a_16_2",
-      "name": "Bramble",
-      "teamId": "team_16",
-      "mobility": false
-    },
-    {
-      "id": "a_16_3",
-      "name": "Damson",
-      "teamId": "team_16",
-      "mobility": false
-    },
-    {
-      "id": "a_16_4",
-      "name": "Rowanberry",
-      "teamId": "team_16",
-      "mobility": false
-    },
-    {
-      "id": "a_17_1",
-      "name": "Edinburgh",
-      "teamId": "team_17",
-      "mobility": true
-    },
-    {
-      "id": "a_17_2",
-      "name": "Glasgow",
-      "teamId": "team_17",
-      "mobility": false
-    },
-    {
-      "id": "a_17_3",
-      "name": "Stirling",
-      "teamId": "team_17",
-      "mobility": false
-    },
-    {
-      "id": "a_17_4",
-      "name": "Aberdeen",
-      "teamId": "team_17",
-      "mobility": false
-    },
-    {
-      "id": "a_18_1",
-      "name": "Bowline",
-      "teamId": "team_18",
-      "mobility": true
-    },
-    {
-      "id": "a_18_2",
-      "name": "Clove",
-      "teamId": "team_18",
-      "mobility": false
-    },
-    {
-      "id": "a_18_3",
-      "name": "Uni",
-      "teamId": "team_18",
-      "mobility": false
-    },
-    {
-      "id": "a_18_4",
-      "name": "Palomar",
-      "teamId": "team_18",
-      "mobility": false
-    },
-    {
-      "id": "a_19_1",
-      "name": "Neap",
-      "teamId": "team_19",
-      "mobility": true
-    },
-    {
-      "id": "a_19_2",
-      "name": "Springtide",
-      "teamId": "team_19",
-      "mobility": false
-    },
-    {
-      "id": "a_19_3",
-      "name": "Ebb",
-      "teamId": "team_19",
-      "mobility": false
-    },
-    {
-      "id": "a_19_4",
-      "name": "Flood",
-      "teamId": "team_19",
-      "mobility": false
-    },
-    {
-      "id": "a_20_1",
-      "name": "Landrover",
-      "teamId": "team_20",
-      "mobility": true
-    },
-    {
-      "id": "a_20_2",
-      "name": "Camper",
-      "teamId": "team_20",
-      "mobility": false
-    },
-    {
-      "id": "a_20_3",
-      "name": "Tractor",
-      "teamId": "team_20",
-      "mobility": false
-    },
-    {
-      "id": "a_20_4",
-      "name": "Trawler",
-      "teamId": "team_20",
-      "mobility": false
-    },
-    {
-      "id": "a_21_1",
-      "name": "Cheddar",
-      "teamId": "team_21",
-      "mobility": true
-    },
-    {
-      "id": "a_21_2",
-      "name": "Brie",
-      "teamId": "team_21",
-      "mobility": false
-    },
-    {
-      "id": "a_21_3",
-      "name": "Stilton",
-      "teamId": "team_21",
-      "mobility": false
-    },
-    {
-      "id": "a_21_4",
-      "name": "Gouda",
-      "teamId": "team_21",
-      "mobility": false
-    },
-    {
-      "id": "a_22_1",
-      "name": "Hammer",
-      "teamId": "team_22",
-      "mobility": true
-    },
-    {
-      "id": "a_22_2",
-      "name": "Chisel",
-      "teamId": "team_22",
-      "mobility": false
-    },
-    {
-      "id": "a_22_3",
-      "name": "Spanner",
-      "teamId": "team_22",
-      "mobility": false
-    },
-    {
-      "id": "a_22_4",
-      "name": "Pliers",
-      "teamId": "team_22",
-      "mobility": false
-    },
-    {
-      "id": "a_23_1",
-      "name": "Penny",
-      "teamId": "team_23",
-      "mobility": true
-    },
-    {
-      "id": "a_23_2",
-      "name": "Shilling",
-      "teamId": "team_23",
-      "mobility": false
-    },
-    {
-      "id": "a_23_3",
-      "name": "Florin",
-      "teamId": "team_23",
-      "mobility": false
-    },
-    {
-      "id": "a_23_4",
-      "name": "Sovereign",
-      "teamId": "team_23",
-      "mobility": false
-    },
-    {
-      "id": "a_24_1",
-      "name": "North",
-      "teamId": "team_24",
-      "mobility": true
-    },
-    {
-      "id": "a_24_2",
-      "name": "South",
-      "teamId": "team_24",
-      "mobility": false
-    },
-    {
-      "id": "a_24_3",
-      "name": "East",
-      "teamId": "team_24",
-      "mobility": false
-    },
-    {
-      "id": "a_24_4",
-      "name": "West",
-      "teamId": "team_24",
-      "mobility": false
-    },
-    {
-      "id": "a_25_1",
-      "name": "Saffron",
-      "teamId": "team_25",
-      "mobility": false
-    },
-    {
-      "id": "a_25_2",
-      "name": "Cinnamon",
-      "teamId": "team_25",
-      "mobility": false
-    },
-    {
-      "id": "a_25_3",
-      "name": "Nutmeg",
-      "teamId": "team_25",
-      "mobility": false
-    },
-    {
-      "id": "a_25_4",
-      "name": "Ginger",
-      "teamId": "team_25",
-      "mobility": false
-    },
-    {
-      "id": "solo_1",
-      "name": "joe",
-      "teamId": null,
-      "mobility": false
-    },
-    {
-      "id": "solo_2",
-      "name": "mark",
-      "teamId": null,
-      "mobility": false
-    },
-    {
-      "id": "solo_3",
-      "name": "tam",
-      "teamId": null,
-      "mobility": false
-    }
-  ],
-  "teams": [
-    {
-      "id": "team_1",
-      "name": "Flowers"
-    },
-    {
-      "id": "team_2",
-      "name": "Birds"
-    },
-    {
-      "id": "team_3",
-      "name": "Countries"
-    },
-    {
-      "id": "team_4",
-      "name": "Trees"
-    },
-    {
-      "id": "team_5",
-      "name": "Sea Fish"
-    },
-    {
-      "id": "team_6",
-      "name": "Planets"
-    },
-    {
-      "id": "team_7",
-      "name": "Gemstones"
-    },
-    {
-      "id": "team_8",
-      "name": "Rivers"
-    },
-    {
-      "id": "team_9",
-      "name": "Mountains"
-    },
-    {
-      "id": "team_10",
-      "name": "Islands"
-    },
-    {
-      "id": "team_11",
-      "name": "Colours"
-    },
-    {
-      "id": "team_12",
-      "name": "Seasons"
-    },
-    {
-      "id": "team_13",
-      "name": "Elements"
-    },
-    {
-      "id": "team_14",
-      "name": "Weather"
-    },
-    {
-      "id": "team_15",
-      "name": "Instruments"
-    },
-    {
-      "id": "team_16",
-      "name": "Fruits"
-    },
-    {
-      "id": "team_17",
-      "name": "Cities"
-    },
-    {
-      "id": "team_18",
-      "name": "Knots"
-    },
-    {
-      "id": "team_19",
-      "name": "Tides"
-    },
-    {
-      "id": "team_20",
-      "name": "Vehicles"
-    },
-    {
-      "id": "team_21",
-      "name": "Cheeses"
-    },
-    {
-      "id": "team_22",
-      "name": "Tools"
-    },
-    {
-      "id": "team_23",
-      "name": "Coins"
-    },
-    {
-      "id": "team_24",
-      "name": "Compass"
-    },
-    {
-      "id": "team_25",
-      "name": "Spices"
-    }
-  ],
-  "scores": {
-    "day1": {
-      "a_1_2": {
-        "totalMetric": 320,
+      "anglerName": "Daffodil",
+      "teamName": "Flowers",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "1",
         "fishCount": 9,
-        "bestFish": 44,
-        "bestFishSpecies": "Cod"
+        "totalLengthCm": 320,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 1
       },
-      "a_18_1": {
-        "totalMetric": 320,
-        "fishCount": 7,
-        "bestFish": 51,
-        "bestFishSpecies": "Bass"
-      },
-      "a_9_1": {
-        "totalMetric": 280,
-        "fishCount": 7,
-        "bestFish": 54,
-        "bestFishSpecies": "Ray"
-      },
-      "a_16_1": {
-        "totalMetric": 280,
-        "fishCount": 7,
-        "bestFish": 46,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_6_1": {
-        "totalMetric": 250,
-        "fishCount": 6,
-        "bestFish": 45,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_23_1": {
-        "totalMetric": 250,
-        "fishCount": 6,
-        "bestFish": 45,
-        "bestFishSpecies": "Dab"
-      },
-      "a_12_1": {
-        "totalMetric": 250,
-        "fishCount": 6,
-        "bestFish": 45,
-        "bestFishSpecies": "Plaice"
-      },
-      "a_2_4": {
-        "totalMetric": 230,
-        "fishCount": 6,
-        "bestFish": 42,
-        "bestFishSpecies": "Dogfish"
-      },
-      "a_3_4": {
-        "totalMetric": 220,
-        "fishCount": 3,
-        "bestFish": 33,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_4_2": {
-        "totalMetric": 210,
-        "fishCount": 5,
-        "bestFish": 32,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_5_3": {
-        "totalMetric": 200,
-        "fishCount": 4,
-        "bestFish": 41,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_7_2": {
-        "totalMetric": 190,
-        "fishCount": 3,
-        "bestFish": 40,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_8_4": {
-        "totalMetric": 180,
-        "fishCount": 5,
-        "bestFish": 39,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_10_2": {
-        "totalMetric": 170,
-        "fishCount": 4,
-        "bestFish": 38,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_11_2": {
-        "totalMetric": 160,
-        "fishCount": 3,
-        "bestFish": 37,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_13_4": {
-        "totalMetric": 150,
-        "fishCount": 5,
-        "bestFish": 36,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_14_3": {
-        "totalMetric": 140,
-        "fishCount": 4,
-        "bestFish": 35,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_15_3": {
-        "totalMetric": 130,
-        "fishCount": 3,
-        "bestFish": 34,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_17_2": {
-        "totalMetric": 120,
-        "fishCount": 5,
-        "bestFish": 33,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_19_4": {
-        "totalMetric": 110,
-        "fishCount": 4,
-        "bestFish": 32,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_20_3": {
-        "totalMetric": 100,
-        "fishCount": 3,
-        "bestFish": 41,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_21_3": {
-        "totalMetric": 90,
-        "fishCount": 5,
-        "bestFish": 40,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_22_2": {
-        "totalMetric": 80,
-        "fishCount": 4,
-        "bestFish": 39,
-        "bestFishSpecies": "Coalies"
-      },
-      "a_24_4": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "a_25_2": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "solo_2": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "a_1_1": {
-        "totalMetric": 310,
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "51",
         "fishCount": 8,
-        "bestFish": 56,
-        "bestFishSpecies": "Bull Huss"
-      },
-      "a_20_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 48,
-        "bestFishSpecies": "Codling"
-      },
-      "a_19_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 48,
-        "bestFishSpecies": "Codling"
-      },
-      "a_11_1": {
-        "totalMetric": 233,
-        "fishCount": 3,
-        "bestFish": 41,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_21_1": {
-        "totalMetric": 224,
-        "fishCount": 6,
-        "bestFish": 40,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_5_1": {
-        "totalMetric": 215,
-        "fishCount": 5,
-        "bestFish": 39,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_13_1": {
-        "totalMetric": 206,
-        "fishCount": 4,
-        "bestFish": 38,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_8_1": {
-        "totalMetric": 197,
-        "fishCount": 3,
-        "bestFish": 37,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_2_2": {
-        "totalMetric": 188,
-        "fishCount": 6,
-        "bestFish": 36,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_3_2": {
-        "totalMetric": 179,
-        "fishCount": 5,
-        "bestFish": 35,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_4_3": {
-        "totalMetric": 170,
-        "fishCount": 4,
-        "bestFish": 34,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_6_2": {
-        "totalMetric": 161,
-        "fishCount": 3,
-        "bestFish": 33,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_7_3": {
-        "totalMetric": 152,
-        "fishCount": 6,
-        "bestFish": 44,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_9_2": {
-        "totalMetric": 143,
-        "fishCount": 5,
-        "bestFish": 43,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_10_4": {
-        "totalMetric": 134,
-        "fishCount": 4,
-        "bestFish": 42,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_12_3": {
-        "totalMetric": 125,
-        "fishCount": 3,
-        "bestFish": 41,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_14_2": {
-        "totalMetric": 116,
-        "fishCount": 6,
-        "bestFish": 40,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_15_2": {
-        "totalMetric": 107,
-        "fishCount": 5,
-        "bestFish": 39,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_16_3": {
-        "totalMetric": 98,
-        "fishCount": 4,
-        "bestFish": 38,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_17_3": {
-        "totalMetric": 89,
-        "fishCount": 3,
-        "bestFish": 37,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_18_3": {
-        "totalMetric": 80,
-        "fishCount": 6,
-        "bestFish": 36,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_22_4": {
-        "totalMetric": 71,
-        "fishCount": 5,
-        "bestFish": 35,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_23_4": {
-        "totalMetric": 62,
-        "fishCount": 4,
-        "bestFish": 34,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_24_3": {
-        "totalMetric": 53,
-        "fishCount": 3,
-        "bestFish": 33,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_25_3": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "solo_1": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "a_2_1": {
-        "totalMetric": 320,
-        "fishCount": 8,
-        "bestFish": 59,
-        "bestFishSpecies": "Bull Huss"
-      },
-      "a_22_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 48,
-        "bestFishSpecies": "Codling"
-      },
-      "a_17_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 48,
-        "bestFishSpecies": "Codling"
-      },
-      "a_15_1": {
-        "totalMetric": 233,
-        "fishCount": 3,
-        "bestFish": 41,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_10_1": {
-        "totalMetric": 224,
-        "fishCount": 6,
-        "bestFish": 40,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_14_1": {
-        "totalMetric": 215,
-        "fishCount": 5,
-        "bestFish": 39,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_7_1": {
-        "totalMetric": 206,
-        "fishCount": 4,
-        "bestFish": 38,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_1_3": {
-        "totalMetric": 197,
-        "fishCount": 3,
-        "bestFish": 37,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_3_3": {
-        "totalMetric": 188,
-        "fishCount": 6,
-        "bestFish": 36,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_4_4": {
-        "totalMetric": 179,
-        "fishCount": 5,
-        "bestFish": 35,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_5_2": {
-        "totalMetric": 170,
-        "fishCount": 4,
-        "bestFish": 34,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_6_3": {
-        "totalMetric": 161,
-        "fishCount": 3,
-        "bestFish": 33,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_8_3": {
-        "totalMetric": 152,
-        "fishCount": 6,
-        "bestFish": 44,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_9_3": {
-        "totalMetric": 143,
-        "fishCount": 5,
-        "bestFish": 43,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_11_4": {
-        "totalMetric": 134,
-        "fishCount": 4,
-        "bestFish": 42,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_12_2": {
-        "totalMetric": 125,
-        "fishCount": 3,
-        "bestFish": 41,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_13_3": {
-        "totalMetric": 116,
-        "fishCount": 6,
-        "bestFish": 40,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_16_2": {
-        "totalMetric": 107,
-        "fishCount": 5,
-        "bestFish": 39,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_18_4": {
-        "totalMetric": 98,
-        "fishCount": 4,
-        "bestFish": 38,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_19_3": {
-        "totalMetric": 89,
-        "fishCount": 3,
-        "bestFish": 37,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_20_4": {
-        "totalMetric": 80,
-        "fishCount": 6,
-        "bestFish": 36,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_21_4": {
-        "totalMetric": 71,
-        "fishCount": 5,
-        "bestFish": 35,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_23_2": {
-        "totalMetric": 62,
-        "fishCount": 4,
-        "bestFish": 34,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_24_2": {
-        "totalMetric": 53,
-        "fishCount": 3,
-        "bestFish": 33,
-        "bestFishSpecies": "Whiting"
-      },
-      "a_25_1": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "solo_3": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "a_3_1": {
-        "totalMetric": 340,
-        "fishCount": 9,
-        "bestFish": 62,
-        "bestFishSpecies": "Smoothhound"
-      },
-      "a_4_1": {
-        "totalMetric": 300,
-        "fishCount": 8,
-        "bestFish": 49,
-        "bestFishSpecies": "Bass"
-      },
-      "a_24_1": {
-        "totalMetric": 300,
-        "fishCount": 6,
-        "bestFish": 53,
-        "bestFishSpecies": "Bass"
-      },
-      "a_1_4": {
-        "totalMetric": 240,
-        "fishCount": 3,
-        "bestFish": 44,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_2_3": {
-        "totalMetric": 230,
-        "fishCount": 6,
-        "bestFish": 43,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_5_4": {
-        "totalMetric": 220,
-        "fishCount": 5,
-        "bestFish": 42,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_6_4": {
-        "totalMetric": 210,
-        "fishCount": 4,
-        "bestFish": 41,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_7_4": {
-        "totalMetric": 200,
-        "fishCount": 3,
-        "bestFish": 40,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_8_2": {
-        "totalMetric": 190,
-        "fishCount": 6,
-        "bestFish": 39,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_9_4": {
-        "totalMetric": 180,
-        "fishCount": 5,
-        "bestFish": 38,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_10_3": {
-        "totalMetric": 170,
-        "fishCount": 4,
-        "bestFish": 37,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_11_3": {
-        "totalMetric": 160,
-        "fishCount": 3,
-        "bestFish": 47,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_12_4": {
-        "totalMetric": 150,
-        "fishCount": 6,
-        "bestFish": 46,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_13_2": {
-        "totalMetric": 140,
-        "fishCount": 5,
-        "bestFish": 45,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_14_4": {
-        "totalMetric": 130,
-        "fishCount": 4,
-        "bestFish": 44,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_15_4": {
-        "totalMetric": 120,
-        "fishCount": 3,
-        "bestFish": 43,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_16_4": {
-        "totalMetric": 110,
-        "fishCount": 6,
-        "bestFish": 42,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_17_4": {
-        "totalMetric": 100,
-        "fishCount": 5,
-        "bestFish": 41,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_18_2": {
-        "totalMetric": 90,
-        "fishCount": 4,
-        "bestFish": 40,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_19_2": {
-        "totalMetric": 80,
-        "fishCount": 3,
-        "bestFish": 39,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_20_2": {
-        "totalMetric": 70,
-        "fishCount": 6,
-        "bestFish": 38,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_21_2": {
-        "totalMetric": 60,
-        "fishCount": 5,
-        "bestFish": 37,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_22_3": {
-        "totalMetric": 50,
-        "fishCount": 4,
-        "bestFish": 47,
-        "bestFishSpecies": "Flounder"
-      },
-      "a_23_3": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
-      },
-      "a_25_4": {
-        "totalMetric": 0,
-        "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 334,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 1
+      },
+      "totals": {
+        "overallRank": 1,
+        "cumulativePoints": 2,
+        "cumulativeFish": 17,
+        "cumulativeLengthCm": 654
       }
     },
-    "day2": {
-      "a_20_1": {
-        "totalMetric": 330,
+    {
+      "anglerName": "Tulip",
+      "teamName": "Flowers",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "29",
         "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Ray"
+        "totalLengthCm": 310,
+        "biggestFishCm": 56,
+        "biggestFishSpecies": "Bull Huss",
+        "zonePoints": 1
       },
-      "a_22_1": {
-        "totalMetric": 275,
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "95",
+        "fishCount": 8,
+        "totalLengthCm": 342,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 1
+      },
+      "totals": {
+        "overallRank": 2,
+        "cumulativePoints": 2,
+        "cumulativeFish": 16,
+        "cumulativeLengthCm": 652
+      }
+    },
+    {
+      "anglerName": "Neap",
+      "teamName": "Tides",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "28",
         "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
+        "totalLengthCm": 290,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Codling",
+        "zonePoints": 2
       },
-      "a_17_1": {
-        "totalMetric": 275,
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "77",
+        "fishCount": 8,
+        "totalLengthCm": 338,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 1
+      },
+      "totals": {
+        "overallRank": 3,
+        "cumulativePoints": 3,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 628
+      }
+    },
+    {
+      "anglerName": "Landrover",
+      "teamName": "Vehicles",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "30",
         "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
+        "totalLengthCm": 290,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Codling",
+        "zonePoints": 2
       },
-      "a_21_1": {
-        "totalMetric": 297,
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "24",
+        "fishCount": 8,
+        "totalLengthCm": 330,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 1
+      },
+      "totals": {
+        "overallRank": 4,
+        "cumulativePoints": 3,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 620
+      }
+    },
+    {
+      "anglerName": "Oak",
+      "teamName": "Trees",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "79",
+        "fishCount": 8,
+        "totalLengthCm": 300,
+        "biggestFishCm": 49,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "72",
         "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Bass"
+        "totalLengthCm": 305,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
       },
-      "a_13_1": {
-        "totalMetric": 286,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Ray"
+      "totals": {
+        "overallRank": 5,
+        "cumulativePoints": 4,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 605
+      }
+    },
+    {
+      "anglerName": "Scotland",
+      "teamName": "Countries",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "80",
+        "fishCount": 9,
+        "totalLengthCm": 340,
+        "biggestFishCm": 62,
+        "biggestFishSpecies": "Smoothhound",
+        "zonePoints": 1
       },
-      "a_7_1": {
-        "totalMetric": 275,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Bass"
-      },
-      "a_1_3": {
-        "totalMetric": 264,
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "78",
         "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Ray"
+        "totalLengthCm": 285,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
       },
-      "a_2_2": {
-        "totalMetric": 253,
+      "totals": {
+        "overallRank": 6,
+        "cumulativePoints": 5,
+        "cumulativeFish": 16,
+        "cumulativeLengthCm": 625
+      }
+    },
+    {
+      "anglerName": "Robin",
+      "teamName": "Birds",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "53",
+        "fishCount": 8,
+        "totalLengthCm": 320,
+        "biggestFishCm": 59,
+        "biggestFishSpecies": "Bull Huss",
+        "zonePoints": 1
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "96",
+        "fishCount": 7,
+        "totalLengthCm": 290,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 7,
+        "cumulativePoints": 5,
+        "cumulativeFish": 15,
+        "cumulativeLengthCm": 610
+      }
+    },
+    {
+      "anglerName": "Bowline",
+      "teamName": "Knots",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "7",
+        "fishCount": 7,
+        "totalLengthCm": 320,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "103",
+        "fishCount": 7,
+        "totalLengthCm": 290,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 8,
+        "cumulativePoints": 6,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 610
+      }
+    },
+    {
+      "anglerName": "Apple",
+      "teamName": "Fruits",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "8",
+        "fishCount": 7,
+        "totalLengthCm": 280,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "50",
+        "fishCount": 5,
+        "totalLengthCm": 301,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
+      },
+      "totals": {
+        "overallRank": 9,
+        "cumulativePoints": 6,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 581
+      }
+    },
+    {
+      "anglerName": "Edinburgh",
+      "teamName": "Cities",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "57",
+        "fishCount": 7,
+        "totalLengthCm": 290,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Codling",
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "21",
+        "fishCount": 7,
+        "totalLengthCm": 275,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 5
+      },
+      "totals": {
+        "overallRank": 10,
+        "cumulativePoints": 7,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 565
+      }
+    },
+    {
+      "anglerName": "Hammer",
+      "teamName": "Tools",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "54",
+        "fishCount": 7,
+        "totalLengthCm": 290,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Codling",
+        "zonePoints": 2
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "23",
+        "fishCount": 7,
+        "totalLengthCm": 275,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 5
+      },
+      "totals": {
+        "overallRank": 11,
+        "cumulativePoints": 7,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 565
+      }
+    },
+    {
+      "anglerName": "Nevis",
+      "teamName": "Mountains",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "5",
+        "fishCount": 7,
+        "totalLengthCm": 280,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "47",
+        "fishCount": 7,
+        "totalLengthCm": 280,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 12,
+        "cumulativePoints": 7,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 560
+      }
+    },
+    {
+      "anglerName": "Cheddar",
+      "teamName": "Cheeses",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "27",
         "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Bass"
+        "totalLengthCm": 224,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 5
       },
-      "a_3_3": {
-        "totalMetric": 242,
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "18",
         "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Ray"
+        "totalLengthCm": 297,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
       },
-      "a_4_3": {
-        "totalMetric": 231,
-        "fishCount": 4,
-        "bestFish": 49,
-        "bestFishSpecies": "Bass"
-      },
-      "a_5_2": {
-        "totalMetric": 220,
-        "fishCount": 8,
-        "bestFish": 48,
-        "bestFishSpecies": "Ray"
-      },
-      "a_6_3": {
-        "totalMetric": 209,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Bass"
-      },
-      "a_8_3": {
-        "totalMetric": 198,
+      "totals": {
+        "overallRank": 13,
+        "cumulativePoints": 7,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 521
+      }
+    },
+    {
+      "anglerName": "Penny",
+      "teamName": "Coins",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "3",
         "fishCount": 6,
-        "bestFish": 46,
-        "bestFishSpecies": "Ray"
+        "totalLengthCm": 250,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Dab",
+        "zonePoints": 5
       },
-      "a_9_3": {
-        "totalMetric": 187,
-        "fishCount": 5,
-        "bestFish": 45,
-        "bestFishSpecies": "Bass"
-      },
-      "a_10_4": {
-        "totalMetric": 176,
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "74",
         "fishCount": 4,
-        "bestFish": 44,
-        "bestFishSpecies": "Ray"
+        "totalLengthCm": 294,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 3
       },
-      "a_11_4": {
-        "totalMetric": 165,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Bass"
-      },
-      "a_12_2": {
-        "totalMetric": 154,
-        "fishCount": 7,
-        "bestFish": 57,
-        "bestFishSpecies": "Ray"
-      },
-      "a_14_4": {
-        "totalMetric": 143,
+      "totals": {
+        "overallRank": 14,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 544
+      }
+    },
+    {
+      "anglerName": "Mars",
+      "teamName": "Planets",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "4",
         "fishCount": 6,
-        "bestFish": 56,
-        "bestFishSpecies": "Bass"
+        "totalLengthCm": 250,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 5
       },
-      "a_15_4": {
-        "totalMetric": 132,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Ray"
-      },
-      "a_16_2": {
-        "totalMetric": 121,
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "52",
         "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Bass"
+        "totalLengthCm": 290,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 3
       },
-      "a_18_4": {
-        "totalMetric": 110,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Ray"
-      },
-      "a_19_3": {
-        "totalMetric": 99,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Bass"
-      },
-      "a_23_2": {
-        "totalMetric": 88,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Ray"
-      },
-      "a_24_2": {
-        "totalMetric": 77,
+      "totals": {
+        "overallRank": 15,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 540
+      }
+    },
+    {
+      "anglerName": "Cod",
+      "teamName": "Sea Fish",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "34",
         "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Bass"
+        "totalLengthCm": 215,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 6
       },
-      "a_25_1": {
-        "totalMetric": 0,
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "102",
+        "fishCount": 5,
+        "totalLengthCm": 309,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 2
+      },
+      "totals": {
+        "overallRank": 16,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 524
+      }
+    },
+    {
+      "anglerName": "Skye",
+      "teamName": "Islands",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "61",
+        "fishCount": 6,
+        "totalLengthCm": 224,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "97",
+        "fishCount": 4,
+        "totalLengthCm": 298,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 3
+      },
+      "totals": {
+        "overallRank": 17,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 522
+      }
+    },
+    {
+      "anglerName": "Crimson",
+      "teamName": "Colours",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "32",
+        "fishCount": 3,
+        "totalLengthCm": 233,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "70",
+        "fishCount": 7,
+        "totalLengthCm": 285,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 18,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 518
+      }
+    },
+    {
+      "anglerName": "Fiddle",
+      "teamName": "Instruments",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "55",
+        "fishCount": 3,
+        "totalLengthCm": 233,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "44",
+        "fishCount": 7,
+        "totalLengthCm": 280,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Cod",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 19,
+        "cumulativePoints": 8,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 513
+      }
+    },
+    {
+      "anglerName": "North",
+      "teamName": "Compass",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "82",
+        "fishCount": 6,
+        "totalLengthCm": 300,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 3
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "75",
+        "fishCount": 7,
+        "totalLengthCm": 272,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 7
+      },
+      "totals": {
+        "overallRank": 20,
+        "cumulativePoints": 10,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 572
+      }
+    },
+    {
+      "anglerName": "Iron",
+      "teamName": "Elements",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "33",
+        "fishCount": 4,
+        "totalLengthCm": 206,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "20",
+        "fishCount": 4,
+        "totalLengthCm": 286,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 3
+      },
+      "totals": {
+        "overallRank": 21,
+        "cumulativePoints": 10,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 492
+      }
+    },
+    {
+      "anglerName": "Spring",
+      "teamName": "Seasons",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "2",
+        "fishCount": 6,
+        "totalLengthCm": 250,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Plaice",
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "76",
+        "fishCount": 8,
+        "totalLengthCm": 283,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 6
+      },
+      "totals": {
+        "overallRank": 22,
+        "cumulativePoints": 11,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 533
+      }
+    },
+    {
+      "anglerName": "Puffin",
+      "teamName": "Birds",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "88",
+        "fishCount": 6,
+        "totalLengthCm": 230,
+        "biggestFishCm": 43,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 5
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "39",
+        "fishCount": 8,
+        "totalLengthCm": 279,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 6
+      },
+      "totals": {
+        "overallRank": 23,
+        "cumulativePoints": 11,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 509
+      }
+    },
+    {
+      "anglerName": "Ruby",
+      "teamName": "Gemstones",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "59",
+        "fishCount": 4,
+        "totalLengthCm": 206,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "19",
+        "fishCount": 8,
+        "totalLengthCm": 275,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 4
+      },
+      "totals": {
+        "overallRank": 24,
+        "cumulativePoints": 11,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 481
+      }
+    },
+    {
+      "anglerName": "Gale",
+      "teamName": "Weather",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "58",
+        "fishCount": 5,
+        "totalLengthCm": 215,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "99",
+        "fishCount": 8,
+        "totalLengthCm": 287,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 6
+      },
+      "totals": {
+        "overallRank": 25,
+        "cumulativePoints": 12,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 502
+      }
+    },
+    {
+      "anglerName": "Bluebell",
+      "teamName": "Flowers",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "98",
+        "fishCount": 3,
+        "totalLengthCm": 240,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 4
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "65",
+        "fishCount": 6,
+        "totalLengthCm": 261,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 8
+      },
+      "totals": {
+        "overallRank": 26,
+        "cumulativePoints": 12,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 501
+      }
+    },
+    {
+      "anglerName": "Clyde",
+      "teamName": "Rivers",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "35",
+        "fishCount": 3,
+        "totalLengthCm": 197,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 8
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "98",
+        "fishCount": 7,
+        "totalLengthCm": 276,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 7
+      },
+      "totals": {
+        "overallRank": 27,
+        "cumulativePoints": 15,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 473
+      }
+    },
+    {
+      "anglerName": "Flounder",
+      "teamName": "Sea Fish",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "86",
+        "fishCount": 5,
+        "totalLengthCm": 220,
+        "biggestFishCm": 42,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 6
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "46",
+        "fishCount": 5,
+        "totalLengthCm": 246,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 9
+      },
+      "totals": {
+        "overallRank": 28,
+        "cumulativePoints": 15,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 466
+      }
+    },
+    {
+      "anglerName": "Orchid",
+      "teamName": "Flowers",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "75",
+        "fishCount": 3,
+        "totalLengthCm": 197,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 8
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "4",
+        "fishCount": 7,
+        "totalLengthCm": 264,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 7
+      },
+      "totals": {
+        "overallRank": 29,
+        "cumulativePoints": 15,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 461
+      }
+    },
+    {
+      "anglerName": "Portugal",
+      "teamName": "Countries",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "20",
+        "fishCount": 3,
+        "totalLengthCm": 220,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 9
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "40",
+        "fishCount": 7,
+        "totalLengthCm": 268,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 7
+      },
+      "totals": {
+        "overallRank": 30,
+        "cumulativePoints": 16,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 488
+      }
+    },
+    {
+      "anglerName": "Kingfisher",
+      "teamName": "Birds",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "18",
+        "fishCount": 6,
+        "totalLengthCm": 230,
+        "biggestFishCm": 42,
+        "biggestFishSpecies": "Dogfish",
+        "zonePoints": 8
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "66",
+        "fishCount": 5,
+        "totalLengthCm": 250,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 9
+      },
+      "totals": {
+        "overallRank": 31,
+        "cumulativePoints": 17,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 480
+      }
+    },
+    {
+      "anglerName": "Kestrel",
+      "teamName": "Birds",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "37",
+        "fishCount": 6,
+        "totalLengthCm": 188,
+        "biggestFishCm": 36,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 9
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "25",
+        "fishCount": 6,
+        "totalLengthCm": 253,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 8
+      },
+      "totals": {
+        "overallRank": 32,
+        "cumulativePoints": 17,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 441
+      }
+    },
+    {
+      "anglerName": "Poland",
+      "teamName": "Countries",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "47",
+        "fishCount": 5,
+        "totalLengthCm": 179,
+        "biggestFishCm": 35,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 10
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "90",
+        "fishCount": 6,
+        "totalLengthCm": 265,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 8
+      },
+      "totals": {
+        "overallRank": 33,
+        "cumulativePoints": 18,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 444
+      }
+    },
+    {
+      "anglerName": "Neptune",
+      "teamName": "Planets",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "91",
+        "fishCount": 4,
+        "totalLengthCm": 210,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 7
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "61",
+        "fishCount": 8,
+        "totalLengthCm": 228,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 11
+      },
+      "totals": {
+        "overallRank": 34,
+        "cumulativePoints": 18,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 438
+      }
+    },
+    {
+      "anglerName": "Willow",
+      "teamName": "Trees",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "65",
+        "fishCount": 5,
+        "totalLengthCm": 179,
+        "biggestFishCm": 35,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 10
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "37",
+        "fishCount": 6,
+        "totalLengthCm": 257,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 8
+      },
+      "totals": {
+        "overallRank": 35,
+        "cumulativePoints": 18,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 436
+      }
+    },
+    {
+      "anglerName": "Amber",
+      "teamName": "Gemstones",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "96",
+        "fishCount": 3,
+        "totalLengthCm": 200,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 8
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "30",
+        "fishCount": 4,
+        "totalLengthCm": 235,
+        "biggestFishCm": 49,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 10
+      },
+      "totals": {
+        "overallRank": 36,
+        "cumulativePoints": 18,
+        "cumulativeFish": 7,
+        "cumulativeLengthCm": 435
+      }
+    },
+    {
+      "anglerName": "Norway",
+      "teamName": "Countries",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "73",
+        "fishCount": 6,
+        "totalLengthCm": 188,
+        "biggestFishCm": 36,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 9
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "22",
+        "fishCount": 5,
+        "totalLengthCm": 242,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 9
+      },
+      "totals": {
+        "overallRank": 37,
+        "cumulativePoints": 18,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 430
+      }
+    },
+    {
+      "anglerName": "Birch",
+      "teamName": "Trees",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "17",
+        "fishCount": 5,
+        "totalLengthCm": 210,
+        "biggestFishCm": 32,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 10
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "89",
+        "fishCount": 5,
+        "totalLengthCm": 254,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 9
+      },
+      "totals": {
+        "overallRank": 38,
+        "cumulativePoints": 19,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 464
+      }
+    },
+    {
+      "anglerName": "Forth",
+      "teamName": "Rivers",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "87",
+        "fishCount": 6,
+        "totalLengthCm": 190,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 9
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "31",
+        "fishCount": 8,
+        "totalLengthCm": 224,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 11
+      },
+      "totals": {
+        "overallRank": 39,
+        "cumulativePoints": 20,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 414
+      }
+    },
+    {
+      "anglerName": "Plaice",
+      "teamName": "Sea Fish",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "26",
+        "fishCount": 4,
+        "totalLengthCm": 200,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 11
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "62",
+        "fishCount": 4,
+        "totalLengthCm": 239,
+        "biggestFishCm": 49,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 10
+      },
+      "totals": {
+        "overallRank": 40,
+        "cumulativePoints": 21,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 439
+      }
+    },
+    {
+      "anglerName": "Rowan",
+      "teamName": "Trees",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "38",
+        "fishCount": 4,
+        "totalLengthCm": 170,
+        "biggestFishCm": 34,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 11
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "13",
+        "fishCount": 4,
+        "totalLengthCm": 231,
+        "biggestFishCm": 49,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 10
+      },
+      "totals": {
+        "overallRank": 41,
+        "cumulativePoints": 21,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 401
+      }
+    },
+    {
+      "anglerName": "Venus",
+      "teamName": "Planets",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "52",
+        "fishCount": 3,
+        "totalLengthCm": 161,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 12
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "92",
+        "fishCount": 4,
+        "totalLengthCm": 243,
+        "biggestFishCm": 49,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 10
+      },
+      "totals": {
+        "overallRank": 42,
+        "cumulativePoints": 22,
+        "cumulativeFish": 7,
+        "cumulativeLengthCm": 404
+      }
+    },
+    {
+      "anglerName": "Bass",
+      "teamName": "Sea Fish",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "64",
+        "fishCount": 4,
+        "totalLengthCm": 170,
+        "biggestFishCm": 34,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 11
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "3",
+        "fishCount": 8,
+        "totalLengthCm": 220,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 11
+      },
+      "totals": {
+        "overallRank": 43,
+        "cumulativePoints": 22,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 390
+      }
+    },
+    {
+      "anglerName": "Mull",
+      "teamName": "Islands",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "89",
+        "fishCount": 4,
+        "totalLengthCm": 170,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 11
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "45",
+        "fishCount": 7,
+        "totalLengthCm": 213,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 12
+      },
+      "totals": {
+        "overallRank": 44,
+        "cumulativePoints": 23,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 383
+      }
+    },
+    {
+      "anglerName": "Emerald",
+      "teamName": "Gemstones",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "10",
+        "fishCount": 3,
+        "totalLengthCm": 190,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 12
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "73",
+        "fishCount": 7,
+        "totalLengthCm": 217,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 12
+      },
+      "totals": {
+        "overallRank": 45,
+        "cumulativePoints": 24,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 407
+      }
+    },
+    {
+      "anglerName": "Sapphire",
+      "teamName": "Gemstones",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "36",
+        "fishCount": 6,
+        "totalLengthCm": 152,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 13
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "86",
+        "fishCount": 8,
+        "totalLengthCm": 232,
+        "biggestFishCm": 48,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 11
+      },
+      "totals": {
+        "overallRank": 46,
+        "cumulativePoints": 24,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 384
+      }
+    },
+    {
+      "anglerName": "Snowdon",
+      "teamName": "Mountains",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "100",
+        "fishCount": 5,
+        "totalLengthCm": 180,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 10
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "53",
+        "fishCount": 5,
+        "totalLengthCm": 195,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 14
+      },
+      "totals": {
+        "overallRank": 47,
+        "cumulativePoints": 24,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 375
+      }
+    },
+    {
+      "anglerName": "Saturn",
+      "teamName": "Planets",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "67",
+        "fishCount": 3,
+        "totalLengthCm": 161,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 12
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "26",
+        "fishCount": 7,
+        "totalLengthCm": 209,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 12
+      },
+      "totals": {
+        "overallRank": 48,
+        "cumulativePoints": 24,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 370
+      }
+    },
+    {
+      "anglerName": "Saffron",
+      "teamName": "Colours",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "83",
+        "fishCount": 3,
+        "totalLengthCm": 160,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 12
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "49",
+        "fishCount": 6,
+        "totalLengthCm": 202,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 13
+      },
+      "totals": {
+        "overallRank": 49,
+        "cumulativePoints": 25,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 362
+      }
+    },
+    {
+      "anglerName": "Tweed",
+      "teamName": "Rivers",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "14",
+        "fishCount": 5,
+        "totalLengthCm": 180,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 13
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "69",
+        "fishCount": 6,
+        "totalLengthCm": 206,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 13
+      },
+      "totals": {
+        "overallRank": 50,
+        "cumulativePoints": 26,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 386
+      }
+    },
+    {
+      "anglerName": "Lomond",
+      "teamName": "Mountains",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "31",
+        "fishCount": 5,
+        "totalLengthCm": 143,
+        "biggestFishCm": 43,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 14
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "83",
+        "fishCount": 7,
+        "totalLengthCm": 221,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 12
+      },
+      "totals": {
+        "overallRank": 51,
+        "cumulativePoints": 26,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 364
+      }
+    },
+    {
+      "anglerName": "Tay",
+      "teamName": "Rivers",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "56",
+        "fishCount": 6,
+        "totalLengthCm": 152,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 13
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "6",
+        "fishCount": 6,
+        "totalLengthCm": 198,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 13
+      },
+      "totals": {
+        "overallRank": 52,
+        "cumulativePoints": 26,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 350
+      }
+    },
+    {
+      "anglerName": "Winter",
+      "teamName": "Seasons",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "94",
+        "fishCount": 6,
+        "totalLengthCm": 150,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 13
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "36",
+        "fishCount": 5,
+        "totalLengthCm": 191,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 14
+      },
+      "totals": {
+        "overallRank": 53,
+        "cumulativePoints": 27,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 341
+      }
+    },
+    {
+      "anglerName": "Cobalt",
+      "teamName": "Colours",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "12",
+        "fishCount": 3,
+        "totalLengthCm": 160,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 15
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "93",
+        "fishCount": 6,
+        "totalLengthCm": 210,
+        "biggestFishCm": 46,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 13
+      },
+      "totals": {
+        "overallRank": 54,
+        "cumulativePoints": 28,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 370
+      }
+    },
+    {
+      "anglerName": "Cairngorm",
+      "teamName": "Mountains",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "60",
+        "fishCount": 5,
+        "totalLengthCm": 143,
+        "biggestFishCm": 43,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 14
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "12",
+        "fishCount": 5,
+        "totalLengthCm": 187,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 14
+      },
+      "totals": {
+        "overallRank": 55,
+        "cumulativePoints": 28,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 330
+      }
+    },
+    {
+      "anglerName": "Arran",
+      "teamName": "Islands",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "9",
+        "fishCount": 4,
+        "totalLengthCm": 170,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 14
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "58",
+        "fishCount": 4,
+        "totalLengthCm": 184,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 15
+      },
+      "totals": {
+        "overallRank": 56,
+        "cumulativePoints": 29,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 354
+      }
+    },
+    {
+      "anglerName": "Autumn",
+      "teamName": "Seasons",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "50",
+        "fishCount": 3,
+        "totalLengthCm": 125,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 16
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "91",
+        "fishCount": 5,
+        "totalLengthCm": 199,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 14
+      },
+      "totals": {
+        "overallRank": 57,
+        "cumulativePoints": 30,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 324
+      }
+    },
+    {
+      "anglerName": "Copper",
+      "teamName": "Elements",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "97",
+        "fishCount": 5,
+        "totalLengthCm": 140,
+        "biggestFishCm": 45,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 14
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "59",
+        "fishCount": 8,
+        "totalLengthCm": 173,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 16
+      },
+      "totals": {
+        "overallRank": 58,
+        "cumulativePoints": 30,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 313
+      }
+    },
+    {
+      "anglerName": "Islay",
+      "teamName": "Islands",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "49",
+        "fishCount": 4,
+        "totalLengthCm": 134,
+        "biggestFishCm": 42,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 15
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "15",
+        "fishCount": 4,
+        "totalLengthCm": 176,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 15
+      },
+      "totals": {
+        "overallRank": 59,
+        "cumulativePoints": 30,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 310
+      }
+    },
+    {
+      "anglerName": "Gold",
+      "teamName": "Elements",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "13",
+        "fishCount": 5,
+        "totalLengthCm": 150,
+        "biggestFishCm": 36,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 16
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "85",
+        "fishCount": 4,
+        "totalLengthCm": 188,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 15
+      },
+      "totals": {
+        "overallRank": 60,
+        "cumulativePoints": 31,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 338
+      }
+    },
+    {
+      "anglerName": "Indigo",
+      "teamName": "Colours",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "69",
+        "fishCount": 4,
+        "totalLengthCm": 134,
+        "biggestFishCm": 42,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 15
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "14",
+        "fishCount": 8,
+        "totalLengthCm": 165,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 16
+      },
+      "totals": {
+        "overallRank": 61,
+        "cumulativePoints": 31,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 299
+      }
+    },
+    {
+      "anglerName": "Silver",
+      "teamName": "Elements",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "77",
+        "fishCount": 6,
+        "totalLengthCm": 116,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 17
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "35",
+        "fishCount": 4,
+        "totalLengthCm": 180,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 15
+      },
+      "totals": {
+        "overallRank": 62,
+        "cumulativePoints": 32,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 296
+      }
+    },
+    {
+      "anglerName": "Drizzle",
+      "teamName": "Weather",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "19",
+        "fishCount": 4,
+        "totalLengthCm": 140,
+        "biggestFishCm": 35,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 17
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "34",
+        "fishCount": 8,
+        "totalLengthCm": 169,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 16
+      },
+      "totals": {
+        "overallRank": 63,
+        "cumulativePoints": 33,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 309
+      }
+    },
+    {
+      "anglerName": "Summer",
+      "teamName": "Seasons",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "66",
+        "fishCount": 3,
+        "totalLengthCm": 125,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 16
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "11",
+        "fishCount": 7,
+        "totalLengthCm": 154,
+        "biggestFishCm": 57,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 17
+      },
+      "totals": {
+        "overallRank": 64,
+        "cumulativePoints": 33,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 279
+      }
+    },
+    {
+      "anglerName": "Thunder",
+      "teamName": "Weather",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "90",
+        "fishCount": 4,
+        "totalLengthCm": 130,
+        "biggestFishCm": 44,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 15
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "8",
+        "fishCount": 6,
+        "totalLengthCm": 143,
+        "biggestFishCm": 56,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 18
+      },
+      "totals": {
+        "overallRank": 65,
+        "cumulativePoints": 33,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 273
+      }
+    },
+    {
+      "anglerName": "Bagpipe",
+      "teamName": "Instruments",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "42",
+        "fishCount": 5,
+        "totalLengthCm": 107,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 18
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "80",
+        "fishCount": 8,
+        "totalLengthCm": 177,
+        "biggestFishCm": 58,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 16
+      },
+      "totals": {
+        "overallRank": 66,
+        "cumulativePoints": 34,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 284
+      }
+    },
+    {
+      "anglerName": "Frost",
+      "teamName": "Weather",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "45",
+        "fishCount": 6,
+        "totalLengthCm": 116,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 17
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "55",
+        "fishCount": 7,
+        "totalLengthCm": 162,
+        "biggestFishCm": 57,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 17
+      },
+      "totals": {
+        "overallRank": 67,
+        "cumulativePoints": 34,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 278
+      }
+    },
+    {
+      "anglerName": "Aberdeen",
+      "teamName": "Cities",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "99",
+        "fishCount": 5,
+        "totalLengthCm": 100,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 18
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "41",
+        "fishCount": 7,
+        "totalLengthCm": 158,
+        "biggestFishCm": 57,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 17
+      },
+      "totals": {
+        "overallRank": 68,
+        "cumulativePoints": 35,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 258
+      }
+    },
+    {
+      "anglerName": "Flute",
+      "teamName": "Instruments",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "95",
+        "fishCount": 3,
+        "totalLengthCm": 120,
+        "biggestFishCm": 43,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 16
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "1",
+        "fishCount": 5,
+        "totalLengthCm": 132,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 19
+      },
+      "totals": {
+        "overallRank": 69,
+        "cumulativePoints": 35,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 252
+      }
+    },
+    {
+      "anglerName": "Guitar",
+      "teamName": "Instruments",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "25",
+        "fishCount": 3,
+        "totalLengthCm": 130,
+        "biggestFishCm": 34,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 18
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "67",
+        "fishCount": 6,
+        "totalLengthCm": 151,
+        "biggestFishCm": 56,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 18
+      },
+      "totals": {
+        "overallRank": 70,
+        "cumulativePoints": 36,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 281
+      }
+    },
+    {
+      "anglerName": "Damson",
+      "teamName": "Fruits",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "40",
+        "fishCount": 4,
+        "totalLengthCm": 98,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 19
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "84",
+        "fishCount": 7,
+        "totalLengthCm": 166,
+        "biggestFishCm": 57,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 17
+      },
+      "totals": {
+        "overallRank": 71,
+        "cumulativePoints": 36,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 264
+      }
+    },
+    {
+      "anglerName": "Rowanberry",
+      "teamName": "Fruits",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "81",
+        "fishCount": 6,
+        "totalLengthCm": 110,
+        "biggestFishCm": 42,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 17
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "56",
+        "fishCount": 5,
+        "totalLengthCm": 140,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 19
+      },
+      "totals": {
+        "overallRank": 72,
+        "cumulativePoints": 36,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 250
+      }
+    },
+    {
+      "anglerName": "Clove",
+      "teamName": "Knots",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "92",
+        "fishCount": 4,
+        "totalLengthCm": 90,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 19
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "33",
+        "fishCount": 6,
+        "totalLengthCm": 147,
+        "biggestFishCm": 56,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 18
+      },
+      "totals": {
+        "overallRank": 73,
+        "cumulativePoints": 37,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 237
+      }
+    },
+    {
+      "anglerName": "Stirling",
+      "teamName": "Cities",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "46",
+        "fishCount": 3,
+        "totalLengthCm": 89,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 20
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "79",
+        "fishCount": 6,
+        "totalLengthCm": 155,
+        "biggestFishCm": 56,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 18
+      },
+      "totals": {
+        "overallRank": 74,
+        "cumulativePoints": 38,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 244
+      }
+    },
+    {
+      "anglerName": "Bramble",
+      "teamName": "Fruits",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "68",
+        "fishCount": 5,
+        "totalLengthCm": 107,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 18
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "7",
+        "fishCount": 4,
+        "totalLengthCm": 121,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 20
+      },
+      "totals": {
+        "overallRank": 75,
+        "cumulativePoints": 38,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 228
+      }
+    },
+    {
+      "anglerName": "Flood",
+      "teamName": "Tides",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "11",
+        "fishCount": 4,
+        "totalLengthCm": 110,
+        "biggestFishCm": 32,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 20
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "94",
+        "fishCount": 5,
+        "totalLengthCm": 144,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 19
+      },
+      "totals": {
+        "overallRank": 76,
+        "cumulativePoints": 39,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 254
+      }
+    },
+    {
+      "anglerName": "Glasgow",
+      "teamName": "Cities",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "22",
+        "fishCount": 5,
+        "totalLengthCm": 120,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 19
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "68",
+        "fishCount": 4,
+        "totalLengthCm": 129,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 20
+      },
+      "totals": {
+        "overallRank": 77,
+        "cumulativePoints": 39,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 249
+      }
+    },
+    {
+      "anglerName": "Springtide",
+      "teamName": "Tides",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "84",
+        "fishCount": 3,
+        "totalLengthCm": 80,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 20
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "48",
+        "fishCount": 5,
+        "totalLengthCm": 136,
+        "biggestFishCm": 55,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 19
+      },
+      "totals": {
+        "overallRank": 78,
+        "cumulativePoints": 39,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 216
+      }
+    },
+    {
+      "anglerName": "Palomar",
+      "teamName": "Knots",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "62",
+        "fishCount": 4,
+        "totalLengthCm": 98,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 19
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "2",
+        "fishCount": 8,
+        "totalLengthCm": 110,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 21
+      },
+      "totals": {
+        "overallRank": 79,
+        "cumulativePoints": 40,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 208
+      }
+    },
+    {
+      "anglerName": "Trawler",
+      "teamName": "Vehicles",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "71",
+        "fishCount": 6,
+        "totalLengthCm": 80,
+        "biggestFishCm": 36,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 21
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "81",
+        "fishCount": 4,
+        "totalLengthCm": 133,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 20
+      },
+      "totals": {
+        "overallRank": 80,
+        "cumulativePoints": 41,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 213
+      }
+    },
+    {
+      "anglerName": "Camper",
+      "teamName": "Vehicles",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "93",
+        "fishCount": 6,
+        "totalLengthCm": 70,
+        "biggestFishCm": 38,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 21
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "29",
+        "fishCount": 4,
+        "totalLengthCm": 125,
+        "biggestFishCm": 54,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 20
+      },
+      "totals": {
+        "overallRank": 81,
+        "cumulativePoints": 41,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 195
+      }
+    },
+    {
+      "anglerName": "Uni",
+      "teamName": "Knots",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "48",
+        "fishCount": 6,
+        "totalLengthCm": 80,
+        "biggestFishCm": 36,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 21
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "63",
+        "fishCount": 8,
+        "totalLengthCm": 118,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 21
+      },
+      "totals": {
+        "overallRank": 82,
+        "cumulativePoints": 42,
+        "cumulativeFish": 14,
+        "cumulativeLengthCm": 198
+      }
+    },
+    {
+      "anglerName": "Ebb",
+      "teamName": "Tides",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "78",
+        "fishCount": 3,
+        "totalLengthCm": 89,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 20
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "5",
+        "fishCount": 7,
+        "totalLengthCm": 99,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 22
+      },
+      "totals": {
+        "overallRank": 83,
+        "cumulativePoints": 42,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 188
+      }
+    },
+    {
+      "anglerName": "Tractor",
+      "teamName": "Vehicles",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "16",
+        "fishCount": 3,
+        "totalLengthCm": 100,
+        "biggestFishCm": 41,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 21
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "54",
+        "fishCount": 7,
+        "totalLengthCm": 107,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 22
+      },
+      "totals": {
+        "overallRank": 84,
+        "cumulativePoints": 43,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 207
+      }
+    },
+    {
+      "anglerName": "Gouda",
+      "teamName": "Cheeses",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "76",
+        "fishCount": 5,
+        "totalLengthCm": 71,
+        "biggestFishCm": 35,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 22
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "87",
+        "fishCount": 8,
+        "totalLengthCm": 122,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 21
+      },
+      "totals": {
+        "overallRank": 85,
+        "cumulativePoints": 43,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 193
+      }
+    },
+    {
+      "anglerName": "Brie",
+      "teamName": "Cheeses",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "85",
+        "fishCount": 5,
+        "totalLengthCm": 60,
+        "biggestFishCm": 37,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 22
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "32",
+        "fishCount": 8,
+        "totalLengthCm": 114,
+        "biggestFishCm": 53,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 21
+      },
+      "totals": {
+        "overallRank": 86,
+        "cumulativePoints": 43,
+        "cumulativeFish": 13,
+        "cumulativeLengthCm": 174
+      }
+    },
+    {
+      "anglerName": "Pliers",
+      "teamName": "Tools",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "43",
+        "fishCount": 5,
+        "totalLengthCm": 71,
+        "biggestFishCm": 35,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 22
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "101",
+        "fishCount": 7,
+        "totalLengthCm": 111,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 22
+      },
+      "totals": {
+        "overallRank": 87,
+        "cumulativePoints": 44,
+        "cumulativeFish": 12,
+        "cumulativeLengthCm": 182
+      }
+    },
+    {
+      "anglerName": "Stilton",
+      "teamName": "Cheeses",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "15",
+        "fishCount": 5,
+        "totalLengthCm": 90,
+        "biggestFishCm": 40,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 22
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "71",
+        "fishCount": 6,
+        "totalLengthCm": 96,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 23
+      },
+      "totals": {
+        "overallRank": 88,
+        "cumulativePoints": 45,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 186
+      }
+    },
+    {
+      "anglerName": "Spanner",
+      "teamName": "Tools",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "103",
+        "fishCount": 4,
+        "totalLengthCm": 50,
+        "biggestFishCm": 47,
+        "biggestFishSpecies": "Flounder",
+        "zonePoints": 23
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "28",
+        "fishCount": 7,
+        "totalLengthCm": 103,
+        "biggestFishCm": 52,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 22
+      },
+      "totals": {
+        "overallRank": 89,
+        "cumulativePoints": 45,
+        "cumulativeFish": 11,
+        "cumulativeLengthCm": 153
+      }
+    },
+    {
+      "anglerName": "Sovereign",
+      "teamName": "Coins",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "41",
+        "fishCount": 4,
+        "totalLengthCm": 62,
+        "biggestFishCm": 34,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 23
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "100",
+        "fishCount": 6,
+        "totalLengthCm": 100,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 23
+      },
+      "totals": {
+        "overallRank": 90,
+        "cumulativePoints": 46,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 162
+      }
+    },
+    {
+      "anglerName": "Shilling",
+      "teamName": "Coins",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "70",
+        "fishCount": 4,
+        "totalLengthCm": 62,
+        "biggestFishCm": 34,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 23
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "10",
+        "fishCount": 6,
+        "totalLengthCm": 88,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 23
+      },
+      "totals": {
+        "overallRank": 91,
+        "cumulativePoints": 46,
+        "cumulativeFish": 10,
+        "cumulativeLengthCm": 150
+      }
+    },
+    {
+      "anglerName": "Chisel",
+      "teamName": "Tools",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "21",
+        "fishCount": 4,
+        "totalLengthCm": 80,
+        "biggestFishCm": 39,
+        "biggestFishSpecies": "Coalies",
+        "zonePoints": 23
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "57",
+        "fishCount": 5,
+        "totalLengthCm": 85,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 24
+      },
+      "totals": {
+        "overallRank": 92,
+        "cumulativePoints": 47,
+        "cumulativeFish": 9,
+        "cumulativeLengthCm": 165
+      }
+    },
+    {
+      "anglerName": "South",
+      "teamName": "Compass",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "74",
+        "fishCount": 3,
+        "totalLengthCm": 53,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 24
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "16",
+        "fishCount": 5,
+        "totalLengthCm": 77,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 24
+      },
+      "totals": {
+        "overallRank": 93,
+        "cumulativePoints": 48,
+        "cumulativeFish": 8,
+        "cumulativeLengthCm": 130
+      }
+    },
+    {
+      "anglerName": "Florin",
+      "teamName": "Coins",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "102",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 25
       },
-      "solo_3": {
-        "totalMetric": 0,
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "43",
+        "fishCount": 6,
+        "totalLengthCm": 92,
+        "biggestFishCm": 51,
+        "biggestFishSpecies": "Ray",
+        "zonePoints": 23
+      },
+      "totals": {
+        "overallRank": 94,
+        "cumulativePoints": 48,
+        "cumulativeFish": 6,
+        "cumulativeLengthCm": 92
+      }
+    },
+    {
+      "anglerName": "East",
+      "teamName": "Compass",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "39",
+        "fishCount": 3,
+        "totalLengthCm": 53,
+        "biggestFishCm": 33,
+        "biggestFishSpecies": "Whiting",
+        "zonePoints": 24
+      },
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "88",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 25
       },
-      "a_1_2": {
-        "totalMetric": 334,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Ray"
-      },
-      "a_15_1": {
-        "totalMetric": 280,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_9_1": {
-        "totalMetric": 280,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_16_1": {
-        "totalMetric": 301,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Bass"
-      },
-      "a_6_1": {
-        "totalMetric": 290,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Ray"
-      },
-      "a_2_3": {
-        "totalMetric": 279,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Bass"
-      },
-      "a_3_4": {
-        "totalMetric": 268,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Ray"
-      },
-      "a_4_4": {
-        "totalMetric": 257,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Bass"
-      },
-      "a_5_4": {
-        "totalMetric": 246,
-        "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Ray"
-      },
-      "a_7_4": {
-        "totalMetric": 235,
-        "fishCount": 4,
-        "bestFish": 49,
-        "bestFishSpecies": "Bass"
-      },
-      "a_8_2": {
-        "totalMetric": 224,
-        "fishCount": 8,
-        "bestFish": 48,
-        "bestFishSpecies": "Ray"
-      },
-      "a_10_3": {
-        "totalMetric": 213,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Bass"
-      },
-      "a_11_3": {
-        "totalMetric": 202,
-        "fishCount": 6,
-        "bestFish": 46,
-        "bestFishSpecies": "Ray"
-      },
-      "a_12_4": {
-        "totalMetric": 191,
-        "fishCount": 5,
-        "bestFish": 45,
-        "bestFishSpecies": "Bass"
-      },
-      "a_13_3": {
-        "totalMetric": 180,
-        "fishCount": 4,
-        "bestFish": 44,
-        "bestFishSpecies": "Ray"
-      },
-      "a_14_3": {
-        "totalMetric": 169,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Bass"
-      },
-      "a_17_4": {
-        "totalMetric": 158,
-        "fishCount": 7,
-        "bestFish": 57,
-        "bestFishSpecies": "Ray"
-      },
-      "a_18_2": {
-        "totalMetric": 147,
-        "fishCount": 6,
-        "bestFish": 56,
-        "bestFishSpecies": "Bass"
-      },
-      "a_19_2": {
-        "totalMetric": 136,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Ray"
-      },
-      "a_20_2": {
-        "totalMetric": 125,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Bass"
-      },
-      "a_21_2": {
-        "totalMetric": 114,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Ray"
-      },
-      "a_22_3": {
-        "totalMetric": 103,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Bass"
-      },
-      "a_23_3": {
-        "totalMetric": 92,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Ray"
-      },
-      "a_24_4": {
-        "totalMetric": 81,
-        "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Bass"
-      },
-      "a_25_4": {
-        "totalMetric": 0,
+      "totals": {
+        "overallRank": 95,
+        "cumulativePoints": 49,
+        "cumulativeFish": 3,
+        "cumulativeLengthCm": 53
+      }
+    },
+    {
+      "anglerName": "West",
+      "teamName": "Compass",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "23",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
       },
-      "solo_2": {
-        "totalMetric": 0,
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "27",
+        "fishCount": 5,
+        "totalLengthCm": 81,
+        "biggestFishCm": 50,
+        "biggestFishSpecies": "Bass",
+        "zonePoints": 24
+      },
+      "totals": {
+        "overallRank": 96,
+        "cumulativePoints": 50,
+        "cumulativeFish": 5,
+        "cumulativeLengthCm": 81
+      }
+    },
+    {
+      "anglerName": "Nutmeg",
+      "teamName": "Spices",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "44",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
       },
-      "a_19_1": {
-        "totalMetric": 338,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Ray"
-      },
-      "a_11_1": {
-        "totalMetric": 285,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_3_1": {
-        "totalMetric": 285,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_4_1": {
-        "totalMetric": 305,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Bass"
-      },
-      "a_23_1": {
-        "totalMetric": 294,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Ray"
-      },
-      "a_12_1": {
-        "totalMetric": 283,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Bass"
-      },
-      "a_24_1": {
-        "totalMetric": 272,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Ray"
-      },
-      "a_1_4": {
-        "totalMetric": 261,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Bass"
-      },
-      "a_2_4": {
-        "totalMetric": 250,
-        "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Ray"
-      },
-      "a_5_3": {
-        "totalMetric": 239,
-        "fishCount": 4,
-        "bestFish": 49,
-        "bestFishSpecies": "Bass"
-      },
-      "a_6_4": {
-        "totalMetric": 228,
-        "fishCount": 8,
-        "bestFish": 48,
-        "bestFishSpecies": "Ray"
-      },
-      "a_7_2": {
-        "totalMetric": 217,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Bass"
-      },
-      "a_8_4": {
-        "totalMetric": 206,
-        "fishCount": 6,
-        "bestFish": 46,
-        "bestFishSpecies": "Ray"
-      },
-      "a_9_4": {
-        "totalMetric": 195,
-        "fishCount": 5,
-        "bestFish": 45,
-        "bestFishSpecies": "Bass"
-      },
-      "a_10_2": {
-        "totalMetric": 184,
-        "fishCount": 4,
-        "bestFish": 44,
-        "bestFishSpecies": "Ray"
-      },
-      "a_13_2": {
-        "totalMetric": 173,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Bass"
-      },
-      "a_14_2": {
-        "totalMetric": 162,
-        "fishCount": 7,
-        "bestFish": 57,
-        "bestFishSpecies": "Ray"
-      },
-      "a_15_3": {
-        "totalMetric": 151,
-        "fishCount": 6,
-        "bestFish": 56,
-        "bestFishSpecies": "Bass"
-      },
-      "a_16_4": {
-        "totalMetric": 140,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Ray"
-      },
-      "a_17_2": {
-        "totalMetric": 129,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Bass"
-      },
-      "a_18_3": {
-        "totalMetric": 118,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Ray"
-      },
-      "a_20_3": {
-        "totalMetric": 107,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Bass"
-      },
-      "a_21_3": {
-        "totalMetric": 96,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Ray"
-      },
-      "a_22_2": {
-        "totalMetric": 85,
-        "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Bass"
-      },
-      "a_25_2": {
-        "totalMetric": 0,
+      "day2": {
+        "zone": "Blue Zone",
+        "peg": "82",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 25
       },
-      "solo_1": {
-        "totalMetric": 0,
+      "totals": {
+        "overallRank": 97,
+        "cumulativePoints": 51,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "Ginger",
+      "teamName": "Spices",
+      "day1": {
+        "zone": "Blue Zone",
+        "peg": "101",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 25
       },
-      "a_1_1": {
-        "totalMetric": 342,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Ray"
-      },
-      "a_2_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_18_1": {
-        "totalMetric": 290,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Cod"
-      },
-      "a_5_1": {
-        "totalMetric": 309,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Bass"
-      },
-      "a_10_1": {
-        "totalMetric": 298,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Ray"
-      },
-      "a_14_1": {
-        "totalMetric": 287,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Bass"
-      },
-      "a_8_1": {
-        "totalMetric": 276,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Ray"
-      },
-      "a_3_2": {
-        "totalMetric": 265,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Bass"
-      },
-      "a_4_2": {
-        "totalMetric": 254,
-        "fishCount": 5,
-        "bestFish": 50,
-        "bestFishSpecies": "Ray"
-      },
-      "a_6_2": {
-        "totalMetric": 243,
-        "fishCount": 4,
-        "bestFish": 49,
-        "bestFishSpecies": "Bass"
-      },
-      "a_7_3": {
-        "totalMetric": 232,
-        "fishCount": 8,
-        "bestFish": 48,
-        "bestFishSpecies": "Ray"
-      },
-      "a_9_2": {
-        "totalMetric": 221,
-        "fishCount": 7,
-        "bestFish": 47,
-        "bestFishSpecies": "Bass"
-      },
-      "a_11_2": {
-        "totalMetric": 210,
-        "fishCount": 6,
-        "bestFish": 46,
-        "bestFishSpecies": "Ray"
-      },
-      "a_12_3": {
-        "totalMetric": 199,
-        "fishCount": 5,
-        "bestFish": 45,
-        "bestFishSpecies": "Bass"
-      },
-      "a_13_4": {
-        "totalMetric": 188,
-        "fishCount": 4,
-        "bestFish": 44,
-        "bestFishSpecies": "Ray"
-      },
-      "a_15_2": {
-        "totalMetric": 177,
-        "fishCount": 8,
-        "bestFish": 58,
-        "bestFishSpecies": "Bass"
-      },
-      "a_16_3": {
-        "totalMetric": 166,
-        "fishCount": 7,
-        "bestFish": 57,
-        "bestFishSpecies": "Ray"
-      },
-      "a_17_3": {
-        "totalMetric": 155,
-        "fishCount": 6,
-        "bestFish": 56,
-        "bestFishSpecies": "Bass"
-      },
-      "a_19_4": {
-        "totalMetric": 144,
-        "fishCount": 5,
-        "bestFish": 55,
-        "bestFishSpecies": "Ray"
-      },
-      "a_20_4": {
-        "totalMetric": 133,
-        "fishCount": 4,
-        "bestFish": 54,
-        "bestFishSpecies": "Bass"
-      },
-      "a_21_4": {
-        "totalMetric": 122,
-        "fishCount": 8,
-        "bestFish": 53,
-        "bestFishSpecies": "Ray"
-      },
-      "a_22_4": {
-        "totalMetric": 111,
-        "fishCount": 7,
-        "bestFish": 52,
-        "bestFishSpecies": "Bass"
-      },
-      "a_23_4": {
-        "totalMetric": 100,
-        "fishCount": 6,
-        "bestFish": 51,
-        "bestFishSpecies": "Ray"
-      },
-      "a_24_3": {
-        "totalMetric": 0,
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "42",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
       },
-      "a_25_3": {
-        "totalMetric": 0,
+      "totals": {
+        "overallRank": 98,
+        "cumulativePoints": 51,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "Saffron",
+      "teamName": "Spices",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "63",
         "fishCount": 0,
-        "bestFish": 0
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "17",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "totals": {
+        "overallRank": 99,
+        "cumulativePoints": 52,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "Cinnamon",
+      "teamName": "Spices",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "24",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "64",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "totals": {
+        "overallRank": 100,
+        "cumulativePoints": 52,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "joe",
+      "teamName": "Independent",
+      "day1": {
+        "zone": "Yellow Zone",
+        "peg": "51",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "day2": {
+        "zone": "Green Zone",
+        "peg": "60",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "totals": {
+        "overallRank": 101,
+        "cumulativePoints": 52,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "mark",
+      "teamName": "Independent",
+      "day1": {
+        "zone": "Red Zone",
+        "peg": "6",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "day2": {
+        "zone": "Yellow Zone",
+        "peg": "38",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "totals": {
+        "overallRank": 102,
+        "cumulativePoints": 52,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
+      }
+    },
+    {
+      "anglerName": "tam",
+      "teamName": "Independent",
+      "day1": {
+        "zone": "Green Zone",
+        "peg": "72",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "day2": {
+        "zone": "Red Zone",
+        "peg": "9",
+        "fishCount": 0,
+        "totalLengthCm": 0,
+        "biggestFishCm": 0,
+        "biggestFishSpecies": "",
+        "zonePoints": 26
+      },
+      "totals": {
+        "overallRank": 103,
+        "cumulativePoints": 52,
+        "cumulativeFish": 0,
+        "cumulativeLengthCm": 0
       }
     }
+  ],
+  "secretPairs": {
+    "description": "Target Length calculated for wildcard mystery pairing.",
+    "targetLength": "0cm",
+    "winners": [],
+    "otherPairs": []
   }
 }
