@@ -819,8 +819,8 @@
 
     .session-h2h-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.78rem;
       width: 100%;
       margin-bottom: 0.85rem;
     }
@@ -828,14 +828,17 @@
     .sh2h-metric-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
-      border-top: 3px solid var(--brand-tint-border);
       border-radius: var(--radius-lg);
-      padding: 0.9rem 0.95rem;
+      padding: 0.88rem 0.95rem;
       box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 0.6rem;
+      gap: 0.55rem;
+    }
+
+    .sh2h-metric-card.full-span-card {
+      grid-column: 1 / -1;
     }
 
     .sh2h-top-row {
@@ -846,7 +849,7 @@
     }
 
     .sh2h-title {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-weight: 800;
@@ -854,9 +857,9 @@
     }
 
     .sh2h-edge-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.18rem 0.58rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.16rem 0.56rem;
       border-radius: 999px;
       white-space: nowrap;
     }
@@ -879,87 +882,178 @@
       border: 1px solid var(--brand-tint-border);
     }
 
-    .sh2h-split-cols {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: stretch;
-      gap: 0.5rem;
+    /* Open Two-Column Stat Row (No Inner Boxes) */
+    .sh2h-open-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
 
-    .sh2h-side {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-md);
-      padding: 0.58rem 0.64rem;
-      min-width: 0;
+    .sh2h-open-side {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      min-width: 0;
     }
 
-    .sh2h-side.d1-side {
-      background: #f5f7ff;
-      border-color: #dbeafe;
-      border-top: 2.5px solid #818cf8;
-    }
-
-    .sh2h-side.d2-side {
-      background: #fffdf5;
-      border-color: #fef3c7;
-      border-top: 2.5px solid #fbbf24;
-    }
-
-    .sh2h-side.d1-side.winner-side {
-      background: #eef2ff;
-      border-color: #818cf8;
-      border-top: 3px solid var(--accent-indigo);
-      box-shadow: 0 2px 6px rgba(67, 56, 202, 0.08);
-    }
-
-    .sh2h-side.d2-side.winner-side {
-      background: #fffbeb;
-      border-color: #f59e0b;
-      border-top: 3px solid var(--accent-amber);
-      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.09);
+    .sh2h-open-side.right {
+      text-align: right;
+      align-items: flex-end;
     }
 
     .sh2h-side-lbl {
       font-size: 0.71rem;
       font-weight: 800;
-      margin-bottom: 0.14rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.32rem;
+      margin-bottom: 0.12rem;
+    }
+
+    .sh2h-dot-d1 {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-indigo);
+      display: inline-block;
+    }
+
+    .sh2h-dot-d2 {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      display: inline-block;
     }
 
     .sh2h-side-val {
-      font-size: 1.08rem;
+      font-size: 1.14rem;
       font-weight: 800;
       color: var(--text-primary);
-      line-height: 1.2;
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+    }
+
+    .sh2h-open-side.dimmed .sh2h-side-val {
+      color: var(--text-secondary);
+      font-weight: 700;
     }
 
     .sh2h-side-sub {
       font-size: 0.73rem;
       color: var(--text-secondary);
       line-height: 1.25;
-      margin-top: 0.16rem;
+      margin-top: 0.14rem;
     }
 
-    .sh2h-vs-sep {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
+    /* Proportional Tug-of-War Split Bar */
+    .sh2h-split-bar {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      gap: 2px;
+    }
+
+    .sh2h-bar-d1 {
+      height: 100%;
+      background: var(--accent-indigo);
+      border-radius: 999px 0 0 999px;
+      transition: width 0.45s ease;
+    }
+
+    .sh2h-bar-d2 {
+      height: 100%;
+      background: var(--accent-amber);
+      border-radius: 0 999px 999px 0;
+      transition: width 0.45s ease;
     }
 
     .sh2h-footer-note {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-secondary);
-      border-top: 1px solid var(--border-glass);
-      padding-top: 0.42rem;
+      line-height: 1.3;
     }
 
+    /* Compact 4-Zone Night vs Day Rows */
+    .zone-nd-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-top: 0.15rem;
+    }
+
+    .zone-nd-row {
+      display: grid;
+      grid-template-columns: 74px 1fr 90px 1fr;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.46rem 0.55rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+    }
+
+    .zone-nd-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.36rem;
+    }
+
+    .zone-nd-swatch {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .zone-nd-stat {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .zone-nd-stat.d1 {
+      text-align: left;
+    }
+
+    .zone-nd-stat.d2 {
+      text-align: right;
+    }
+
+    .zone-nd-main {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .zone-nd-sub {
+      font-size: 0.71rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 640px) {
+      .zone-nd-row {
+        grid-template-columns: 62px 1fr 64px 1fr;
+        gap: 0.35rem;
+        padding: 0.42rem 0.42rem;
+      }
+      .zone-nd-name {
+        font-size: 0.78rem;
+      }
+      .zone-nd-main {
+        font-size: 0.82rem;
+      }
+      .zone-nd-sub {
+        font-size: 0.67rem;
+      }
+    }
     /* Vivid Zone Winners Panels */
     .zone-winner-panel[data-zone="Red Zone"] {
       border: 2px solid #ef4444;
@@ -2773,7 +2867,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.27",
+      version: "v3.8.28",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3253,8 +3347,6 @@
 
         return {
           zoneName,
-          d1Rows,
-          d2Rows,
           d1Fish,
           d2Fish,
           zoneFish,
@@ -3269,6 +3361,7 @@
       const totalD1Meters = (totalD1LenCm / 100).toFixed(2);
       const totalD2Meters = (totalD2LenCm / 100).toFixed(2);
 
+      // Top Chart Card: Only Competition Total (Overall)
       document.getElementById("sessionDonutsGrid").innerHTML = `
         <div class="session-donut-card total-hero-card">
           <div class="session-donut-card-title">
@@ -3287,46 +3380,6 @@
               `${totalFish}`,
               zoneStats.map(z => z.zoneFish),
               zoneStats.map(z => `${z.zoneFish}`)
-            )}
-          </div>
-        </div>
-
-        <div class="daily-breakdown-divider" role="separator" aria-label="Daily Breakdown">
-          <span>Daily Breakdown</span>
-        </div>
-
-        <div class="session-donut-card day1-sub-card">
-          <div class="session-donut-card-title">Day 1</div>
-          <div class="donut-pair-row">
-            ${buildZoneVerticalBarChart(
-              "Length (m)",
-              `${totalD1Meters}m`,
-              zoneStats.map(z => z.d1Len),
-              zoneStats.map(z => `${(z.d1Len / 100).toFixed(1)}`)
-            )}
-            ${buildZoneVerticalBarChart(
-              "Fish Count",
-              `${totalD1Fish}`,
-              zoneStats.map(z => z.d1Fish),
-              zoneStats.map(z => `${z.d1Fish}`)
-            )}
-          </div>
-        </div>
-
-        <div class="session-donut-card day2-sub-card">
-          <div class="session-donut-card-title">Day 2</div>
-          <div class="donut-pair-row">
-            ${buildZoneVerticalBarChart(
-              "Length (m)",
-              `${totalD2Meters}m`,
-              zoneStats.map(z => z.d2Len),
-              zoneStats.map(z => `${(z.d2Len / 100).toFixed(1)}`)
-            )}
-            ${buildZoneVerticalBarChart(
-              "Fish Count",
-              `${totalD2Fish}`,
-              zoneStats.map(z => z.d2Fish),
-              zoneStats.map(z => `${z.d2Fish}`)
             )}
           </div>
         </div>
@@ -3350,8 +3403,6 @@
         : "No specimen";
 
       const topLengthZone = [...zoneStats].sort((a, b) => b.zoneLen - a.zoneLen)[0];
-      const d1TopZone = [...zoneStats].sort((a, b) => b.d1Len - a.d1Len || b.d1Fish - a.d1Fish)[0];
-      const d2TopZone = [...zoneStats].sort((a, b) => b.d2Len - a.d2Len || b.d2Fish - a.d2Fish)[0];
 
       function buildEdgeBadge(d1Val, d2Val, d1WinText, d2WinText) {
         if (d1Val > d2Val) return `<span class="sh2h-edge-badge d1">${d1WinText}</span>`;
@@ -3359,174 +3410,147 @@
         return `<span class="sh2h-edge-badge even">Level</span>`;
       }
 
+      function buildModernMetricCard(title, badgeHtml, d1Num, d2Num, d1Main, d1Sub, d2Main, d2Sub, footerText) {
+        const sum = d1Num + d2Num;
+        const d1Pct = sum > 0 ? Math.max(6, Math.min(94, Math.round((d1Num / sum) * 100))) : 50;
+        const d2Pct = 100 - d1Pct;
+
+        return `
+          <div class="sh2h-metric-card">
+            <div class="sh2h-top-row">
+              <span class="sh2h-title">${title}</span>
+              ${badgeHtml}
+            </div>
+            <div class="sh2h-open-row">
+              <div class="sh2h-open-side ${d2Num > d1Num ? "dimmed" : ""}">
+                <div class="sh2h-side-lbl zt-lbl-d1"><span class="sh2h-dot-d1"></span>Day 1 (Night)</div>
+                <div class="sh2h-side-val">${d1Main}</div>
+                <div class="sh2h-side-sub">${d1Sub}</div>
+              </div>
+              <div class="sh2h-open-side right ${d1Num > d2Num ? "dimmed" : ""}">
+                <div class="sh2h-side-lbl zt-lbl-d2">Day 2 (Day)<span class="sh2h-dot-d2"></span></div>
+                <div class="sh2h-side-val">${d2Main}</div>
+                <div class="sh2h-side-sub">${d2Sub}</div>
+              </div>
+            </div>
+            <div class="sh2h-split-bar" aria-hidden="true">
+              <div class="sh2h-bar-d1" style="width:${d1Pct}%;"></div>
+              <div class="sh2h-bar-d2" style="width:${d2Pct}%;"></div>
+            </div>
+            <div class="sh2h-footer-note">${footerText}</div>
+          </div>
+        `;
+      }
+
+      const zoneRowsHtml = zoneStats.map(z => {
+        const zTotal = z.d1Len + z.d2Len;
+        const d1ZPct = zTotal > 0 ? Math.max(8, Math.min(92, Math.round((z.d1Len / zTotal) * 100))) : 50;
+        const d2ZPct = 100 - d1ZPct;
+        const swatchColor = MATCH_CONFIG.zoneColors[z.zoneName] || "#004481";
+
+        return `
+          <div class="zone-nd-row">
+            <div class="zone-nd-name">
+              <span class="zone-nd-swatch" style="background:${swatchColor};"></span>
+              <span>${shortZone(z.zoneName)}</span>
+            </div>
+            <div class="zone-nd-stat d1">
+              <span class="zone-nd-main">${(z.d1Len / 100).toFixed(2)}m</span>
+              <span class="zone-nd-sub">${z.d1Fish} fish</span>
+            </div>
+            <div class="sh2h-split-bar" aria-hidden="true">
+              <div class="sh2h-bar-d1" style="width:${d1ZPct}%;"></div>
+              <div class="sh2h-bar-d2" style="width:${d2ZPct}%;"></div>
+            </div>
+            <div class="zone-nd-stat d2">
+              <span class="zone-nd-main">${(z.d2Len / 100).toFixed(2)}m</span>
+              <span class="zone-nd-sub">${z.d2Fish} fish</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
       document.getElementById("sessionComparisonGrid").innerHTML = `
-        <div class="sh2h-metric-card">
+        ${buildModernMetricCard(
+          "Total Fish Caught",
+          buildEdgeBadge(totalD1Fish, totalD2Fish, `Night +${totalD1Fish - totalD2Fish} fish`, `Day +${totalD2Fish - totalD1Fish} fish`),
+          totalD1Fish,
+          totalD2Fish,
+          `${totalD1Fish} fish`,
+          `Avg ${d1AvgPerRod} / angler`,
+          `${totalD2Fish} fish`,
+          `Avg ${d2AvgPerRod} / angler`,
+          totalFish > 0
+            ? `${Math.round((totalD1Fish / totalFish) * 100)}% caught at night vs ${Math.round((totalD2Fish / totalFish) * 100)}% during the day`
+            : "No fish recorded"
+        )}
+
+        ${buildModernMetricCard(
+          "Total Fish Length",
+          buildEdgeBadge(totalD1LenCm, totalD2LenCm, `Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`, `Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`),
+          totalD1LenCm,
+          totalD2LenCm,
+          `${totalD1Meters}m`,
+          `${totalD1LenCm} cm total`,
+          `${totalD2Meters}m`,
+          `${totalD2LenCm} cm total`,
+          `Competition total length: ${totalLengthMeters}m (${totalLengthCm} cm)`
+        )}
+
+        ${buildModernMetricCard(
+          "Average Fish Size",
+          buildEdgeBadge(Number(d1AvgFishSize), Number(d2AvgFishSize), `Night +${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm`, `Day +${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm`),
+          Number(d1AvgFishSize),
+          Number(d2AvgFishSize),
+          `${d1AvgFishSize} cm`,
+          `Per fish caught`,
+          `${d2AvgFishSize} cm`,
+          `Per fish caught`,
+          `Compares average specimen size between darkness & daylight sessions`
+        )}
+
+        ${buildModernMetricCard(
+          "Anglers Catching vs Blanking",
+          buildEdgeBadge(d1CatchingAnglers, d2CatchingAnglers, `+${d1CatchingAnglers - d2CatchingAnglers} more catching`, `+${d2CatchingAnglers - d1CatchingAnglers} more catching`),
+          d1CatchingAnglers,
+          d2CatchingAnglers,
+          `${d1CatchPct}% Caught`,
+          `${d1CatchingAnglers}/${totalAnglers} caught (${d1BlankingAnglers} blank)`,
+          `${d2CatchPct}% Caught`,
+          `${d2CatchingAnglers}/${totalAnglers} caught (${d2BlankingAnglers} blank)`,
+          `${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers caught in both sessions • ${anglers.filter(a => (a.d1.fishCount || 0) === 0 && (a.d2.fishCount || 0) === 0).length} blanked both`
+        )}
+
+        <div class="sh2h-metric-card full-span-card">
           <div class="sh2h-top-row">
-            <span class="sh2h-title">Total Fish Caught</span>
-            ${buildEdgeBadge(
-              totalD1Fish,
-              totalD2Fish,
-              `Night +${totalD1Fish - totalD2Fish} fish`,
-              `Day +${totalD2Fish - totalD1Fish} fish`
-            )}
+            <span class="sh2h-title">Top Individual Catch & Specimen</span>
+            ${buildEdgeBadge(d1BestBag.fish, d2BestBag.fish, `Night Top (${d1BestBag.fish})`, `Day Top (${d2BestBag.fish})`)}
           </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side ${totalD1Fish > totalD2Fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
-              <div class="sh2h-side-val">${totalD1Fish} fish</div>
-              <div class="sh2h-side-sub">Avg ${d1AvgPerRod} / angler</div>
+          <div class="sh2h-open-row">
+            <div class="sh2h-open-side ${d2BestBag.fish > d1BestBag.fish ? "dimmed" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d1"><span class="sh2h-dot-d1"></span>Day 1 (Night)</div>
+              <div class="sh2h-side-val">${d1BestBag.fish} fish — ${d1BestBag.angler}</div>
+              <div class="sh2h-side-sub">Longest: ${d1SpecText}</div>
             </div>
-            <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side d2-side ${totalD2Fish > totalD1Fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
-              <div class="sh2h-side-val">${totalD2Fish} fish</div>
-              <div class="sh2h-side-sub">Avg ${d2AvgPerRod} / angler</div>
+            <div class="sh2h-open-side right ${d1BestBag.fish > d2BestBag.fish ? "dimmed" : ""}">
+              <div class="sh2h-side-lbl zt-lbl-d2">Day 2 (Day)<span class="sh2h-dot-d2"></span></div>
+              <div class="sh2h-side-val">${d2BestBag.fish} fish — ${d2BestBag.angler}</div>
+              <div class="sh2h-side-sub">Longest: ${d2SpecText}</div>
             </div>
-          </div>
-          <div class="sh2h-footer-note">
-            ${totalFish > 0 ? `${Math.round((totalD1Fish / totalFish) * 100)}% caught at night vs ${Math.round((totalD2Fish / totalFish) * 100)}% during the day` : "No fish recorded"}
           </div>
         </div>
 
-        <div class="sh2h-metric-card">
+        <div class="sh2h-metric-card full-span-card">
           <div class="sh2h-top-row">
-            <span class="sh2h-title">Total Fish Length</span>
-            ${buildEdgeBadge(
-              totalD1LenCm,
-              totalD2LenCm,
-              `Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`,
-              `Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`
-            )}
+            <span class="sh2h-title">Zone Breakdown: Night vs. Day</span>
+            <span class="sh2h-edge-badge even">Overall Top: ${shortZone(topLengthZone.zoneName)}</span>
           </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side ${totalD1LenCm > totalD2LenCm ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
-              <div class="sh2h-side-val">${totalD1Meters}m</div>
-              <div class="sh2h-side-sub">${totalD1LenCm} cm total</div>
-            </div>
-            <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side d2-side ${totalD2LenCm > totalD1LenCm ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
-              <div class="sh2h-side-val">${totalD2Meters}m</div>
-              <div class="sh2h-side-sub">${totalD2LenCm} cm total</div>
-            </div>
-          </div>
-          <div class="sh2h-footer-note">
-            Competition total length: ${totalLengthMeters}m (${totalLengthCm} cm)
-          </div>
-        </div>
-
-        <div class="sh2h-metric-card">
-          <div class="sh2h-top-row">
-            <span class="sh2h-title">Average Fish Size</span>
-            ${buildEdgeBadge(
-              Number(d1AvgFishSize),
-              Number(d2AvgFishSize),
-              `Larger (+${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm)`,
-              `Larger (+${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm)`
-            )}
-          </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side ${Number(d1AvgFishSize) > Number(d2AvgFishSize) ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
-              <div class="sh2h-side-val">${d1AvgFishSize} cm</div>
-              <div class="sh2h-side-sub">Per fish caught</div>
-            </div>
-            <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side d2-side ${Number(d2AvgFishSize) > Number(d1AvgFishSize) ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
-              <div class="sh2h-side-val">${d2AvgFishSize} cm</div>
-              <div class="sh2h-side-sub">Per fish caught</div>
-            </div>
-          </div>
-          <div class="sh2h-footer-note">
-            Compares average fish size between darkness & daylight sessions
-          </div>
-        </div>
-
-        <div class="sh2h-metric-card">
-          <div class="sh2h-top-row">
-            <span class="sh2h-title">Anglers Catching vs Blanking</span>
-            ${buildEdgeBadge(
-              d1CatchingAnglers,
-              d2CatchingAnglers,
-              `+${d1CatchingAnglers - d2CatchingAnglers} more catching`,
-              `+${d2CatchingAnglers - d1CatchingAnglers} more catching`
-            )}
-          </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side ${d1CatchingAnglers > d2CatchingAnglers ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
-              <div class="sh2h-side-val">${d1CatchPct}% Caught</div>
-              <div class="sh2h-side-sub">${d1CatchingAnglers} of ${totalAnglers} anglers caught (${d1BlankingAnglers} blanked)</div>
-            </div>
-            <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side d2-side ${d2CatchingAnglers > d1CatchingAnglers ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
-              <div class="sh2h-side-val">${d2CatchPct}% Caught</div>
-              <div class="sh2h-side-sub">${d2CatchingAnglers} of ${totalAnglers} anglers caught (${d2BlankingAnglers} blanked)</div>
-            </div>
-          </div>
-          <div class="sh2h-footer-note">
-            ${anglers.filter(a => (a.d1.fishCount || 0) > 0 && (a.d2.fishCount || 0) > 0).length} anglers caught in both sessions • ${anglers.filter(a => (a.d1.fishCount || 0) === 0 && (a.d2.fishCount || 0) === 0).length} blanked both
-          </div>
-        </div>
-
-        <div class="sh2h-metric-card">
-          <div class="sh2h-top-row">
-            <span class="sh2h-title">Top Individual Catch</span>
-            ${buildEdgeBadge(
-              d1BestBag.fish,
-              d2BestBag.fish,
-              `Top catch (${d1BestBag.fish})`,
-              `Top catch (${d2BestBag.fish})`
-            )}
-          </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side ${d1BestBag.fish > d2BestBag.fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1</div>
-              <div class="sh2h-side-val">${d1BestBag.fish} fish</div>
-              <div class="sh2h-side-sub">${d1BestBag.angler}</div>
-            </div>
-            <div class="sh2h-vs-sep">vs</div>
-            <div class="sh2h-side d2-side ${d2BestBag.fish > d1BestBag.fish ? "winner-side" : ""}">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2</div>
-              <div class="sh2h-side-val">${d2BestBag.fish} fish</div>
-              <div class="sh2h-side-sub">${d2BestBag.angler}</div>
-            </div>
-          </div>
-          <div class="sh2h-footer-note">
-            Longest: D1 ${d1SpecText} • D2 ${d2SpecText}
-          </div>
-        </div>
-
-        <div class="sh2h-metric-card">
-          <div class="sh2h-top-row">
-            <span class="sh2h-title">Top Performing Zone</span>
-            <span class="sh2h-edge-badge even">Overall: ${shortZone(topLengthZone.zoneName)}</span>
-          </div>
-          <div class="sh2h-split-cols">
-            <div class="sh2h-side d1-side">
-              <div class="sh2h-side-lbl zt-lbl-d1">Day 1 Best</div>
-              <div class="sh2h-side-val">${shortZone(d1TopZone.zoneName)}</div>
-              <div class="sh2h-side-sub">${(d1TopZone.d1Len / 100).toFixed(2)}m • ${d1TopZone.d1Fish} fish</div>
-            </div>
-            <div class="sh2h-vs-sep">→</div>
-            <div class="sh2h-side d2-side">
-              <div class="sh2h-side-lbl zt-lbl-d2">Day 2 Best</div>
-              <div class="sh2h-side-val">${shortZone(d2TopZone.zoneName)}</div>
-              <div class="sh2h-side-sub">${(d2TopZone.d2Len / 100).toFixed(2)}m • ${d2TopZone.d2Fish} fish</div>
-            </div>
-          </div>
-          <div class="sh2h-footer-note">
-            ${d1TopZone.zoneName === d2TopZone.zoneName
-              ? `${d1TopZone.zoneName} led both sessions across the championship`
-              : `Top zone shifted from ${shortZone(d1TopZone.zoneName)} (Night) to ${shortZone(d2TopZone.zoneName)} (Day)`}
+          <div class="zone-nd-list">
+            ${zoneRowsHtml}
           </div>
         </div>
       `;
     }
-
     /* ---------------------------------------------------------
        RENDER VIEW 2: INDIVIDUAL LEADERBOARD (FULL HORIZONTAL SWIPE)
        --------------------------------------------------------- */
