@@ -26,6 +26,11 @@
       --brand-tint: #eef5fc;
       --brand-tint-border: #bfd9f2;
 
+      /* Distinct Sticky Anchor Column Tint */
+      --sticky-bg: #e6eef8;
+      --sticky-bg-hover: #dce7f5;
+      --sticky-border: #b8cde6;
+
       --accent-emerald: #059669;
       --accent-emerald-bg: #ecfdf5;
       --accent-emerald-border: #a7f3d0;
@@ -58,7 +63,7 @@
     }
 
     html {
-      font-size: 17px;
+      font-size: 18px;
     }
 
     * {
@@ -78,7 +83,7 @@
     }
 
     .container {
-      max-width: 1440px;
+      max-width: 1460px;
       width: 100%;
       margin: 0 auto;
       padding: 0.85rem 0.65rem;
@@ -187,6 +192,7 @@
       font-size: 0.75rem;
       border-radius: 5px;
       margin-right: 0.24rem;
+      background: #ffffff;
     }
 
     .pts-pill-badge.member-pts {
@@ -1027,7 +1033,7 @@
     }
 
     .table-wrap.tight-scores-wrap {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
     }
 
@@ -1064,13 +1070,13 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      height: 30px;
+      height: 31px;
       box-shadow: none;
     }
 
     table.two-tier-sticky-table thead tr:nth-child(2) th {
       position: sticky;
-      top: 30px;
+      top: 31px;
       z-index: 29;
       box-shadow: 0 3px 6px rgba(15, 23, 42, 0.09);
     }
@@ -1270,9 +1276,9 @@
     /* Tightened Pos-to-Angler gap on Desktop */
     table.tight-ind-table th.pos-th,
     table.tight-ind-table td.pos-cell {
-      width: 36px;
-      min-width: 36px;
-      max-width: 36px;
+      width: 38px;
+      min-width: 38px;
+      max-width: 38px;
       padding-left: 0.32rem;
       padding-right: 0.12rem;
       text-align: center;
@@ -1283,12 +1289,12 @@
     table.tight-ind-table th.angler-th,
     table.tight-ind-table td.angler-cell {
       text-align: left;
-      padding-left: 0.22rem;
-      padding-right: 0.45rem;
-      max-width: 175px;
+      padding-left: 0.24rem;
+      padding-right: 0.48rem;
+      max-width: 188px;
     }
 
-    /* Sticky Left Columns for Horizontal Swiping (Individual & Team Tables) */
+    /* Sticky Left Columns with Distinct Anchor Background Colour */
     .sticky-col-pos {
       position: sticky;
       left: 0;
@@ -1297,9 +1303,9 @@
 
     .sticky-col-name {
       position: sticky;
-      left: 36px;
+      left: 38px;
       z-index: 15;
-      box-shadow: 4px 0 8px -3px rgba(15, 23, 42, 0.11);
+      box-shadow: 4px 0 10px -2px rgba(0, 40, 77, 0.14);
     }
 
     .sticky-col-team-pos {
@@ -1310,15 +1316,50 @@
 
     .sticky-col-team-name {
       position: sticky;
-      left: 38px;
+      left: 40px;
       z-index: 15;
-      box-shadow: 4px 0 8px -3px rgba(15, 23, 42, 0.11);
+      box-shadow: 4px 0 10px -2px rgba(0, 40, 77, 0.14);
     }
 
-    table.two-tier-sticky-table thead th.sticky-col-pos,
-    table.two-tier-sticky-table thead th.sticky-col-name,
-    table.two-tier-sticky-table thead th.sticky-col-team-pos,
-    table.two-tier-sticky-table thead th.sticky-col-team-name {
+    /* Distinct Slate-Blue Anchor Tint for Pinned Body Cells */
+    table.two-tier-sticky-table tbody tr td.sticky-col-pos,
+    table.two-tier-sticky-table tbody tr td.sticky-col-name,
+    table.two-tier-sticky-table tbody tr td.sticky-col-team-pos,
+    table.two-tier-sticky-table tbody tr td.sticky-col-team-name {
+      background: var(--sticky-bg) !important;
+      border-top-color: var(--sticky-border) !important;
+      border-bottom-color: var(--sticky-border) !important;
+    }
+
+    table.two-tier-sticky-table tbody tr td.sticky-col-pos.card-cell-start,
+    table.two-tier-sticky-table tbody tr td.sticky-col-team-pos.card-cell-start {
+      border-left-color: var(--sticky-border) !important;
+    }
+
+    table.two-tier-sticky-table tbody tr td.sticky-col-name.card-cell-end,
+    table.two-tier-sticky-table tbody tr td.sticky-col-team-name.card-cell-end {
+      border-right: 1.5px solid #9ab8dc !important;
+    }
+
+    table.two-tier-sticky-table tbody tr:hover td.sticky-col-pos,
+    table.two-tier-sticky-table tbody tr:hover td.sticky-col-name,
+    table.two-tier-sticky-table tbody tr:hover td.sticky-col-team-pos,
+    table.two-tier-sticky-table tbody tr:hover td.sticky-col-team-name {
+      background: var(--sticky-bg-hover) !important;
+    }
+
+    /* Distinct Darker Anchor Header Tint for Pinned Header Cells */
+    table.two-tier-sticky-table thead tr:nth-child(1) th.sticky-col-pos,
+    table.two-tier-sticky-table thead tr:nth-child(1) th.sticky-col-team-pos {
+      background: #002b54 !important;
+      z-index: 35 !important;
+    }
+
+    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-pos,
+    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-name,
+    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-team-pos,
+    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-team-name {
+      background: #002347 !important;
       z-index: 35 !important;
     }
 
@@ -1335,12 +1376,27 @@
     .ind-team-sub {
       font-size: 0.74rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       line-height: 1.15;
       margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    /* Ghost / Average Score Pill in Mystery Pairs */
+    .avg-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.12rem 0.5rem;
+      border-radius: 6px;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      color: #3730a3;
+      font-size: 0.82rem;
+      font-weight: 800;
+      font-style: italic;
     }
 
     /* Team Leaderboard Specific Cells - Tightened Rank-to-Team Gap & Separated Angler Cards */
@@ -1350,9 +1406,9 @@
 
     table.one-line-team-table th.team-pos-th,
     table.one-line-team-table tbody tr.team-strip-row td:first-child {
-      width: 38px;
-      min-width: 38px;
-      max-width: 38px;
+      width: 40px;
+      min-width: 40px;
+      max-width: 40px;
       padding-left: 0.32rem;
       padding-right: 0.12rem;
       text-align: center;
@@ -1362,10 +1418,10 @@
 
     table.one-line-team-table th.team-name-th,
     .team-main-cell {
-      min-width: 175px;
+      min-width: 188px;
       text-align: left;
-      padding-left: 0.24rem !important;
-      padding-right: 0.48rem !important;
+      padding-left: 0.26rem !important;
+      padding-right: 0.5rem !important;
     }
 
     .team-name-line {
@@ -1385,7 +1441,7 @@
 
     .team-contrib-cell {
       text-align: left;
-      min-width: 162px;
+      min-width: 168px;
     }
 
     .contrib-angler-line {
@@ -2126,7 +2182,7 @@
        ========================================================================= */
     @media (max-width: 640px) {
       html {
-        font-size: 16.5px;
+        font-size: 17.5px;
       }
       .container {
         padding: 0.55rem 0.35rem;
@@ -2259,7 +2315,7 @@
         font-size: 0.8rem;
       }
 
-      /* Individual Sticky Identity Columns (28px Pos + 114px Angler) */
+      /* Individual Sticky Identity Columns (28px Pos + 122px Angler) */
       table.tight-ind-table th.pos-th,
       table.tight-ind-table td.pos-cell {
         width: 28px;
@@ -2276,9 +2332,9 @@
 
       table.tight-ind-table th.angler-th,
       table.tight-ind-table td.angler-cell {
-        width: 114px;
-        min-width: 114px;
-        max-width: 114px;
+        width: 122px;
+        min-width: 122px;
+        max-width: 122px;
         padding-left: 0.18rem;
         padding-right: 0.28rem;
         white-space: normal;
@@ -2300,7 +2356,7 @@
         text-overflow: ellipsis;
       }
 
-      /* Team Sticky Identity Columns (28px Pos + 124px Team & Totals) */
+      /* Team Sticky Identity Columns (28px Pos + 128px Team & Totals) */
       table.one-line-team-table th.team-pos-th,
       table.one-line-team-table tbody tr.team-strip-row td:first-child {
         width: 28px;
@@ -2317,9 +2373,9 @@
 
       table.one-line-team-table th.team-name-th,
       .team-main-cell {
-        width: 124px;
-        min-width: 124px;
-        max-width: 124px;
+        width: 128px;
+        min-width: 128px;
+        max-width: 128px;
         padding-left: 0.18rem !important;
         padding-right: 0.32rem !important;
         white-space: normal !important;
@@ -2339,7 +2395,7 @@
       }
 
       .team-contrib-cell {
-        min-width: 148px;
+        min-width: 152px;
       }
 
       .contrib-angler-line {
@@ -2350,23 +2406,23 @@
         font-size: 0.71rem;
       }
 
-      /* Zone Winners Mobile Zero-Horizontal-Scroll Table Fit with Fuller Fonts */
+      /* Zone Winners Mobile Zero-Horizontal-Scroll Table Fit (5 Columns: Pt, Angler, Len, Fish, Big) */
       table.zone-compact-table {
-        font-size: 0.81rem;
+        font-size: 0.83rem;
       }
 
       table.zone-compact-table thead th {
-        padding: 0.4rem 0.2rem;
-        font-size: 0.66rem;
+        padding: 0.42rem 0.24rem;
+        font-size: 0.68rem;
       }
 
       table.zone-compact-table tbody tr td {
-        padding: 0.4rem 0.2rem;
+        padding: 0.42rem 0.24rem;
       }
 
       table.zone-compact-table td.zone-angler-td {
         white-space: normal;
-        max-width: 122px;
+        max-width: 145px;
       }
 
       .session-donuts-grid {
@@ -2475,12 +2531,12 @@
               <div class="bento-spotlight-top">
                 <div>
                   <div class="bento-spotlight-title">Team Leaderboard</div>
-                  <div class="bento-spotlight-sub">Overall team standings & individual angler contributions</div>
+                  <div class="bento-spotlight-sub">Full 4-angler team standings & individual contributions</div>
                 </div>
                 <span class="hub-arrow">›</span>
               </div>
               <div class="bento-spotlight-footer">
-                <span class="bento-live-pill">Team Standings</span>
+                <span class="bento-live-pill">4-Angler Teams</span>
               </div>
             </button>
           </div>
@@ -2526,7 +2582,7 @@
             <button class="bento-compact-card accent-mystery" data-nav="secret">
               <div>
                 <div class="bento-compact-title">Mystery Pairs</div>
-                <div class="bento-compact-sub">Wildcard mystery pairing draw & target diff</div>
+                <div class="bento-compact-sub">Wildcard mystery pairing ranked by combined length</div>
               </div>
               <div class="bento-compact-meta">
                 <span>Wildcard Draw</span>
@@ -2573,7 +2629,7 @@
          VIEW 2: INDIVIDUAL LEADERBOARD
          ========================================================= -->
     <section id="view-individual" class="view-section">
-      <div class="glass-card" style="max-width: 1140px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1180px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Individual Leaderboard</div>
@@ -2624,14 +2680,14 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD
+         VIEW 3: TEAM LEADERBOARD (FULL TEAMS OF 4 ONLY)
          ========================================================= -->
     <section id="view-teams" class="view-section">
-      <div class="glass-card" style="max-width: 1320px; margin-left: auto; margin-right: auto;">
+      <div class="glass-card" style="max-width: 1340px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Team Leaderboard</div>
-            <div class="card-subtitle">Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
+            <div class="card-subtitle">Full teams of 4 • Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
           </div>
         </div>
         <div class="table-scroll-shell" id="teamsScrollShell">
@@ -2702,16 +2758,15 @@
     </section>
 
     <!-- =========================================================
-         VIEW 5: MYSTERY PAIRS
+         VIEW 5: MYSTERY PAIRS (RANKED BY COMBINED LENGTH)
          ========================================================= -->
     <section id="view-secret" class="view-section">
-      <div class="glass-card">
+      <div class="glass-card" style="max-width: 900px; margin-left: auto; margin-right: auto;">
         <div class="card-header">
           <div>
             <div class="card-title">Mystery Pairs</div>
-            <div class="card-subtitle" id="secretPairsDesc">Target Length calculated for wildcard mystery pairing.</div>
+            <div class="card-subtitle" id="secretPairsDesc">Ranked by highest combined length (cm) across paired anglers</div>
           </div>
-          <span class="badge-pill" id="secretTargetBadge">Target Length: 0cm</span>
         </div>
         <div id="secretPairsBody"></div>
       </div>
@@ -2763,7 +2818,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.24",
+      version: "v3.8.25",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2786,6 +2841,15 @@
 
     function shortZone(zoneStr) {
       return (zoneStr || "").replace(" Zone", "").trim();
+    }
+
+    function parseNumericCm(val) {
+      if (typeof val === "number" && !Number.isNaN(val)) return val;
+      if (typeof val === "string") {
+        const num = parseFloat(val.replace(/[^0-9.-]/g, ""));
+        return Number.isNaN(num) ? 0 : num;
+      }
+      return 0;
     }
 
     function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
@@ -3016,12 +3080,16 @@
         };
       });
 
+      // Build teams and restrict strictly to full teams of 4 (excluding solos/independents)
       const teamMap = {};
       STATE.anglers.forEach(a => {
-        const tName = a.teamName || "Independent";
-        if (!teamMap[tName]) {
-          teamMap[tName] = {
-            teamName: tName,
+        const rawTeam = (a.teamName || "").trim();
+        if (!rawTeam || rawTeam.toLowerCase() === "independent" || rawTeam.toLowerCase() === "solo" || rawTeam === "-") {
+          return;
+        }
+        if (!teamMap[rawTeam]) {
+          teamMap[rawTeam] = {
+            teamName: rawTeam,
             members: [],
             d1Pts: 0,
             d2Pts: 0,
@@ -3031,24 +3099,26 @@
             biggestFishCm: 0
           };
         }
-        teamMap[tName].members.push(a);
-        teamMap[tName].d1Pts += a.d1.zonePoints || 0;
-        teamMap[tName].d2Pts += a.d2.zonePoints || 0;
-        teamMap[tName].totalPts += a.totals.cumulativePoints || 0;
-        teamMap[tName].totalFish += a.totals.cumulativeFish || 0;
-        teamMap[tName].totalLengthCm += a.totals.cumulativeLengthCm || 0;
-        if (a.overallBiggestCm > teamMap[tName].biggestFishCm) {
-          teamMap[tName].biggestFishCm = a.overallBiggestCm;
+        teamMap[rawTeam].members.push(a);
+        teamMap[rawTeam].d1Pts += a.d1.zonePoints || 0;
+        teamMap[rawTeam].d2Pts += a.d2.zonePoints || 0;
+        teamMap[rawTeam].totalPts += a.totals.cumulativePoints || 0;
+        teamMap[rawTeam].totalFish += a.totals.cumulativeFish || 0;
+        teamMap[rawTeam].totalLengthCm += a.totals.cumulativeLengthCm || 0;
+        if (a.overallBiggestCm > teamMap[rawTeam].biggestFishCm) {
+          teamMap[rawTeam].biggestFishCm = a.overallBiggestCm;
         }
       });
 
-      STATE.teams = Object.values(teamMap).sort(
-        (a, b) =>
-          a.totalPts - b.totalPts ||
-          b.totalLengthCm - a.totalLengthCm ||
-          b.totalFish - a.totalFish ||
-          b.biggestFishCm - a.biggestFishCm
-      );
+      STATE.teams = Object.values(teamMap)
+        .filter(t => t.members.length === 4)
+        .sort(
+          (a, b) =>
+            a.totalPts - b.totalPts ||
+            b.totalLengthCm - a.totalLengthCm ||
+            b.totalFish - a.totalFish ||
+            b.biggestFishCm - a.biggestFishCm
+        );
 
       const d1Specimens = [];
       const d2Specimens = [];
@@ -3184,7 +3254,7 @@
           <div class="kpi-cell">
             <div class="kpi-label">Field Entered</div>
             <div class="kpi-value">${totalAnglers}</div>
-            <div class="kpi-sub">${totalTeams} Teams • 4 Zones / Day</div>
+            <div class="kpi-sub">${totalTeams} Full Teams • 4 Zones / Day</div>
           </div>
           <div class="kpi-cell">
             <div class="kpi-label">Total Fish Landed</div>
@@ -3577,20 +3647,20 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD
+       RENDER VIEW 3: TEAM LEADERBOARD (FULL TEAMS OF 4 ONLY)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
-      const maxMembers = Math.max(4, ...STATE.teams.map(t => t.members.length));
+      const memberSlots = 4;
 
       let anglerHeaders = "";
-      for (let i = 1; i <= maxMembers; i++) {
+      for (let i = 1; i <= memberSlots; i++) {
         if (i > 1) {
           anglerHeaders += `<th class="col-gap-spacer" aria-hidden="true"></th>`;
         }
         anglerHeaders += `<th class="sub-th left-align card-sub-start card-sub-end">Angler ${i}</th>`;
       }
 
-      const contribSpan = maxMembers * 2 - 1;
+      const contribSpan = memberSlots * 2 - 1;
 
       document.getElementById("teamsTableHead").innerHTML = `
         <tr>
@@ -3619,7 +3689,7 @@
         );
 
         let memberCells = "";
-        for (let i = 0; i < maxMembers; i++) {
+        for (let i = 0; i < memberSlots; i++) {
           if (i > 0) {
             memberCells += `<td class="col-gap-spacer" aria-hidden="true"></td>`;
           }
@@ -3656,7 +3726,8 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS (ZERO H-SCROLL, NO WINNER PILL)
+       RENDER VIEWS 3B & 3C: DAY 1 & DAY 2 ZONE WINNERS
+       (NO POS COLUMN, LEADS WITH PT, NUMERICAL BIGGEST FISH ONLY)
        --------------------------------------------------------- */
     function renderDayZoneWinners(dayKey, gridElementId) {
       const gridEl = document.getElementById(gridElementId);
@@ -3680,18 +3751,15 @@
           const pos = idx + 1;
           const podiumClass = pos <= 3 ? `podium-${pos}` : "";
           const sess = a[dayKey];
-          const bigDisplay = (sess.biggestFishCm || 0) > 0
-            ? `${sess.biggestFishCm}cm${sess.biggestFishSpecies ? ` <span style="color:var(--text-muted); font-size:0.7rem;">(${sess.biggestFishSpecies})</span>` : ""}`
-            : "—";
+          const bigDisplay = (sess.biggestFishCm || 0) > 0 ? `${sess.biggestFishCm}` : "—";
 
           return `
             <tr class="${podiumClass}">
-              <td class="pos-num" style="text-align:center; width:30px;">${pos}</td>
+              <td style="text-align:center; width:36px;"><span class="pts-pill-badge">${sess.zonePoints}</span></td>
               <td class="zone-angler-td">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <td style="text-align:center;"><strong style="color:var(--brand-navy);">${sess.zonePoints}</strong></td>
               <td style="text-align:center;">${sess.totalLengthCm}</td>
               <td style="text-align:center;"><strong>${sess.fishCount}</strong></td>
               <td style="text-align:center;">${bigDisplay}</td>
@@ -3708,9 +3776,8 @@
               <table class="card-row-table zone-compact-table">
                 <thead>
                   <tr>
-                    <th style="text-align:center; width:30px;">Pos</th>
+                    <th style="text-align:center; width:36px;">Pt</th>
                     <th>Angler</th>
-                    <th style="text-align:center;">Pt</th>
                     <th style="text-align:center;">Len</th>
                     <th style="text-align:center;">Fish</th>
                     <th style="text-align:center;">Big</th>
@@ -3759,51 +3826,114 @@
 
     /* ---------------------------------------------------------
        RENDER VIEW 5: MYSTERY PAIRS
+       (HIGHEST COMBINED LENGTH ONLY + INDIVIDUAL CM + AVERAGE SCORE GHOST)
        --------------------------------------------------------- */
     function renderSecretPairs() {
       const sp = STATE.raw?.secretPairs || {};
-      document.getElementById("secretPairsDesc").textContent =
-        sp.description || "Target Length calculated for wildcard mystery pairing.";
-      document.getElementById("secretTargetBadge").textContent =
-        `Target Length: ${sp.targetLength || "0cm"}`;
+      const bodyEl = document.getElementById("secretPairsBody");
 
       const winners = Array.isArray(sp.winners) ? sp.winners : [];
       const others = Array.isArray(sp.otherPairs) ? sp.otherPairs : [];
-      const bodyEl = document.getElementById("secretPairsBody");
+      const directPairs = Array.isArray(sp.pairs) ? sp.pairs : [];
+      const rawList = [...winners, ...others, ...directPairs];
 
-      if (!winners.length && !others.length) {
+      if (!rawList.length) {
         bodyEl.innerHTML = `
           <div style="padding:1.5rem; text-align:center; background:var(--bg-card); border-radius:var(--radius-md); border:1px dashed var(--border-strong); color:var(--text-secondary);">
             <div style="font-weight:800; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
-            <div style="font-size:0.86rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, winning pairs and target length diffs will appear here automatically.</div>
+            <div style="font-size:0.86rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, pairs ranked by combined length will appear here automatically.</div>
           </div>
         `;
         return;
       }
 
-      const allPairs = [...winners, ...others];
+      // Compute average individual total length across the field as fallback for ghost partner
+      const totalFieldLen = STATE.anglers.reduce((sum, a) => sum + (a.totals?.cumulativeLengthCm || 0), 0);
+      const avgAnglerLenCm = STATE.anglers.length > 0 ? Math.round(totalFieldLen / STATE.anglers.length) : 0;
+
+      function resolvePartnerDetails(rawName, explicitLen) {
+        const cleaned = (rawName || "").trim();
+        const isGhost = !cleaned || cleaned === "-" || cleaned === "—" || cleaned.toLowerCase() === "ghost" || cleaned.toLowerCase() === "average score";
+
+        if (isGhost) {
+          const parsedExplicit = parseNumericCm(explicitLen);
+          const lenCm = parsedExplicit > 0 ? parsedExplicit : avgAnglerLenCm;
+          return {
+            isGhost: true,
+            displayName: "Average Score",
+            lengthCm: lenCm
+          };
+        }
+
+        const parsedExplicit = parseNumericCm(explicitLen);
+        if (parsedExplicit > 0) {
+          return {
+            isGhost: false,
+            displayName: cleaned,
+            lengthCm: parsedExplicit
+          };
+        }
+
+        const foundAngler = STATE.anglers.find(
+          a => a.anglerName.toLowerCase() === cleaned.toLowerCase()
+        );
+        return {
+          isGhost: false,
+          displayName: foundAngler ? foundAngler.anglerName : cleaned,
+          lengthCm: foundAngler ? (foundAngler.totals?.cumulativeLengthCm || 0) : 0
+        };
+      }
+
+      const normalizedPairs = rawList.map(p => {
+        const p1 = resolvePartnerDetails(p.angler1, p.angler1Length ?? p.length1);
+        const p2 = resolvePartnerDetails(p.angler2, p.angler2Length ?? p.length2);
+        const explicitCombined = parseNumericCm(p.combinedLength ?? p.totalLengthCm);
+        const combinedCm = explicitCombined > 0 ? explicitCombined : (p1.lengthCm + p2.lengthCm);
+
+        return {
+          p1,
+          p2,
+          combinedCm
+        };
+      }).sort((a, b) => b.combinedCm - a.combinedCm);
+
+      function renderPartnerCell(partner) {
+        const nameMarkup = partner.isGhost
+          ? `<span class="avg-score-badge">Average Score</span>`
+          : `<div class="ind-angler-name">${partner.displayName}</div>`;
+
+        return `
+          <td style="white-space:normal;">
+            ${nameMarkup}
+            <div class="ind-team-sub">${partner.lengthCm} cm</div>
+          </td>
+        `;
+      }
+
       bodyEl.innerHTML = `
         <div class="table-wrap">
           <table class="card-row-table">
             <thead>
               <tr>
-                <th style="width:46px; text-align:center;">Pos</th>
+                <th style="width:42px; text-align:center;">Pos</th>
                 <th>Angler 1</th>
                 <th>Angler 2</th>
-                <th>Combined Length</th>
-                <th>Target Diff</th>
+                <th style="text-align:right;">Combined</th>
               </tr>
             </thead>
             <tbody>
-              ${allPairs.map((p, i) => `
-                <tr>
-                  <td class="pos-num" style="text-align:center;">${i + 1}</td>
-                  <td>${p.angler1 || "—"}</td>
-                  <td>${p.angler2 || "—"}</td>
-                  <td>${p.combinedLength || "—"}</td>
-                  <td>${p.diff || "—"}</td>
-                </tr>
-              `).join("")}
+              ${normalizedPairs.map((pair, i) => {
+                const rank = i + 1;
+                const podiumClass = rank <= 3 ? `podium-${rank}` : "";
+                return `
+                  <tr class="${podiumClass}">
+                    <td class="pos-num" style="text-align:center;">${rank}</td>
+                    ${renderPartnerCell(pair.p1)}
+                    ${renderPartnerCell(pair.p2)}
+                    <td style="text-align:right;"><span class="pts-pill-badge">${pair.combinedCm} cm</span></td>
+                  </tr>
+                `;
+              }).join("")}
             </tbody>
           </table>
         </div>
