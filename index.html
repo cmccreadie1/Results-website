@@ -26,7 +26,7 @@
       --brand-tint: #eef5fc;
       --brand-tint-border: #bfd9f2;
 
-      /* Distinct Sticky Anchor Column Tint */
+      /* Distinct Identity Anchor Column Tint */
       --sticky-bg: #e6eef8;
       --sticky-bg-hover: #dce7f5;
       --sticky-border: #b8cde6;
@@ -86,21 +86,21 @@
       max-width: 1460px;
       width: 100%;
       margin: 0 auto;
-      padding: 0.85rem 0.65rem;
+      padding: 0.75rem 0.65rem;
     }
 
     /* =========================================================================
-       SPOILER-FREE DEEP NAVY HERO SPLASH CARD
+       SPOILER-FREE DEEP NAVY HERO SPLASH CARD (CRISP PROPORTIONS)
        ========================================================================= */
     .hero-splash-banner {
       position: relative;
       overflow: hidden;
       background: linear-gradient(135deg, #004481 0%, #00284d 100%);
       color: #ffffff;
-      border-radius: var(--radius-xl);
-      padding: 1.4rem 1.45rem;
-      margin-bottom: 1.05rem;
-      box-shadow: 0 12px 30px rgba(0, 40, 77, 0.22);
+      border-radius: var(--radius-lg);
+      padding: 1.05rem 1.2rem;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 10px 24px rgba(0, 40, 77, 0.20);
     }
 
     .hero-splash-banner::before {
@@ -129,32 +129,32 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
     }
 
     .hero-eyebrow {
-      font-size: 0.72rem;
+      font-size: 0.62rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: #93c5fd;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.18rem;
     }
 
     .hero-title {
-      font-size: 1.52rem;
+      font-size: 1.26rem;
       font-weight: 800;
-      letter-spacing: -0.025em;
+      letter-spacing: -0.02em;
       color: #ffffff;
       line-height: 1.2;
     }
 
     .hero-venue {
-      font-size: 0.9rem;
+      font-size: 0.78rem;
       font-weight: 600;
       color: #cbd5e1;
-      margin-top: 0.28rem;
+      margin-top: 0.2rem;
     }
 
     .badge-pill {
@@ -231,9 +231,9 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1.5px solid rgba(255, 255, 255, 0.85);
       color: #ffffff;
-      padding: 0.68rem 1.3rem;
+      padding: 0.64rem 1.22rem;
       border-radius: 999px;
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       font-weight: 700;
       letter-spacing: 0.01em;
       cursor: pointer;
@@ -252,50 +252,50 @@
     }
 
     /* =========================================================================
-       BENTO HUB NAVIGATION SYSTEM (3 DISTINCT VISUAL TIERS - SPOILER FREE)
+       BENTO HUB NAVIGATION SYSTEM (CRISP, WELL-DEFINED BUTTON PROPORTIONS)
        ========================================================================= */
     .bento-hub-stack {
       display: flex;
       flex-direction: column;
-      gap: 0.95rem;
+      gap: 0.72rem;
     }
 
     .bento-tier-label {
-      font-size: 0.72rem;
+      font-size: 0.63rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-muted);
-      margin: 0 0 0.45rem 0.2rem;
+      margin: 0 0 0.32rem 0.15rem;
     }
 
     .bento-grid-2 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.8rem;
+      gap: 0.62rem;
     }
 
     .bento-grid-4 {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     /* Tier 1: Topmost Insights & Personal Report Tiles */
     .bento-insight-card {
       background: linear-gradient(145deg, #eef5fc 0%, #ffffff 100%);
       border: 1.5px solid var(--brand-tint-border);
-      border-left: 4.5px solid var(--brand-cobalt);
-      border-radius: var(--radius-lg);
-      padding: 1.15rem 1.2rem;
+      border-left: 4px solid var(--brand-cobalt);
+      border-radius: 13px;
+      padding: 0.82rem 0.92rem;
       text-align: left;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.9rem;
-      box-shadow: var(--shadow-card);
-      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 0.7rem;
+      box-shadow: 0 2px 8px rgba(0, 68, 129, 0.06);
+      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-insight-card:hover {
@@ -305,45 +305,45 @@
     }
 
     .bento-insight-eyebrow {
-      font-size: 0.68rem;
+      font-size: 0.6rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.07em;
       color: var(--brand-cobalt);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.14rem;
     }
 
     .bento-insight-title {
-      font-size: 1.16rem;
+      font-size: 0.96rem;
       font-weight: 800;
       color: var(--brand-navy);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.015em;
       line-height: 1.2;
     }
 
     .bento-insight-sub {
-      font-size: 0.82rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--text-secondary);
-      margin-top: 0.24rem;
-      line-height: 1.35;
+      margin-top: 0.16rem;
+      line-height: 1.3;
     }
 
     /* Tier 2: Championship Standings Spotlight Cards */
     .bento-spotlight-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      border-top: 4px solid var(--brand-navy);
-      border-radius: var(--radius-lg);
-      padding: 1.1rem 1.15rem;
+      border: 1.5px solid var(--border-glass);
+      border-top: 3.5px solid var(--brand-navy);
+      border-radius: 13px;
+      padding: 0.8rem 0.9rem;
       text-align: left;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 0.75rem;
-      box-shadow: var(--shadow-card);
-      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 0.52rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-spotlight-card:hover {
@@ -357,39 +357,40 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 0.65rem;
+      gap: 0.55rem;
     }
 
     .bento-spotlight-title {
-      font-size: 1.12rem;
+      font-size: 0.94rem;
       font-weight: 800;
       color: var(--brand-navy);
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
       line-height: 1.2;
     }
 
     .bento-spotlight-sub {
-      font-size: 0.8rem;
+      font-size: 0.71rem;
       font-weight: 500;
       color: var(--text-secondary);
-      margin-top: 0.2rem;
+      margin-top: 0.14rem;
+      line-height: 1.3;
     }
 
     .bento-spotlight-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.5rem;
-      padding-top: 0.6rem;
+      gap: 0.45rem;
+      padding-top: 0.44rem;
       border-top: 1px solid var(--border-glass);
     }
 
     .bento-live-pill {
       display: inline-flex;
       align-items: center;
-      padding: 0.22rem 0.64rem;
+      padding: 0.16rem 0.52rem;
       border-radius: 999px;
-      font-size: 0.74rem;
+      font-size: 0.65rem;
       font-weight: 800;
       background: var(--brand-tint);
       color: var(--brand-navy);
@@ -403,18 +404,18 @@
     /* Tier 3: Compact 2x2 Session & Special Draw Tiles */
     .bento-compact-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-glass);
-      border-top: 3.5px solid var(--brand-navy);
-      border-radius: var(--radius-md);
-      padding: 0.95rem 1rem;
+      border: 1.5px solid var(--border-glass);
+      border-top: 3px solid var(--brand-navy);
+      border-radius: 12px;
+      padding: 0.72rem 0.78rem;
       text-align: left;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 0.65rem;
-      box-shadow: var(--shadow-card);
-      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 0.48rem;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-compact-card.accent-d1 { border-top-color: var(--accent-indigo); }
@@ -429,33 +430,33 @@
     }
 
     .bento-compact-title {
-      font-size: 1rem;
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--brand-navy);
       letter-spacing: -0.01em;
-      line-height: 1.25;
+      line-height: 1.22;
     }
 
     .bento-compact-sub {
-      font-size: 0.77rem;
+      font-size: 0.68rem;
       font-weight: 500;
       color: var(--text-secondary);
-      margin-top: 0.2rem;
-      line-height: 1.3;
+      margin-top: 0.14rem;
+      line-height: 1.28;
     }
 
     .bento-compact-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.4rem;
-      font-size: 0.74rem;
+      gap: 0.35rem;
+      font-size: 0.66rem;
       font-weight: 700;
       color: var(--brand-cobalt);
     }
 
     .hub-arrow {
-      font-size: 1.2rem;
+      font-size: 1.05rem;
       color: var(--brand-cobalt);
       font-weight: 700;
       flex-shrink: 0;
@@ -465,7 +466,7 @@
     .bento-insight-card:hover .hub-arrow,
     .bento-spotlight-card:hover .hub-arrow,
     .bento-compact-card:hover .hub-arrow {
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
 
     /* Clean White Elevated Cards */
@@ -473,9 +474,9 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 0.9rem 0.95rem;
+      padding: 0.78rem 0.85rem;
       box-shadow: var(--shadow-card);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.75rem;
       width: 100%;
     }
 
@@ -484,7 +485,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.65rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.55rem;
       flex-wrap: wrap;
     }
 
@@ -996,7 +997,7 @@
     }
 
     /* =========================================================================
-       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM (STEPPED-UP READABILITY)
+       CONSISTENT ROUNDED-CORNER CARD-ROW TABLE SYSTEM (FULL HORIZONTAL SWIPE)
        ========================================================================= */
     .table-scroll-shell {
       position: relative;
@@ -1021,14 +1022,16 @@
     .table-wrap {
       overflow-x: auto;
       position: relative;
+      -webkit-overflow-scrolling: touch;
     }
 
     .sticky-scroll-wrap {
       overflow: auto;
-      max-height: calc(100vh - 140px);
+      max-height: calc(100vh - 82px);
       border-radius: var(--radius-md);
       padding-right: 2px;
       padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .table-wrap.tight-scores-wrap {
@@ -1272,7 +1275,7 @@
       pointer-events: none;
     }
 
-    /* Tightened Pos-to-Angler gap on Desktop */
+    /* Pos & Angler Identity Columns (Scrolls Smoothly Horizontally) */
     table.tight-ind-table th.pos-th,
     table.tight-ind-table td.pos-cell {
       width: 38px;
@@ -1293,73 +1296,32 @@
       max-width: 196px;
     }
 
-    /* Sticky Left Columns with Distinct Anchor Background Colour */
-    .sticky-col-pos {
-      position: sticky;
-      left: 0;
-      z-index: 15;
-    }
-
-    .sticky-col-name {
-      position: sticky;
-      left: 38px;
-      z-index: 15;
-      box-shadow: 4px 0 10px -2px rgba(0, 40, 77, 0.14);
-    }
-
-    .sticky-col-team-pos {
-      position: sticky;
-      left: 0;
-      z-index: 15;
-    }
-
-    .sticky-col-team-name {
-      position: sticky;
-      left: 38px;
-      z-index: 15;
-      box-shadow: 4px 0 10px -2px rgba(0, 40, 77, 0.14);
-    }
-
-    /* Distinct Slate-Blue Anchor Tint for Pinned Body Cells */
-    table.two-tier-sticky-table tbody tr td.sticky-col-pos,
-    table.two-tier-sticky-table tbody tr td.sticky-col-name,
-    table.two-tier-sticky-table tbody tr td.sticky-col-team-pos,
-    table.two-tier-sticky-table tbody tr td.sticky-col-team-name {
+    /* Distinct Slate-Blue Anchor Tint for Identity Cells */
+    table.two-tier-sticky-table tbody tr td.identity-anchor-cell {
       background: var(--sticky-bg) !important;
       border-top-color: var(--sticky-border) !important;
       border-bottom-color: var(--sticky-border) !important;
     }
 
-    table.two-tier-sticky-table tbody tr td.sticky-col-pos.card-cell-start,
-    table.two-tier-sticky-table tbody tr td.sticky-col-team-pos.card-cell-start {
+    table.two-tier-sticky-table tbody tr td.identity-anchor-cell.card-cell-start {
       border-left-color: var(--sticky-border) !important;
     }
 
-    table.two-tier-sticky-table tbody tr td.sticky-col-name.card-cell-end,
-    table.two-tier-sticky-table tbody tr td.sticky-col-team-name.card-cell-end {
-      border-right: 1.5px solid #9ab8dc !important;
+    table.two-tier-sticky-table tbody tr td.identity-anchor-cell.card-cell-end {
+      border-right-color: var(--sticky-border) !important;
     }
 
-    table.two-tier-sticky-table tbody tr:hover td.sticky-col-pos,
-    table.two-tier-sticky-table tbody tr:hover td.sticky-col-name,
-    table.two-tier-sticky-table tbody tr:hover td.sticky-col-team-pos,
-    table.two-tier-sticky-table tbody tr:hover td.sticky-col-team-name {
+    table.two-tier-sticky-table tbody tr:hover td.identity-anchor-cell {
       background: var(--sticky-bg-hover) !important;
     }
 
-    /* Distinct Darker Anchor Header Tint for Pinned Header Cells */
-    table.two-tier-sticky-table thead tr:nth-child(1) th.sticky-col-pos,
-    table.two-tier-sticky-table thead tr:nth-child(1) th.sticky-col-team-pos {
+    /* Distinct Darker Anchor Header Tint for Identity Header Cells */
+    table.two-tier-sticky-table thead tr:nth-child(1) th.identity-anchor-hdr {
       background: #002b54 !important;
-      z-index: 35 !important;
     }
 
-    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-pos,
-    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-name,
-    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-team-pos,
-    table.two-tier-sticky-table thead tr:nth-child(2) th.sticky-col-team-name {
+    table.two-tier-sticky-table thead tr:nth-child(2) th.identity-anchor-hdr {
       background: #002347 !important;
-      z-index: 35 !important;
     }
 
     .ind-angler-name {
@@ -1398,16 +1360,16 @@
       font-style: italic;
     }
 
-    /* Team Leaderboard Specific Cells - Stacked Sticky Column + Separated Angler Cards */
+    /* Team Leaderboard Specific Cells - Stacked Identity Column + Separated Angler Cards */
     table.one-line-team-table {
       border-spacing: 0 6px;
     }
 
     table.one-line-team-table th.team-pos-th,
     table.one-line-team-table tbody tr.team-strip-row td:first-child {
-      width: 38px;
-      min-width: 38px;
-      max-width: 38px;
+      width: 40px;
+      min-width: 40px;
+      max-width: 40px;
       padding-left: 0.28rem;
       padding-right: 0.12rem;
       text-align: center;
@@ -1563,12 +1525,13 @@
       background: #ffffff;
       border: 1px solid var(--border-strong);
       color: var(--text-primary);
-      padding: 0.52rem 0.82rem;
+      padding: 0.48rem 0.8rem;
       border-radius: var(--radius-md);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       outline: none;
-      min-width: 210px;
+      width: 100%;
+      max-width: 320px;
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
@@ -2188,27 +2151,55 @@
     }
 
     /* =========================================================================
-       MOBILE HORIZONTAL SPACE & COMPACT STICKY IDENTITY COLUMNS (< 640px)
+       MOBILE HORIZONTAL SPACE & COMPACT TABLES (< 640px)
        ========================================================================= */
     @media (max-width: 640px) {
       html {
         font-size: 17.5px;
       }
       .container {
-        padding: 0.55rem 0.35rem;
+        padding: 0.45rem 0.35rem;
       }
+
+      /* Crisp Front Page Header & Bento Buttons on Mobile */
       .hero-splash-banner {
-        padding: 1.2rem 1.05rem;
+        padding: 0.9rem 0.95rem;
+        margin-bottom: 0.65rem;
       }
       .hero-title {
-        font-size: 1.32rem;
+        font-size: 1.12rem;
+      }
+      .hero-venue {
+        font-size: 0.74rem;
+      }
+      .bento-hub-stack {
+        gap: 0.62rem;
       }
       .bento-grid-2 {
         grid-template-columns: 1fr;
+        gap: 0.5rem;
       }
       .bento-grid-4 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.65rem;
+        gap: 0.5rem;
+      }
+      .bento-insight-card {
+        padding: 0.72rem 0.82rem;
+      }
+      .bento-insight-title {
+        font-size: 0.92rem;
+      }
+      .bento-spotlight-card {
+        padding: 0.72rem 0.82rem;
+      }
+      .bento-spotlight-title {
+        font-size: 0.9rem;
+      }
+      .bento-compact-card {
+        padding: 0.65rem 0.68rem;
+      }
+      .bento-compact-title {
+        font-size: 0.82rem;
       }
 
       /* Condensed Trajectory Flow & 3-Column Single-Row Strip on Mobile */
@@ -2271,7 +2262,7 @@
       #view-day2zones .glass-card,
       #view-biggest .glass-card,
       #view-secret .glass-card {
-        padding: 0.65rem 0.42rem;
+        padding: 0.5rem 0.38rem;
         border-radius: var(--radius-md);
       }
 
@@ -2282,12 +2273,7 @@
 
       .card-header {
         padding: 0 0.2rem;
-        margin-bottom: 0.45rem;
-      }
-
-      /* Full Right-Side Scroll Buffer on Individual Leaderboard so Day 2 Slides Cleanly Beside Sticky Name */
-      #indTableWrap {
-        padding-right: 45vw;
+        margin-bottom: 0.42rem;
       }
 
       /* Stepped-Up Table Font Sizes on Mobile for Easy Reading */
@@ -2296,12 +2282,12 @@
       }
 
       table.card-row-table thead th {
-        padding: 0.46rem 0.3rem;
+        padding: 0.46rem 0.32rem;
         font-size: 0.72rem;
       }
 
       table.card-row-table tbody tr td {
-        padding: 0.46rem 0.3rem;
+        padding: 0.46rem 0.32rem;
       }
 
       table.two-tier-sticky-table th.col-gap-spacer,
@@ -2316,7 +2302,7 @@
       }
 
       table.tight-ind-table tbody tr.ind-data-row td {
-        padding: 0.44rem 0.22rem;
+        padding: 0.44rem 0.26rem;
       }
 
       .pts-pill-badge {
@@ -2335,86 +2321,64 @@
         padding: 0.12rem 0.36rem;
       }
 
-      /* Individual Sticky Identity Columns (28px Pos + 128px Angler) */
+      /* Individual Identity Columns (Full Horizontal Swipe) */
       table.tight-ind-table th.pos-th,
       table.tight-ind-table td.pos-cell {
-        width: 28px;
-        min-width: 28px;
-        max-width: 28px;
-        padding-left: 0.2rem;
-        padding-right: 0.08rem;
+        width: 30px;
+        min-width: 30px;
+        max-width: 30px;
+        padding-left: 0.22rem;
+        padding-right: 0.1rem;
         font-size: 0.88rem;
-      }
-
-      .sticky-col-name {
-        left: 28px;
       }
 
       table.tight-ind-table th.angler-th,
       table.tight-ind-table td.angler-cell {
-        width: 128px;
-        min-width: 128px;
-        max-width: 128px;
-        padding-left: 0.2rem;
-        padding-right: 0.28rem;
-        white-space: normal;
+        min-width: 136px;
+        max-width: 156px;
+        padding-left: 0.22rem;
+        padding-right: 0.32rem;
       }
 
       .ind-angler-name {
         font-size: 0.9rem;
-        white-space: normal;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-height: 1.15;
+        line-height: 1.18;
       }
 
       .ind-team-sub {
         font-size: 0.74rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
 
-      /* Team Sticky Identity Columns (26px # + 112px Vertically Stacked Team) */
+      /* Team Identity Columns (Full Horizontal Swipe) */
       table.one-line-team-table th.team-pos-th,
       table.one-line-team-table tbody tr.team-strip-row td:first-child {
-        width: 26px;
-        min-width: 26px;
-        max-width: 26px;
-        padding-left: 0.16rem;
-        padding-right: 0.06rem;
+        width: 32px;
+        min-width: 32px;
+        max-width: 32px;
+        padding-left: 0.2rem;
+        padding-right: 0.08rem;
         font-size: 0.9rem;
-      }
-
-      .sticky-col-team-name {
-        left: 26px;
       }
 
       table.one-line-team-table th.team-name-th,
       .team-main-cell {
-        width: 112px;
-        min-width: 112px;
-        max-width: 112px;
-        padding-left: 0.2rem !important;
-        padding-right: 0.26rem !important;
-        white-space: normal !important;
+        min-width: 122px;
+        padding-left: 0.24rem !important;
+        padding-right: 0.34rem !important;
       }
 
       .team-name-line {
         font-size: 0.92rem;
         line-height: 1.15;
-        white-space: normal;
       }
 
       .team-totals-line {
         font-size: 0.76rem;
         line-height: 1.2;
-        white-space: nowrap;
       }
 
       .team-contrib-cell {
-        min-width: 164px;
+        min-width: 168px;
       }
 
       .contrib-angler-line {
@@ -2480,7 +2444,7 @@
         min-width: 0;
       }
       .sticky-scroll-wrap {
-        max-height: calc(100vh - 155px);
+        max-height: calc(100vh - 90px);
       }
     }
   </style>
@@ -2645,25 +2609,19 @@
     </section>
 
     <!-- =========================================================
-         VIEW 2: INDIVIDUAL LEADERBOARD
+         VIEW 2: INDIVIDUAL LEADERBOARD (NO TOP HEADING FOR MAX HEIGHT)
          ========================================================= -->
     <section id="view-individual" class="view-section">
       <div class="glass-card" style="max-width: 1180px; margin-left: auto; margin-right: auto;">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Individual Leaderboard</div>
-            <div class="card-subtitle">All lengths & biggest fish in cm • Separated by Overall Points tiers</div>
-          </div>
-          <div style="display:flex; align-items:center; gap:0.55rem; flex-wrap:wrap;">
-            <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." style="min-width:190px;" />
-          </div>
+        <div style="margin-bottom: 0.45rem; padding: 0 0.15rem;">
+          <input type="text" id="searchAngler" class="glass-input" placeholder="Search angler or team..." />
         </div>
         <div class="table-scroll-shell" id="indScrollShell">
           <div class="table-wrap sticky-scroll-wrap tight-scores-wrap" id="indTableWrap">
             <table class="card-row-table tight-ind-table two-tier-sticky-table">
               <thead>
                 <tr>
-                  <th colspan="2" class="group-th card-grp-end sticky-col-pos"></th>
+                  <th colspan="2" class="group-th card-grp-end identity-anchor-hdr"></th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
                   <th colspan="4" class="group-th overall-grp card-grp-start card-grp-end">Overall</th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
@@ -2672,8 +2630,8 @@
                   <th colspan="4" class="group-th d2-grp card-grp-start">Day 2</th>
                 </tr>
                 <tr>
-                  <th class="sub-th pos-th sticky-col-pos" style="text-align:center;">Pos</th>
-                  <th class="sub-th angler-th left-align card-sub-end sticky-col-name">Angler</th>
+                  <th class="sub-th pos-th identity-anchor-hdr" style="text-align:center;">Pos</th>
+                  <th class="sub-th angler-th left-align card-sub-end identity-anchor-hdr">Angler</th>
                   <th class="col-gap-spacer" aria-hidden="true"></th>
                   <th class="sub-th card-sub-start">Pt</th>
                   <th class="sub-th">Len</th>
@@ -2699,16 +2657,10 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3: TEAM LEADERBOARD (FULL TEAMS OF 4 ONLY)
+         VIEW 3: TEAM LEADERBOARD (NO TOP HEADING FOR MAX HEIGHT)
          ========================================================= -->
     <section id="view-teams" class="view-section">
       <div class="glass-card" style="max-width: 1340px; margin-left: auto; margin-right: auto;">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Team Leaderboard</div>
-            <div class="card-subtitle">Full teams of 4 • Ranked by Lowest Team Points → Total Length (cm) → Total Fish → Biggest Fish</div>
-          </div>
-        </div>
         <div class="table-scroll-shell" id="teamsScrollShell">
           <div class="table-wrap sticky-scroll-wrap" id="teamsTableWrap">
             <table class="card-row-table one-line-team-table two-tier-sticky-table">
@@ -2721,32 +2673,16 @@
     </section>
 
     <!-- =========================================================
-         VIEW 3B: DAY 1 ZONE WINNERS
+         VIEW 3B: DAY 1 ZONE WINNERS (NO TOP HEADING FOR MAX HEIGHT)
          ========================================================= -->
     <section id="view-day1zones" class="view-section">
-      <div class="glass-card" style="margin-bottom: 0.75rem;">
-        <div class="card-header" style="margin-bottom:0;">
-          <div>
-            <div class="card-title">Day 1 Zone Winners</div>
-            <div class="card-subtitle">Night session • Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
-          </div>
-        </div>
-      </div>
       <div class="zone-winners-grid" id="day1ZonesGrid"></div>
     </section>
 
     <!-- =========================================================
-         VIEW 3C: DAY 2 ZONE WINNERS
+         VIEW 3C: DAY 2 ZONE WINNERS (NO TOP HEADING FOR MAX HEIGHT)
          ========================================================= -->
     <section id="view-day2zones" class="view-section">
-      <div class="glass-card" style="margin-bottom: 0.75rem;">
-        <div class="card-header" style="margin-bottom:0;">
-          <div>
-            <div class="card-title">Day 2 Zone Winners</div>
-            <div class="card-subtitle">Day session • Ranked by Points → Length (cm) → Fish → Biggest Fish (cm)</div>
-          </div>
-        </div>
-      </div>
       <div class="zone-winners-grid" id="day2ZonesGrid"></div>
     </section>
 
@@ -2837,7 +2773,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.26",
+      version: "v3.8.27",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3592,7 +3528,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 2: INDIVIDUAL LEADERBOARD
+       RENDER VIEW 2: INDIVIDUAL LEADERBOARD (FULL HORIZONTAL SWIPE)
        --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
@@ -3624,8 +3560,8 @@
 
           rowsHtml.push(`
             <tr class="ind-data-row">
-              <td class="pos-cell overall-card-cell card-cell-start sticky-col-pos">${a.rank}</td>
-              <td class="angler-cell overall-card-cell card-cell-end sticky-col-name">
+              <td class="pos-cell overall-card-cell card-cell-start identity-anchor-cell">${a.rank}</td>
+              <td class="angler-cell overall-card-cell card-cell-end identity-anchor-cell">
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
@@ -3666,7 +3602,7 @@
     }
 
     /* ---------------------------------------------------------
-       RENDER VIEW 3: TEAM LEADERBOARD (FULL TEAMS OF 4 + VERTICALLY STACKED STICKY CELL)
+       RENDER VIEW 3: TEAM LEADERBOARD (FULL HORIZONTAL SWIPE + STACKED TEAM CELL)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const memberSlots = 4;
@@ -3683,13 +3619,13 @@
 
       document.getElementById("teamsTableHead").innerHTML = `
         <tr>
-          <th colspan="2" class="group-th overall-grp card-grp-end sticky-col-team-pos">Team Overall</th>
+          <th colspan="2" class="group-th overall-grp card-grp-end identity-anchor-hdr">Team Overall</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           <th colspan="${contribSpan}" class="group-th d1-grp card-grp-start">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
-          <th class="sub-th team-pos-th sticky-col-team-pos" style="text-align:center;">#</th>
-          <th class="sub-th team-name-th left-align card-sub-end sticky-col-team-name">Team & Totals</th>
+          <th class="sub-th team-pos-th identity-anchor-hdr" style="text-align:center;">Pos</th>
+          <th class="sub-th team-name-th left-align card-sub-end identity-anchor-hdr">Team & Totals</th>
           <th class="col-gap-spacer" aria-hidden="true"></th>
           ${anglerHeaders}
         </tr>
@@ -3727,8 +3663,8 @@
 
         return `
           <tr class="team-strip-row ${podiumClass}">
-            <td class="overall-card-cell card-cell-start sticky-col-team-pos">${teamRank}</td>
-            <td class="team-main-cell overall-card-cell card-cell-end sticky-col-team-name">
+            <td class="overall-card-cell card-cell-start identity-anchor-cell">${teamRank}</td>
+            <td class="team-main-cell overall-card-cell card-cell-end identity-anchor-cell">
               <div class="team-stack-wrap">
                 <div class="team-name-line">${team.teamName}</div>
                 <div class="team-pts-row"><span class="pts-pill-badge team-total-pts">${team.totalPts} pts</span></div>
