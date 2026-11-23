@@ -1691,91 +1691,34 @@
       font-weight: 500;
       color: var(--text-secondary);
     }
-
-    /* =========================================================================
-       COMPACT VISUAL TRAJECTORY GRAPHIC + SINGLE-ROW 3-STAT SUMMARY STRIP
+/* =========================================================================
+       MODERN OPEN TRAJECTORY & 3-STAT SUMMARY CARD (ABOVE 5 RING DIAGRAMS)
        ========================================================================= */
     .trajectory-graphic-card {
-      background: linear-gradient(180deg, #f8fbff 0%, #eef5fc 100%);
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
       border: 1px solid var(--brand-tint-border);
-      border-radius: var(--radius-md);
-      padding: 0.65rem 0.72rem;
-      margin-bottom: 0.85rem;
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 0.95rem;
+      margin-bottom: 0.9rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
     }
 
-    .traj-flow-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+    .traj-top-header {
+      display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.5rem;
     }
 
-    .traj-node {
-      background: #ffffff;
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-sm);
-      padding: 0.42rem 0.55rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      min-width: 0;
-    }
-
-    .traj-node.d1-node {
-      border-top: 2.5px solid var(--accent-indigo);
-    }
-
-    .traj-node.final-node {
-      border-top: 2.5px solid var(--brand-navy);
-    }
-
-    .traj-node-top {
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 0.35rem;
-    }
-
-    .traj-node-tag {
-      font-size: 0.66rem;
+    .traj-eyebrow-lbl {
+      font-size: 0.74rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
-
-    .traj-node-rank {
-      font-size: 1.12rem;
-      font-weight: 800;
       color: var(--brand-navy);
-      line-height: 1.1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .traj-node-zone {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-      line-height: 1.15;
-      margin-top: 2px;
-    }
-
-    .traj-node-catch {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--brand-cobalt);
-      line-height: 1.15;
-      margin-top: 1px;
-    }
-
-    .traj-delta-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.14rem;
-      padding: 0 0.12rem;
     }
 
     .traj-delta-badge {
@@ -1783,54 +1726,94 @@
       align-items: center;
       justify-content: center;
       gap: 0.24rem;
-      padding: 0.28rem 0.68rem;
+      padding: 0.18rem 0.62rem;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 800;
       white-space: nowrap;
-      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     }
 
     .traj-delta-badge.up {
       background: var(--accent-emerald-bg);
       color: #065f46;
-      border: 1.5px solid var(--accent-emerald-border);
+      border: 1px solid var(--accent-emerald-border);
     }
 
     .traj-delta-badge.down {
       background: #fef2f2;
       color: #991b1b;
-      border: 1.5px solid #fecaca;
+      border: 1px solid #fecaca;
     }
 
     .traj-delta-badge.steady {
-      background: #ffffff;
+      background: var(--brand-tint);
       color: var(--brand-navy);
-      border: 1.5px solid var(--brand-tint-border);
+      border: 1px solid var(--brand-tint-border);
     }
 
-    .traj-arrow-line {
-      font-size: 0.65rem;
+    .traj-open-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .traj-open-side {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .traj-open-side.right {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    .traj-node-tag {
+      font-size: 0.71rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.32rem;
+      margin-bottom: 0.12rem;
+    }
+
+    .traj-node-rank {
+      font-size: 1.24rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .traj-node-zone {
+      font-size: 0.74rem;
       font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.03em;
+      color: var(--text-secondary);
+      line-height: 1.2;
+      margin-top: 2px;
     }
 
-    /* Single-Row 3-Column Compact Personal Insights Strip */
+    .traj-node-catch {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--brand-cobalt);
+      line-height: 1.2;
+      margin-top: 1px;
+    }
+
+    /* Hairline-Divided 3-Column Personal Insights Strip (No Inner Boxes) */
     .personal-extras-strip {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.45rem;
-      margin-top: 0.52rem;
-      padding-top: 0.52rem;
-      border-top: 1px solid var(--brand-tint-border);
+      padding-top: 0.58rem;
+      border-top: 1px solid var(--border-glass);
     }
 
     .p-extra-tile {
-      background: #ffffff;
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-sm);
-      padding: 0.38rem 0.45rem;
+      padding: 0.1rem 0.45rem;
+      border-right: 1px solid var(--border-glass);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1839,8 +1822,12 @@
       min-width: 0;
     }
 
+    .p-extra-tile:last-child {
+      border-right: none;
+    }
+
     .p-extra-lbl {
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
@@ -1849,11 +1836,11 @@
     }
 
     .p-extra-val {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--brand-navy);
-      line-height: 1.2;
-      margin-top: 1px;
+      line-height: 1.22;
+      margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1861,7 +1848,7 @@
     }
 
     .p-extra-sub {
-      font-size: 0.67rem;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-secondary);
       line-height: 1.15;
@@ -1870,8 +1857,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
-    }
-
+    }    
     /* 5 Motif Cards: 5-Column Balanced Grid on Desktop, 2-Column on Mobile */
     .gauges-row {
       display: grid;
@@ -2867,7 +2853,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.28",
+      version: "v3.8.29",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -4077,32 +4063,38 @@
           }
         }
       }
+const d1LenVal = me.d1.totalLengthCm || 0;
+      const d2LenVal = me.d2.totalLengthCm || 0;
+      const totLenVal = d1LenVal + d2LenVal;
+      const d1SharePct = totLenVal > 0 ? Math.max(8, Math.min(92, Math.round((d1LenVal / totLenVal) * 100))) : 50;
+      const d2SharePct = 100 - d1SharePct;
 
       bannerEl.innerHTML = `
         <div class="trajectory-graphic-card">
-          <div class="traj-flow-row">
-            <div class="traj-node d1-node">
-              <div class="traj-node-top">
-                <span class="traj-node-tag">Day 1</span>
-                <span class="traj-node-rank">#${me.d1OverallRank}</span>
-              </div>
+          <div class="traj-top-header">
+            <span class="traj-eyebrow-lbl">Championship Trajectory</span>
+            <span class="traj-delta-badge ${moveBadgeClass}">${moveBadgeText}</span>
+          </div>
+
+          <div class="traj-open-row">
+            <div class="traj-open-side">
+              <div class="traj-node-tag zt-lbl-d1"><span class="sh2h-dot-d1"></span>Day 1 (Night)</div>
+              <div class="traj-node-rank">#${me.d1OverallRank}</div>
               <div class="traj-node-zone">${shortZone(me.d1.zone)} #${me.d1ZoneStanding.pos} • ${me.d1.zonePoints} pts</div>
               <div class="traj-node-catch">${d1CatchLine}</div>
             </div>
 
-            <div class="traj-delta-center">
-              <span class="traj-delta-badge ${moveBadgeClass}">${moveBadgeText}</span>
-              <span class="traj-arrow-line">Day 1 → Final</span>
-            </div>
-
-            <div class="traj-node final-node">
-              <div class="traj-node-top">
-                <span class="traj-node-tag">Final</span>
-                <span class="traj-node-rank">#${me.rank}</span>
-              </div>
+            <div class="traj-open-side right">
+              <div class="traj-node-tag zt-lbl-d2">Final (After Day 2)<span class="sh2h-dot-d2"></span></div>
+              <div class="traj-node-rank">#${me.rank}</div>
               <div class="traj-node-zone">${shortZone(me.d2.zone)} #${me.d2ZoneStanding.pos} • ${me.d2.zonePoints} pts</div>
               <div class="traj-node-catch">D2: ${d2CatchLine}</div>
             </div>
+          </div>
+
+          <div class="sh2h-split-bar" aria-hidden="true">
+            <div class="sh2h-bar-d1" style="width:${d1SharePct}%;"></div>
+            <div class="sh2h-bar-d2" style="width:${d2SharePct}%;"></div>
           </div>
 
           <div class="personal-extras-strip">
@@ -4125,8 +4117,7 @@
             </div>
           </div>
         </div>
-      `;
-
+      `;      
       // 3. Five Circle Motif Cards in Exact Order:
       // 1. Overall Standing | 2. Total Fish | 3. Total Length | 4. Average Fish Size | 5. Biggest Fish
       const overallPct = Math.max(6, Math.round(((fieldSize - me.rank + 1) / fieldSize) * 100));
