@@ -801,20 +801,30 @@
       letter-spacing: 0.02em;
     }
 
-    /* Darker Slate-Blue Anchor Band: Day 1 (Night) vs Day 2 (Day) Performance Banner */
-    .session-section-banner {
-      background: linear-gradient(180deg, #e5eef9 0%, #edf4fc 100%);
-      border: 1.5px solid #bfd3ec;
-      border-left: 4px solid var(--brand-navy);
-      border-radius: var(--radius-lg);
-      padding: 0.85rem 1rem;
-      box-shadow: var(--shadow-card);
-      margin-bottom: 0.85rem;
+    /* Sleek Section Header for Day 1 (Night) vs. Day 2 (Day) Performance */
+    .session-sleek-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.75rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
+      padding: 0 0.2rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .session-sleek-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: -0.01em;
+    }
+
+    .session-sleek-legend {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 800;
     }
 
     .session-h2h-grid {
@@ -2591,26 +2601,23 @@
           <div class="rings-strip-title">Fish Length & Fish Count Breakdown</div>
         </div>
         <div class="session-donuts-grid" id="sessionDonutsGrid"></div>
+        <div id="zoneNightDaySlot" style="margin-top: 0.75rem;"></div>
       </div>
 
       <div class="daily-breakdown-divider section-gap-divider" role="separator" aria-label="Daily Comparison">
         <span>Daily Comparison</span>
       </div>
 
-      <div class="session-section-banner">
-        <div>
-          <div class="card-title">Day 1 (Night) vs. Day 2 (Day) Performance</div>
-          <div class="card-subtitle">Head-to-head session breakdown across catch volume, length, blank rate & top zones</div>
-        </div>
-        <div style="display:flex; gap:0.75rem; font-size:0.84rem; font-weight:700;">
-          <span class="zt-lbl-d1">Night (D1)</span>
-          <span class="zt-lbl-d2">Day (D2)</span>
+      <div class="session-sleek-header">
+        <div class="session-sleek-title">Day 1 (Night) vs. Day 2 (Day) Performance</div>
+        <div class="session-sleek-legend">
+          <span class="zt-lbl-d1"><span class="sh2h-dot-d1"></span>Night (D1)</span>
+          <span class="zt-lbl-d2"><span class="sh2h-dot-d2"></span>Day (D2)</span>
         </div>
       </div>
 
       <div class="session-h2h-grid" id="sessionComparisonGrid"></div>
     </section>
-
     <!-- =========================================================
          VIEW 2: INDIVIDUAL LEADERBOARD (NO TOP HEADING FOR MAX HEIGHT)
          ========================================================= -->
@@ -2776,7 +2783,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.30",
+      version: "v3.8.31",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3379,6 +3386,21 @@
         `;
       }).join("");
 
+      const zoneSlotEl = document.getElementById("zoneNightDaySlot");
+      if (zoneSlotEl) {
+        zoneSlotEl.innerHTML = `
+          <div class="sh2h-metric-card" style="background: var(--bg-card); box-shadow: none;">
+            <div class="sh2h-top-row">
+              <span class="sh2h-title">Zone Breakdown: Night vs. Day</span>
+              <span class="sh2h-edge-badge even">Overall Top: ${shortZone(topLengthZone.zoneName)}</span>
+            </div>
+            <div class="zone-nd-list">
+              ${zoneRowsHtml}
+            </div>
+          </div>
+        `;
+      }
+
       document.getElementById("sessionComparisonGrid").innerHTML = `
         ${buildModernMetricCard(
           "Total Fish Caught",
@@ -3446,16 +3468,6 @@
               <div class="sh2h-side-val">${d2BestBag.fish} fish — ${d2BestBag.angler}</div>
               <div class="sh2h-side-sub">Longest: ${d2SpecText}</div>
             </div>
-          </div>
-        </div>
-
-        <div class="sh2h-metric-card full-span-card">
-          <div class="sh2h-top-row">
-            <span class="sh2h-title">Zone Breakdown: Night vs. Day</span>
-            <span class="sh2h-edge-badge even">Overall Top: ${shortZone(topLengthZone.zoneName)}</span>
-          </div>
-          <div class="zone-nd-list">
-            ${zoneRowsHtml}
           </div>
         </div>
       `;
