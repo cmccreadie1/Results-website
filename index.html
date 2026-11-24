@@ -2641,7 +2641,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.33",
+      version: "v3.8.34",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -2795,6 +2795,44 @@
       }
     }
 
+    /* Standard Competition ("1224") Dead-Heat Rank Helper */
+    function assignCompetitionRanks(sortedItems, isEqualFn) {
+      let currentRank = 1;
+      return sortedItems.map((item, idx) => {
+        if (idx > 0 && !isEqualFn(sortedItems[idx - 1], item)) {
+          currentRank = idx + 1;
+        }
+        return currentRank;
+      });
+    }
+
+    function areAnglersTiedOverall(a, b) {
+      return (
+        (a.totals?.cumulativePoints ?? 999) === (b.totals?.cumulativePoints ?? 999) &&
+        (a.totals?.cumulativeLengthCm ?? 0) === (b.totals?.cumulativeLengthCm ?? 0) &&
+        (a.totals?.cumulativeFish ?? 0) === (b.totals?.cumulativeFish ?? 0) &&
+        (a.overallBiggestCm ?? 0) === (b.overallBiggestCm ?? 0)
+      );
+    }
+
+    function areAnglersTiedSession(sA, sB) {
+      return (
+        (sA?.zonePoints ?? 999) === (sB?.zonePoints ?? 999) &&
+        (sA?.totalLengthCm ?? 0) === (sB?.totalLengthCm ?? 0) &&
+        (sA?.fishCount ?? 0) === (sB?.fishCount ?? 0) &&
+        (sA?.biggestFishCm ?? 0) === (sB?.biggestFishCm ?? 0)
+      );
+    }
+
+    function areTeamsTiedOverall(a, b) {
+      return (
+        (a.totalPts ?? 999) === (b.totalPts ?? 999) &&
+        (a.totalLengthCm ?? 0) === (b.totalLengthCm ?? 0) &&
+        (a.totalFish ?? 0) === (b.totalFish ?? 0) &&
+        (a.biggestFishCm ?? 0) === (b.biggestFishCm ?? 0)
+      );
+    }
+
     function processMatchData(data) {
       STATE.raw = data;
       const list = Array.isArray(data.anglers) ? data.anglers : [];
@@ -2819,9 +2857,11 @@
       });
 
       const sorted = [...enriched].sort((a, b) => {
-        const rA = a.totals?.overallRank ?? 999;
-        const rB = b.totals?.overallRank ?? 999;
-        if (rA !== rB) return rA - rB;
+        const hasValidRankA = typeof a.totals?.overallRank === "number" && a.totals.overallRank > 0;
+        const hasValidRankB = typeof b.totals?.overallRank === "number" && b.totals.overallRank > 0;
+        if (hasValidRankA && hasValidRankB && a.totals.overallRank !== b.totals.overallRank) {
+          return a.totals.overallRank - b.totals.overallRank;
+        }
         return (
           (a.totals.cumulativePoints ?? 999) - (b.totals.cumulativePoints ?? 999) ||
           (b.totals.cumulativeLengthCm ?? 0) - (a.totals.cumulativeLengthCm ?? 0) ||
@@ -2840,8 +2880,9 @@
       });
 
       const d1OverallRankMap = {};
+      const d1CompRanks = assignCompetitionRanks(sortedDay1Overall, (a, b) => areAnglersTiedSession(a.d1, b.d1));
       sortedDay1Overall.forEach((a, i) => {
-        d1OverallRankMap[a.anglerName] = i + 1;
+        d1OverallRankMap[a.anglerName] = d1CompRanks[i];
       });
 
       const d1ZonePosMap = {};
@@ -2855,8 +2896,9 @@
             (b.d1.fishCount ?? 0) - (a.d1.fishCount ?? 0) ||
             (b.d1.biggestFishCm ?? 0) - (a.d1.biggestFishCm ?? 0)
           );
+        const z1Ranks = assignCompetitionRanks(z1, (a, b) => areAnglersTiedSession(a.d1, b.d1));
         z1.forEach((a, i) => {
-          d1ZonePosMap[a.anglerName] = { pos: i + 1, count: z1.length };
+          d1ZonePosMap[a.anglerName] = { pos: z1Ranks[i], count: z1.length };
         });
 
         const z2 = sorted
@@ -2867,23 +2909,44 @@
             (b.d2.fishCount ?? 0) - (a.d2.fishCount ?? 0) ||
             (b.d2.biggestFishCm ?? 0) - (a.d2.biggestFishCm ?? 0)
           );
+        const z2Ranks = assignCompetitionRanks(z2, (a, b) => areAnglersTiedSession(a.d2, b.d2));
         z2.forEach((a, i) => {
-          d2ZonePosMap[a.anglerName] = { pos: i + 1, count: z2.length };
+          d2ZonePosMap[a.anglerName] = { pos: z2Ranks[i], count: z2.length };
         });
       });
 
       const totalCount = sorted.length;
+      const computedOverallRanks = assignCompetitionRanks(sorted, areAnglersTiedOverall);
+
       const byFish = [...sorted].sort((a, b) => (b.totals?.cumulativeFish || 0) - (a.totals?.cumulativeFish || 0));
+      const fishCompRanks = assignCompetitionRanks(byFish, (a, b) => (a.totals?.cumulativeFish || 0) === (b.totals?.cumulativeFish || 0));
+      const fishRankMap = {};
+      byFish.forEach((x, i) => { fishRankMap[x.anglerName] = fishCompRanks[i]; });
+
       const byLength = [...sorted].sort((a, b) => (b.totals?.cumulativeLengthCm || 0) - (a.totals?.cumulativeLengthCm || 0));
+      const lengthCompRanks = assignCompetitionRanks(byLength, (a, b) => (a.totals?.cumulativeLengthCm || 0) === (b.totals?.cumulativeLengthCm || 0));
+      const lengthRankMap = {};
+      byLength.forEach((x, i) => { lengthRankMap[x.anglerName] = lengthCompRanks[i]; });
+
       const byAvgSize = [...sorted].sort((a, b) => (b.avgFishSize || 0) - (a.avgFishSize || 0));
+      const avgCompRanks = assignCompetitionRanks(byAvgSize, (a, b) => Number((a.avgFishSize || 0).toFixed(2)) === Number((b.avgFishSize || 0).toFixed(2)));
+      const avgRankMap = {};
+      byAvgSize.forEach((x, i) => { avgRankMap[x.anglerName] = avgCompRanks[i]; });
+
       const byBiggest = [...sorted].sort((a, b) => (b.overallBiggestCm || 0) - (a.overallBiggestCm || 0));
+      const biggestCompRanks = assignCompetitionRanks(byBiggest, (a, b) => (a.overallBiggestCm || 0) === (b.overallBiggestCm || 0));
+      const biggestRankMap = {};
+      byBiggest.forEach((x, i) => { biggestRankMap[x.anglerName] = biggestCompRanks[i]; });
 
       STATE.anglers = sorted.map((a, idx) => {
-        const rank = a.totals?.overallRank || (idx + 1);
-        const fishRank = byFish.findIndex(x => x.anglerName === a.anglerName) + 1;
-        const lengthRank = byLength.findIndex(x => x.anglerName === a.anglerName) + 1;
-        const avgSizeRank = byAvgSize.findIndex(x => x.anglerName === a.anglerName) + 1;
-        const biggestRank = byBiggest.findIndex(x => x.anglerName === a.anglerName) + 1;
+        const exportedRank = typeof a.totals?.overallRank === "number" && a.totals.overallRank > 0
+          ? a.totals.overallRank
+          : null;
+        const rank = exportedRank !== null ? exportedRank : computedOverallRanks[idx];
+        const fishRank = fishRankMap[a.anglerName] || 1;
+        const lengthRank = lengthRankMap[a.anglerName] || 1;
+        const avgSizeRank = avgRankMap[a.anglerName] || 1;
+        const biggestRank = biggestRankMap[a.anglerName] || 1;
 
         return {
           ...a,
@@ -2932,7 +2995,7 @@
         }
       });
 
-      STATE.teams = Object.values(teamMap)
+      const sortedTeams = Object.values(teamMap)
         .filter(t => t.members.length === 4)
         .sort(
           (a, b) =>
@@ -2941,6 +3004,12 @@
             b.totalFish - a.totalFish ||
             b.biggestFishCm - a.biggestFishCm
         );
+
+      const teamCompRanks = assignCompetitionRanks(sortedTeams, areTeamsTiedOverall);
+      STATE.teams = sortedTeams.map((t, idx) => ({
+        ...t,
+        teamRank: teamCompRanks[idx]
+      }));
 
       const d1Specimens = [];
       const d2Specimens = [];
@@ -3331,7 +3400,7 @@
 
     /* ---------------------------------------------------------
        RENDER VIEW 2: INDIVIDUAL LEADERBOARD
-       (SINGLE-LINE ROWS + POINTS-BRACKET SEPARATION & ALTERNATING SHADING)
+       (SINGLE-LINE ROWS + STANDARD COMPETITION "1224" RANK + POINTS-BRACKET SHADING)
        --------------------------------------------------------- */
     function renderIndividualTable() {
       const searchInput = document.getElementById("searchAngler");
@@ -3404,7 +3473,7 @@
 
     /* ---------------------------------------------------------
        RENDER VIEW 3: TEAM LEADERBOARD
-       (SINGLE-LINE ROWS + POINTS-BRACKET SEPARATION & ALTERNATING SHADING)
+       (SINGLE-LINE ROWS + STANDARD COMPETITION "1224" RANK + POINTS-BRACKET SHADING)
        --------------------------------------------------------- */
     function renderTeamsContributions() {
       const memberSlots = 4;
@@ -3431,7 +3500,7 @@
       const teamRowsHtml = [];
 
       STATE.teams.forEach((team, idx) => {
-        const teamRank = idx + 1;
+        const displayTeamRank = team.teamRank || (idx + 1);
         if (idx > 0 && team.totalPts !== lastTeamPts) {
           teamPtsGroupIndex++;
           teamRowsHtml.push(`
@@ -3443,7 +3512,7 @@
         lastTeamPts = team.totalPts;
 
         const groupAltClass = teamPtsGroupIndex % 2 === 1 ? "pts-group-alt" : "";
-        const podiumClass = teamRank <= 3 ? `podium-${teamRank}` : "";
+        const podiumClass = displayTeamRank <= 3 ? `podium-${displayTeamRank}` : "";
 
         const sortedMembers = [...team.members].sort(
           (a, b) =>
@@ -3470,7 +3539,7 @@
 
         teamRowsHtml.push(`
           <tr class="team-strip-row ${groupAltClass} ${podiumClass}">
-            <td>${teamRank}</td>
+            <td>${displayTeamRank}</td>
             <td class="team-main-cell">
               <div class="team-stack-wrap">
                 <div class="team-name-line">${team.teamName}</div>
@@ -3512,8 +3581,10 @@
             );
           });
 
+        const zoneCompRanks = assignCompetitionRanks(zoneAnglers, (a, b) => areAnglersTiedSession(a[dayKey], b[dayKey]));
+
         const rowsHtml = zoneAnglers.map((a, idx) => {
-          const pos = idx + 1;
+          const pos = zoneCompRanks[idx];
           const podiumClass = pos <= 3 ? `podium-${pos}` : "";
           const sess = a[dayKey];
           const bigDisplay = (sess.biggestFishCm || 0) > 0 ? `${sess.biggestFishCm}` : "—";
@@ -3561,9 +3632,10 @@
        --------------------------------------------------------- */
     function renderBiggestFish() {
       const top5 = STATE.specimensAll.slice(0, 5);
+      const specRanks = assignCompetitionRanks(top5, (a, b) => a.lengthCm === b.lengthCm);
 
       document.getElementById("biggestFishTableBody").innerHTML = top5.map((s, idx) => {
-        const rank = idx + 1;
+        const rank = specRanks[idx];
         const podiumClass = rank <= 3 ? `podium-${rank}` : "";
         const zShort = shortZone(s.zone);
 
@@ -3660,6 +3732,8 @@
         };
       }).sort((a, b) => b.combinedCm - a.combinedCm);
 
+      const pairCompRanks = assignCompetitionRanks(normalizedPairs, (a, b) => a.combinedCm === b.combinedCm);
+
       function renderPartnerCell(partner) {
         const nameMarkup = partner.isGhost
           ? `<span class="avg-score-badge">Average Score</span>`
@@ -3686,7 +3760,7 @@
             </thead>
             <tbody>
               ${normalizedPairs.map((pair, i) => {
-                const rank = i + 1;
+                const rank = pairCompRanks[i];
                 const podiumClass = rank <= 3 ? `podium-${rank}` : "";
                 return `
                   <tr class="${podiumClass}">
@@ -3824,22 +3898,27 @@
         marginTitle = "Winning Margin";
         const runnerUp = anglers[1];
         if (runnerUp) {
-          const ptsLead = runnerUp.totals.cumulativePoints - me.totals.cumulativePoints;
-          if (ptsLead > 0) {
-            marginVal = `+${ptsLead} ${ptsLead === 1 ? "pt" : "pts"} clear`;
-            marginSub = `Ahead of #2`;
+          if (runnerUp.rank === 1) {
+            marginVal = "Tied 1st Overall";
+            marginSub = `Shared w/ ${runnerUp.anglerName}`;
           } else {
-            const cmLead = Math.max(1, me.totals.cumulativeLengthCm - runnerUp.totals.cumulativeLengthCm);
-            marginVal = `+${cmLead}cm clear`;
-            marginSub = `Tiebreak over #2`;
+            const ptsLead = runnerUp.totals.cumulativePoints - me.totals.cumulativePoints;
+            if (ptsLead > 0) {
+              marginVal = `+${ptsLead} ${ptsLead === 1 ? "pt" : "pts"} clear`;
+              marginSub = `Ahead of #${runnerUp.rank}`;
+            } else {
+              const cmLead = Math.max(1, me.totals.cumulativeLengthCm - runnerUp.totals.cumulativeLengthCm);
+              marginVal = `+${cmLead}cm clear`;
+              marginSub = `Tiebreak over #${runnerUp.rank}`;
+            }
           }
         } else {
           marginVal = "1st Overall";
           marginSub = "Champion";
         }
       } else {
-        const targetPos = me.rank - 1;
-        const anglerAhead = anglers[targetPos - 1];
+        const anglerAhead = [...anglers].reverse().find(a => a.rank < me.rank);
+        const targetPos = anglerAhead ? anglerAhead.rank : (me.rank - 1);
         marginTitle = `Next Spot (#${targetPos})`;
         if (anglerAhead) {
           const ptsGap = me.totals.cumulativePoints - anglerAhead.totals.cumulativePoints;
