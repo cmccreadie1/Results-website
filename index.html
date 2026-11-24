@@ -3,67 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#004481" />
+  <meta name="theme-color" content="#090d16" />
   <title>SPRA Scottish Shore Championship 2027 | Results Portal</title>
   <link rel="manifest" href="manifest.json" />
   <style>
     :root {
-      /* Modern Fintech / Bank of Scotland Light Palette */
-      --bg-base: #f3f5f8;
-      --bg-surface: #ffffff;
-      --bg-card: #f8fafc;
-      --bg-card-hover: #f1f5f9;
-      --border-glass: #dce3ec;
-      --border-strong: #cbd5e1;
+      /* Dark Slate / Championship Theme Palette */
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-card: #131b2e;
+      --bg-card-hover: #1a243d;
+      --border-glass: #1e293b;
+      --border-strong: #2d3b52;
 
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
       --text-muted: #64748b;
 
-      --brand-navy: #004481;
-      --brand-navy-dark: #00284d;
-      --brand-cobalt: #005eb8;
-      --brand-tint: #eef5fc;
-      --brand-tint-border: #bfd9f2;
+      /* Colored Stat Typography Palette */
+      --stat-pts: #60a5fa;
+      --stat-len: #22d3ee;
+      --stat-fish: #fbbf24;
+      --stat-big: #fb923c;
+
+      --brand-navy: #38bdf8;
+      --brand-navy-dark: #0f172a;
+      --brand-cobalt: #3b82f6;
+      --brand-tint: rgba(56, 189, 248, 0.12);
+      --brand-tint-border: rgba(56, 189, 248, 0.28);
 
       /* Distinct Identity Anchor Column Tint */
-      --sticky-bg: #e6eef8;
-      --sticky-bg-hover: #dce7f5;
-      --sticky-border: #b8cde6;
+      --sticky-bg: #162033;
+      --sticky-bg-hover: #1e2c45;
+      --sticky-border: #2a3a54;
 
       /* Subtle Alternating Points-Bracket Shading */
-      --group-tint-alt: #f1f5fb;
-      --group-tint-alt-border: #cdd9ea;
+      --group-tint-alt: #162035;
+      --group-tint-alt-border: #25344f;
 
-      --accent-emerald: #059669;
-      --accent-emerald-bg: #ecfdf5;
-      --accent-emerald-border: #a7f3d0;
-      --accent-amber: #d97706;
-      --accent-indigo: #4338ca;
+      --accent-emerald: #34d399;
+      --accent-emerald-bg: rgba(16, 185, 129, 0.14);
+      --accent-emerald-border: rgba(52, 211, 153, 0.35);
+      --accent-amber: #fbbf24;
+      --accent-indigo: #818cf8;
 
       /* Zone Colors */
-      --zone-red: #ef4444;
-      --zone-red-bg: #fef2f2;
-      --zone-red-border: #fca5a5;
+      --zone-red: #f87171;
+      --zone-red-bg: rgba(239, 68, 68, 0.15);
+      --zone-red-border: rgba(248, 113, 113, 0.35);
 
-      --zone-yellow: #eab308;
-      --zone-yellow-bg: #fefce8;
-      --zone-yellow-border: #fde047;
+      --zone-yellow: #facc15;
+      --zone-yellow-bg: rgba(234, 179, 8, 0.15);
+      --zone-yellow-border: rgba(250, 204, 21, 0.35);
 
-      --zone-green: #22c55e;
-      --zone-green-bg: #f0fdf4;
-      --zone-green-border: #86efac;
+      --zone-green: #4ade80;
+      --zone-green-bg: rgba(34, 197, 94, 0.15);
+      --zone-green-border: rgba(74, 222, 128, 0.35);
 
-      --zone-blue: #3b82f6;
-      --zone-blue-bg: #eff6ff;
-      --zone-blue-border: #93c5fd;
+      --zone-blue: #60a5fa;
+      --zone-blue-bg: rgba(59, 130, 246, 0.16);
+      --zone-blue-border: rgba(96, 165, 250, 0.38);
 
       --radius-xl: 20px;
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
-      --shadow-elevated: 0 12px 28px rgba(0, 68, 129, 0.12);
+      --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.32), 0 1px 4px rgba(0, 0, 0, 0.24);
+      --shadow-elevated: 0 14px 32px rgba(2, 6, 23, 0.55);
     }
 
     html {
@@ -94,17 +100,18 @@
     }
 
     /* =========================================================================
-       SPOILER-FREE DEEP NAVY HERO SPLASH CARD (FRONT PAGE ONLY)
+       SPOILER-FREE DARK SLATE HERO SPLASH CARD (FRONT PAGE ONLY)
        ========================================================================= */
     .hero-splash-banner {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #004481 0%, #00284d 100%);
-      color: #ffffff;
+      background: linear-gradient(135deg, #131f35 0%, #0c1322 100%);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
       border-radius: var(--radius-lg);
       padding: 1.05rem 1.2rem;
       margin-bottom: 0.8rem;
-      box-shadow: 0 10px 24px rgba(0, 40, 77, 0.20);
+      box-shadow: var(--shadow-elevated);
     }
 
     .hero-splash-banner::before {
@@ -112,11 +119,11 @@
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle at 92% 14%, rgba(255, 255, 255, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 92% 14%, rgba(56, 189, 248, 0.14) 0%, transparent 45%),
         repeating-linear-gradient(
           -28deg,
-          rgba(255, 255, 255, 0.03) 0px,
-          rgba(255, 255, 255, 0.03) 1px,
+          rgba(255, 255, 255, 0.025) 0px,
+          rgba(255, 255, 255, 0.025) 1px,
           transparent 1px,
           transparent 18px
         );
@@ -142,7 +149,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #93c5fd;
+      color: var(--stat-len);
       margin-bottom: 0.18rem;
     }
 
@@ -150,14 +157,14 @@
       font-size: 1.26rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: #ffffff;
+      color: var(--text-primary);
       line-height: 1.2;
     }
 
     .hero-venue {
       font-size: 0.78rem;
       font-weight: 600;
-      color: #cbd5e1;
+      color: var(--text-secondary);
       margin-top: 0.2rem;
     }
 
@@ -169,9 +176,9 @@
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 700;
-      background: var(--brand-tint);
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      background: rgba(37, 99, 235, 0.22);
+      color: var(--stat-pts);
+      border: 1px solid rgba(96, 165, 250, 0.35);
     }
 
     /* Highlighted Points Bordered Box Badges */
@@ -182,32 +189,51 @@
       min-width: 32px;
       padding: 0.18rem 0.5rem;
       border-radius: 6px;
-      background: #e6f0fb;
-      border: 1.5px solid #93c5fd;
-      color: var(--brand-navy);
+      background: rgba(37, 99, 235, 0.2);
+      border: 1.5px solid rgba(96, 165, 250, 0.45);
+      color: var(--stat-pts);
       font-weight: 800;
       font-size: 0.96rem;
       line-height: 1.15;
-      box-shadow: 0 1px 2px rgba(0, 68, 129, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     }
 
     .pts-pill-badge.team-total-pts {
       padding: 0.14rem 0.44rem;
       font-size: 0.84rem;
       border-radius: 5px;
-      background: #ffffff;
+      background: rgba(59, 130, 246, 0.24);
+      color: #93c5fd;
     }
 
     .pts-pill-badge.member-pts {
       padding: 0.12rem 0.4rem;
       font-size: 0.8rem;
       border-radius: 5px;
-      background: #f0f6fd;
-      border-color: #bfd9f2;
+      background: rgba(37, 99, 235, 0.18);
+      border-color: rgba(96, 165, 250, 0.35);
+      color: var(--stat-pts);
       margin-right: 0.24rem;
     }
 
-    /* Views & Frosted Glass Floating Bottom-Left Back Button */
+    /* Colored Stat Helpers Across Tables & Summaries */
+    .stat-len-txt {
+      color: var(--stat-len) !important;
+    }
+
+    .stat-fish-txt {
+      color: var(--stat-fish) !important;
+    }
+
+    .stat-big-txt {
+      color: var(--stat-big) !important;
+    }
+
+    .stat-pts-txt {
+      color: var(--stat-pts) !important;
+    }
+
+    /* Views & Floating Bottom-Left Back Button */
     .view-section {
       display: none;
       animation: fadeIn 0.22s ease;
@@ -230,18 +256,18 @@
       display: none;
       align-items: center;
       gap: 0.45rem;
-      background: rgba(0, 68, 129, 0.90);
+      background: rgba(17, 24, 39, 0.92);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border: 1.5px solid rgba(255, 255, 255, 0.85);
-      color: #ffffff;
+      border: 1.5px solid rgba(56, 189, 248, 0.55);
+      color: var(--text-primary);
       padding: 0.64rem 1.22rem;
       border-radius: 999px;
       font-size: 0.86rem;
       font-weight: 700;
       letter-spacing: 0.01em;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(0, 40, 77, 0.34), 0 3px 8px rgba(15, 23, 42, 0.16);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.48), 0 3px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.18s ease;
     }
 
@@ -250,9 +276,10 @@
     }
 
     .floating-back-btn:hover {
-      background: var(--brand-cobalt);
+      background: #1d2b45;
+      border-color: var(--stat-len);
       transform: translateY(-2px);
-      box-shadow: 0 12px 26px rgba(0, 68, 129, 0.42);
+      box-shadow: 0 12px 26px rgba(2, 6, 23, 0.65);
     }
 
     /* =========================================================================
@@ -286,9 +313,9 @@
     }
 
     .bento-insight-card {
-      background: linear-gradient(145deg, #eef5fc 0%, #ffffff 100%);
-      border: 1.5px solid var(--brand-tint-border);
-      border-left: 4px solid var(--brand-cobalt);
+      background: linear-gradient(145deg, #162238 0%, #111827 100%);
+      border: 1.5px solid var(--border-strong);
+      border-left: 4px solid var(--stat-len);
       border-radius: 13px;
       padding: 0.82rem 0.92rem;
       text-align: left;
@@ -297,13 +324,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.7rem;
-      box-shadow: 0 2px 8px rgba(0, 68, 129, 0.06);
+      box-shadow: var(--shadow-card);
       transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-insight-card:hover {
       transform: translateY(-2px);
-      border-color: var(--brand-cobalt);
+      border-color: var(--stat-len);
       box-shadow: var(--shadow-elevated);
     }
 
@@ -312,14 +339,14 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
       margin-bottom: 0.14rem;
     }
 
     .bento-insight-title {
       font-size: 0.96rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.015em;
       line-height: 1.2;
     }
@@ -335,7 +362,7 @@
     .bento-spotlight-card {
       background: var(--bg-surface);
       border: 1.5px solid var(--border-glass);
-      border-top: 3.5px solid var(--brand-navy);
+      border-top: 3.5px solid var(--brand-cobalt);
       border-radius: 13px;
       padding: 0.8rem 0.9rem;
       text-align: left;
@@ -344,14 +371,14 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 0.52rem;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+      box-shadow: var(--shadow-card);
       transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-spotlight-card:hover {
       transform: translateY(-2px);
-      border-color: var(--brand-tint-border);
-      border-top-color: var(--brand-cobalt);
+      border-color: var(--border-strong);
+      border-top-color: var(--stat-len);
       box-shadow: var(--shadow-elevated);
     }
 
@@ -365,7 +392,7 @@
     .bento-spotlight-title {
       font-size: 0.94rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.01em;
       line-height: 1.2;
     }
@@ -394,9 +421,9 @@
       border-radius: 999px;
       font-size: 0.65rem;
       font-weight: 800;
-      background: var(--brand-tint);
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      background: rgba(37, 99, 235, 0.18);
+      color: var(--stat-pts);
+      border: 1px solid rgba(96, 165, 250, 0.32);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -406,7 +433,7 @@
     .bento-compact-card {
       background: var(--bg-surface);
       border: 1.5px solid var(--border-glass);
-      border-top: 3px solid var(--brand-navy);
+      border-top: 3px solid var(--brand-cobalt);
       border-radius: 12px;
       padding: 0.72rem 0.78rem;
       text-align: left;
@@ -415,25 +442,25 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 0.48rem;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      box-shadow: var(--shadow-card);
       transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .bento-compact-card.accent-d1 { border-top-color: var(--accent-indigo); }
     .bento-compact-card.accent-d2 { border-top-color: var(--accent-amber); }
-    .bento-compact-card.accent-big { border-top-color: var(--accent-emerald); }
-    .bento-compact-card.accent-mystery { border-top-color: var(--brand-cobalt); }
+    .bento-compact-card.accent-big { border-top-color: var(--stat-big); }
+    .bento-compact-card.accent-mystery { border-top-color: var(--stat-len); }
 
     .bento-compact-card:hover {
       transform: translateY(-2px);
-      border-color: var(--brand-tint-border);
+      border-color: var(--border-strong);
       box-shadow: var(--shadow-elevated);
     }
 
     .bento-compact-title {
       font-size: 0.85rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.01em;
       line-height: 1.22;
     }
@@ -453,12 +480,12 @@
       gap: 0.35rem;
       font-size: 0.66rem;
       font-weight: 700;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
     }
 
     .hub-arrow {
       font-size: 1.05rem;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
       font-weight: 700;
       flex-shrink: 0;
       transition: transform 0.18s ease;
@@ -470,7 +497,7 @@
       transform: translateX(3px);
     }
 
-    /* Clean White Elevated Cards */
+    /* Dark Elevated Cards */
     .glass-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-glass);
@@ -493,7 +520,7 @@
     .card-title {
       font-size: 1.1rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -505,11 +532,11 @@
       color: var(--text-secondary);
     }
 
-    /* Darker Slate-Blue Anchor Band: Top 6-Column Unified KPI Card */
+    /* Dark Anchor Band: Top 6-Column Unified KPI Card */
     .kpi-unified-card {
-      background: linear-gradient(180deg, #e5eef9 0%, #edf4fc 100%);
-      border: 1.5px solid #bfd3ec;
-      border-top: 4px solid var(--brand-navy);
+      background: linear-gradient(180deg, #162238 0%, #111827 100%);
+      border: 1.5px solid var(--border-strong);
+      border-top: 4px solid var(--stat-len);
       border-radius: var(--radius-lg);
       padding: 0.65rem 0.45rem;
       margin-bottom: 0.95rem;
@@ -525,7 +552,7 @@
 
     .kpi-cell {
       padding: 0.35rem 0.75rem;
-      border-right: 1px solid #c8d9ee;
+      border-right: 1px solid var(--border-glass);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -540,7 +567,7 @@
       font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--brand-navy-dark);
+      color: var(--text-secondary);
       font-weight: 700;
       line-height: 1.2;
     }
@@ -548,7 +575,7 @@
     .kpi-value {
       font-size: 1.24rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       margin: 0.1rem 0;
       letter-spacing: -0.02em;
       line-height: 1.15;
@@ -587,7 +614,7 @@
     .rings-strip-title {
       font-size: 1.02rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.01em;
     }
 
@@ -609,10 +636,10 @@
 
     .session-donut-card.total-hero-card {
       grid-column: 1 / -1;
-      background: linear-gradient(180deg, #eef5fc 0%, #f8fbff 100%);
-      border: 1.5px solid var(--brand-tint-border);
-      border-top: 3.5px solid var(--brand-navy);
-      box-shadow: 0 4px 14px rgba(0, 68, 129, 0.08);
+      background: linear-gradient(180deg, #162136 0%, #111827 100%);
+      border: 1.5px solid var(--border-strong);
+      border-top: 3.5px solid var(--stat-len);
+      box-shadow: var(--shadow-card);
     }
 
     .daily-breakdown-divider {
@@ -632,7 +659,7 @@
       content: "";
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+      background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
     }
 
     .daily-breakdown-divider span {
@@ -640,9 +667,9 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--brand-navy);
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
+      color: var(--stat-len);
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
       padding: 0.2rem 0.8rem;
       border-radius: 999px;
       white-space: nowrap;
@@ -651,7 +678,7 @@
     .session-donut-card-title {
       font-size: 0.92rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       text-align: center;
       letter-spacing: -0.01em;
       padding-bottom: 0.35rem;
@@ -663,7 +690,7 @@
     }
 
     .session-donut-card.total-hero-card .session-donut-card-title {
-      border-bottom-color: var(--brand-tint-border);
+      border-bottom-color: var(--border-glass);
     }
 
     .overall-hero-pill {
@@ -671,8 +698,9 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      background: var(--brand-navy);
-      color: #ffffff;
+      background: rgba(37, 99, 235, 0.25);
+      color: var(--stat-pts);
+      border: 1px solid rgba(96, 165, 250, 0.35);
       padding: 0.14rem 0.52rem;
       border-radius: 999px;
     }
@@ -685,7 +713,7 @@
     }
 
     .bar-chart-slot {
-      background: #ffffff;
+      background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-sm);
       padding: 0.45rem 0.25rem 0.4rem;
@@ -696,7 +724,7 @@
     }
 
     .session-donut-card.total-hero-card .bar-chart-slot {
-      border-color: var(--brand-tint-border);
+      border-color: var(--border-glass);
     }
 
     .bar-chart-header {
@@ -720,7 +748,7 @@
     .bar-chart-total-badge {
       font-size: 0.82rem;
       font-weight: 800;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
     }
 
     .vbar-plot-area {
@@ -731,7 +759,7 @@
       gap: 0.15rem;
       align-items: end;
       padding-top: 1.1rem;
-      border-bottom: 1.5px solid #cbd5e1;
+      border-bottom: 1.5px solid var(--border-strong);
     }
 
     .vbar-col {
@@ -806,7 +834,7 @@
     .session-sleek-title {
       font-size: 1.02rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.01em;
     }
 
@@ -819,7 +847,7 @@
     }
 
     /* =========================================================================
-       MODERN OPEN FINTECH METRIC CARDS (NO BOXES INSIDE BOXES)
+       DARK FINTECH METRIC CARDS
        ========================================================================= */
     .session-h2h-grid {
       display: grid;
@@ -857,7 +885,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-secondary);
     }
 
     .sh2h-edge-badge {
@@ -869,24 +897,23 @@
     }
 
     .sh2h-edge-badge.d1 {
-      background: #eef2ff;
-      color: #3730a3;
-      border: 1px solid #c7d2fe;
+      background: rgba(129, 140, 248, 0.16);
+      color: #a5b4fc;
+      border: 1px solid rgba(129, 140, 248, 0.35);
     }
 
     .sh2h-edge-badge.d2 {
-      background: #fffbeb;
-      color: #b45309;
-      border: 1px solid #fde68a;
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--stat-fish);
+      border: 1px solid rgba(251, 191, 36, 0.35);
     }
 
     .sh2h-edge-badge.even {
-      background: var(--brand-tint);
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--stat-len);
+      border: 1px solid rgba(56, 189, 248, 0.32);
     }
 
-    /* Open Two-Column Stat Row */
     .sh2h-open-row {
       display: flex;
       align-items: flex-start;
@@ -952,12 +979,11 @@
       margin-top: 0.14rem;
     }
 
-    /* Proportional Tug-of-War Split Bar */
     .sh2h-split-bar {
       width: 100%;
       height: 6px;
       border-radius: 999px;
-      background: #e2e8f0;
+      background: #1e293b;
       overflow: hidden;
       display: flex;
       gap: 2px;
@@ -983,7 +1009,6 @@
       line-height: 1.3;
     }
 
-    /* Compact 4-Zone Night vs Day Rows */
     .zone-nd-list {
       display: flex;
       flex-direction: column;
@@ -998,14 +1023,14 @@
       gap: 0.5rem;
       padding: 0.46rem 0.55rem;
       border-radius: var(--radius-md);
-      background: #ffffff;
+      background: var(--bg-surface);
       border: 1px solid var(--border-glass);
     }
 
     .zone-nd-name {
       font-size: 0.82rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 0.36rem;
@@ -1035,46 +1060,46 @@
     .zone-nd-main {
       font-size: 0.88rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--stat-len);
     }
 
     .zone-nd-sub {
       font-size: 0.71rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--stat-fish);
     }
 
-    /* Vivid Zone Winners Panels */
+    /* Zone Winners Panels with Colored Accent Borders */
     .zone-winner-panel[data-zone="Red Zone"] {
-      border: 2px solid #ef4444;
-      border-top: 5px solid #dc2626;
-      background: linear-gradient(180deg, #fee2e2 0%, #fef2f2 45%, #ffffff 100%);
+      border: 1.5px solid rgba(248, 113, 113, 0.42);
+      border-top: 4px solid #ef4444;
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.35) 0%, #111827 38%, #111827 100%);
     }
     .zone-winner-panel[data-zone="Yellow Zone"] {
-      border: 2px solid #eab308;
-      border-top: 5px solid #ca8a04;
-      background: linear-gradient(180deg, #fef08a 0%, #fefce8 45%, #ffffff 100%);
+      border: 1.5px solid rgba(250, 204, 21, 0.42);
+      border-top: 4px solid #eab308;
+      background: linear-gradient(180deg, rgba(113, 63, 18, 0.35) 0%, #111827 38%, #111827 100%);
     }
     .zone-winner-panel[data-zone="Green Zone"] {
-      border: 2px solid #22c55e;
-      border-top: 5px solid #16a34a;
-      background: linear-gradient(180deg, #dcfce7 0%, #f0fdf4 45%, #ffffff 100%);
+      border: 1.5px solid rgba(74, 222, 128, 0.42);
+      border-top: 4px solid #22c55e;
+      background: linear-gradient(180deg, rgba(20, 83, 45, 0.35) 0%, #111827 38%, #111827 100%);
     }
     .zone-winner-panel[data-zone="Blue Zone"] {
-      border: 2px solid #3b82f6;
-      border-top: 5px solid #2563eb;
-      background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 45%, #ffffff 100%);
+      border: 1.5px solid rgba(96, 165, 250, 0.42);
+      border-top: 4px solid #3b82f6;
+      background: linear-gradient(180deg, rgba(30, 58, 138, 0.40) 0%, #111827 38%, #111827 100%);
     }
 
     .zt-lbl-d1 {
-      color: #4338ca;
+      color: #a5b4fc;
       display: inline-flex;
       align-items: center;
       gap: 0.28rem;
     }
 
     .zt-lbl-d2 {
-      color: #b45309;
+      color: var(--stat-fish);
       display: inline-flex;
       align-items: center;
       gap: 0.28rem;
@@ -1099,7 +1124,7 @@
       z-index: 32;
       border-top-right-radius: var(--radius-md);
       border-bottom-right-radius: var(--radius-md);
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(15, 23, 42, 0.11) 100%);
+      background: linear-gradient(90deg, rgba(17, 24, 39, 0) 0%, rgba(56, 189, 248, 0.16) 100%);
       transition: opacity 0.2s ease;
     }
 
@@ -1149,7 +1174,7 @@
       position: sticky;
       top: 0;
       z-index: 25;
-      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
     }
 
     table.two-tier-sticky-table thead tr:nth-child(1) th {
@@ -1164,45 +1189,45 @@
       position: sticky;
       top: 32px;
       z-index: 29;
-      box-shadow: 0 3px 6px rgba(15, 23, 42, 0.09);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
     }
 
     table.card-row-table thead th {
-      background: var(--brand-navy);
-      color: #ffffff;
+      background: #172136;
+      color: var(--text-secondary);
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       padding: 0.52rem 0.58rem;
-      border-top: 1px solid var(--brand-navy);
-      border-bottom: 1px solid var(--brand-navy);
+      border-top: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border-strong);
       white-space: nowrap;
     }
 
     table.card-row-table thead tr:first-child th:first-child {
-      border-left: 1px solid var(--brand-navy);
+      border-left: 1px solid var(--border-strong);
       border-top-left-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:first-child th:last-child {
-      border-right: 1px solid var(--brand-navy);
+      border-right: 1px solid var(--border-strong);
       border-top-right-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:last-child th:first-child {
-      border-left: 1px solid var(--brand-navy);
+      border-left: 1px solid var(--border-strong);
       border-bottom-left-radius: var(--radius-sm);
     }
 
     table.card-row-table thead tr:last-child th:last-child {
-      border-right: 1px solid var(--brand-navy);
+      border-right: 1px solid var(--border-strong);
       border-bottom-right-radius: var(--radius-sm);
     }
 
     /* Unified Single-Line Row Styling */
     table.card-row-table tbody tr td {
-      background: #ffffff;
+      background: var(--bg-card);
       border-top: 1px solid var(--border-glass);
       border-bottom: 1px solid var(--border-glass);
       padding: 0.52rem 0.58rem;
@@ -1220,7 +1245,7 @@
     }
 
     table.card-row-table tbody tr:hover td {
-      background: var(--brand-tint) !important;
+      background: var(--bg-card-hover) !important;
     }
 
     table.card-row-table tbody tr td:first-child {
@@ -1244,13 +1269,13 @@
     }
 
     table.card-row-table tbody tr.podium-1 td:first-child {
-      border-left: 4px solid #eab308;
+      border-left: 4px solid #facc15;
     }
     table.card-row-table tbody tr.podium-2 td:first-child {
       border-left: 4px solid #94a3b8;
     }
     table.card-row-table tbody tr.podium-3 td:first-child {
-      border-left: 4px solid #d97706;
+      border-left: 4px solid #fb923c;
     }
 
     /* Clean Points-Bracket Divider Row Between Tied Points Groups */
@@ -1265,7 +1290,7 @@
     .pts-divider-line {
       width: 100%;
       height: 1px;
-      background: linear-gradient(90deg, transparent 0%, #cbd5e1 12%, #cbd5e1 88%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, var(--border-strong) 12%, var(--border-strong) 88%, transparent 100%);
     }
 
     /* Individual & Team Table Headers */
@@ -1282,28 +1307,29 @@
     }
 
     table.two-tier-sticky-table th.group-th.overall-grp {
-      color: #ffffff;
-      background: var(--brand-navy);
-      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--stat-len);
+      background: #18253d;
+      border-left: 1px solid var(--border-strong);
     }
 
     table.two-tier-sticky-table th.group-th.d1-grp {
-      color: #e0e7ff;
-      background: #1e3a8a;
-      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      color: #a5b4fc;
+      background: #19223b;
+      border-left: 1px solid var(--border-strong);
     }
 
     table.two-tier-sticky-table th.group-th.d2-grp {
-      color: #fef3c7;
-      background: #1e40af;
-      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--stat-fish);
+      background: #222334;
+      border-left: 1px solid var(--border-strong);
     }
 
     table.two-tier-sticky-table th.sub-th {
       padding: 0.38rem 0.38rem;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       text-align: center;
-      background: #003566;
+      background: #141d2e;
+      color: var(--text-secondary);
     }
 
     table.two-tier-sticky-table th.sub-th.left-align {
@@ -1312,7 +1338,7 @@
 
     table.two-tier-sticky-table th.section-edge-left,
     table.two-tier-sticky-table tbody tr td.section-edge-left {
-      border-left: 1px solid rgba(148, 163, 184, 0.28);
+      border-left: 1px solid rgba(148, 163, 184, 0.16);
     }
 
     table.tight-ind-table tbody tr.ind-data-row td {
@@ -1330,7 +1356,7 @@
       padding-right: 0.12rem;
       text-align: center;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
     }
 
     table.tight-ind-table th.angler-th,
@@ -1343,11 +1369,11 @@
 
     /* Subtle Identity Anchor Accent */
     table.two-tier-sticky-table thead tr:nth-child(1) th.identity-anchor-hdr {
-      background: #002b54 !important;
+      background: #101827 !important;
     }
 
     table.two-tier-sticky-table thead tr:nth-child(2) th.identity-anchor-hdr {
-      background: #002347 !important;
+      background: #0d1421 !important;
     }
 
     .ind-angler-name {
@@ -1361,9 +1387,9 @@
     }
 
     .ind-team-sub {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
       line-height: 1.15;
       margin-top: 2px;
       white-space: nowrap;
@@ -1378,9 +1404,9 @@
       gap: 0.25rem;
       padding: 0.14rem 0.54rem;
       border-radius: 6px;
-      background: #eef2ff;
-      border: 1px solid #c7d2fe;
-      color: #3730a3;
+      background: rgba(129, 140, 248, 0.16);
+      border: 1px solid rgba(129, 140, 248, 0.38);
+      color: #c7d2fe;
       font-size: 0.84rem;
       font-weight: 800;
       font-style: italic;
@@ -1404,14 +1430,14 @@
 
     .mp-status-badge.eligible {
       background: var(--accent-emerald-bg);
-      color: #065f46;
+      color: var(--accent-emerald);
       border: 1px solid var(--accent-emerald-border);
     }
 
     .mp-status-badge.guard {
-      background: #fffbeb;
-      color: #b45309;
-      border: 1px solid #fde68a;
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--stat-fish);
+      border: 1px solid rgba(251, 191, 36, 0.35);
     }
 
     /* Team Leaderboard Single-Line Row Cells */
@@ -1428,7 +1454,7 @@
       padding-right: 0.12rem;
       text-align: center;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
     }
 
     table.one-line-team-table th.team-name-th,
@@ -1449,7 +1475,7 @@
     .team-name-line {
       font-size: 1rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       line-height: 1.18;
     }
 
@@ -1461,14 +1487,14 @@
     .team-totals-line {
       font-size: 0.84rem;
       font-weight: 700;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
       line-height: 1.2;
     }
 
     .team-contrib-cell {
       text-align: left;
       min-width: 185px;
-      border-left: 1px solid rgba(148, 163, 184, 0.25);
+      border-left: 1px solid rgba(148, 163, 184, 0.14);
     }
 
     .contrib-angler-line {
@@ -1480,8 +1506,8 @@
 
     .contrib-stats-line {
       font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-weight: 700;
+      color: var(--stat-len);
       line-height: 1.25;
       margin-top: 3px;
     }
@@ -1513,7 +1539,7 @@
     .zw-zone-title {
       font-size: 1.04rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       letter-spacing: -0.01em;
     }
 
@@ -1552,7 +1578,7 @@
     .bf-len-val {
       font-weight: 800;
       font-size: 1.1rem;
-      color: var(--accent-amber);
+      color: var(--stat-big);
       white-space: nowrap;
     }
 
@@ -1575,9 +1601,9 @@
       color: var(--text-secondary);
     }
 
-    /* App-Styled Native Inputs & Select Dropdowns */
+    /* App-Styled Dark Inputs & Select Dropdowns */
     .glass-input {
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-strong);
       color: var(--text-primary);
       padding: 0.48rem 0.8rem;
@@ -1587,26 +1613,30 @@
       outline: none;
       width: 100%;
       max-width: 320px;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    }
+
+    .glass-input::placeholder {
+      color: var(--text-muted);
     }
 
     .glass-input:focus {
-      border-color: var(--brand-cobalt);
-      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.14);
+      border-color: var(--stat-len);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
     }
 
     .glass-select {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      background-color: #ffffff;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23004481' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-color: var(--bg-card);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 0.85rem center;
       background-size: 14px 14px;
-      border: 1.5px solid var(--brand-tint-border);
-      border-left: 4px solid var(--brand-navy);
-      color: var(--brand-navy);
+      border: 1.5px solid var(--border-strong);
+      border-left: 4px solid var(--stat-len);
+      color: var(--text-primary);
       padding: 0.62rem 2.35rem 0.62rem 0.9rem;
       border-radius: var(--radius-md);
       font-family: inherit;
@@ -1615,24 +1645,28 @@
       outline: none;
       min-width: 245px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 68, 129, 0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
       transition: all 0.16s ease;
     }
 
+    .glass-select option {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+    }
+
     .glass-select:hover {
-      border-color: var(--brand-cobalt);
-      background-color: #f8fbff;
-      box-shadow: 0 4px 12px rgba(0, 68, 129, 0.10);
+      border-color: var(--stat-len);
+      background-color: var(--bg-card-hover);
     }
 
     .glass-select:focus {
-      border-color: var(--brand-cobalt);
-      box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.15);
+      border-color: var(--stat-len);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
     }
 
     .report-empty-prompt {
-      background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
-      border: 1.5px dashed var(--brand-tint-border);
+      background: linear-gradient(135deg, #162136 0%, #111827 100%);
+      border: 1.5px dashed var(--border-strong);
       border-radius: var(--radius-md);
       padding: 1.65rem 1.2rem;
       text-align: center;
@@ -1642,7 +1676,7 @@
     .report-empty-title {
       font-size: 1.02rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       margin-bottom: 0.25rem;
     }
 
@@ -1653,11 +1687,11 @@
     }
 
     /* =========================================================================
-       MODERN OPEN TRAJECTORY & 3-STAT SUMMARY CARD (ABOVE 5 RING DIAGRAMS)
+       DARK TRAJECTORY & 3-STAT SUMMARY CARD (ABOVE 5 RING DIAGRAMS)
        ========================================================================= */
     .trajectory-graphic-card {
-      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
-      border: 1px solid var(--brand-tint-border);
+      background: linear-gradient(180deg, #162136 0%, #111827 100%);
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-lg);
       padding: 0.85rem 0.95rem;
       margin-bottom: 0.9rem;
@@ -1679,7 +1713,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--brand-navy);
+      color: var(--stat-len);
     }
 
     .traj-delta-badge {
@@ -1696,20 +1730,20 @@
 
     .traj-delta-badge.up {
       background: var(--accent-emerald-bg);
-      color: #065f46;
+      color: var(--accent-emerald);
       border: 1px solid var(--accent-emerald-border);
     }
 
     .traj-delta-badge.down {
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
+      background: rgba(239, 68, 68, 0.16);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.35);
     }
 
     .traj-delta-badge.steady {
-      background: var(--brand-tint);
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--stat-len);
+      border: 1px solid rgba(56, 189, 248, 0.32);
     }
 
     .traj-open-row {
@@ -1742,7 +1776,7 @@
     .traj-node-rank {
       font-size: 1.24rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       line-height: 1.15;
       letter-spacing: -0.02em;
       font-variant-numeric: tabular-nums;
@@ -1759,7 +1793,7 @@
     .traj-node-catch {
       font-size: 0.72rem;
       font-weight: 800;
-      color: var(--brand-cobalt);
+      color: var(--stat-len);
       line-height: 1.2;
       margin-top: 1px;
     }
@@ -1799,7 +1833,7 @@
     .p-extra-val {
       font-size: 0.88rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--stat-len);
       line-height: 1.22;
       margin-top: 2px;
       white-space: nowrap;
@@ -1845,7 +1879,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: var(--brand-navy);
+      color: var(--text-secondary);
       margin-bottom: 0.55rem;
       line-height: 1.2;
     }
@@ -1867,7 +1901,7 @@
 
     .gauge-track {
       fill: none;
-      stroke: #e2e8f0;
+      stroke: #1e293b;
       stroke-width: 7.5;
     }
 
@@ -1891,7 +1925,7 @@
     .gauge-ordinal {
       font-size: 1.2rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       line-height: 1.1;
       font-variant-numeric: tabular-nums;
     }
@@ -1922,17 +1956,17 @@
       font-size: 0.72rem;
       font-weight: 600;
       color: var(--text-secondary);
-      background: #ffffff;
+      background: var(--bg-surface);
       border: 1px solid var(--border-glass);
       padding: 0.15rem 0.54rem;
       border-radius: 999px;
       white-space: nowrap;
     }
 
-    /* Opt-In Modern Open Head-to-Head Comparison */
+    /* Opt-In Head-to-Head Comparison */
     .h2h-selector-card {
       background: var(--bg-surface);
-      border: 1.5px solid var(--brand-tint-border);
+      border: 1.5px solid var(--border-strong);
       border-radius: var(--radius-lg);
       padding: 0.95rem 1rem;
       box-shadow: var(--shadow-card);
@@ -1958,8 +1992,8 @@
     }
 
     .h2h-matchup-banner {
-      background: linear-gradient(180deg, #eef5fc 0%, #f8fbff 100%);
-      border: 1px solid var(--brand-tint-border);
+      background: linear-gradient(180deg, #162136 0%, #111827 100%);
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-md);
       padding: 0.78rem 0.9rem;
       display: flex;
@@ -1980,7 +2014,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--brand-navy);
+      color: var(--stat-len);
     }
 
     .h2h-overall-record-badge {
@@ -1996,20 +2030,20 @@
 
     .h2h-overall-record-badge.series-won {
       background: var(--accent-emerald-bg);
-      color: #065f46;
+      color: var(--accent-emerald);
       border: 1px solid var(--accent-emerald-border);
     }
 
     .h2h-overall-record-badge.series-lost {
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
+      background: rgba(239, 68, 68, 0.16);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.35);
     }
 
     .h2h-overall-record-badge.series-drawn {
-      background: #ffffff;
-      color: var(--brand-navy);
-      border: 1px solid var(--brand-tint-border);
+      background: var(--bg-card);
+      color: var(--stat-len);
+      border: 1px solid var(--border-strong);
     }
 
     .h2h-players-row {
@@ -2033,7 +2067,7 @@
     .h2h-player-name {
       font-size: 0.98rem;
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       line-height: 1.2;
       display: inline-flex;
       align-items: center;
@@ -2064,14 +2098,14 @@
       font-size: 0.74rem;
       font-weight: 700;
     }
-    .zone-chip.Red { background: var(--zone-red-bg); color: #b91c1c; border: 1px solid var(--zone-red-border); }
-    .zone-chip.Yellow { background: var(--zone-yellow-bg); color: #a16207; border: 1px solid var(--zone-yellow-border); }
-    .zone-chip.Green { background: var(--zone-green-bg); color: #15803d; border: 1px solid var(--zone-green-border); }
-    .zone-chip.Blue { background: var(--zone-blue-bg); color: #1d4ed8; border: 1px solid var(--zone-blue-border); }
+    .zone-chip.Red { background: var(--zone-red-bg); color: var(--zone-red); border: 1px solid var(--zone-red-border); }
+    .zone-chip.Yellow { background: var(--zone-yellow-bg); color: var(--zone-yellow); border: 1px solid var(--zone-yellow-border); }
+    .zone-chip.Green { background: var(--zone-green-bg); color: var(--zone-green); border: 1px solid var(--zone-green-border); }
+    .zone-chip.Blue { background: var(--zone-blue-bg); color: var(--zone-blue); border: 1px solid var(--zone-blue-border); }
 
     .pos-num {
       font-weight: 800;
-      color: var(--brand-navy);
+      color: var(--text-primary);
       font-variant-numeric: tabular-nums;
     }
 
@@ -2086,8 +2120,8 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
       .kpi-cell {
-        border-right: 1px solid #c8d9ee;
-        border-bottom: 1px solid #c8d9ee;
+        border-right: 1px solid var(--border-glass);
+        border-bottom: 1px solid var(--border-glass);
         padding: 0.42rem 0.65rem;
       }
       .kpi-cell:nth-child(3n) {
@@ -2332,13 +2366,13 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .kpi-cell:nth-child(3n) {
-        border-right: 1px solid #c8d9ee;
+        border-right: 1px solid var(--border-glass);
       }
       .kpi-cell:nth-child(2n) {
         border-right: none;
       }
       .kpi-cell:nth-child(n+3) {
-        border-bottom: 1px solid #c8d9ee;
+        border-bottom: 1px solid var(--border-glass);
       }
       .kpi-cell:nth-child(n+5) {
         border-bottom: none;
@@ -2360,7 +2394,7 @@
 <body>
   <div class="container">
     <!-- =========================================================
-         SPOILER-FREE DEEP NAVY HERO SPLASH CARD (FRONT PAGE ONLY)
+         SPOILER-FREE DARK SLATE HERO SPLASH CARD (FRONT PAGE ONLY)
          ========================================================= -->
     <header class="hero-splash-banner" id="mainSplashHeader">
       <div class="hero-top-row">
@@ -2628,7 +2662,7 @@
     </section>
 
     <!-- =========================================================
-         VIEW 6: MY MATCH REPORT (MODERN OPEN TRAJECTORY + 5 RINGS + H2H)
+         VIEW 6: MY MATCH REPORT (TRAJECTORY + 5 RINGS + H2H)
          ========================================================= -->
     <section id="view-myreport" class="view-section">
       <div class="glass-card" style="max-width: 1120px; margin-left: auto; margin-right: auto;">
@@ -2662,22 +2696,22 @@
     </section>
   </div>
 
-  <!-- Frosted Glass Floating Bottom-Left Back Button -->
+  <!-- Floating Bottom-Left Back Button -->
   <button class="floating-back-btn" id="floatingBackBtn" data-nav="home" aria-label="Back to Home">
     ← Back
   </button>
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.36",
+      version: "v3.8.37",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
       zoneColors: {
-        "Red Zone": "#ef4444",
-        "Yellow Zone": "#eab308",
-        "Green Zone": "#22c55e",
-        "Blue Zone": "#3b82f6"
+        "Red Zone": "#f87171",
+        "Yellow Zone": "#facc15",
+        "Green Zone": "#4ade80",
+        "Blue Zone": "#60a5fa"
       }
     };
 
@@ -2706,7 +2740,7 @@
     function buildZoneVerticalBarChart(metricTitle, totalBadgeText, rawValues, formattedLabels) {
       const colors = ["#ef4444", "#eab308", "#22c55e", "#3b82f6"];
       const axisLetters = ["R", "Y", "G", "B"];
-      const axisTextColors = ["#dc2626", "#b45309", "#15803d", "#1d4ed8"];
+      const axisTextColors = ["#f87171", "#facc15", "#4ade80", "#60a5fa"];
       const maxVal = Math.max(...rawValues, 1);
 
       const barsHtml = rawValues.map((val, idx) => {
@@ -2884,8 +2918,6 @@
         };
       });
 
-      // Always sort & rank by Combined Totals (ShoreScore exact 4 tie-breakers)
-      // so dead-heat ties ("10, 10, 12") match ShoreScore even when Day 1/Day 2 splits differ
       const sorted = [...enriched].sort((a, b) => {
         return (
           (a.totals.cumulativePoints ?? 999) - (b.totals.cumulativePoints ?? 999) ||
@@ -3171,12 +3203,12 @@
           </div>
           <div class="kpi-cell">
             <div class="kpi-label">Total Fish Landed</div>
-            <div class="kpi-value">${totalFish}</div>
+            <div class="kpi-value stat-fish-txt">${totalFish}</div>
             <div class="kpi-sub">Avg ${avgFishPerAngler} fish / angler</div>
           </div>
           <div class="kpi-cell">
             <div class="kpi-label">Total Length</div>
-            <div class="kpi-value">${totalLengthMeters}<span style="font-size:0.88rem; font-weight:600;">m</span></div>
+            <div class="kpi-value stat-len-txt">${totalLengthMeters}<span style="font-size:0.88rem; font-weight:600;">m</span></div>
             <div class="kpi-sub">Avg ${(totalLengthCm / Math.max(1, totalFish)).toFixed(1)} cm / fish</div>
           </div>
           <div class="kpi-cell">
@@ -3186,12 +3218,12 @@
           </div>
           <div class="kpi-cell">
             <div class="kpi-label">Best Session Bag</div>
-            <div class="kpi-value">${bestSessionFish} <span style="font-size:0.86rem; font-weight:600;">fish</span></div>
+            <div class="kpi-value stat-fish-txt">${bestSessionFish} <span style="font-size:0.86rem; font-weight:600;">fish</span></div>
             <div class="kpi-sub">${bestSessionWho}</div>
           </div>
           <div class="kpi-cell">
             <div class="kpi-label">Specimen High</div>
-            <div class="kpi-value" style="color:var(--accent-amber);">${specimenValHtml}</div>
+            <div class="kpi-value stat-big-txt">${specimenValHtml}</div>
             <div class="kpi-sub">${specimenSubText}</div>
           </div>
         </div>
@@ -3309,7 +3341,7 @@
         const zTotal = z.d1Len + z.d2Len;
         const d1ZPct = zTotal > 0 ? Math.max(8, Math.min(92, Math.round((z.d1Len / zTotal) * 100))) : 50;
         const d2ZPct = 100 - d1ZPct;
-        const swatchColor = MATCH_CONFIG.zoneColors[z.zoneName] || "#004481";
+        const swatchColor = MATCH_CONFIG.zoneColors[z.zoneName] || "#38bdf8";
 
         return `
           <div class="zone-nd-row">
@@ -3354,9 +3386,9 @@
           buildEdgeBadge(totalD1Fish, totalD2Fish, `Night +${totalD1Fish - totalD2Fish} fish`, `Day +${totalD2Fish - totalD1Fish} fish`),
           totalD1Fish,
           totalD2Fish,
-          `${totalD1Fish} fish`,
+          `<span class="stat-fish-txt">${totalD1Fish} fish</span>`,
           `Avg ${d1AvgPerRod} / angler`,
-          `${totalD2Fish} fish`,
+          `<span class="stat-fish-txt">${totalD2Fish} fish</span>`,
           `Avg ${d2AvgPerRod} / angler`,
           totalFish > 0
             ? `${Math.round((totalD1Fish / totalFish) * 100)}% caught at night vs ${Math.round((totalD2Fish / totalFish) * 100)}% during the day`
@@ -3368,9 +3400,9 @@
           buildEdgeBadge(totalD1LenCm, totalD2LenCm, `Night +${((totalD1LenCm - totalD2LenCm) / 100).toFixed(2)}m`, `Day +${((totalD2LenCm - totalD1LenCm) / 100).toFixed(2)}m`),
           totalD1LenCm,
           totalD2LenCm,
-          `${totalD1Meters}m`,
+          `<span class="stat-len-txt">${totalD1Meters}m</span>`,
           `${totalD1LenCm} cm total`,
-          `${totalD2Meters}m`,
+          `<span class="stat-len-txt">${totalD2Meters}m</span>`,
           `${totalD2LenCm} cm total`,
           `Competition total length: ${totalLengthMeters}m (${totalLengthCm} cm)`
         )}
@@ -3380,9 +3412,9 @@
           buildEdgeBadge(Number(d1AvgFishSize), Number(d2AvgFishSize), `Night +${(Number(d1AvgFishSize) - Number(d2AvgFishSize)).toFixed(1)}cm`, `Day +${(Number(d2AvgFishSize) - Number(d1AvgFishSize)).toFixed(1)}cm`),
           Number(d1AvgFishSize),
           Number(d2AvgFishSize),
-          `${d1AvgFishSize} cm`,
+          `<span class="stat-len-txt">${d1AvgFishSize} cm</span>`,
           `Per fish caught`,
-          `${d2AvgFishSize} cm`,
+          `<span class="stat-len-txt">${d2AvgFishSize} cm</span>`,
           `Per fish caught`,
           `Compares average specimen size between darkness & daylight sessions`
         )}
@@ -3407,13 +3439,13 @@
           <div class="sh2h-open-row">
             <div class="sh2h-open-side ${d2BestBag.fish > d1BestBag.fish ? "dimmed" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d1"><span class="sh2h-dot-d1"></span>Day 1 (Night)</div>
-              <div class="sh2h-side-val">${d1BestBag.fish} fish — ${d1BestBag.angler}</div>
-              <div class="sh2h-side-sub">Longest: ${d1SpecText}</div>
+              <div class="sh2h-side-val"><span class="stat-fish-txt">${d1BestBag.fish} fish</span> — ${d1BestBag.angler}</div>
+              <div class="sh2h-side-sub">Longest: <span class="stat-big-txt">${d1SpecText}</span></div>
             </div>
             <div class="sh2h-open-side right ${d1BestBag.fish > d2BestBag.fish ? "dimmed" : ""}">
               <div class="sh2h-side-lbl zt-lbl-d2">Day 2 (Day)<span class="sh2h-dot-d2"></span></div>
-              <div class="sh2h-side-val">${d2BestBag.fish} fish — ${d2BestBag.angler}</div>
-              <div class="sh2h-side-sub">Longest: ${d2SpecText}</div>
+              <div class="sh2h-side-val"><span class="stat-fish-txt">${d2BestBag.fish} fish</span> — ${d2BestBag.angler}</div>
+              <div class="sh2h-side-sub">Longest: <span class="stat-big-txt">${d2SpecText}</span></div>
             </div>
           </div>
         </div>
@@ -3452,9 +3484,9 @@
 
           const groupAltClass = ptsGroupIndex % 2 === 1 ? "pts-group-alt" : "";
           const podiumClass = a.rank <= 3 ? `podium-${a.rank}` : "";
-          const ovBig = a.overallBiggestCm > 0 ? a.overallBiggestCm : "—";
-          const d1Big = (a.d1.biggestFishCm || 0) > 0 ? a.d1.biggestFishCm : "—";
-          const d2Big = (a.d2.biggestFishCm || 0) > 0 ? a.d2.biggestFishCm : "—";
+          const ovBig = a.overallBiggestCm > 0 ? `<span class="stat-big-txt">${a.overallBiggestCm}</span>` : "—";
+          const d1Big = (a.d1.biggestFishCm || 0) > 0 ? `<span class="stat-big-txt">${a.d1.biggestFishCm}</span>` : "—";
+          const d2Big = (a.d2.biggestFishCm || 0) > 0 ? `<span class="stat-big-txt">${a.d2.biggestFishCm}</span>` : "—";
 
           rowsHtml.push(`
             <tr class="ind-data-row ${groupAltClass} ${podiumClass}">
@@ -3465,18 +3497,18 @@
               </td>
 
               <td class="section-edge-left"><span class="pts-pill-badge">${pts}</span></td>
-              <td>${a.totals.cumulativeLengthCm}</td>
-              <td><strong>${a.totals.cumulativeFish}</strong></td>
+              <td class="stat-len-txt"><strong>${a.totals.cumulativeLengthCm}</strong></td>
+              <td class="stat-fish-txt"><strong>${a.totals.cumulativeFish}</strong></td>
               <td>${ovBig}</td>
 
-              <td class="section-edge-left">${a.d1.zonePoints}</td>
-              <td>${a.d1.totalLengthCm}</td>
-              <td>${a.d1.fishCount}</td>
+              <td class="section-edge-left stat-pts-txt">${a.d1.zonePoints}</td>
+              <td class="stat-len-txt">${a.d1.totalLengthCm}</td>
+              <td class="stat-fish-txt">${a.d1.fishCount}</td>
               <td>${d1Big}</td>
 
-              <td class="section-edge-left">${a.d2.zonePoints}</td>
-              <td>${a.d2.totalLengthCm}</td>
-              <td>${a.d2.fishCount}</td>
+              <td class="section-edge-left stat-pts-txt">${a.d2.zonePoints}</td>
+              <td class="stat-len-txt">${a.d2.totalLengthCm}</td>
+              <td class="stat-fish-txt">${a.d2.fishCount}</td>
               <td>${d2Big}</td>
             </tr>
           `);
@@ -3551,7 +3583,7 @@
             memberCells += `
               <td class="team-contrib-cell">
                 <div class="contrib-angler-line">${m.anglerName}</div>
-                <div class="contrib-stats-line"><span class="pts-pill-badge member-pts">${m.totals.cumulativePoints} pts</span>${m.totals.cumulativeLengthCm}cm • ${m.totals.cumulativeFish} fish</div>
+                <div class="contrib-stats-line"><span class="pts-pill-badge member-pts">${m.totals.cumulativePoints} pts</span><span class="stat-len-txt">${m.totals.cumulativeLengthCm}cm</span> • <span class="stat-fish-txt">${m.totals.cumulativeFish} fish</span></div>
               </td>
             `;
           } else {
@@ -3566,7 +3598,7 @@
               <div class="team-stack-wrap">
                 <div class="team-name-line">${team.teamName}</div>
                 <div class="team-pts-row"><span class="pts-pill-badge team-total-pts">${team.totalPts} pts</span></div>
-                <div class="team-totals-line">${team.totalLengthCm}cm • ${team.totalFish} fish</div>
+                <div class="team-totals-line"><span class="stat-len-txt">${team.totalLengthCm}cm</span> • <span class="stat-fish-txt">${team.totalFish} fish</span></div>
               </div>
             </td>
             ${memberCells}
@@ -3609,7 +3641,7 @@
           const pos = zoneCompRanks[idx];
           const podiumClass = pos <= 3 ? `podium-${pos}` : "";
           const sess = a[dayKey];
-          const bigDisplay = (sess.biggestFishCm || 0) > 0 ? `${sess.biggestFishCm}` : "—";
+          const bigDisplay = (sess.biggestFishCm || 0) > 0 ? `<span class="stat-big-txt">${sess.biggestFishCm}</span>` : "—";
 
           return `
             <tr class="${podiumClass}">
@@ -3618,8 +3650,8 @@
                 <div class="ind-angler-name">${a.anglerName}</div>
                 <div class="ind-team-sub">${a.teamName}</div>
               </td>
-              <td style="text-align:center;">${sess.totalLengthCm}</td>
-              <td style="text-align:center;"><strong>${sess.fishCount}</strong></td>
+              <td class="stat-len-txt" style="text-align:center;"><strong>${sess.totalLengthCm}</strong></td>
+              <td class="stat-fish-txt" style="text-align:center;"><strong>${sess.fishCount}</strong></td>
               <td style="text-align:center;">${bigDisplay}</td>
             </tr>
           `;
@@ -3699,14 +3731,13 @@
       if (!rawList.length) {
         bodyEl.innerHTML = `
           <div style="padding:1.5rem; text-align:center; background:var(--bg-card); border-radius:var(--radius-md); border:1px dashed var(--border-strong); color:var(--text-secondary);">
-            <div style="font-weight:800; color:var(--brand-navy);">Mystery Pairs Draw Pending</div>
+            <div style="font-weight:800; color:var(--text-primary);">Mystery Pairs Draw Pending</div>
             <div style="font-size:0.86rem; margin-top:0.2rem;">Once Mystery Pairs are populated in <code>scores.json</code>, pairs ranked by combined length will appear here automatically.</div>
           </div>
         `;
         return;
       }
 
-      // Compute Day 1 & Day 2 field averages matching ShoreScore's MysteryPairsModule.calculateFieldAverage()
       const d1FieldAvg = STATE.anglers.length > 0
         ? Math.round(STATE.anglers.reduce((sum, a) => sum + (a.d1?.totalLengthCm || 0), 0) / STATE.anglers.length)
         : 0;
@@ -3714,7 +3745,6 @@
         ? Math.round(STATE.anglers.reduce((sum, a) => sum + (a.d2?.totalLengthCm || 0), 0) / STATE.anglers.length)
         : 0;
 
-      // Compute Day 1 length ranking matching ShoreScore's MysteryPairsModule.generatePairs()
       const d1LengthSorted = [...STATE.anglers].sort((a, b) => (b.d1?.totalLengthCm || 0) - (a.d1?.totalLengthCm || 0));
       const d1LengthRankMap = {};
       d1LengthSorted.forEach((a, idx) => {
@@ -3801,9 +3831,9 @@
                       <div class="ind-angler-name">${pair.angler1Name} <span class="mp-rank-tag">(Rank ${pair.angler1Rank})</span></div>
                     </td>
                     <td style="white-space:normal;">${a2Html}</td>
-                    <td style="text-align:center;">${pair.d1Total} cm</td>
-                    <td style="text-align:center;">${pair.d2Total} cm</td>
-                    <td style="text-align:right;"><span class="pts-pill-badge">${pair.combinedCm} cm</span></td>
+                    <td class="stat-len-txt" style="text-align:center;">${pair.d1Total} cm</td>
+                    <td class="stat-len-txt" style="text-align:center;">${pair.d2Total} cm</td>
+                    <td style="text-align:right;"><span class="pts-pill-badge stat-len-txt">${pair.combinedCm} cm</span></td>
                     <td style="text-align:center;">${statusBadgeHtml}</td>
                   </tr>
                 `;
@@ -3903,8 +3933,8 @@
         moveBadgeText = `▼ -${dropCount} ${dropCount === 1 ? "Place" : "Places"}`;
       }
 
-      const d1CatchLine = `${me.d1.fishCount || 0} fish • ${me.d1.totalLengthCm || 0}cm`;
-      const d2CatchLine = `${me.d2.fishCount || 0} fish • ${me.d2.totalLengthCm || 0}cm`;
+      const d1CatchLine = `<span class="stat-fish-txt">${me.d1.fishCount || 0} fish</span> • <span class="stat-len-txt">${me.d1.totalLengthCm || 0}cm</span>`;
+      const d2CatchLine = `<span class="stat-fish-txt">${me.d2.fishCount || 0} fish</span> • <span class="stat-len-txt">${me.d2.totalLengthCm || 0}cm</span>`;
 
       const myTeamObj = STATE.teams.find(t => t.teamName === me.teamName);
       let teamShareVal = "—";
@@ -3987,14 +4017,14 @@
             <div class="traj-open-side">
               <div class="traj-node-tag zt-lbl-d1"><span class="sh2h-dot-d1"></span>Day 1 (Night)</div>
               <div class="traj-node-rank">#${me.d1OverallRank}</div>
-              <div class="traj-node-zone">${shortZone(me.d1.zone)} #${me.d1ZoneStanding.pos} • ${me.d1.zonePoints} pts</div>
+              <div class="traj-node-zone">${shortZone(me.d1.zone)} #${me.d1ZoneStanding.pos} • <span class="stat-pts-txt">${me.d1.zonePoints} pts</span></div>
               <div class="traj-node-catch">${d1CatchLine}</div>
             </div>
 
             <div class="traj-open-side right">
               <div class="traj-node-tag zt-lbl-d2">Final (After Day 2)<span class="sh2h-dot-d2"></span></div>
               <div class="traj-node-rank">#${me.rank}</div>
-              <div class="traj-node-zone">${shortZone(me.d2.zone)} #${me.d2ZoneStanding.pos} • ${me.d2.zonePoints} pts</div>
+              <div class="traj-node-zone">${shortZone(me.d2.zone)} #${me.d2ZoneStanding.pos} • <span class="stat-pts-txt">${me.d2.zonePoints} pts</span></div>
               <div class="traj-node-catch">D2: ${d2CatchLine}</div>
             </div>
           </div>
@@ -4070,46 +4100,46 @@
           "Overall Standing",
           `${me.rank}`,
           `of ${fieldSize}`,
-          `${me.totals.cumulativePoints} zone pts`,
+          `<span class="stat-pts-txt">${me.totals.cumulativePoints} zone pts</span>`,
           `${fieldBestPts} pts`,
           overallPct,
-          "#004481"
+          "#60a5fa"
         )}
         ${buildMotifCard(
           "Total Fish",
           `${me.fishRank}`,
           `of ${fieldSize}`,
-          `${me.totals.cumulativeFish} fish`,
+          `<span class="stat-fish-txt">${me.totals.cumulativeFish} fish</span>`,
           `${fieldBestFish} fish`,
           fishRankPct,
-          "#059669"
+          "#fbbf24"
         )}
         ${buildMotifCard(
           "Total Length",
           `${me.lengthRank}`,
           `of ${fieldSize}`,
-          `${me.totals.cumulativeLengthCm} cm`,
+          `<span class="stat-len-txt">${me.totals.cumulativeLengthCm} cm</span>`,
           `${fieldBestLength} cm`,
           lengthRankPct,
-          "#005eb8"
+          "#22d3ee"
         )}
         ${buildMotifCard(
           "Average Fish Size",
           me.totals.cumulativeFish > 0 ? `${me.avgSizeRank}` : "—",
           me.totals.cumulativeFish > 0 ? `of ${fieldSize}` : "No fish",
-          me.totals.cumulativeFish > 0 ? `${me.avgFishSize.toFixed(1)} cm` : "0.0 cm",
+          me.totals.cumulativeFish > 0 ? `<span class="stat-len-txt">${me.avgFishSize.toFixed(1)} cm</span>` : "0.0 cm",
           `${fieldBestAvgSize.toFixed(1)} cm`,
           avgSizeRankPct,
-          "#0d9488"
+          "#34d399"
         )}
         ${buildMotifCard(
           "Biggest Fish",
           me.overallBiggestCm > 0 ? `${me.biggestRank}` : "—",
           me.overallBiggestCm > 0 ? `of ${fieldSize}` : "No fish",
-          me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "0 cm",
+          me.overallBiggestCm > 0 ? `<span class="stat-big-txt">${me.overallBiggestCm} cm</span>` : "0 cm",
           `${fieldBestBiggest} cm`,
           biggestRankPct,
-          "#d97706"
+          "#fb923c"
         )}
       `;
 
@@ -4137,8 +4167,8 @@
       const comparisons = [
         {
           metricLabel: "Overall Standing",
-          meVal: `${me.totals.cumulativePoints} pts`,
-          rivalVal: `${rival.totals.cumulativePoints} pts`,
+          meVal: `<span class="stat-pts-txt">${me.totals.cumulativePoints} pts</span>`,
+          rivalVal: `<span class="stat-pts-txt">${rival.totals.cumulativePoints} pts</span>`,
           meSub: `Field Rank #${me.rank}`,
           rivalSub: `Field Rank #${rival.rank}`,
           meNum: me.totals.cumulativePoints,
@@ -4148,8 +4178,8 @@
         },
         {
           metricLabel: "Total Fish",
-          meVal: `${me.totals.cumulativeFish} fish`,
-          rivalVal: `${rival.totals.cumulativeFish} fish`,
+          meVal: `<span class="stat-fish-txt">${me.totals.cumulativeFish} fish</span>`,
+          rivalVal: `<span class="stat-fish-txt">${rival.totals.cumulativeFish} fish</span>`,
           meSub: `Field Rank #${me.fishRank}`,
           rivalSub: `Field Rank #${rival.fishRank}`,
           meNum: me.totals.cumulativeFish,
@@ -4159,8 +4189,8 @@
         },
         {
           metricLabel: "Total Length",
-          meVal: `${me.totals.cumulativeLengthCm} cm`,
-          rivalVal: `${rival.totals.cumulativeLengthCm} cm`,
+          meVal: `<span class="stat-len-txt">${me.totals.cumulativeLengthCm} cm</span>`,
+          rivalVal: `<span class="stat-len-txt">${rival.totals.cumulativeLengthCm} cm</span>`,
           meSub: `${(me.totals.cumulativeLengthCm / 100).toFixed(2)}m • Rank #${me.lengthRank}`,
           rivalSub: `${(rival.totals.cumulativeLengthCm / 100).toFixed(2)}m • Rank #${rival.lengthRank}`,
           meNum: me.totals.cumulativeLengthCm,
@@ -4170,8 +4200,8 @@
         },
         {
           metricLabel: "Average Fish Size",
-          meVal: me.totals.cumulativeFish > 0 ? `${meAvgRounded.toFixed(1)} cm` : "0.0 cm",
-          rivalVal: rival.totals.cumulativeFish > 0 ? `${rivalAvgRounded.toFixed(1)} cm` : "0.0 cm",
+          meVal: me.totals.cumulativeFish > 0 ? `<span class="stat-len-txt">${meAvgRounded.toFixed(1)} cm</span>` : "0.0 cm",
+          rivalVal: rival.totals.cumulativeFish > 0 ? `<span class="stat-len-txt">${rivalAvgRounded.toFixed(1)} cm</span>` : "0.0 cm",
           meSub: me.totals.cumulativeFish > 0 ? `Field Rank #${me.avgSizeRank}` : "No fish",
           rivalSub: rival.totals.cumulativeFish > 0 ? `Field Rank #${rival.avgSizeRank}` : "No fish",
           meNum: meAvgRounded,
@@ -4181,8 +4211,8 @@
         },
         {
           metricLabel: "Biggest Fish",
-          meVal: me.overallBiggestCm > 0 ? `${me.overallBiggestCm} cm` : "—",
-          rivalVal: rival.overallBiggestCm > 0 ? `${rival.overallBiggestCm} cm` : "—",
+          meVal: me.overallBiggestCm > 0 ? `<span class="stat-big-txt">${me.overallBiggestCm} cm</span>` : "—",
+          rivalVal: rival.overallBiggestCm > 0 ? `<span class="stat-big-txt">${rival.overallBiggestCm} cm</span>` : "—",
           meSub: me.overallBiggestCm > 0 ? `Field Rank #${me.biggestRank}` : "No fish",
           rivalSub: rival.overallBiggestCm > 0 ? `Field Rank #${rival.biggestRank}` : "No fish",
           meNum: me.overallBiggestCm,
