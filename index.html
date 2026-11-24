@@ -2669,7 +2669,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.35",
+      version: "v3.8.36",
       title: "SPRA Scottish Shore Championship 2027",
       venue: "Arbroath & Elliot Beach",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
@@ -3753,8 +3753,7 @@
           ? parseNumericCm(p.d2Total)
           : ((a1 ? (a1.d2?.totalLengthCm || 0) : 0) + (isGhost ? d2FieldAvg : (a2 ? (a2.d2?.totalLengthCm || 0) : 0)));
 
-        const explicitCombined = parseNumericCm(p.combined ?? p.combinedLength ?? p.totalLengthCm);
-        const combinedCm = explicitCombined > 0 ? explicitCombined : (d1Total + d2Total);
+        const combinedCm = d1Total + d2Total;
 
         return {
           angler1Name: a1 ? a1.anglerName : name1,
