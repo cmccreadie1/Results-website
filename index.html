@@ -216,6 +216,29 @@
       margin-right: 0.24rem;
     }
 
+    /* Squared-off border with no background for Day 1 & Day 2 points */
+    .day-pts-square {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      padding: 0.12rem 0.42rem;
+      border-radius: 2px;
+      background: transparent;
+      border: 1.5px solid rgba(96, 165, 250, 0.55);
+      color: var(--stat-pts);
+      font-weight: 800;
+      font-size: 0.9rem;
+      line-height: 1.15;
+    }
+
+    /* Visual separation gap between Overall (Combined) and Day 1 columns */
+    table.tight-ind-table th.d1-split-gap,
+    table.tight-ind-table tbody tr.ind-data-row td.d1-split-gap {
+      border-left: 2px solid var(--border-strong);
+      padding-left: 0.72rem;
+    }
+
     /* Colored Stat Helpers Across Tables & Summaries */
     .stat-len-txt {
       color: var(--stat-len) !important;
@@ -1380,6 +1403,7 @@
       font-weight: 800;
       font-size: 0.98rem;
       color: var(--text-primary);
+      text-transform: uppercase;
       line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
@@ -1390,13 +1414,13 @@
       font-size: 0.78rem;
       font-weight: 700;
       color: var(--text-muted);
+      text-transform: uppercase;
       line-height: 1.15;
       margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     /* Ghost / Average Score Pill & Status Badges in Mystery Pairs */
     .avg-score-badge {
       display: inline-flex;
@@ -1472,10 +1496,11 @@
       gap: 3px;
     }
 
-    .team-name-line {
+   .team-name-line {
       font-size: 1rem;
       font-weight: 800;
       color: var(--text-primary);
+      text-transform: uppercase;
       line-height: 1.18;
     }
 
@@ -1501,6 +1526,7 @@
       font-size: 0.96rem;
       font-weight: 700;
       color: var(--text-primary);
+      text-transform: uppercase;
       line-height: 1.2;
     }
 
@@ -2559,21 +2585,21 @@
         <div class="table-scroll-shell" id="indScrollShell">
           <div class="table-wrap sticky-scroll-wrap tight-scores-wrap" id="indTableWrap">
             <table class="card-row-table tight-ind-table two-tier-sticky-table">
-              <thead>
+             <thead>
                 <tr>
                   <th colspan="2" class="group-th identity-anchor-hdr"></th>
                   <th colspan="4" class="group-th overall-grp">Overall</th>
-                  <th colspan="4" class="group-th d1-grp">Day 1</th>
+                  <th colspan="4" class="group-th d1-grp d1-split-gap">Day 1</th>
                   <th colspan="4" class="group-th d2-grp">Day 2</th>
                 </tr>
                 <tr>
-                  <th class="sub-th pos-th identity-anchor-hdr" style="text-align:center;">Pos</th>
-                  <th class="sub-th angler-th left-align identity-anchor-hdr">Angler</th>
+                  <th class="sub-th pos-th identity-anchor-hdr" style="text-align:center;"></th>
+                  <th class="sub-th angler-th left-align identity-anchor-hdr"></th>
                   <th class="sub-th section-edge-left">Pt</th>
                   <th class="sub-th">Len</th>
                   <th class="sub-th">Fish</th>
                   <th class="sub-th">Big</th>
-                  <th class="sub-th section-edge-left">Pt</th>
+                  <th class="sub-th section-edge-left d1-split-gap">Pt</th>
                   <th class="sub-th">Len</th>
                   <th class="sub-th">Fish</th>
                   <th class="sub-th">Big</th>
@@ -2703,9 +2729,9 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.37",
-      title: "SPRA Scottish Shore Championship 2027",
-      venue: "Arbroath & Elliot Beach",
+      version: "v3.8.38",
+      title: "SPRA Shore Championship 2027",
+      venue: "Elliot Beach - Arbroath",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
       zoneColors: {
         "Red Zone": "#f87171",
@@ -3501,12 +3527,12 @@
               <td class="stat-fish-txt"><strong>${a.totals.cumulativeFish}</strong></td>
               <td>${ovBig}</td>
 
-              <td class="section-edge-left stat-pts-txt">${a.d1.zonePoints}</td>
+              <td class="section-edge-left d1-split-gap"><span class="day-pts-square">${a.d1.zonePoints}</span></td>
               <td class="stat-len-txt">${a.d1.totalLengthCm}</td>
               <td class="stat-fish-txt">${a.d1.fishCount}</td>
               <td>${d1Big}</td>
 
-              <td class="section-edge-left stat-pts-txt">${a.d2.zonePoints}</td>
+              <td class="section-edge-left"><span class="day-pts-square">${a.d2.zonePoints}</span></td>
               <td class="stat-len-txt">${a.d2.totalLengthCm}</td>
               <td class="stat-fish-txt">${a.d2.fishCount}</td>
               <td>${d2Big}</td>
@@ -3538,13 +3564,13 @@
       }
 
       document.getElementById("teamsTableHead").innerHTML = `
-        <tr>
+       <tr>
           <th colspan="2" class="group-th overall-grp identity-anchor-hdr">Team Overall</th>
           <th colspan="${memberSlots}" class="group-th d1-grp">Individual Angler Contributions (Best → Lowest)</th>
         </tr>
         <tr>
-          <th class="sub-th team-pos-th identity-anchor-hdr" style="text-align:center;">Pos</th>
-          <th class="sub-th team-name-th left-align identity-anchor-hdr">Team & Totals</th>
+          <th class="sub-th team-pos-th identity-anchor-hdr" style="text-align:center;"></th>
+          <th class="sub-th team-name-th left-align identity-anchor-hdr"></th>
           ${anglerHeaders}
         </tr>
       `;
