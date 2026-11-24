@@ -1399,27 +1399,33 @@
       background: #0d1421 !important;
     }
 
-    .ind-angler-name {
+   .ind-angler-name {
       font-weight: 800;
-      font-size: 0.98rem;
+      font-size: 0.88rem;
       color: var(--text-primary);
       text-transform: uppercase;
-      line-height: 1.2;
-      white-space: nowrap;
+      line-height: 1.15;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .ind-team-sub {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       line-height: 1.15;
       margin-top: 2px;
-      white-space: nowrap;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
     /* Ghost / Average Score Pill & Status Badges in Mystery Pairs */
     .avg-score-badge {
@@ -1497,11 +1503,17 @@
     }
 
    .team-name-line {
-      font-size: 1rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: var(--text-primary);
       text-transform: uppercase;
-      line-height: 1.18;
+      line-height: 1.15;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .team-pts-row {
@@ -1523,11 +1535,17 @@
     }
 
     .contrib-angler-line {
-      font-size: 0.96rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--text-primary);
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.15;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .contrib-stats-line {
@@ -2319,14 +2337,15 @@
         padding-right: 0.32rem;
       }
 
-      .ind-angler-name {
-        font-size: 0.9rem;
-        line-height: 1.18;
-      }
+     .ind-angler-name {
+      font-size: 0.82rem;
+      line-height: 1.14;
+    }
 
-      .ind-team-sub {
-        font-size: 0.74rem;
-      }
+     .ind-team-sub {
+      font-size: 0.68rem;
+      line-height: 1.14;
+    }
 
       table.one-line-team-table th.team-pos-th,
       table.one-line-team-table tbody tr.team-strip-row td:first-child {
@@ -2346,9 +2365,9 @@
       }
 
       .team-name-line {
-        font-size: 0.92rem;
-        line-height: 1.15;
-      }
+      font-size: 0.82rem;
+      line-height: 1.14;
+    }
 
       .team-totals-line {
         font-size: 0.76rem;
@@ -2360,8 +2379,9 @@
       }
 
       .contrib-angler-line {
-        font-size: 0.92rem;
-      }
+      font-size: 0.82rem;
+      line-height: 1.14;
+    }
 
       .contrib-stats-line {
         font-size: 0.78rem;
@@ -2729,7 +2749,7 @@
 
   <script>
     const MATCH_CONFIG = {
-      version: "v3.8.38",
+      version: "v3.8.39",
       title: "SPRA Shore Championship 2027",
       venue: "Elliot Beach - Arbroath",
       zones: ["Red Zone", "Yellow Zone", "Green Zone", "Blue Zone"],
