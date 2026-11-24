@@ -8,7 +8,7 @@
         "zone": "Red Zone",
         "peg": "1",
         "fishCount": 9,
-        "totalLengthCm": 320,
+        "totalLengthCm": 321,
         "biggestFishCm": 44,
         "biggestFishSpecies": "Cod",
         "zonePoints": 1
@@ -26,7 +26,7 @@
         "overallRank": 1,
         "cumulativePoints": 2,
         "cumulativeFish": 17,
-        "cumulativeLengthCm": 654
+        "cumulativeLengthCm": 655
       }
     },
     {
@@ -2949,8 +2949,8 @@
       {
         "angler1": "Daffodil",
         "angler2": "mark",
-        "combinedLength": "654cm",
-        "diff": "654cm"
+        "combinedLength": "655cm",
+        "diff": "655cm"
       },
       {
         "angler1": "Snowdon",
